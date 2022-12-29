@@ -131,12 +131,15 @@ class ATNewDZTest extends Controller{
             'action' => 'content',
             'file' => $_GET['FileId'],
             'document' => $_GET['DocumentId'],
-            'contentType' => 'dotx'            
+            'contentType' => 'pdf',
+            'options' => ''            
         ];
 
-        $this->MyRequest=$this->CurlRequest();
-        $this->Arg=['List'=>[]];
-        #(new MyCheck($this->MyRequest))->ShowCheck2();
+        $this->MyRequest=$this->CurlRequest(1);
+        
+        file_put_contents('downloads/DocZillaFile.pdf',$this->MyRequest);
+
+        $this->Arg=['List'=>[]];        
         $this->actionIndex();
     }
     
@@ -229,13 +232,17 @@ class ATNewDZTest extends Controller{
         $this->MySession=$this->MyAuth->session;
     }
     
-    protected function CurlRequest(){        
+    protected function CurlRequest($type=0){        
         curl_setopt($this->CurlLink, CURLOPT_POST, 1);
         curl_setopt($this->CurlLink, CURLOPT_POSTFIELDS, $this->CurlParam); 
         curl_setopt($this->CurlLink, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->CurlLink, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($this->CurlLink, CURLOPT_HEADER, false);
-        $Response = json_decode(curl_exec($this->CurlLink));
+        if ($type==0) {
+            $Response = json_decode(curl_exec($this->CurlLink));
+        }else{
+            $Response = curl_exec($this->CurlLink);
+        }
         curl_close($this->CurlLink);
         (new logger())->logToFile('REQUEST :: '.json_encode($this->CurlParam));
         (new logger())->logToFile('RESPONSE :: '.json_encode($Response));
