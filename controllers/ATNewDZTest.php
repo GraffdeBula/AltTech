@@ -22,7 +22,7 @@ class ATNewDZTest extends Controller{
             $this->Arg=['List'=>[]];
         }
             
-        $this->render('ATTestDZ',$this->Arg);
+        $this->render('ATTestDZ',$this->Arg);        
     }
     
     public function actionAuth(){
@@ -38,6 +38,7 @@ class ATNewDZTest extends Controller{
             'session' => $this->MySession,
             'request' => 'ru.doczilla.workspace.table.Workspace',
             'action' => 'read',
+            'limit' => '5000',            
             'fields' => json_encode(array(
                 'recordId','name','shortName','createdBy','comment','type','folderId','folders'
             ))
@@ -131,13 +132,13 @@ class ATNewDZTest extends Controller{
             'action' => 'content',
             'file' => $_GET['FileId'],
             'document' => $_GET['DocumentId'],
-            'contentType' => 'pdf',
+            'contentType' => 'dotx',
             'options' => ''            
         ];
 
         $this->MyRequest=$this->CurlRequest(1);
         
-        file_put_contents('downloads/DocZillaFile.pdf',$this->MyRequest);
+        file_put_contents('downloads/DocZillaFile.dotx',$this->MyRequest);
 
         $this->Arg=['List'=>[]];        
         $this->actionIndex();
@@ -167,13 +168,12 @@ class ATNewDZTest extends Controller{
         $this->CurlLink=curl_init('https://afpc24.doczilla.pro/request.json');
 
         $this->CurlParam=[
-            'session' => $this->MySession,
-            #'session' =>'59D58A64-9F16-4672-90B9-FCC3475B15DE',
+            'session' => $this->MySession,            
             'request' => 'ru.doczilla.workspace.table.Workspace',
             'method' => 'createDocz',
             'action' => 'content',
-            'file' => 'FC6E07BF-0755-4027-A393-93F3D70F79B6',
-            'folder'=>'6C7308C8-24E0-4B2A-BBA8-652AA0960CD6',
+            'file' => '81578F56-097E-4F77-907C-D09887587BCB',
+            'folder'=>'0213CBDF-E833-442F-90AA-9A6BFA546CCE',
             'name'=>'Тест Анкеты'
         ];
         
@@ -200,14 +200,17 @@ class ATNewDZTest extends Controller{
             'request' => 'ru.doczilla.workspace.table.Workspace',
             'method' => 'fillDocz',
             'action' => 'content',
-            'id' => $this->MyDoc->recordId,
+            'id' => $this->MyDoc->recordId,            
+            'data' => json_encode([
+                    '1'=>'текст 1',
+                    '2'=>'текст текст 2'                
+                ]),
             'dictionaryData'=>json_encode([   
                 'data'=>json_encode([
-                'ID1'=>'this is true',
-                'ID2'=>'this is false',
-                'ID3'=>'this is fiftien'        
-            ])
-                ]),
+                    'ID1'=>'текст 1',
+                    'ID2'=>'текст текст 2'                
+                ])
+            ]),
             
         ];
 

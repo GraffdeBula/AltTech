@@ -25,16 +25,16 @@ class PrintIskCtrl extends Controller{
         $this->ClCode=$_GET['ClCode'];
         $this->ContCode=$_GET['ContCode'];
         $this->IskPack=[
+            1=>'6ADEFCFB6-3587-40BF-AC70-0033F3EE87B5',
+            2=>'2818C72E-FC0E-39FF-A57F-AA69E9A1B3CB',            
+            3=>'16FB5551-717B-363F-9037-BE764201D7AB'
             
-            1=>'2818C72E-FC0E-39FF-A57F-AA69E9A1B3CB',            
-            2=>'16FB5551-717B-363F-9037-BE764201D7AB',
-            3=>'6ADEFCFB6-3587-40BF-AC70-0033F3EE87B5'
         ];
         $this->IskNames=[
+            1=>'Исковое заявление',
+            2=>'Приложение 1 кредиторы',
+            3=>'Приложение 2 имущество'
             
-            1=>'Приложение 1 кредиторы',
-            2=>'Приложение 2 имущество',
-            3=>'Исковое заявление',
         ];
         
         $this->GetData();        
@@ -44,7 +44,10 @@ class PrintIskCtrl extends Controller{
             $Isk->DocID=$IskDoc;
             $Isk->DocName=$this->Client->CLNAMEIP.' '.$this->IskNames[$i];
             $Isk->Data=$this->CreateData($i);            
-            
+            #var_dump($Isk->Data);
+            #echo("<br>=======<br>");
+            #echo(json_encode($Isk->Data));
+            #exit;
             #$Isk->action='TestAc';
             $Isk->run();            
         }

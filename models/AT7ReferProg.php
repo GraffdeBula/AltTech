@@ -8,12 +8,12 @@
  */
 class AT7ReferProg extends Model{
     public function GetAgentList(){
-        $Sql="SELECT * FROM tbl7ReferProg ORDER BY ID DESC";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
     public function GetAgentListDate($DateF,$DateL){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE lgDate BETWEEN ? AND ? ORDER BY ID DESC";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND lgDate BETWEEN ? AND ? ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
     }
     
@@ -32,8 +32,9 @@ class AT7ReferProg extends Model{
         db2::getInstance()->FetchOne($Sql,[$Name,$Code,$Refer,$ID]);
     }
     
-    public function DelAgent($ID){
-        
+    public function DelAgent($ID,$Comment){
+        $Sql="UPDATE tbl7ReferProg SET Status=?,DelComment=? WHERE ID=?";
+        db2::getInstance()->FetchOne($Sql,[2,$Comment,$ID]);
     }
             
             

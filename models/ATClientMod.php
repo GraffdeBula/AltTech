@@ -61,8 +61,6 @@ class ATClientMod extends Model{
     }
                           
     public function updClient($Param=[],$ClCode){                
-        #var_dump($Param);
-        #exit();
         $Sql="UPDATE tblClients SET lgEmp='{$_SESSION['EmName']} and lgDat=current_timestamp'";
         $Params=[];
         foreach($Param as $key=>$value){
@@ -134,6 +132,11 @@ class ATClientMod extends Model{
         $Sql="DELETE FROM tblClDocuments WHERE ClCode=? AND ID=?";
         $Params=[$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
+    }
+    
+    public function getDocument($ClCode,$Name){
+        $Sql="SELECT * FROM tblClDocuments WHERE ClCode=? AND ClDocName=?";
+        return db2::getInstance()->FetchAll($Sql,[$ClCode,$Name]);
     }
     
     public function GetClIncomesList($ClCode){

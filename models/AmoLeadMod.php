@@ -22,6 +22,14 @@ class AmoLeadMod {
         return $Amo->request();        
     }
     
+    public function getLeadFromPost(){       
+        $Amo=new AmoTools0();
+        $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadID}");
+        $Amo->setVar('AmoHeader',false);
+        $Amo->setVar('AmoMethod','GET');
+        return $Amo->request();        
+    }
+    
     public function updLead($LeadID,$NewInfo=[]){
         $Amo=new AmoTools0();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/leads/{$LeadID}");

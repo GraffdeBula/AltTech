@@ -17,11 +17,11 @@ class ATP1CredMod extends Model{
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
     }
     
-    public function GetP1CredList($ContCode){ //получение списка 
-        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrCode;";                
-
-        return $this->Data=db2::getInstance()->FetchAll($Sql,[$ContCode]);    
-    }
+//    public function GetP1CredList($ContCode){ //получение списка 
+//        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrCode;";                
+//
+//        return $this->Data=db2::getInstance()->FetchAll($Sql,[$ContCode]);    
+//    }
     
     public function GetP1Credit($CrCode){ 
         $Sql="SELECT * FROM tblP1Credits WHERE CrCode=?;";                

@@ -66,7 +66,7 @@ class ATP1ContMod extends Model{
     }
     
     public function UpdP1Front($Param=[],$ContCode){                        
-        $Sql="UPDATE tblP1Front SET lgEmp='{$_SESSION['EmName']} and lgdat=current_timestamp";
+        $Sql="UPDATE tblP1Front SET lgEmp='{$_SESSION['EmName']}', lgDat=current_timestamp";
         $Params=[];
         foreach($Param as $Key=>$Value){
             $Sql=$Sql.", {$Key}=?";
@@ -75,7 +75,7 @@ class ATP1ContMod extends Model{
         }
         $Sql=$Sql." WHERE ContCode=?";
         $Params[]=$ContCode;
-
+        
         return $this->Data=db2::getInstance()->Query($Sql,$Params);
     }
     

@@ -19,7 +19,7 @@ class ClInfoCtrl extends Controller{
     protected function actionSearchData(){
         $this->ContCode=$_POST['contCode'];
         $this->ClCode=(new Anketa1)->getAnketaByCode($_POST['contCode'])->CLCODE;
-        $this->Client=(new Client)->getClientById($this->ClCode);
+        $this->Client=(new ClientMod)->getClientById($this->ClCode);
         $this->Cont=(new IskMod)->getContract($this->ContCode);
         $args=['Client'=>$this->Client,'Contract'=>$this->Cont];
         $this->render('AdminClientPrint', $args);
@@ -35,7 +35,7 @@ class ClInfoCtrl extends Controller{
         $params=[$_POST['iskDate'],$this->ContCode];
         $Model->UpdIskDat($params);
         
-        $this->Client=(new Client)->getClientById($this->ClCode);
+        $this->Client=(new ClientMod)->getClientById($this->ClCode);
         $this->Cont=(new IskMod)->getContract($this->ContCode);
         
         $args=['Client'=>$this->Client,'Contract'=>$this->Cont];   

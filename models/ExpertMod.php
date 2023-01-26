@@ -51,9 +51,47 @@ class ExpertMod extends Model{
     public function DelRiskDr($DrID){//удалить запись из справочника
         return db2::getInstance()->Query('DELETE FROM tbl1DrExpList WHERE id=?',[$DrID]);
     }
-    //сохранение информации
-    public function UpdExp($ExTotDebtSum,$ExMainDebtSum,$ExAnnTotPay,$ExAnnTotInc,$ContCode){//удалить запись из справочника
-        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExTotDebtSum=?,ExMainDebtSum=?,ExAnnTotPay=?,ExAnnTotInc=?,$ContCode WHERE ContCode=?',[$ExTotDebtSum,$ExMainDebtSum,$ExAnnTotPay,$ExAnnTotInc,$ContCode]);
+    //сохранение результатов ЭПЭ
+    public function UpdExp($ExTotDebtSum,$ExMainDebtSum,$ExAnnTotPay,$ExAnnTotInc,$ContCode){
+        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExTotDebtSum=?,ExMainDebtSum=?,ExAnnTotPay=?,ExAnnTotInc=? WHERE ContCode=?',[$ExTotDebtSum,$ExMainDebtSum,$ExAnnTotPay,$ExAnnTotInc,$ContCode]);
+    }
+    //согласование андеррайтера
+    public function UpdSoglExp($ExResName,$ExResDate,$ContCode){
+        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExResEmp=?,ExResDat=? WHERE ContCode=?',[$ExResName,$ExResDate,$ContCode]);
+    }
+    //согласование юриста
+    public function UpdSoglJur($ExJurName,$ExJurDate,$ContCode){
+        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExJurSoglName=?,ExJurSoglDate=? WHERE ContCode=?',[$ExJurName,$ExJurDate,$ContCode]);
+    }
+    //согласование руководителя
+    public function UpdSoglDir($ExDirName,$ExDirDate,$ContCode){
+        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExDirSoglName=?,ExDirSoglDate=? WHERE ContCode=?',[$ExDirName,$ExDirDate,$ContCode]);
+    }
+    
+    //***списки договоров на ЭПЭ
+    //список для андеррайтера
+    public function getExpList(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFName||' '||Cl1Name||' 'Cl2Name,frOffice "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat Is Null",[2]);
+    }
+    //список для юриста
+    public function getExpJurList(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFName||' '||Cl1Name||' 'Cl2Name,frOffice "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExJurSoglDate Is Null",[2]);
+    }
+    //список для руководителя
+    public function getExpDirList(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFName||' '||Cl1Name||' 'Cl2Name,frOffice "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExDirSoglDate Is Null",[2]);
     }
     
 }

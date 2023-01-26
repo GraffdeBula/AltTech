@@ -6,7 +6,7 @@
  */
 class ClientList extends Controller{
     public function actionIndex(){
-        $ClientList=(new Client())->getClientList();
+        $ClientList=(new ClientMod())->getClientList();
         foreach($ClientList as $MyClient){
             echo($MyClient->CONTCODE);
             echo($MyClient->CLFNAME);
