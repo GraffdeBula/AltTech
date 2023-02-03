@@ -80,6 +80,12 @@ class PrintDoc{
         }
     }
     
+    protected function InsBookMark2($BookMark){
+        if ($BookMark->BMCHANGE<4){
+            $Data=$this->DocData[$BookMark->BMTABLE]->{$BookMark->BMFIELD}; 
+        }
+    }
+    
     protected function PasteDataSimple($BookMark,$Data){// простая вставка данных       
         if ($Data=='') {
             $this->DocObj->setValue($BookMark,'---');        

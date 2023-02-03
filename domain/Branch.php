@@ -9,7 +9,7 @@ class Branch{
     protected $Rec;
     
     public function __construct($BrName){
-        $this->Rec=(new BranchRec())->getBr($BrName);
+        $this->Rec=(new BranchRecMod())->getBranchRec($BrName);
     }
     
     public function getRec(){

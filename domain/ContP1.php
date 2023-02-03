@@ -1,6 +1,6 @@
 <?php
 
-namespace AltTech\Domain;
+#namespace AltTech\Domain;
 
 /**
  * Description of ContP1

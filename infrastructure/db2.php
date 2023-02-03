@@ -36,15 +36,16 @@ class db2{
     
     public function Query($sql,$params=[]) {//вызов запроса к БД c параметрами        
         try {
-            $query=$this->getConnection()->prepare($sql);         
+            $query=$this->getConnection()->prepare($sql);                     
         } catch (\PDOException $e) {
             new MyCheck($sql,2);
         }
+        
         try {
-            $query->execute($params);
+            $query->execute($params);            
         } catch (\PDOException $e) {
             new MyCheck([$sql,$params],2);
-        }        
+        }                
         return $query;//->execute($params);                         
     }
     

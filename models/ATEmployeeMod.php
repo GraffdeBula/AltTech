@@ -29,5 +29,13 @@ class ATEmployeeMod extends Model{
     public function GetEmp($EmpID){//выбирает сотрудника из таблицы по Id
        return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE ID=?",[$EmpID]);
     }
+    
+    public function getEmpName($EmName){//выбирает сотрудника из таблицы по Имени
+       return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE EmName=?",[$EmName]);
+    }
+    
+    public function getEmpDovName($EmName){//выбирает сотрудника из таблицы по Имени
+       return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmpDov WHERE EmName=?",[$EmName]);
+    }
                       
 }

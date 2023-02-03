@@ -1,6 +1,6 @@
 <?php
 
-namespace AltTech\Domain;
+#namespace AltTech\Domain;
 /**
  *для создания объекта "организация" и его использования в других классах
  *
@@ -10,7 +10,7 @@ class Organizaion {
     protected $Rec;
     
     public function __construct($OrgPref){
-        $this->Rec=(new OrgRecMod())->getOrg($OrgPref);
+        $this->Rec=(new OrgRecMod())->getOrgRec($OrgPref);
     }
     
     public function getRec(){
