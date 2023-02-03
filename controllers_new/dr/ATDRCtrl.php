@@ -91,7 +91,7 @@ class ATDRCtrl extends ControllerMain {
     }
     
     public function actionOrgDel(){
-        (new OrgRecMod)->DelOrg($_GET['BranchID']);
+        (new OrgRecMod)->DelOrg($_GET['OrgID']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDROrg");
     }
     //справочник филиалов
