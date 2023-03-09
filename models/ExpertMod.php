@@ -69,7 +69,11 @@ class ExpertMod extends Model{
     public function UpdSoglDir($ExDirName,$ExDirDate,$ContCode){
         return db2::getInstance()->Query('UPDATE tblP1Expert SET ExDirSoglName=?,ExDirSoglDate=? WHERE ContCode=?',[$ExDirName,$ExDirDate,$ContCode]);
     }
-    
+    //общий коммент для юриста
+    public function AddToJurist($ExComment,$ContCode){
+        db2::getInstance()->Query('UPDATE tblP1Expert SET ExComment=? WHERE ContCode=?',[$ExComment,$ContCode]);
+    }
+
     //***списки договоров на ЭПЭ
     //список для андеррайтера
     public function getExpList(){
