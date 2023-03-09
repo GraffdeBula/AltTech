@@ -112,29 +112,40 @@
                         </div> 
                     </div>    
                 </div>    
-                
-                <form method='get'>
-                    <?php
-                        (new MyForm('ATContP1FileExpertCtrl','ExpRes',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    
-                        echo("<p><label>Результат ЭПЭ</label><select name='EXRES'>");
-                        echo("<option value='{$Expert->EXRES}'>{$Expert->EXRES}</option>");
-                        echo("<option value='ЭПЭ не проведена. Доработка'>Экспертиза не проведена. Доработка</option>");
-                        echo("<option value='ЭПЭ проведена'>ЭПЭ проведена</option>");
-                        echo("<option value='Требуется согласование юриста'>Требуется согласование юриста</option>");
-                        echo("</select>");
-                        echo("<label>Рекомендуемая программа</label><select name='EXPRODREC'>");
-                        echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
-                        echo("<option value='Банкротство физлиц'>Банкротство физлиц</option>");
-                        echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");
-                        echo("</select></p>");
-                        echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
-                        echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
-                        echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
-                        echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");
-                    ?>
-                    <button type='summit' class='btn btn-info'>Сохранить результат</button>
-                </form>
+                <div class='col-lg-4'>
+                    <form method='get'>
+                        <?php
+                            (new MyForm('ATContP1FileExpertCtrl','ExpRes',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                        
+                            echo("<p><label>Результат ЭПЭ</label><select name='EXRES'>");
+                            echo("<option value='{$Expert->EXRES}'>{$Expert->EXRES}</option>");
+                            echo("<option value='ЭПЭ не проведена. Доработка'>Экспертиза не проведена. Доработка</option>");
+                            echo("<option value='ЭПЭ проведена'>ЭПЭ проведена</option>");
+                            echo("<option value='Требуется согласование юриста'>Требуется согласование юриста</option>");
+                            echo("</select>");
+                            echo("<label>Рекомендуемая программа</label><select name='EXPRODREC'>");
+                            echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
+                            echo("<option value='Банкротство физлиц'>Банкротство физлиц</option>");
+                            echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");
+                            echo("</select></p>");
+                            echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
+                            echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
+                            echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
+                            echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");
+                        ?>
+                        <button type='summit' class='btn btn-info'>Сохранить результат</button>
+                    </form>
+                </div>
+                <div class='col-lg-4'>
+                    <form method='get'>
+                        <?php (new MyForm('ATContP1FileExpertCtrl','AddToJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
+                        <div class="form-group">
+                            <label for="exampleTextarea" class="form-label mt-4">Причина согласования юристом</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='NewComment'></textarea>
+                        </div>
+                        <button type='summit' class='btn btn-warning'>Сохранить причину</button>               
+                    </form>
+                </div>
                 
                 
             </div>
