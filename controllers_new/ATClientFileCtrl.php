@@ -39,7 +39,8 @@ class ATClientFileCtrl extends ControllerMain {
     }
     
     public function actionContP4Create(){
-        
+        $Model=new ATP4ContMod();        
+        $Model->InsP4Anketa($_GET['ClCode'],$_SESSION['EmBranch'],$_SESSION['EmName']);
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     
@@ -64,8 +65,8 @@ class ATClientFileCtrl extends ControllerMain {
     }
     
     protected function LoadContP4List(){       
-        //$Model=new ATP4ContMod();
-        //$this->ContList=$Model->GetContList($_GET['ClCode']);
+        $Model=new ATP4ContMod();
+        $this->ContP4List=$Model->GetContList($_GET['ClCode']);
     }
     
     protected function LoadComments(){       

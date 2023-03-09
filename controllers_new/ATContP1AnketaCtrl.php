@@ -61,6 +61,15 @@ class ATContP1AnketaCtrl extends ControllerMain {
         
         $this->UpdCredInfo();
         
+        //меняем название банка на офф.
+        $BankCont=(new DrBanksMod())->getByINN($_GET['CRBANKCONTINN']);
+        $BankCur=(new DrBanksMod())->getByINN($_GET['CRBANKCURINN']);
+        if ($BankCont){
+            $Model->UpdBankCont($_GET['CRCODE'], $BankCont->BNNAME, $BankCont->BNTYPE, $BankCont->BNINN);
+        }
+        if ($BankCur){
+            $Model->UpdBankCur($_GET['CRCODE'], $BankCur->BNNAME, $BankCur->BNTYPE, $BankCur->BNINN);
+        }
         header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -109,14 +118,17 @@ class ATContP1AnketaCtrl extends ControllerMain {
         $CredNum=0;
         $CredTotal=0;
         $CredMain=0;
+        $PayTotal=0;
         foreach($this->CredList as $Cred){
             $CredNum=$CredNum+1;
             $CredTotal=$CredTotal+$Cred->CRSUMREST;
-            $CredMain=$CredMain+$Cred->CRSUMREST;
+            $CredMain=$CredMain+$Cred->CRSUMRESTMAIN;
+            $PayTotal=$PayTotal+$Cred->CRPAYSUM;
         }
         
         $Model=new ATP1ContMod();
         $Model->UpdP1Anketa(['AKCREDNUM'=>$CredNum,'AKCREDTOTSUM'=>$CredTotal,'AKCREDMAINSUM'=>$CredMain],$_GET['ContCode']);
+        (new ATP1ContMod())->UpdP1Expert1([$CredTotal,$CredMain,$PayTotal,$_GET['ContCode']]);
     }
                 
 }

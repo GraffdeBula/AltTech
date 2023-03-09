@@ -86,7 +86,7 @@ class ATDRCtrl extends ControllerMain {
     }
     
     public function actionOrgAdd(){
-        (new OrgRecMod)->InsOrg($_GET['ORGNAME']);
+        (new OrgRecMod)->addOrg($_GET['ORGNAME'],$_GET['ORGPREF']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDROrg");
     }
     

@@ -30,13 +30,20 @@ class PrintDoc{
         #new MyCheck($DocData,2);
     }
 
-    public function PrintDoc(){//метод печатает документ, параметры для которого переданы при создании объекта
+    public function PrintDoc(){//метод печатает документ, параметры для которого переданы при создании объекта        
+        #foreach($this->DocData as $key=>$value){
+        #    echo($key."<br>");
+        #}
+        #var_dump($this->DocData['Emp']);
+        #exit;
         //получение данных
         $this->GetTemplate();
         $this->GetBookmarkTable();        
-        //обход массива закладок
+        //обход массива закладок              
         foreach($this->BookMarks as $BookMark){
+                         
             $this->InsBookMark($BookMark);
+            
         }       
         $this->DocName=$this->DocClass.$this->DocData['Client']->CLFNAME;     
         $this->SaveDoc();
@@ -58,7 +65,9 @@ class PrintDoc{
     
     protected function InsBookMark($BookMark){
         if ($BookMark->BMCHANGE<4){
-            $Data=$this->DocData[$BookMark->BMTABLE]->{$BookMark->BMFIELD}; 
+            $Data=$this->
+                DocData[$BookMark->BMTABLE]->
+                {$BookMark->BMFIELD};             
         }
    
         if ($BookMark->BMCHANGE==0){ //проста вставка без преобразований
@@ -77,6 +86,16 @@ class PrintDoc{
             $this->PasteText($BookMark->BMNAME);
         } elseif ($BookMark->BMCHANGE==7){ //вставка куска текста про кредиторов           
             $this->PasteCreditors($BookMark->BMNAME);
+        } elseif ($BookMark->BMCHANGE==8){ //вставка единственного жилья                       
+            if (($BookMark->BMDOCNAME=='ContNewType1')
+                &&($BookMark->BMNAME=='HOME1')
+                && $this->DocData['Client']->CLADRRPROPYN=='Да')
+            { 
+                $this->PasteDataSimple($BookMark->BMNAME,$this->DocData['Client']->CLADRREG);
+            } else {
+                $this->PasteDataSimple($BookMark->BMNAME,'Нет');
+            }    
+            
         }
     }
     
@@ -124,12 +143,14 @@ class PrintDoc{
     }
     
     protected function PasteText($BookMark){//вставка куска текста про скидки
-        $InsData=(new PrintFunctions())->Discounts($BookMark, $this->DocData['Anketa']->AKCREDTOTSUM, $this->DocData['Cont']->FRTARPAC, $this->DocData['Cont']->FRCONTPERIOD,$this->DocData['Cont']->FRCONTSUM);
+        #$InsData=(new PrintFunctions())->Discounts($BookMark, $this->DocData['Anketa']->AKCREDTOTSUM, $this->DocData['Cont']->FRTARPAC, $this->DocData['Cont']->FRCONTPERIOD,$this->DocData['Cont']->FRCONTSUM);
+        $InsData=(new PrintFunctions())->Discounts($BookMark, $this->DocData['Anketa']->AKCREDTOTSUM, $this->DocData['Front']->FRCONTPAC, 
+                $this->DocData['Pac']->PCPERIOD,$this->DocData['Front']->FRCONTSUM);
         $this->DocObj->setValue($BookMark, $InsData);
     }
     
     protected function PasteCreditors($BookMark){//вставка куска текста про кредиторов
-        $CredList=(new PrintFunctions)->CredList($this->DocData['Cont']->CONTCODE);
+        $CredList=(new PrintFunctions)->CredList($this->DocData['Front']->CONTCODE);
         $this->DocObj->setValue($BookMark, $CredList);
     }
     
@@ -223,7 +244,7 @@ class PrintDoc{
 			// (данный блок прокомментирую при необходимости)
 			if($mod1=$part%100) {
 				$mod2 = $part%10;
-				$flag = $i==1 && $mod1!=11 && $mod1!=12 && $mod2<3 ? -1 : 1;
+				$flag = $i==1 && $mod1!=11 && $mod1!=12 && $mod2<3 && $mod2>0 ? -1 : 1;
 				if($mod1<20 || !$mod2) {
 					$digits[] = $flag*$mod1;
 				} else {

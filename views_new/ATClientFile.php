@@ -60,10 +60,24 @@
                     echo("</div>");
                 }
             ?>
-        </div>
+        </div><!--форма с договорами БФЛ-->
         <div class="tab-pane fade active show " id="contlist4">
-        
-        </div>
+            <form method='get' class='newContFormP4'>
+                <input type='hidden' name='controller' value='ATClientFileCtrl'><br>
+                <input type='hidden' name='action' value='ContP4Create'><br>
+                <input type='hidden' name='ClCode' value='<?php echo($Client->CLCODE);?>'><br>
+                <label>ID сделки (amoCRM)</label><input type='text' maxlength='10' class='MyIDP4'><br>
+                <button type='submit' class='btn btn-warning newContBtnP4'>Добавить разовый договор</button><br>        
+            </form>
+            <?php  
+                foreach($ContP4List as $Cont){
+                    echo("<div> ID договора: ".$Cont->CONTCODE."</div><div> Дата анкеты: ".$Cont->AKDAT."</div><div> Дата договора: ".$Cont->FRCONTDATE."</div><div> Статус договора: ".$Cont->STATUS."</div>");
+                    echo("<div>");
+                    echo("<a target='_blank' href='index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ МЕНЕДЖЕРА</button></a>");
+                    echo("</div>");                    
+                }
+            ?>
+        </div><!--форма с разовыми договорами-->
         <div class="tab-pane fade active show " id="comments">
             <div>
                 <form>

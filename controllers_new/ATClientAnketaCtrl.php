@@ -65,7 +65,8 @@ class ATClientAnketaCtrl extends ControllerMain {
     public function actionSaveClFamily(){
         $Model=new ATClientMod();
         $Model->updClient(['CLFAMSTATUS'=>$_GET['CLFAMSTATUS'],'CLFAMPARTNAME'=>$_GET['CLFAMPARTNAME'],'CLCHILDNUM'=>$_GET['CLCHILDNUM'],
-                'CLMARRIAGEDATE'=>$_GET['CLMARRIAGEDATE'],'CLDIVORCEDATE'=>$_GET['CLDIVORCEDATE']],$_GET['ClCode']);
+            'CLMARRIAGEDATE'=>$_GET['CLMARRIAGEDATE'],'CLDIVORCEDATE'=>$_GET['CLDIVORCEDATE'],'CLALIMENTYN'=>$_GET['CLALIMENTYN'],
+            'CLALIMENTSUM'=>$_GET['CLALIMENTSUM']],$_GET['ClCode']);
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
     
@@ -141,6 +142,13 @@ class ATClientAnketaCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
     
+    public function actionUpdDocument(){        
+        $Model=new ATClientMod();
+        $Model->UpdDocument($_GET['ClCode'],$_GET['ClDocID'],$_GET['ClDocName'],$_GET['ClDocSer'],$_GET['ClDocNum'],$_GET['ClDocComment'],
+                    $_GET['ClDocOrg'],$_GET['ClDocDate'],$_GET['ClDocAttr1']);        
+        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
     public function actionDelDocument(){        
         $Model=new ATClientMod();
         $Model->DelDocument($_GET['ClCode'],$_GET['ClDocID']);        
@@ -180,7 +188,7 @@ class ATClientAnketaCtrl extends ControllerMain {
     public function actionAddDeal(){
         if ((isset($_GET['ClDlObj']))&&($_GET['ClDlObj']!='')){
             $Model=new ATClientMod();
-            $Model->InsDeal($_GET['ClCode'],$_GET['ClDlType'],$_GET['ClDlObj'],$_GET['ClDlSum'],$_GET['ClDlDate'],$_GET['ClDlComment'],$_GET['ClDlDocumentsYN']);        
+            $Model->InsDeal($_GET['ClCode'],$_GET['ClDlType'],$_GET['ClDlObj'],$_GET['ClDlSum'],$_GET['ClDlDate'],$_GET['ClDlComment'],$_GET['ClDlDocumentsYN'],$_GET['ClDlOwner']);        
         }
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }

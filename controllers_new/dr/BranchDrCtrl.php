@@ -17,19 +17,13 @@ class BranchDrCtrl extends ControllerMain {
         $this->render('dr/ATDrBranchFile',$Args);
     } 
     
-    public function actionBranchUpd(){
-        $ToQuery='';
-        $Params=[];
-        $Params[0]=$_GET['ID'];
-        foreach($_GET as $Key => $Value){
-            if(($Key!='controller')&&($Key!='action')&&($Key!='ID')){
-                $Params[$Key]=$Value;
-                $ToQuery=$ToQuery.",{$Key}=?";
-            }            
-        }
-        $Params['ID']=$_GET['ID'];
-        (new BranchRecMod())->updBranch($Params, $ToQuery);
-        header("Location: index_admin.php?controller=BranchDrCtrl&BranchID={$_GET['ID']}");
+    public function actionBranchUpd(){                
+        $Params=[$_GET['BRNAME'],$_GET['BRREGION'],$_GET['BRCITY'],$_GET['BRNAMEOLD'],
+            $_GET['BRDIR'],$_GET['BRADDRESSFACT'],$_GET['BRKPP'],$_GET['BRORGPREF'],
+            $_GET['BRBUCH1'],$_GET['BRKASS1'],$_GET['BRBUCH2'],$_GET['BRKASS2'],$_GET['BranchID']
+        ];
+        (new BranchRecMod())->updBranch($Params);
+        header("Location: index_admin.php?controller=BranchDrCtrl&BranchID={$_GET['BranchID']}");
     }
     
     

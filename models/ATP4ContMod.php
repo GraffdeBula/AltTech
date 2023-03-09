@@ -12,23 +12,27 @@ class ATP4ContMod extends Model{
     public $ClCode;
     protected $Data=[];
     
-    public function GetP1ContList($ClCode){
+    public function GetContList($ClCode){
         $Sql="SELECT * FROM vwP4ContList WHERE ClCode=?;";                
         $Params=[$ClCode];
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
     }
     
-    public function GetAnketaByCode($ContCode){ //метод возвращает строку из таблицы p4Anketa
+    public function getAnketaByCode($ContCode){ //метод возвращает строку из таблицы p4Anketa
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP4Anketa WHERE contCode='{$ContCode}';");        
     }
     
-    public function GetCont($ContCode){ 
+    public function getFrontByCode($ContCode){ //метод возвращает строку из таблицы p4Front
+        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP4Front WHERE ContCode='{$ContCode}';");        
+    }
+    
+    public function getCont($ContCode){ 
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM vwP4ContList WHERE contCode='{$ContCode}';");        
     }
     
-    public function InsP1Anketa($ClCode){
+    public function InsP4Anketa($ClCode=0,$Branch='не указан',$Emp='не указан'){
         $Sql="INSERT INTO tblP4Anketa (ClCode,AkBranch,lgEmp) values (?,?,?)";
-        $Params=[$ClCode,'ГО','admin'];
+        $Params=[$ClCode,$Branch,$Emp];
         db2::getInstance()->Query($Sql,$Params); 
     }
     

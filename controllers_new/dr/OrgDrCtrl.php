@@ -17,9 +17,12 @@ class OrgDrCtrl extends ControllerMain {
         $this->render('dr/ATDrOrgFile',$Args);
     } 
     
+    
     public function actionOrgUpd(){
-        (new OrgRecMod)->UpdEmp([$_GET['EMNAME'],$_GET['EMLOGIN'],$_GET['EMSEX'],$_GET['EMBRANCH'],$_GET['EMPOS'],$_GET['EMROLE'],$_GET['EmpID']]);
-        header("Location: index_admin.php?controller=ATEmpCtrl&EmpID={$_GET['EmpID']}");
+        (new OrgRecMod)->UpdOrg([$_GET['ORGPREF'],$_GET['ORGNAME'],$_GET['ORGFNAME'],
+            $_GET['ORGOGRN'],$_GET['ORGINN'],$_GET['ORGKPP'],$_GET['ORGOFADR'],$_GET['ORGEMAIL'],$_GET['ORGDIRNAME'],
+            $_GET['ORGBANKNAME'],$_GET['ORGBANKACC'],$_GET['ORGBANKBIK'],$_GET['ORGBANKCORR'],$_GET['OrgID']]);
+        header("Location: index_admin.php?controller=OrgDrCtrl&OrgID={$_GET['OrgID']}");
     }
     
     

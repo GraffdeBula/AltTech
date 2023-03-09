@@ -22,8 +22,14 @@ class ATMainFormCtrl extends ControllerMain {
     }
     
     public function actionClSearch(){
-        $this->Params=[$_GET['ClFName'],$_GET['Cl1Name'],$_GET['Cl2Name']];
+        #var_dump($_GET);
+        #echo(ucfirst($_GET['ClFName']));
+        #exit();
+        $this->Params=[ucfirst($_GET['ClFName']),ucfirst($_GET['Cl1Name']),ucfirst($_GET['Cl2Name'])];
         $this->LoadList();
+        $this->GetEmpWorkData();
+        $this->GetRefers();       
+        $this->getExpList();
         $this->ShowList();
     }
     
@@ -56,6 +62,13 @@ class ATMainFormCtrl extends ControllerMain {
         $DelComment="{'Date':'".Date('d.m.Y')."','Name':'".$_SESSION['EmName']."','Comment':'".$_GET['DelComment']."'}";
         (new AT7ReferProg())->DelAgent($_GET['RefId'], $DelComment);
         header("Location: index_admin.php?controller=ATMainFormCtrl");
+    }
+    /* выход из системы
+     */
+    public function actionExit(){
+        $sessName='PHPSESSID';
+	setcookie($sessName,'',time()-1,'/');
+        header('Location: index_admin.php');
     }
     /* сохранение нового клиента
      */    
@@ -106,9 +119,7 @@ class ATMainFormCtrl extends ControllerMain {
         $Model=new ExpertMod();
         $this->ExpList[1]=$Model->getExpList();
         $this->ExpList[2]=$Model->getExpJurList();
-        $this->ExpList[3]=$Model->getExpJurList();
-        #var_dump($this->ExpList);
-        #exit();
+        $this->ExpList[3]=$Model->getExpDirList();        
     }
     
     /*получение списка реферальных ссылок

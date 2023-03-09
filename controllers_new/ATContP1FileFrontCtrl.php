@@ -57,6 +57,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     public function actionTarifChoose(){                
         $this->FrontSave();
         (new Status())->ChangeP1Status(9, $_GET['ContCode']);
+        $Cont=new ContP1($_GET['ContCode']);
+        $Tarif=(new TarifP1())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM);
+        $Params=[
+            'FRCONTSUM'=>$Tarif->TRSUMFIX,
+            'FRCONTPAC'=>$Tarif->TRPAC
+        ];        
+        (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
+        
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -71,7 +79,23 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         (new Status())->ChangeP1Status(13, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
+    
+    public function actionAddPayment(){
+        (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1))->addPayment([$_GET['PAYSUM'],$_GET['PAYDATE'],$_GET['PAYCONTTYPE'],$_GET['PAYPR']]);
         
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionAddComment(){
+        (new ATCommentMod)->AddComment($_GET['ClCode'],$_GET['ContCode'],1,$_GET['NewComment'],$_SESSION['EmName']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+           
+    public function actionDelComment(){
+        (new ATCommentMod)->DelComment($_GET('Id'));
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }   
+    
     protected function FrontSave(){
         $Params=[];
         foreach($_GET as $Key => $Param){
@@ -81,8 +105,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         }        
         
         $Model=new ATP1ContMod();        
-        $Model->UpdP1Front($Params,$_GET['ContCode']);
-        
+        $Model->UpdP1Front($Params,$_GET['ContCode']);        
     }
 
     protected function GetClient(){
@@ -106,17 +129,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     protected function GetComments(){
         $this->Comments=(new ATCommentMod)->GetContComments($_GET['ClCode'],$_GET['ContCode'],1);        
     }
-    
-    public function DelComment(){
-        (new ATCommentMod)->DelComment($_GET('Id'));
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
-    public function actionAddComment(){
-        (new ATCommentMod)->AddComment($_GET['ContCode'], $_GET['NewComment'], $_SESSION['EmName']);
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
+                    
     protected function ShowFile(){    
         $this->ViewName='Досье договора '.$this->Client->CLFNAME;
         $args=['Client'=>$this->Client,
@@ -124,10 +137,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'Anketa'=>$this->TblP1Anketa,
             'Front'=>$this->TblP1Front,
             'Expert'=>$this->TblP1Expert,
-            'Comments'=>$this->Comments
+            'Comments'=>$this->Comments,
+            'Payment'=>new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1),
+            'Tarif'=>new TarifP1(),
         ];
         $this->render('ATContP1FileFront',$args);
     }
-    
-    
+      
 }

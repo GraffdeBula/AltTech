@@ -18,7 +18,7 @@ class Bookmarks extends Model{
     * 
     */
     public function GetBMListForPrinter($DocName){
-        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblDocBookMarks WHERE BmDocName=? ORDER BY ID",[$DocName]); //таблица закладок
+        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblDocBookMarks WHERE BmDocName=? ORDER BY BMFIELD",[$DocName]); //таблица закладок
     }
     
     public function GetBMList(){

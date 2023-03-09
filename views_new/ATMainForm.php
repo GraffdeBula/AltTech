@@ -74,11 +74,11 @@
                 <input type="text" name="ClPasNum" value="" maxlength="6">
             </div>
             <?php
-                if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='top') or ($_SESSION['EmName']=='Иван Рудник')){
+                
                 echo("<div>
                     <button type='submit' class='btn btn-warning'>ДОБАВИТЬ</button>            
                 </div>");
-                }
+                
             ?>
         </form>
         <form method='get' autocomplete="off">    
@@ -88,7 +88,7 @@
             <input type="hidden" name="Cl1Name" value="" id='1name-f'>
             <input type="hidden" name="Cl2Name" value="" id='2name-f'>
             <button type='submit' class='btn btn-info' id='btn-find'>НАЙТИ</button>
-            <a href="index_admin.php?controller=ATMinFormCtrl"><button class='btn btn-warning'>ОЧИСТИТЬ</button></a>
+            <a href="index_admin.php"><button class='btn btn-warning'>ОЧИСТИТЬ</button></a>
         </form>
                             
             <?php  
@@ -169,17 +169,49 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                   <a class="nav-link active" data-bs-toggle="tab" href="#exp1">Требуется экспертиза</a>
-                  <?php var_dump($ExpList[1]); ?>
+                  
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#exp2">Согласование юриста</a>
-                  <?php  var_dump($ExpList[2]); ?>
+                  
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#exp3">Согласование руководителя</a>
-                  <?php  var_dump($ExpList[3]); ?>
+                  
                 </li>
-            </ul>    
+            </ul>
+            <div id="ExpertContent" class="tab-content">
+                <div class="tab-pane fade show active" id="exp1" role="tabpanel">
+                    <p>провеcти ЭПЭ<p>
+                    <?php foreach($ExpList[1] as $ExpCont){                                                
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpCont->FREXPDATE);
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
+                <div class="tab-pane fade" id="exp2" role="tabpanel">
+                    <p>согласовать у юриста<p>
+                    <?php foreach($ExpList[2] as $ExpCont){                                                
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-info'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button><a>");
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
+                <div class="tab-pane fade" id="exp3" role="tabpanel">
+                    <p>согласовать договор<p>
+                    <?php foreach($ExpList[3] as $ExpCont){                                                
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-primary'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button><a>");
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
+            </div>
         </div><!--экспертизы-->
         <div  class='tab-pane fade' id='iski'>
             <a target="_blank" href="index_admin.php?controller=ClInfoCtrl"><button class="btn btn-outline-warning">ИСКИ</button></a>
@@ -188,6 +220,8 @@
             <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
             <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
             <p><a target="_blank" href="index_admin.php?controller=ExpReportCtrl"><button class="btn btn-success">ЭКСПЕРТИЗЫ</button></a></p>
+            <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-success">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
+            
             <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-info">Отчёт по разовым услугам</button></p>
             <p><a target="_blank" href="index_admin.php?controller=ATPaysCtrl"><button class="btn btn-outline-primary">Отчёт по действующим клиентам</button></p>
         </div>
@@ -223,7 +257,18 @@
               
                 
     </div>
+    <script>
+        const MyButton=document.getElementById('btn-find');
+        MyButton.addEventListener('mouseover',function(){
+            document.getElementById('fname-f').value=document.getElementById('fname').value;
+            document.getElementById('1name-f').value=document.getElementById('1name').value;
+            document.getElementById('2name-f').value=document.getElementById('2name').value;
+        });
+
+        console.log('yes2')
+    </script>
+    <!--
     <script src="./js/MainForm.js"></script>
-    
+    -->
 </body>
 </html>

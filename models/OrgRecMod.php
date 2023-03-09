@@ -26,20 +26,22 @@ class OrgRecMod {
         return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrOrgRec",[]);
     }
     
-    public function addOrg($OrgName){
-        db2::getInstance()->Query("INSERT INTO tbl9DrOrgRec (OrgName) VALUES (?)",[$OrgName]);
+    public function addOrg($OrgName='',$OrgPref=''){
+        db2::getInstance()->Query("INSERT INTO tbl9DrOrgRec (OrgName,OrgPref) VALUES (?,?)",[$OrgName,$OrgPref]);
     }
     
-    public function updOrg($Params=[],$Id){
-        $NewParams=[];
-        $SqlAdd='';
-        $NewParams['ID']=$Id;
-        foreach($Params as $Key => $Param){
-            $NewParams[$Key]=$Param;
-            $SqlAdd=$SqlAdd.',$Key=?';
-        }
-        $NewParams[]=$Id;
-        db2::getInstance()->Query("UPDATE tbl9DrOrgRec SET ID=?".$SqlAdd." WHERE ID=?",[$NewParams]);
+    public function updOrg($Params=[]){
+//        $NewParams=[];
+//        $SqlAdd='';
+//        $NewParams['ID']=$Id;
+//        foreach($Params as $Key => $Param){
+//            $NewParams[$Key]=$Param;
+//            $SqlAdd=$SqlAdd.',$Key=?';
+//        }
+//        $NewParams[]=$Id;
+//        db2::getInstance()->Query("UPDATE tbl9DrOrgRec SET ID=?".$SqlAdd." WHERE ID=?",[$NewParams]);
+        db2::getInstance()->Query("UPDATE tbl9DrOrgRec SET ORGPREF=?,ORGNAME=?,ORGFNAME=?,ORGOGRN=?,ORGINN=?,ORGKPP=?,
+            ORGOFADR=?,ORGEMAIL=?,ORGDIRNAME=?,ORGBANKNAME=?,ORGBANKACC=?,ORGBANKBIK=?,ORGBANKCORR=? WHERE ID=?",$Params);
     }
     
     public function delOrgOrg($Id){

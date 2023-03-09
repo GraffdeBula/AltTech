@@ -14,7 +14,7 @@ class ATClientMod extends Model{
     
     public function NewClient($ClFName,$Cl1Name,$Cl2Name,$ClPasSer,$ClPasNum,$Emp,$Branch){
         //добавить запись в таблицу клиентов
-        $Sql="INSERT INTO tblClients (lgDat,lgEmp,clBranch,clFNAme,cl1Name,cl2Name) values (current_timestamp,?,?,?,?,?)";
+        $Sql="INSERT INTO tblClients (lgDat,lgEmp,clBranch,clFNAme,cl1Name,cl2Name) VALUES (current_timestamp,?,?,?,?,?)";
         $Params=[$Emp,$Branch,$ClFName,$Cl1Name,$Cl2Name];
         db2::getInstance()->Query($Sql,$Params);
         
@@ -24,7 +24,7 @@ class ATClientMod extends Model{
         $ClCode=db2::getInstance()->FetchOne($Sql,$Params)->CLCODE;
         
         //добавить запись в таблицу документов
-        $Sql="INSERT INTO tblClDocuments (clCode,clDocName,clDocSer,clDocNum) values (?,?,?,?)";
+        $Sql="INSERT INTO tblClDocuments (clCode,clDocName,clDocSer,clDocNum) VALUES (?,?,?,?)";
         $Params=[$ClCode,'паспорт',$ClPasSer,$ClPasNum];
         db2::getInstance()->Query($Sql,$Params);        
     }        
@@ -90,7 +90,7 @@ class ATClientMod extends Model{
     }
     
     public function InsPhone($ClCode,$ClPhone,$ClPhText,$ClPhComment){
-        $Sql="INSERT INTO tblClPhones (ClCode,ClPhone,ClPhText,clPhComment) values (?,?,?,?)";
+        $Sql="INSERT INTO tblClPhones (ClCode,ClPhone,ClPhText,clPhComment) VALUES (?,?,?,?)";
         $Params=[$ClCode,$ClPhone,$ClPhText,$ClPhComment];
         db2::getInstance()->Query($Sql,$Params);
     }
@@ -108,7 +108,7 @@ class ATClientMod extends Model{
     }
             
     public function InsRelative($ClCode,$ClRelStatus,$ClRelName,$ClRelBirthDate,$ClRelDocSer,$ClRelDocNum,$ClRelDocDate){
-        $Sql="INSERT INTO tblClRelatives (clCode,clRelStatus,ClRelName,ClRelBirthDate,ClRelDocSer,ClRelDocNum,ClRelDocDate) values (?,?,?,?,?,?,?)";
+        $Sql="INSERT INTO tblClRelatives (clCode,clRelStatus,ClRelName,ClRelBirthDate,ClRelDocSer,ClRelDocNum,ClRelDocDate) VALUES (?,?,?,?,?,?,?)";
         $Params=[$ClCode,$ClRelStatus,$ClRelName,$ClRelBirthDate,$ClRelDocSer,$ClRelDocNum,$ClRelDocDate];
         db2::getInstance()->Query($Sql,$Params);
     }
@@ -127,10 +127,19 @@ class ATClientMod extends Model{
             
     public function InsDoc($ClCode,$ClDocName,$ClDocSer,$ClDocNum,$ClDocComment,$ClDocOrg,$ClDocDate,$ClDocAttr1,$ClDocAttr2,$ClDocAttr3){
         $Sql="INSERT INTO tblClDocuments (clCode,clDocName,clDocSer,clDocNum,clDocComment,clDocOrg,clDocDate,"
-                . "clDocAttr1,clDocAttr2,clDocAttr3) values (?,?,?,?,?,?,?,?,?,?)";
+                . "clDocAttr1,clDocAttr2,clDocAttr3) VALUES (?,?,?,?,?,?,?,?,?,?)";
         $Params=[$ClCode,$ClDocName,$ClDocSer,$ClDocNum,$ClDocComment,$ClDocOrg,$ClDocDate,$ClDocAttr1,$ClDocAttr2,$ClDocAttr3];
         db2::getInstance()->Query($Sql,$Params);
     }
+    
+    public function updDocument($ClCode=0,$ID=0,$ClDocName,$ClDocSer,$ClDocNum,$ClDocComment,$ClDocOrg,$ClDocDate,$ClDocAttr1='',$ClDocAttr2='',$ClDocAttr3=''){
+        $Sql="UPDATE tblClDocuments SET clDocName=?,clDocSer=?,clDocNum=?,clDocComment=?,clDocOrg=?,clDocDate=?,"
+                . "clDocAttr1=?,clDocAttr2=?,clDocAttr3=? WHERE ID=? AND ClCode=?";
+        $Params=[$ClDocName,$ClDocSer,$ClDocNum,$ClDocComment,$ClDocOrg,$ClDocDate,
+            $ClDocAttr1,$ClDocAttr2,$ClDocAttr3,$ID,$ClCode];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
     
     public function DelDocument($ClCode,$ID){
         $Sql="DELETE FROM tblClDocuments WHERE ClCode=? AND ID=?";
@@ -150,7 +159,7 @@ class ATClientMod extends Model{
     }
             
     public function InsIncome($ClCode,$ClIncName,$ClIncSum,$ClIncSumOf,$ClIncCardYN,$ClIncBank,$ClIncDeduct,$ClIncSumReal,$ClIncComment,$ClIncPensDate){
-        $Sql="INSERT INTO tblClIncomes (ClCode,ClIncName,ClIncSum,ClIncSumOf,ClIncCardYN,ClIncBank,ClIncDeduct,ClIncSumReal,ClIncComment,ClIncPensDate) values (?,?,?,?,?,?,?,?,?,?)";
+        $Sql="INSERT INTO tblClIncomes (ClCode,ClIncName,ClIncSum,ClIncSumOf,ClIncCardYN,ClIncBank,ClIncDeduct,ClIncSumReal,ClIncComment,ClIncPensDate) VALUES (?,?,?,?,?,?,?,?,?,?)";
         $Params=[$ClCode,$ClIncName,$ClIncSum,$ClIncSumOf,$ClIncCardYN,$ClIncBank,$ClIncDeduct,$ClIncSumReal,$ClIncComment,$ClIncPensDate];
         db2::getInstance()->Query($Sql,$Params);
     }
@@ -168,7 +177,7 @@ class ATClientMod extends Model{
     }
     
     public function InsProperty($ClCode,$ClPropType,$ClPropOwner,$ClPropDesc,$ClPropCost,$ClPropDate,$ClPropComment,$ClPropDocumentsYN){
-        $Sql="INSERT INTO tblClProperty (ClCode,ClPropType,ClPropOwner,ClPropDesc,ClPropCost,ClPropDate,ClPropComment,ClPropDocumentsYN) values (?,?,?,?,?,?,?,?)";
+        $Sql="INSERT INTO tblClProperty (ClCode,ClPropType,ClPropOwner,ClPropDesc,ClPropCost,ClPropDate,ClPropComment,ClPropDocumentsYN) VALUES (?,?,?,?,?,?,?,?)";
         $Params=[$ClCode,$ClPropType,$ClPropOwner,$ClPropDesc,$ClPropCost,$ClPropDate,$ClPropComment,$ClPropDocumentsYN];
         db2::getInstance()->Query($Sql,$Params);
     }
@@ -185,9 +194,9 @@ class ATClientMod extends Model{
         return db2::getInstance()->FetchAll($Sql,$Params);
     }
     
-    public function InsDeal($ClCode,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN){
-        $Sql="INSERT INTO tblClDeals (ClCode,ClDlType,ClDlObj,ClDlSum,ClDlDate,ClDlComment,ClDlDocumentsYN) values (?,?,?,?,?,?,?)";
-        $Params=[$ClCode,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN];
+    public function InsDeal($ClCode,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN,$ClDlOwner){
+        $Sql="INSERT INTO tblClDeals (ClCode,ClDlType,ClDlObj,ClDlSum,ClDlDate,ClDlComment,ClDlDocumentsYN,ClDlOwner) VALUES (?,?,?,?,?,?,?,?)";
+        $Params=[$ClCode,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN,$ClDlOwner];
         db2::getInstance()->Query($Sql,$Params);
     }
     
@@ -204,7 +213,7 @@ class ATClientMod extends Model{
     }
     
     public function InsBankAcc($ClCode,$ClBnAcc,$ClBnName,$ClBnComment,$ClBnSum,$ClBnOpenDat,$ClBnCloseDat){
-        $Sql="INSERT INTO tblClBankAccs (ClCode,ClBnAcc,ClBnName,ClBnComment,ClBnSum,ClBnOpenDat,ClBnCloseDat) values (?,?,?,?,?,?,?)";
+        $Sql="INSERT INTO tblClBankAccs (ClCode,ClBnAcc,ClBnName,ClBnComment,ClBnSum,ClBnOpenDat,ClBnCloseDat) VALUES (?,?,?,?,?,?,?)";
         $Params=[$ClCode,$ClBnAcc,$ClBnName,$ClBnComment,$ClBnSum,$ClBnOpenDat,$ClBnCloseDat];
         db2::getInstance()->Query($Sql,$Params);
     }

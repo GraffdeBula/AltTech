@@ -6,7 +6,7 @@
  */
 class DrBanksMod extends Model{
             
-    public function GetByINN($INN){
-        return db2::getInstance()->FetchOne("SELECT * FROM tblDrBanks WHERE bnINN='{$INN}';");
+    public function getByINN($INN){
+        return db2::getInstance()->FetchOne("SELECT * FROM tbl8DrBanks WHERE bnINN='{$INN}';");
     }
 }

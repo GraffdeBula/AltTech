@@ -5,15 +5,16 @@
     </head>
     <body>
         <h3>СПРАВОЧНИК ОРГАНИЗАЦИЙ</h3>
-        <a href="index_admin.php?controller=MenuCtrl"><button class="btn btn-priary">НАЗАД</button></a><br>
+        <a href="index_admin.php?controller=MenuCtrl"><button class="btn btn-primary">НАЗАД</button></a><br>
         
 
-        <p>ДОБАВИТЬ ФИЛИАЛ</p>
-        <form method='get'>
+        <p>ДОБАВИТЬ ОРГАНИЗАЦИЮ</p>
+        <form method='get' autocomplete="off">
             <input type="hidden" name='controller' value='ATDRCtrl'>
-            <input type="hidden" name='action' value='BranchAdd'>
-            <input type='text' name='BRNAME' value=''>
-            <button type='submit' class='btn btn-ыгссуыы'>ДОБАВИТЬ</button>
+            <input type="hidden" name='action' value='OrgAdd'>
+            <label>Название</label><input type='text' name='ORGNAME' value=''>
+            <label>Префикс</label><input type='text' name='ORGPREF' value=''>
+            <button type='submit' class='btn btn-success'>ДОБАВИТЬ</button>
         </form>
 
         <table class="table table-hover">

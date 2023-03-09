@@ -12,7 +12,7 @@ class ATP1CredMod extends Model{
     protected $Data=[];
     
     public function GetP1CredList($ContCode){ //получение списка 
-        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrCode;";                
+        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrCode DESC;";                
         $Params=[$ContCode];
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
     }
@@ -36,7 +36,7 @@ class ATP1CredMod extends Model{
     }
     
     public function UpdP1Credit($Param,$CrCode){             
-        $Sql="UPDATE tblP1Credits SET lgEmp='{$_SESSION['EmName']} and lgDat=CURRENT_TIMESTAMP";
+        $Sql="UPDATE tblP1Credits SET lgEmp='{$_SESSION['EmName']}', lgDat=CURRENT_TIMESTAMP";
         $Params=[];
         foreach($Param as $key=>$value){
             $Sql=$Sql.", {$key}=?";            
@@ -44,7 +44,9 @@ class ATP1CredMod extends Model{
         }
         $Sql=$Sql." WHERE CrCode=?";
         $Params[]=$CrCode;      
-          
+        #var_dump($Sql);
+        #echo("<br>=============<br>");
+        #var_dump($Params);
         db2::getInstance()->Query($Sql,$Params);
     }
     

@@ -12,12 +12,12 @@
         <form>            
             <?php 
             (new MyForm('ATClientAnketaCtrl','SaveClient',$_GET['ClCode'],0))->AddForm();
-            echo("<label>ФАМИЛИЯ</label><input type='text' name='CLFNAME' value={$Client->CLFNAME}>");
-            echo("<label>ИМЯ</label><input type='text' name='CL1NAME' value={$Client->CL1NAME}>");
-            echo("<label>ОТЧЕСТВО</label><input type='text' name='CL2NAME' value={$Client->CL2NAME}>");
+            echo("<label>ФАМИЛИЯ</label><input type='text' name='CLFNAME' value='{$Client->CLFNAME}'>");
+            echo("<label>ИМЯ</label><input type='text' name='CL1NAME' value='{$Client->CL1NAME}'>");
+            echo("<label>ОТЧЕСТВО</label><input type='text' name='CL2NAME' value='{$Client->CL2NAME}'>");
             echo("<br>");
-            echo("<label>Дата рождения</label><input type='date' name='CLBIRTHDATE' value={$Client->CLBIRTHDATE}>");
-            echo("<label>Место рождения</label><input type='text' class='input-comment' name='CLBIRTHPLACE' value={$Client->CLBIRTHPLACE}>");        
+            echo("<label>Дата рождения</label><input type='date' name='CLBIRTHDATE' value='{$Client->CLBIRTHDATE}'>");
+            echo("<label>Место рождения</label><input type='text' class='input-comment' name='CLBIRTHPLACE' value='{$Client->CLBIRTHPLACE}'>");        
             echo("<label>Пол</label><select name='CLSEX'>"
                 . "<option >{$Client->CLSEX}</option>"
                 . "<option value='муж'>муж</option>"
@@ -172,7 +172,12 @@
                 echo("<label>СУПРУГ</label><input type='text' name='CLFAMPARTNAME' value='{$Client->CLFAMPARTNAME}'>");
                 echo("<label>Кол-во несовершеннолетних детей</label><input type='text' name='CLCHILDNUM' value='{$Client->CLCHILDNUM}'></p>");
                 echo("<p><label>Дата заключения брака</label><input type='date' name='CLMARRIAGEDATE' value='{$Client->CLMARRIAGEDATE}'>");
-                echo("<label>Дата развода</label><input type='date' name='CLDIVORCEDATE' value='{$Client->CLDIVORCEDATE}'></p>");
+                echo("<label>Дата развода</label><input type='date' name='CLDIVORCEDATE' value='{$Client->CLDIVORCEDATE}'>");
+                echo("<label>Платит алименты</label><select name='CLALIMENTYN' value='{$Client->CLALIMENTYN}'>"
+                    . "<option >{$Client->CLALIMENTYN}</option>"
+                    . "<option value='да'>да</option>"
+                    . "<option value='нет'>нет</option></select>");
+                echo("<label>Сумма алиментов</label><input type='text' name='CLALIMENTSUM' value='{$Client->CLALIMENTSUM}'></p>");
             ?>
             <button type="submit" class="btn btn-warning">СОХРАНИТЬ ИНФ О СЕМЬЕ</button>
             </form>
@@ -225,17 +230,28 @@
                 <?php
                     foreach($ClDocumentsList as $Document){       
                         echo("<form method='get' autocomplete='off'>");
-                        (new MyForm('ATClientAnketaCtrl','DelDocument',$_GET['ClCode'],0))->AddForm();
+                        (new MyForm('ATClientAnketaCtrl','UpdDocument',$_GET['ClCode'],0))->AddForm();
                         echo("<input type='hidden' name='ClDocID' value='{$Document->ID}'>");
-                        echo("<label>Вид</label>");
+                        echo("<p><label>Вид</label>");
                         echo("<input type='text' name='ClDocName' value='{$Document->CLDOCNAME}'>");
                         echo("<label>серия</label>");
                         echo("<input type='text' name='ClDocSer' value='{$Document->CLDOCSER}'>");
                         echo("<label>Номер</label>");
                         echo("<input type='text' name='ClDocNum' value='{$Document->CLDOCNUM}'>");
                         echo("<label>Комментарий</label>");
-                        echo("<input type='text' name='ClDocComment' value='{$Document->CLDOCCOMMENT}'>");    
-                        echo("<button type='submit' class='btn btn-danger'>удалить</button></form>");
+                        echo("<input type='text' name='ClDocComment' value='{$Document->CLDOCCOMMENT}'></p>");    
+                        echo("<p><label>Кем выдан</label>");
+                        echo("<input size='80' type='text' name='ClDocOrg' value='{$Document->CLDOCORG}'>");
+                        echo("<label>Дата выдачи</label>");
+                        echo("<input type='date' name='ClDocDate' value='{$Document->CLDOCDATE}'></p>");                        
+                        echo("<p><label>Код подр.</label>");
+                        echo("<input type='text' name='ClDocAttr1' value='{$Document->CLDOCATTR1}'>");
+                        echo("<button type='submit' class='btn btn-success'>изменить</button></form>");
+                        
+                        echo("<form method='get' autocomplete='off'>");
+                        (new MyForm('ATClientAnketaCtrl','DelDocument',$_GET['ClCode'],0))->AddForm();
+                        echo("<input type='hidden' name='ClDocID' value='{$Document->ID}'>");
+                        echo("<button type='submit' class='btn btn-danger'>удалить</button></p></form>");
                     }
                 ?>
                 <hr class='hr-tab'>
@@ -435,7 +451,7 @@
                                     echo("<td>$Income->CLINCCARDYN</td>");
                                     echo("<td>$Income->CLINCBANK</td>");
                                     echo("<td>$Income->CLINCCOMMENT</td>");
-                                    echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
@@ -549,7 +565,7 @@
                                     echo("<td>$Property->CLPROPDATE</td>");
                                     echo("<td>$Property->CLPROPCOMMENT</td>");                                    
                                     echo("<td>$Property->CLPROPDOCUMENTSYN</td>");     
-                                    echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
@@ -575,6 +591,7 @@
                                     <option></option>
                                     <option value='клиент'>клиент</option>
                                     <option value='супруг'>супруг</option>
+                                    <option value='совместно нажитое'>совместно нажитое</option>
                                 </select>
                                 <label>Описание</label><input type='text' name='ClPropDesc'>                                
                             </p>
@@ -599,6 +616,7 @@
                             <thead>
                                 <tr>
                                     <th>Вид</th>
+                                    <th>Собственник</th>
                                     <th>Предмет сделки</th>
                                     <th>Стоимость</th>                                    
                                     <th>Дата сделки</th>
@@ -615,12 +633,13 @@
                                     (new MyForm('ATClientAnketaCtrl','DelDeal',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClDlID' value='{$Deal->ID}'>");
                                     echo("<td>$Deal->CLDLTYPE</td>");
+                                    echo("<td>$Deal->CLDLOWNER</td>");
                                     echo("<td>$Deal->CLDLOBJ</td>");
                                     echo("<td>$Deal->CLDLSUM</td>");                                    
                                     echo("<td>$Deal->CLDLDATE</td>");
                                     echo("<td>$Deal->CLDLCOMMENT</td>");    
                                     echo("<td>$Deal->CLDLDOCUMENTSYN</td>");
-                                    echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
@@ -648,6 +667,12 @@
                                     <option value='дом'>дом</option>
                                     <option value='земельный участок'>земельный участок</option>
                                     <option value='иное имущество'>иное имущество</option>
+                                </select>
+                                <label>Собственник</label><select type='text' name='ClDlOwner'>                                
+                                    <option></option>
+                                    <option value='клиент'>клиент</option>
+                                    <option value='супруг'>супруг</option>
+                                    <option value='совместно нажитое'>совместно нажитое</option>
                                 </select>
                             </p>
                             <p>                                
@@ -692,7 +717,7 @@
                                     echo("<td>$Acc->CLBNOPENDAT</td>");
                                     echo("<td>$Acc->CLBNCLOSEDAT</td>");
                                     echo("<td>$Acc->CLBNCOMMENT</td>");  
-                                    echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }

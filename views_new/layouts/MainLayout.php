@@ -18,9 +18,11 @@
     <body>
         <div>
             <div>                    
-                <h3>                    
-                    <p>Информационная система АЛЬТ-ТЕХ (КЛИЕНТ 2.0)   ООО ФПК АЛЬТЕРНАТИВА</p>
-                </h3>                
+                <h4>                    
+                    <p>Информационная система АЛЬТ-ТЕХ (КЛИЕНТ 2.0)   ООО ФПК АЛЬТЕРНАТИВА      
+                        <a href="index_admin.php?controller=ATMainFormCtrl&action=Exit"><button class='btn btn-secondary'>ВЫХОД</button></a>
+                    </p>
+                </h4>                
             </div>
             <?=$content?>
         </div>

@@ -21,6 +21,8 @@ class ContCtrl extends ControllerMain{
     protected $dataFront;
     protected $dataAnketa;
     protected $dataClient;
+    protected $dataClProperty;
+    protected $dataPartProperty;
     protected $dataOrg;
     protected $dataBranch;
     protected $dataPac;
@@ -57,6 +59,8 @@ class ContCtrl extends ControllerMain{
             
             $Printer2=new PrintDoc('ContNewType1',$this->dataPac->PCTEMPLATEROOT,[
                 'Client'=>$this->dataClient,
+                'ClProperty'=>$this->dataClProperty,
+                'PartProperty'=>$this->dataPartProperty,
                 'Cont'=>$this->dataFront,
                 'Anketa'=>$this->dataAnketa,
                 'BranchRec'=>$this->dataBranch,
@@ -135,6 +139,8 @@ class ContCtrl extends ControllerMain{
     public function getClient(){ //получение данных по клиенту
         $Model=new ClientMod();
         $this->dataClient=$Model->getClientById($this->clCode);
+        $this->dataClProperty=$Model->getClProperty($this->clCode);
+        $this->dataPartProperty=$Model->getPartProperty($this->clCode);        
     }
     
     public function getPac(){ //получение данных по пакету

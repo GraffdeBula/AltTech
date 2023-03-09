@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * LEGACY
+ * старый сервис для печати договоров (из Клиента1)
  * Description of PrintTrics
  *
  * @author Andrey

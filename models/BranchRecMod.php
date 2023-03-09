@@ -31,8 +31,12 @@ class BranchRecMod extends Model{
         return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tbl9DrBranchRec ORDER BY BrNameOld",[]);
     }
     
-    public function updBranch($Params,$ToQuery){    
-        db2::getInstance()->Query("UPDATE tbl9DrBranchRec SET ID=?{$ToQuery} WHERE ID=?",$Params);
+    public function updBranch($Params){   
+        $Sql="UPDATE tbl9DrBranchRec SET BRNAME=?,BRREGION=?,BRCITY=?,BRNAMEOLD=?,
+            BRDIR=?,BRADDRESSFACT=?,BRKPP=?,BRORGPREF=?,
+            BRBUCH1=?,BRKASS1=?,BRBUCH2=?,BRKASS2=?
+            WHERE ID=?";
+        db2::getInstance()->Query($Sql,$Params);
     }
     
 }

@@ -37,7 +37,7 @@ class ATP1ContMod extends Model{
     }
     
     public function InsP1Anketa($ClCode,$Branch,$Emp){
-        $Sql="INSERT INTO tblP1Anketa (ClCode,AkBranch,lgEmp) values (?,?,?)";
+        $Sql="INSERT INTO tblP1Anketa (ClCode,AkBranch,lgEmp) VALUES (?,?,?)";
         $Params=[$ClCode,$Branch,$Emp];
         db2::getInstance()->Query($Sql,$Params); 
     }
@@ -62,6 +62,10 @@ class ATP1ContMod extends Model{
     
     public function UpdP1Expert($Params=[]){
         $Sql="UPDATE tblP1Expert SET EXTOTDEBTSUM=?, EXMAINDEBTSUM=?, EXANNTOTPAY=?,EXANNTOTINC=?, EXPRODREC=?, EXRES=?  WHERE ContCode=?";
+        db2::getInstance()->Query($Sql,$Params); 
+    }
+    public function UpdP1Expert1($Params=[]){
+        $Sql="UPDATE tblP1Expert SET EXTOTDEBTSUM=?, EXMAINDEBTSUM=?,EXANNTOTPAY=? WHERE ContCode=?";
         db2::getInstance()->Query($Sql,$Params); 
     }
     

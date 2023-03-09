@@ -30,6 +30,9 @@
                 <a class="nav-link active" data-bs-toggle="tab" href="#result">Результат ЭПЭ</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#creditors">Кредиторы</a>
             </li>
             <li class="nav-item">
@@ -77,7 +80,11 @@
                                 <form method='get'>
                                     <?php
                                         (new MyForm('ATContP1FileExpertCtrl','JurSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='jurist') or ($_SESSION['EmRole']=='top')){                                    
+                                        if (($_SESSION['EmRole']=='admin') 
+                                                or ($_SESSION['EmRole']=='jurist') 
+                                                or ($_SESSION['EmRole']=='top')
+                                                or ($_SESSION['EmName']=='Ольга Щеглова')
+                                            ){                                    
                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                         }
                                     ?>    
@@ -112,7 +119,7 @@
                     
                         echo("<p><label>Результат ЭПЭ</label><select name='EXRES'>");
                         echo("<option value='{$Expert->EXRES}'>{$Expert->EXRES}</option>");
-                        echo("<option value='ЭПЭ не проведена. Доработка'>Экспертиза не провдена. Доработка</option>");
+                        echo("<option value='ЭПЭ не проведена. Доработка'>Экспертиза не проведена. Доработка</option>");
                         echo("<option value='ЭПЭ проведена'>ЭПЭ проведена</option>");
                         echo("<option value='Требуется согласование юриста'>Требуется согласование юриста</option>");
                         echo("</select>");
@@ -128,6 +135,38 @@
                     ?>
                     <button type='summit' class='btn btn-info'>Сохранить результат</button>
                 </form>
+                
+                
+            </div>
+            <div class="tab-pane fade" id="comments">
+                <form method='get'>
+                <?php (new MyForm('ATContP1FileExpertCtrl','AddComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
+                <div class="form-group">
+                    <label for="exampleTextarea" class="form-label mt-4">Добавить комментарий</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='NewComment'></textarea>
+                </div>
+                <button class='btn btn-warning'>Добавить</button>
+                </form>
+                
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th scope="col">Дата</th>
+                          <th scope="col">Автор</th>
+                          <th scope="col">Текст</th>
+                          <th scope="col">Удалить</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            foreach($Comments as $Comment){
+                                echo("<tr class='table-active'>");
+                                echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td><td>{$Comment->CMTEXT}</td>");
+                                echo("</tr>");
+                            }
+                        ?>
+                    </tbody>
+                </table>
                 
                 
             </div>
@@ -149,6 +188,8 @@
                     <tbody>
                     <?php
                         foreach($CredList as $Credit){
+                            $CrDate=(new PrintFunctions())->DateToStr($Credit->CROPENDAT);
+                            
                             echo("<tr class='table-secondary'>");
                             //(new MyForm('ATClientFileCtrl','Index',$_GET['ClCode'],0))->AddForm();
                             //echo("<input type='hidden' name='ClAccID' value='{$Comment->ID}'>");
@@ -156,7 +197,7 @@
                             echo("<td>$Credit->CRBANKCONTNAME</td>");
                             echo("<td>$Credit->CRBANKCURNAME</td>");
                             echo("<td>$Credit->CRCONTNUM</td>");
-                            echo("<td>$Credit->CROPENDAT</td>");
+                            echo("<td>$CrDate</td>");
                             echo("<td>$Credit->CRSUM</td>");
                             echo("<td>$Credit->CRSUMREST</td>");
                             echo("<td>$Credit->CRSUMRESTMAIN</td>");

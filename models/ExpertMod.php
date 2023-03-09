@@ -29,7 +29,9 @@ class ExpertMod extends Model{
     }
     //получение списка рисков
     public function GetExpRiskList($ContCode){
-        return  db2::getInstance()->FetchAll('SELECT * from tblP1ExpList WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
+        return  db2::getInstance()->FetchAll('SELECT * from tblP1ExpList INNER JOIN tbl1DrExpList 
+            ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
+            WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
     }
     //добавление нового риска
     public function InsExpRisk($param){
@@ -71,27 +73,27 @@ class ExpertMod extends Model{
     //***списки договоров на ЭПЭ
     //список для андеррайтера
     public function getExpList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFName||' '||Cl1Name||' 'Cl2Name,frOffice "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat Is Null",[2]);
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
     }
     //список для юриста
     public function getExpJurList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFName||' '||Cl1Name||' 'Cl2Name,frOffice "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,exRes "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExJurSoglDate Is Null",[2]);
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NOT NULL AND tblP1Expert.ExJurSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
     }
     //список для руководителя
     public function getExpDirList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFName||' '||Cl1Name||' 'Cl2Name,frOffice "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,exRes "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExDirSoglDate Is Null",[2]);
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NOT NULL AND tblP1Expert.ExDirSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
     }
     
 }

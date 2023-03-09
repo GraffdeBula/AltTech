@@ -13,8 +13,7 @@
     <div>
         <h3>ДОГОВОР БФЛ - АНКЕТА ДОГОВОРА</h3>   
     </div>
-        
-                        
+                                
         <?php
             echo("<div class='g-row'>");
             echo("<p>Клиент: {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</p>");
@@ -25,20 +24,21 @@
         ?>
         
     <h5>Список кредитных договоров</h5>
-    
+    <!--
     <input id="CredSearch" type='text' value="" placeholder="Поиск кредитора">
     <button id='BtnSearch' >search</button>
     <button id='Btn2' class='btn btn-primary'>btn2</button>
+    -->
     <div class="accordion" id="CreditList">        
         <?php
             foreach($CredList as $Cred){
-                
+                $CrDate=(new PrintFunctions())->DateToStr($Cred->CROPENDAT);
                 echo("
                 <div class='accordion-item'>
                     <h2 class='accordion-header' id='heading{$Cred->CRCODE}'>
                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse{$Cred->CRCODE}' aria-expanded='false' aria-controls='collapse{$Cred->CRCODE}'>
-                            <p> Договор с  <strong>{$Cred->CRBANKCONTNAME}</strong>  номер <strong>{$Cred->CRCONTNUM}</strong> от <strong>{$Cred->CROPENDAT}</strong> 
-                                Вид кредита: <strong>{$Cred->CRPROG}</strong> Остаток долга: <strong>{$Cred->CRSUMREST}</strong>
+                            <p> Договор с  <strong>{$Cred->CRBANKCONTNAME}</strong>  номер <strong>{$Cred->CRCONTNUM}</strong> от <strong>{$CrDate}</strong> 
+                                Сумма кредита: <strong>{$Cred->CRSUM}</strong> Вид кредита: <strong>{$Cred->CRPROG}</strong> Остаток долга: <strong>{$Cred->CRSUMREST}</strong>
                             </p>
                         </button>
                     </h2>
@@ -78,7 +78,7 @@
                                         <option value='физ лицо'>физ лицо</option>                                
                                     </select>
                                     <label>Кредитор по договору</label><input type='text' name='CRBANKCONTNAME' value='{$Cred->CRBANKCONTNAME}' autocomplete='off'>
-                                    <label>ИНН</label><input type='text' name='CRBANKCONTINN' value='{$Cred->CRBANKCONTINN}'>
+                                    <label>ИНН</label><input type='text' maxlength=10 name='CRBANKCONTINN' value='{$Cred->CRBANKCONTINN}'>
                                     </p>    
                                     <p>    
                                     <label>Номер договора</label><input type='text' name='CRCONTNUM' value='$Cred->CRCONTNUM'>
@@ -97,7 +97,7 @@
                                         <option value='физ лицо'>физ лицо</option>                         
                                     </select>
                                     <label>Наименование</label><input type='text' name='CRBANKCURNAME' value='{$Cred->CRBANKCURNAME}' autocomplete='off'>
-                                    <label>ИНН</label><input type='text' name='CRBANKCURINN' value='{$Cred->CRBANKCURINN}' autocomplete='off'>
+                                    <label>ИНН</label><input type='text' maxlength=10 name='CRBANKCURINN' value='{$Cred->CRBANKCURINN}' autocomplete='off'>
                                     </p>
                                     <p>
                                     <label>Вид кредита</label><select name='CRPROG'>
@@ -237,7 +237,7 @@
                                     <label>Сколько страниц</label><input type='text' name='CRDOCPAGES' value=''>
                                     <label>Номер документа</label><input type='text' name='CRDOCNUM' value=''>
                                     <label>Дата</label><input type='text' name='CRDOCDATE' value=''>
-                                    <button type='submit' class='btn btn-secondary btn-sm'>Сохранить</button>
+                                    <button type='submit' class='btn btn-warning btn-sm'>Сохранить</button>
                                 </form>
                                 <table class='table table-hover'>
                                     <thead>
