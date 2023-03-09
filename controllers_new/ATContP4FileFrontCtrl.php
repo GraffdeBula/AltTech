@@ -36,7 +36,7 @@ class ATContP4FileFrontCtrl extends ControllerMain {
     }
     
     public function actionAddPayment(){
-        (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],4))->addPayment([$_GET['PAYSUM'],$_GET['PAYDATE'],$_GET['PAYCONTTYPE'],$_GET['PAYPR']]);
+        (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],4,$_GET['PAYCONTTYPE'],$_GET['PAYSUM']))->addPayment();
         
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }

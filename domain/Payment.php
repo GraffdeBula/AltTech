@@ -34,7 +34,8 @@ class Payment {
     protected $Branch;
     protected $Emp;
     
-    public function __construct($ClCode=0,$ContCode=0,$ContBranch='',$ContEmp='',$ProdCode=0,$ContType=1,$PaySum=0,$PayDate='',$PayPr=''){
+    public function __construct($ClCode=0,$ContCode=0,$ContBranch='',$ContEmp='',$ProdCode=0,$ContType=1,
+        $PaySum=0,$PayDate='',$PayPr=''){
         $this->ClCode=$ClCode;
         $this->ContCode=$ContCode;
         $this->ContBranch=$ContBranch;
@@ -47,15 +48,31 @@ class Payment {
         
         $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
         $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode);
+
+        foreach($this->PaymentType as $Type){
+            if ($PayPr==$Type->NAME){
+                $this->PayType=$Type->PAYTYPE1;
+                break;
+            }
+        }
+        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
+            $this->PaySum=$PaySum*(-1);
+        }
+
     }
     
     public function addPayment(){
         $ClFIO=(new Client($_GET['ClCode']))->getClRec()->CLFIO;
-        (new PaymentMod())->addPayment($_SESSION['EmName'],1,$this->ContCode,$_GET['PAYSUM'],$_GET['PAYDATE'],$_GET['PAYPR'],
-                $_SESSION['EmBranch'],'Альт',$_GET['FROFFICE'],$_GET['FRPERSMANAGER'],$ClFIO,'','',$_GET['PAYCONTTYPE']);
+        (new PaymentMod())->addPayment($_SESSION['EmName'],$this->ProdCode,$this->ContCode,$this->PaySum,$_GET['PAYDATE'],$_GET['PAYPR'],
+                $_SESSION['EmBranch'],'Альт',$_GET['FROFFICE'],$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType);
         //$Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType
         $this->getLastPaymentRec();
-        $this->printPayment();
+        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
+            $this->printReturn();
+        } else {
+            $this->printPayment();
+        }
+        
     }
     
     public function getLastPaymentRec(){//получение реквизитов последнего платежа для вывода на печать
@@ -116,6 +133,26 @@ class Payment {
         $sheet->setCellValue("N37", $this->KassName);
         
         
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ContCode}.xlsx";
+        $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
+        $objWriter->save($FileName);
+    }
+
+    protected function printReturn(){
+        $FileTemplate = \PhpOffice\PhpSpreadsheet\IOFactory::load("{$_SERVER['DOCUMENT_ROOT']}/AltTech/templates/Шаблон РКО1.xlsx");
+        $sheet = $FileTemplate->getActiveSheet();        
+        //РКО
+        $sheet->setCellValue("A6", $this->OrgName);
+        $sheet->setCellValue("CC11", $this->PayCode);
+        $sheet->setCellValue("CT11", (new PrintFunctions)->DateToStr($this->PayDate));
+        $sheet->setCellValue("CC15", $this->PaySum*(-1));
+        $sheet->setCellValue("H17", $this->ContClient);
+        $sheet->setCellValue("K19", $this->ContPr);
+        $sheet->setCellValue("G20", (new PrintFunctions())->SumToStr($this->PaySum*(-1)));
+        $sheet->setCellValue("I29", (new PrintFunctions())->SumToStr($this->PaySum*(-1)));
+        $sheet->setCellValue("AK27", $this->BuchName);
+        $sheet->setCellValue("AG37", $this->KassName);
+                      
         $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ContCode}.xlsx";
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);
