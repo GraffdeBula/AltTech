@@ -2,8 +2,9 @@
  * скрипт для обработки поведения пользователя на станице "анкета договора P1"
  * функции:
  * 1. поиск по списку кредиторов
+ * 2. назначение сабмит на кнопку сохр основной инф по кредиту
  */
-
+/*
 const BtnSearch = document.getElementById('BtnSearch');
 const Btn2 = document.getElementById('Btn2');
 const CredSearch = document.getElementById('CredSearch');
@@ -58,12 +59,8 @@ function FindOnPage() {//ищет текст на странице, в пара�
   window.location = '#'+textToFind;//перемещаем скрол к последнему найденному совпадению
   
  }
-
+*/
 //функция 2 смена кнопки для формы c результатами ЭПЭ
-const MyButton1=document.getElementById('btn1');
-const MyButton2=document.getElementById('btn2');
-const MyButton3=document.getElementById('btn3');
-const MyInput=document.getElementById('ExpRes');
-const MyForm=document.getElementById('ExpForm');
 
+console.log('is true 2');
 

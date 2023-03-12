@@ -61,7 +61,7 @@
                             <div id='myTabContent' class='tab-content'>
                                 <div class='tab-pane fade  active show' id='credmain{$Cred->CRCODE}'>   
                             
-                                <form method='get' autocomplete='off'>");
+                                <form method='get' autocomplete='off' id='frmSaveMain'>");
                                 (new MyForm('ATContP1AnketaCtrl','UpdCred',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                 echo("
                                     <input type='hidden' name='CRCODE' value='{$Cred->CRCODE}'>
@@ -140,16 +140,17 @@
                                     <label>Израсходованный лимит</label><input type='text' name='CRCARDUSEDSUM' value='{$Cred->CRCARDUSEDSUM}' autocomplete='off'>
                                     <label>Минимальный платёж</label><input type='text' name='CRCARDMINPAY' value='{$Cred->CRCARDMINPAY}' autocomplete='off'>
                                     </p>
-                                    <button type='submit' class='btn btn-warning'>Сохранить основную информацию</button>    
+                                    <button type='submit' class='btn btn-warning' id='btnSaveMain'>Сохранить основную информацию</button>       
                                 </form>    
                                 <div class='row'>
                                     <div class='col-lg-5'>
-                                            
+                                        
                                     </div>                                
                                     <div class='col-lg-2'>");                                            
-                                    #if ((new CheckRole)->Check($_SESSION['EmRole'],'ATClientFileCtrl','DelCred')){    
-                                    #    echo("<button type='submit' class='btn btn-danger'>Удалить</button>");
-                                    #}
+                                    if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1AnketaCtrl','DelCred')){    
+                                        echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=DelCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
+                                            <button class='btn btn-danger'>Удалить</button></a>");
+                                    }
                                 echo("</div>                                    
                                 </div>
                             </div><!--основная инф по кредиту-->
