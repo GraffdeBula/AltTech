@@ -22,12 +22,16 @@ class PaymentMod extends Model{
         return db2::getInstance()->FetchAll($Sql,[$ContCode,$ProdCode]); 
     }
     
-    public function getPaymentFullList($DateF,$DateL){
+    public function getPaymentFullListDt($DateF,$DateL){
         $Sql="SELECT * FROM tbl5Payments WHERE PayDate BETWEEN ? AND ? ORDER BY ID DESC";
         return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]); 
     }
+    public function getPaymentFullListBrDt($DateF,$DateL,$Branch){
+        $Sql="SELECT * FROM tbl5Payments WHERE (PayDate BETWEEN ? AND ?) AND PayBranch=? ORDER BY ID DESC";
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$Branch]); 
+    }
     
-    public function getPaymentAggrList($DateF,$DateL){
+    public function getPaymentAggrListDt($DateF,$DateL){
         $Sql="SELECT tbl5drpayreptypes.name as PayName,SUM(tbl5payments.paysum) as PaySum,tbl5drpayreptypes.paytype2,paybranch
             FROM tbl5payments INNER JOIN tbl5drpaytypes ON tbl5payments.paypr=tbl5drpaytypes.name
             INNER JOIN tbl5drpayreptypes ON tbl5drpaytypes.paytype2=tbl5drpayreptypes.paytype2
@@ -35,6 +39,13 @@ class PaymentMod extends Model{
         return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]); 
     }
     
+    public function getPaymentAggrListBrDt($DateF,$DateL,$Branch){
+        $Sql="SELECT tbl5drpayreptypes.name as PayName,SUM(tbl5payments.paysum) as PaySum,tbl5drpayreptypes.paytype2,paybranch
+            FROM tbl5payments INNER JOIN tbl5drpaytypes ON tbl5payments.paypr=tbl5drpaytypes.name
+            INNER JOIN tbl5drpayreptypes ON tbl5drpaytypes.paytype2=tbl5drpayreptypes.paytype2
+            WHERE (paydate BETWEEN ? AND ?) AND PayBranch=? GROUP BY tbl5drpayreptypes.name,tbl5drpayreptypes.paytype2,paybranch ORDER BY paybranch,tbl5drpayreptypes.paytype2";
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$Branch]); 
+    }
 
 
 }

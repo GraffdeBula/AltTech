@@ -47,22 +47,23 @@ class Payment {
         $this->ProdCode=$ProdCode;
         
         $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
-        $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode);
-
-        foreach($this->PaymentType as $Type){
-            if ($PayPr==$Type->NAME){
-                $this->PayType=$Type->PAYTYPE1;
-                break;
-            }
-        }
-        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
-            $this->PaySum=$PaySum*(-1);
-        }
-
+        $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode);        
     }
     
     public function addPayment(){
         $ClFIO=(new Client($_GET['ClCode']))->getClRec()->CLFIO;
+        $this->PayPr=$_GET['PAYPR'];
+        
+        foreach($this->PaymentType as $Type){            
+            if ($this->PayPr==$Type->NAME){
+                $this->PayType=$Type->PAYTYPE1;                
+                (new logger())->logToFile("find: ".$Type->NAME." code ".$Type->PAYTYPE1);
+            }            
+        }        
+        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
+            $this->PaySum=$this->PaySum*(-1);
+        }
+        
         (new PaymentMod())->addPayment($_SESSION['EmName'],$this->ProdCode,$this->ContCode,$this->PaySum,$_GET['PAYDATE'],$_GET['PAYPR'],
                 $_SESSION['EmBranch'],'Альт',$_GET['FROFFICE'],$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType);
         //$Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType

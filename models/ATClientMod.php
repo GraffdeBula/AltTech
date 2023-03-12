@@ -113,6 +113,12 @@ class ATClientMod extends Model{
         db2::getInstance()->Query($Sql,$Params);
     }
     
+    public function UpdRelative($ClCode,$ID,$ClRelStatus,$ClRelName,$ClRelBirthDate,$ClRelDocSer,$ClRelDocNum,$ClRelDocDate){
+        $Sql="UPDATE tblClRelatives SET clRelStatus=?,ClRelName=?,ClRelBirthDate=?,ClRelDocSer=?,ClRelDocNum=?,ClRelDocDate=? WHERE ClCode=? AND ID=?";
+        $Params=[$ClRelStatus,$ClRelName,$ClRelBirthDate,$ClRelDocSer,$ClRelDocNum,$ClRelDocDate,$ClCode,$ID];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
     public function DelRelative($ClCode,$ID){
         $Sql="DELETE FROM tblClRelatives WHERE ClCode=? AND ID=?";
         $Params=[$ClCode,$ID];
@@ -182,6 +188,12 @@ class ATClientMod extends Model{
         db2::getInstance()->Query($Sql,$Params);
     }
     
+    public function UpdProperty($ClCode,$ID,$ClPropType,$ClPropOwner,$ClPropDesc,$ClPropCost,$ClPropDate,$ClPropComment,$ClPropDocumentsYN){
+        $Sql="UPDATE tblClProperty SET ClPropType=?,ClPropOwner=?,ClPropDesc=?,ClPropCost=?,ClPropDate=?,ClPropComment=?,ClPropDocumentsYN=? WHERE ClCode=? AND ID=?";
+        $Params=[$ClPropType,$ClPropOwner,$ClPropDesc,$ClPropCost,$ClPropDate,$ClPropComment,$ClPropDocumentsYN,$ClCode,$ID];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
     public function DelProperty($ClCode,$ID){
         $Sql="DELETE FROM tblClProperty WHERE ClCode=? AND ID=?";
         $Params=[$ClCode,$ID];
@@ -197,6 +209,12 @@ class ATClientMod extends Model{
     public function InsDeal($ClCode,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN,$ClDlOwner){
         $Sql="INSERT INTO tblClDeals (ClCode,ClDlType,ClDlObj,ClDlSum,ClDlDate,ClDlComment,ClDlDocumentsYN,ClDlOwner) VALUES (?,?,?,?,?,?,?,?)";
         $Params=[$ClCode,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN,$ClDlOwner];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
+    public function UpdDeal($ClCode,$ID,$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN,$ClDlOwner){
+        $Sql="UPDATE tblClDeals SET ClDlType=?,ClDlObj=?,ClDlSum=?,ClDlDate=?,ClDlComment=?,ClDlDocumentsYN=?,ClDlOwner=? WHERE ClCode=? AND ID=?";
+        $Params=[$ClDlType,$ClDlObj,$ClDlSum,$ClDlDate,$ClDlComment,$ClDlDocumentsYN,$ClDlOwner,$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
     

@@ -187,7 +187,7 @@
                 <?php
                 foreach($ClRelativesList as $Relative){
                     echo("<form method='get'>");
-                    (new MyForm('ATClientAnketaCtrl','DelRelative',$_GET['ClCode'],0))->AddForm();
+                    (new MyForm('ATClientAnketaCtrl','UpdRelative',$_GET['ClCode'],0))->AddForm();
                     echo("<input type='hidden' name='ClRelID' value='{$Relative->ID}'>");
                     echo("<label>Имя</label>");
                     echo("<input type='text' name='ClRelName' value='{$Relative->CLRELNAME}'>");
@@ -201,7 +201,15 @@
                     echo("<input type='text' name='ClRelDocNum' value='{$Relative->CLRELDOCNUM}'>");
                     echo("<label>дата выдачи</label>");
                     echo("<input type='date' name='ClRelDocDate' value='{$Relative->CLRELDOCDATE}'>");
+                    
+                    echo("<button type='submit' class='btn btn-success'>изменить</button></form>");
+                        
+                    echo("<form method='get' autocomplete='off'>");
+                    (new MyForm('ATClientAnketaCtrl','DelRelative',$_GET['ClCode'],0))->AddForm();
+                    echo("<input type='hidden' name='ClDocID' value='{$Relative->ID}'>");
+                        
                     echo("<button type='submit' class='btn btn-danger'>удалить</button></form>");
+                    
                 }
                 ?>
             </div>
@@ -251,6 +259,7 @@
                         echo("<form method='get' autocomplete='off'>");
                         (new MyForm('ATClientAnketaCtrl','DelDocument',$_GET['ClCode'],0))->AddForm();
                         echo("<input type='hidden' name='ClDocID' value='{$Document->ID}'>");
+                        
                         echo("<button type='submit' class='btn btn-danger'>удалить</button></p></form>");
                     }
                 ?>
@@ -273,13 +282,14 @@
                         <option value="свидетельство о браке">свидетельство о браке</option>
                         <option value="свидетельство о расторжении брака">свидетельство о расторжении брака</option>
                         <option value="свидетельство о смерти">свидетельство о смерти</option>
+                        <option value="иной документ">иной документ</option>
                     </select>
                     <label>серия</label><input type="text" name="ClDocSer">
                     <label>номер</label><input type="text" name="ClDocNum">
                     <label>Комментарий</label><input type="text" name="ClDocComment">
                     </p>
                     <p>
-                        <label>Кем выдан</label><input type="text" name="ClDocOrg">
+                        <label>Кем выдан</label><input size='80' type="text" name="ClDocOrg">
                         <label>Дата выдачи</label><input type="date" name="ClDocDate">
                     </p>
                         <label>код подразд.</label><input type="text" name="ClDocAttr1">
@@ -556,16 +566,22 @@
                             <?php
                                 foreach($ClPropertyList as $Property){                
                                     echo("<tr class='table-secondary'><form method='get'>");
-                                    (new MyForm('ATClientAnketaCtrl','DelProp',$_GET['ClCode'],0))->AddForm();
+                                    (new MyForm('ATClientAnketaCtrl','UpdProperty',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClPropID' value='{$Property->ID}'>");
-                                    echo("<td>$Property->CLPROPTYPE</td>");
-                                    echo("<td>$Property->CLPROPOWNER</td>");
-                                    echo("<td>$Property->CLPROPDESC</td>");
-                                    echo("<td>$Property->CLPROPCOST</td>");
-                                    echo("<td>$Property->CLPROPDATE</td>");
-                                    echo("<td>$Property->CLPROPCOMMENT</td>");                                    
-                                    echo("<td>$Property->CLPROPDOCUMENTSYN</td>");     
-                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    echo("<td><input type='text' value='{$Property->CLPROPTYPE}' name='CLPROPTYPE'</td>");
+                                    echo("<td><input type='text' value='{$Property->CLPROPOWNER}' name='CLPROPOWNER'</td>");
+                                    echo("<td><input type='text' value='{$Property->CLPROPDESC}' name='CLPROPDESC'</td>");
+                                    echo("<td><input type='text' value='{$Property->CLPROPCOST}' name='CLPROPCOST'</td>");
+                                    echo("<td><input type='date' value='{$Property->CLPROPDATE}' name='CLPROPDATE'</td>");
+                                    echo("<td><input type='text' value='{$Property->CLPROPCOMMENT}' name='CLPROPCOMMENT'</td>");                                    
+                                    echo("<td><input type='text' value='{$Property->CLPROPDOCUMENTSYN}' name='CLPROPDOCUMENTSYN'</td>");     
+                                    
+                                    echo("<td><button type='submit' class='btn btn-success'>изменить</button></td></form>");
+                        
+                                    echo("<form method='get' autocomplete='off'>");
+                                    (new MyForm('ATClientAnketaCtrl','DelProp',$_GET['ClCode'],0))->AddForm();
+                                    echo("<input type='hidden' name='ClDocID' value='{$Property->ID}'>");
+                                    
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
@@ -630,16 +646,20 @@
                             <?php
                                 foreach($ClDealsList as $Deal){                
                                     echo("<tr class='table-secondary'><form method='get'>");
-                                    (new MyForm('ATClientAnketaCtrl','DelDeal',$_GET['ClCode'],0))->AddForm();
+                                    (new MyForm('ATClientAnketaCtrl','UpdDeal',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClDlID' value='{$Deal->ID}'>");
-                                    echo("<td>$Deal->CLDLTYPE</td>");
-                                    echo("<td>$Deal->CLDLOWNER</td>");
-                                    echo("<td>$Deal->CLDLOBJ</td>");
-                                    echo("<td>$Deal->CLDLSUM</td>");                                    
-                                    echo("<td>$Deal->CLDLDATE</td>");
-                                    echo("<td>$Deal->CLDLCOMMENT</td>");    
-                                    echo("<td>$Deal->CLDLDOCUMENTSYN</td>");
-                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    echo("<td><input type='text' value='{$Deal->CLDLTYPE}' name='CLDLTYPE'</td>");
+                                    echo("<td><input type='text' value='{$Deal->CLDLOWNER}' name='CLDLOWNER'</td>");
+                                    echo("<td><input type='text' value='{$Deal->CLDLOBJ}' name='CLDLOBJ'</td>");
+                                    echo("<td><input type='text' value='{$Deal->CLDLSUM}' name='CLDLSUM'</td>");                                    
+                                    echo("<td><input type='date' value='{$Deal->CLDLDATE}' name='CLDLDATE'</td>");
+                                    echo("<td><input type='text' value='{$Deal->CLDLCOMMENT}' name='CLDLCOMMENT'</td>");    
+                                    echo("<td><input type='text' value='{$Deal->CLDLDOCUMENTSYN}' name='CLDLDOCUMENTSYN'</td>");
+                                    echo("<td><button type='submit' class='btn btn-success'>изменить</button></td></form>");
+                        
+                                    echo("<form method='get' autocomplete='off'>");
+                                    (new MyForm('ATClientAnketaCtrl','DelDeal',$_GET['ClCode'],0))->AddForm();
+                                    echo("<input type='hidden' name='ClDlID' value='{$Property->ID}'>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }

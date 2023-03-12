@@ -12,6 +12,14 @@
                 <?php (new MyForm('RepPaymentsCtrl','Index',0,0))->AddForm() ?>
                 <label>|  C  |</label><input type='date' name='DateF' value='<?=$_GET['DateF']?>'>
                 <label>|  по  |</label><input type='date' name='DateL' value='<?=$_GET['DateL']?>'>
+                <?php
+                if (isset($_GET['Branch'])){
+                    echo("<label>|  филиал  |</label><input type='text' name='Branch' value='{$_GET['Branch']}'>");
+                }
+                if (!isset($_GET['Branch'])){
+                    echo("<label>|  филиал  |</label><input type='text' name='Branch' value=''>");
+                }
+                ?>        
                 <button>Получить отчёт</button>
             </form>  
             

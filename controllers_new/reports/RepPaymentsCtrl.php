@@ -19,14 +19,22 @@ class RepPaymentsCtrl extends ControllerMain{
     
     public function formRep() {
         $Model=new PaymentMod();        
-        if (isset($_GET['DateF']) && isset($_GET['DateL'])){
-            $this->Payments=(new PaymentMod())->getPaymentFullList($_GET['DateF'],$_GET['DateL']);
-            $this->RepPayments=(new PaymentMod())->getPaymentAggrList($_GET['DateF'],$_GET['DateL']);
-        } else {
-            $this->Payments=(new PaymentMod())->getPaymentFullList(date("d.m.Y"),date("d.m.Y"));
-            $this->RepPayments=(new PaymentMod())->getPaymentAggrList(date("d.m.Y"),date("d.m.Y"));
+        if (isset($_GET['DateF']) && isset($_GET['DateL']) && (!isset($_GET['Branch']))){
+            $this->Payments=(new PaymentMod())->getPaymentFullListDt($_GET['DateF'],$_GET['DateL']);
+            $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt($_GET['DateF'],$_GET['DateL']);
+        } 
+        if (isset($_GET['DateF']) && isset($_GET['DateL']) && isset($_GET['Branch'])){
+            $this->Payments=(new PaymentMod())->getPaymentFullListBrDt($_GET['DateF'],$_GET['DateL'],$_GET['Branch']);
+            $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt($_GET['DateF'],$_GET['DateL'],$_GET['Branch']);
         }
-        
+        if (((!isset($_GET['DateF'])) or (!isset($_GET['DateL']))) && (!isset($_GET['Branch']))){        
+            $this->Payments=(new PaymentMod())->getPaymentFullListDt(date("d.m.Y"),date("d.m.Y"));
+            $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt(date("d.m.Y"),date("d.m.Y"));
+        }
+        if (((!isset($_GET['DateF'])) or (!isset($_GET['DateL']))) && (isset($_GET['Branch']))){        
+            $this->Payments=(new PaymentMod())->getPaymentFullListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
+            $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
+        }
                 
         
     }

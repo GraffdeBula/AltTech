@@ -37,8 +37,8 @@
                 <div class='accordion-item'>
                     <h2 class='accordion-header' id='heading{$Cred->CRCODE}'>
                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse{$Cred->CRCODE}' aria-expanded='false' aria-controls='collapse{$Cred->CRCODE}'>
-                            <p> Договор с  <strong>{$Cred->CRBANKCONTNAME}</strong>  номер <strong>{$Cred->CRCONTNUM}</strong> от <strong>{$CrDate}</strong> 
-                                Сумма кредита: <strong>{$Cred->CRSUM}</strong> Вид кредита: <strong>{$Cred->CRPROG}</strong> Остаток долга: <strong>{$Cred->CRSUMREST}</strong>
+                            <p>Договор с  <strong>{$Cred->CRBANKCONTNAME}</strong>  номер <strong>{$Cred->CRCONTNUM}</strong> от <strong>{$CrDate}</strong> 
+                                Сумма кредита: <strong>{$Cred->CRSUM}</strong> Вид кредита: <strong>{$Cred->CRPROG}</strong> Остаток долга: <strong>{$Cred->CRSUMREST}</strong>                                    
                             </p>
                         </button>
                     </h2>
@@ -141,7 +141,17 @@
                                     <label>Минимальный платёж</label><input type='text' name='CRCARDMINPAY' value='{$Cred->CRCARDMINPAY}' autocomplete='off'>
                                     </p>
                                     <button type='submit' class='btn btn-warning'>Сохранить основную информацию</button>    
-                                </form>
+                                </form>    
+                                <div class='row'>
+                                    <div class='col-lg-5'>
+                                            
+                                    </div>                                
+                                    <div class='col-lg-2'>");                                            
+                                    #if ((new CheckRole)->Check($_SESSION['EmRole'],'ATClientFileCtrl','DelCred')){    
+                                    #    echo("<button type='submit' class='btn btn-danger'>Удалить</button>");
+                                    #}
+                                echo("</div>                                    
+                                </div>
                             </div><!--основная инф по кредиту-->
                             <div class='tab-pane fade' id='credadd{$Cred->CRCODE}'>
                                 <form method='get' autocomplete='off'>");

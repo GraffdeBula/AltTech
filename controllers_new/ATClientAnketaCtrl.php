@@ -127,6 +127,14 @@ class ATClientAnketaCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
     
+    public function actionUpdRelative(){
+        if ((isset($_GET['ClRelName']))&&($_GET['ClRelName']!='')){
+            $Model=new ATClientMod();
+            $Model->UpdRelative($_GET['ClCode'],$_GET['ClRelID'],$_GET['ClRelStatus'],$_GET['ClRelName'],$_GET['ClRelBirthDate'],$_GET['ClRelDocSer'],$_GET['ClRelDocNum'],$_GET['ClRelDocDate']);        
+        }
+        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
     public function actionDelRelative(){        
         $Model=new ATClientMod();
         $Model->DelRelative($_GET['ClCode'],$_GET['ClRelID']);
@@ -179,6 +187,15 @@ class ATClientAnketaCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
     
+    public function actionUpdProperty(){
+        if ((isset($_GET['ClPropID']))&&($_GET['ClPropID']!='')){
+            $Model=new ATClientMod();
+            $Model->UpdProperty($_GET['ClCode'],$_GET['ClPropID'],$_GET['CLPROPTYPE'],$_GET['CLPROPOWNER'],$_GET['CLPROPDESC'],$_GET['CLPROPCOST'],$_GET['CLPROPDATE'],
+                    $_GET['CLPROPCOMMENT'],$_GET['CLPROPDOCUMENTSYN']);        
+        }
+        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
     public function actionDelProp(){        
         $Model=new ATClientMod();
         $Model->DelProperty($_GET['ClCode'],$_GET['ClPropID']);        
@@ -189,6 +206,14 @@ class ATClientAnketaCtrl extends ControllerMain {
         if ((isset($_GET['ClDlObj']))&&($_GET['ClDlObj']!='')){
             $Model=new ATClientMod();
             $Model->InsDeal($_GET['ClCode'],$_GET['ClDlType'],$_GET['ClDlObj'],$_GET['ClDlSum'],$_GET['ClDlDate'],$_GET['ClDlComment'],$_GET['ClDlDocumentsYN'],$_GET['ClDlOwner']);        
+        }
+        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
+    public function actionUpdDeal(){
+        if ((isset($_GET['ClDlID']))&&($_GET['ClDlID']!='')){
+            $Model=new ATClientMod();
+            $Model->UpdDeal($_GET['ClCode'],$_GET['ClDlID'],$_GET['CLDLTYPE'],$_GET['CLDLOBJ'],$_GET['CLDLSUM'],$_GET['CLDLDATE'],$_GET['CLDLCOMMENT'],$_GET['CLDLDOCUMENTSYN'],$_GET['CLDLOWNER']);
         }
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
