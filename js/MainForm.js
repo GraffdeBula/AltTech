@@ -3,6 +3,7 @@
  * функции:
  * 1. валидация комментария при удалении агента
  * 2. копирование ФИО в скрытые поля формы поиска при наведении на кнопку "Найти"
+ * 3. очистка полей поиска
  */
 /*
 var Form = document.querySelector('.delAgForm');
@@ -33,11 +34,29 @@ Form.addEventListener('submit', function (event) {
 });
 
 /*ФУНКЦИЯ 2*/
-const MyButton=document.getElementById('btn-find');
-MyButton.addEventListener('mouseover',function(){
+const MyButton1=document.getElementById('btn-find');
+MyButton1.addEventListener('mouseover',function(){
     document.getElementById('fname-f').value=document.getElementById('fname').value;
     document.getElementById('1name-f').value=document.getElementById('1name').value;
     document.getElementById('2name-f').value=document.getElementById('2name').value;
+});
+
+/*ФУНКЦИЯ 3*/
+const MyButton2=document.getElementById('btn-clear');
+MyButton2.addEventListener('click',function(){
+    console.log('but 2');
+    document.getElementById('fname').innerHTML.value='';
+    document.getElementById('1name').innerHTML.value='';
+    document.getElementById('2name').innerHTML.value='';
+    console.log('but 2');
+});
+
+/*ФУНКЦИЯ 4*/
+const MyButton3=document.getElementById('btn-add');
+MyButton3.addEventListener('click',function(){
+    document.getElementById('fname').value='';
+    document.getElementById('1name').value='';
+    document.getElementById('2name').value='';
 });
 
 console.log('yes');

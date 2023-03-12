@@ -56,41 +56,40 @@
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active show" id="home">
             
-        <form method='get' autocomplete='off'>
-            <input type="hidden" name='controller' value='ATMainFormCtrl'>
-            <input type="hidden" name='action' value='ClIns'>
-            <div>
-                <label>Фамилия</label>
-                <input type="text" name="ClFName" value="" id='fname'>
-                <label>Имя</label>
-                <input type="text" name="Cl1Name" value="" id='1name'>
-                <label>Отчество</label>
-                <input type="text" name="Cl2Name" value="" id='2name'>
-            </div>
-            <div>
-                <label>паспорт серия</label>
-                <input type="text" name="ClPasSer" value="" maxlength="4">
-                <label>номер</label>
-                <input type="text" name="ClPasNum" value="" maxlength="6">
-            </div>
-            <?php
+            <form method='get' autocomplete='off' id='frm-add'>
+                <input type="hidden" name='controller' value='ATMainFormCtrl'>
+                <input type="hidden" name='action' value='ClIns'>
+                <div>
+                    <label>Фамилия</label>
+                    <input type="text" name="ClFName" value="" id='fname'>
+                    <label>Имя</label>
+                    <input type="text" name="Cl1Name" value="" id='1name'>
+                    <label>Отчество</label>
+                    <input type="text" name="Cl2Name" value="" id='2name'>
+                </div>
+                <div>
+                    <label>паспорт серия</label>
+                    <input type="text" name="ClPasSer" value="" id="ClPasSer" maxlength="4">
+                    <label>номер</label>
+                    <input type="text" name="ClPasNum" value="" id="ClPasNum" maxlength="6">
+                </div>            
+            </form>
+
+            <form method='get' autocomplete="off" id='frm-find'>    
+                <input type="hidden" name='controller' value='ATMainFormCtrl'>
+                <input type="hidden" name='action' value='ClSearch'>
+                <input type="hidden" name="ClFName" value="" id='fname-f'>
+                <input type="hidden" name="Cl1Name" value="" id='1name-f'>
+                <input type="hidden" name="Cl2Name" value="" id='2name-f'>                        
+            </form>
+            
+                    <button type='submit' class='btn btn-info' id='btn-find'>НАЙТИ</button>
+            -----
+                    <button type='submit' class='btn btn-warning' id='btn-add'>ДОБАВИТЬ</button> 
+            -----  
+                    <button class='btn btn-secondary' id='btn-clear'>ОЧИСТИТЬ</button>
                 
-                echo("<div>
-                    <button type='submit' class='btn btn-warning'>ДОБАВИТЬ</button>            
-                </div>");
-                
-            ?>
-        </form>
-        <form method='get' autocomplete="off">    
-            <input type="hidden" name='controller' value='ATMainFormCtrl'>
-            <input type="hidden" name='action' value='ClSearch'>
-            <input type="hidden" name="ClFName" value="" id='fname-f'>
-            <input type="hidden" name="Cl1Name" value="" id='1name-f'>
-            <input type="hidden" name="Cl2Name" value="" id='2name-f'>
-            <button type='submit' class='btn btn-info' id='btn-find'>НАЙТИ</button>
-            <a href="index_admin.php"><button class='btn btn-warning'>ОЧИСТИТЬ</button></a>
-        </form>
-                            
+                        
             <?php  
              
                 foreach($ClList as $Client){
@@ -259,13 +258,34 @@
     </div>
     <script>
         const MyButton=document.getElementById('btn-find');
+        const FormFind=document.getElementById('frm-find');
+
         MyButton.addEventListener('mouseover',function(){
             document.getElementById('fname-f').value=document.getElementById('fname').value;
             document.getElementById('1name-f').value=document.getElementById('1name').value;
             document.getElementById('2name-f').value=document.getElementById('2name').value;
         });
+        MyButton.addEventListener('click',function(){
+            FormFind.submit();
+        });
+        
 
-        console.log('yes2')
+        const MyButton2=document.getElementById('btn-clear');
+        MyButton2.addEventListener('click',function(){            
+            document.getElementById('fname').value='';
+            document.getElementById('1name').value='';
+            document.getElementById('2name').value='';
+            document.getElementById('ClPasSer').value='';
+            document.getElementById('ClPasNum').value='';            
+        });
+
+        const MyButton3=document.getElementById('btn-add');
+        const FormAdd=document.getElementById('frm-add');
+        MyButton3.addEventListener('click',function(){
+            FormAdd.submit();
+        });
+
+        console.log('yes4')
     </script>
     <!--
     <script src="./js/MainForm.js"></script>
