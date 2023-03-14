@@ -121,11 +121,23 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
         //заполнение таблицы имущества
         $PropList=[];
         foreach($Client->getPropertyList() as $PropRow){
+            $Owner=$PropRow->CLPROPOWNER;
+            if ($PropRow->CLPROPOWNER=='клиент'){
+                $Owner='заказчик';
+            } 
             $PropList[]=[                
                 'PROPTYPE'=>$PropRow->CLPROPTYPE,
                 'PROPDESC'=>$PropRow->CLPROPDESC,
                 'PROPCOST'=>$PropRow->CLPROPCOST,
-                'PROPOWNER'=>$PropRow->CLPROPOWNER    
+                'PROPOWNER'=>$Owner    
+             ];
+        }
+        if ($PropList==[]){
+            $PropList[]=[                
+                'PROPTYPE'=>'---',
+                'PROPDESC'=>'---',
+                'PROPCOST'=>'---',
+                'PROPOWNER'=>'---'    
              ];
         }
         $Act->cloneRowAndSetValues('PROPTYPE', $PropList);
@@ -146,13 +158,26 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
         //заполнение таблицы Сделок
         $DealList=[];
         foreach($Client->getDealList() as $DealRow){
+            $Owner=$DealRow->CLDLOWNER;
+            if ($DealRow->CLDLOWNER=='клиент'){
+                $Owner='заказчик';
+            }
             $DealList[]=[                
                 'DLOBJ'=>$DealRow->CLDLOBJ,
                 'DLCOMMENT'=>$DealRow->CLDLCOMMENT,
                 'DLSUM'=>$DealRow->CLDLSUM,
-                'DLOWNER'=>$DealRow->CLDLOWNER    
+                'DLOWNER'=>$Owner    
              ];
         }
+        if ($DealList==[]){
+            $DealList[]=[                
+                'DLOBJ'=>'---',
+                'DLCOMMENT'=>'---',
+                'DLSUM'=>'---',
+                'DLOWNER'=>'---'    
+             ];
+        }
+        
         $Act->cloneRowAndSetValues('DLOBJ', $DealList);
         //заполнение таблицы Риски2
         $Risk2List=[];
@@ -211,6 +236,9 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
         if ($RiskF>0){
             $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
         }         
+        //заполнение стоимости услуг
+        $Act->setValue('CONTSUM',$Front->getFront()->FREXPSUM);
+        $Act->setValue('CONTSUMSTR',$Front->getFront()->FREXPSUM);
         //БЛОК 4
         $FileName="Отчёт ЭПЭ {$Client->getClRec()->CLFIO}";
         $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/AltTech/documents/{$FileName}.docx");

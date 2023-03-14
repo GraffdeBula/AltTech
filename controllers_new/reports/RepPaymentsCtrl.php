@@ -19,7 +19,19 @@ class RepPaymentsCtrl extends ControllerMain{
     
     public function formRep() {
         $Model=new PaymentMod();        
-        if (isset($_GET['DateF']) && isset($_GET['DateL']) && (!isset($_GET['Branch']))){
+        /*
+        if (isset($_GET['DateF']) && isset($_GET['DateL'])){
+            echo('111');
+            $this->Payments=(new PaymentMod())->getPaymentFullListDt($_GET['DateF'],$_GET['DateL']);
+            $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt($_GET['DateF'],$_GET['DateL']);
+        } 
+        if ((!isset($_GET['DateF'])) or (!isset($_GET['DateL']))){        
+            $this->Payments=(new PaymentMod())->getPaymentFullListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
+            $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
+        }
+        */
+        if (isset($_GET['DateF']) && isset($_GET['DateL']) && ((!isset($_GET['Branch'])) or ($_GET['Branch']==''))){
+            echo('111');
             $this->Payments=(new PaymentMod())->getPaymentFullListDt($_GET['DateF'],$_GET['DateL']);
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt($_GET['DateF'],$_GET['DateL']);
         } 
@@ -27,7 +39,8 @@ class RepPaymentsCtrl extends ControllerMain{
             $this->Payments=(new PaymentMod())->getPaymentFullListBrDt($_GET['DateF'],$_GET['DateL'],$_GET['Branch']);
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt($_GET['DateF'],$_GET['DateL'],$_GET['Branch']);
         }
-        if (((!isset($_GET['DateF'])) or (!isset($_GET['DateL']))) && (!isset($_GET['Branch']))){        
+        if (((!isset($_GET['DateF'])) or (!isset($_GET['DateL']))) && ((!isset($_GET['Branch'])) or ($_GET['Branch']==''))){  
+            echo('333');
             $this->Payments=(new PaymentMod())->getPaymentFullListDt(date("d.m.Y"),date("d.m.Y"));
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt(date("d.m.Y"),date("d.m.Y"));
         }

@@ -29,9 +29,7 @@ class ExpertMod extends Model{
     }
     //получение списка рисков
     public function GetExpRiskList($ContCode){
-        return  db2::getInstance()->FetchAll('SELECT * from tblP1ExpList INNER JOIN tbl1DrExpList 
-            ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
-            WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
+        return  db2::getInstance()->FetchAll('SELECT * from tblP1ExpList WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
     }
     //добавление нового риска
     public function InsExpRisk($param){

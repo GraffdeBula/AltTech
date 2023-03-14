@@ -2,7 +2,8 @@
 /*
  * досье ЭПЭ
  *  */
-
+#var_dump($RiskList);
+#exit();
 ?>
 <!DOCTYPE html>
 <html>
@@ -142,8 +143,7 @@
                             <?php (new MyForm('ATContP1FileExpertCtrl','AddToJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
                             <div class="form-group">
                                 <label for="exampleTextarea" class="form-label mt-4">Причина согласования юристом</label>
-                                <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXCOMMENT' maxlength=250 
-                                value='<?=$Expert->EXCOMMENT?>'></textarea>
+                                <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXCOMMENT' maxlength=250 ><?=$Expert->EXCOMMENT?></textarea>
                             </div>
                             <button type='summit' class='btn btn-warning'>Сохранить причину</button>               
                         </form>                        
@@ -227,6 +227,7 @@
                 <table class='table table-hover'>
                     <thead>
                         <tr>
+                            
                             <th>РИСК</th>
                             <th>УДАЛИТЬ<th>
                         </tr>
@@ -257,12 +258,16 @@
                     <select name='AddRisk' value='' id='RiskSelect'>                            
                         <option value=''></option>
                         <?php
-                            foreach($RiskListDr as $Risk){
-                                echo("<option value='{$Risk->DRVALUE}'>{$Risk->DRVALUE}</option>");
+                            foreach($RiskListDr as $RiskDr){
+                                echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
                             }
                         ?>
                     </select>
-                    <button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>
+                    <?php
+                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','AddRisk')){
+                            echo("<button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>");
+                        }
+                    ?>
                 </form>
             </div>
             <div class="tab-pane fade" id="work">

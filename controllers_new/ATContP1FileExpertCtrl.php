@@ -81,6 +81,8 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     }
     
     public function actionDelRisk(){//удалить риск заключения БФЛ
+        #echo($_GET['RiskID']);
+        #exit();
         (new ExpertMod)->DelExpRisk([$_GET['RiskID']]);
         
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");

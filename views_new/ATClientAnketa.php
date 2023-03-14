@@ -164,7 +164,7 @@
                 (new MyForm('ATClientAnketaCtrl','SaveClFamily',$_GET['ClCode'],0))->AddForm();
                 echo("<p><label>СЕМЕЙНОЕ ПОЛОЖЕНИЕ</label><select name='CLFAMSTATUS'>");
                 echo("<option value='{$Client->CLFAMSTATUS}'>{$Client->CLFAMSTATUS}</option>");
-                echo("<option value='холост'>холост</option>");
+                echo("<option value='холост/не замужем'>холост/не замужем</option>");
                 echo("<option value='женат/замужем'>женат/замужем</option>");
                 echo("<option value='в разводе'>в разводе</option>");
                 echo("<option value='вдова/вдовец'>вдова/вдовец</option>");                
@@ -608,6 +608,7 @@
                                     <option value='клиент'>клиент</option>
                                     <option value='супруг'>супруг</option>
                                     <option value='совместно нажитое'>совместно нажитое</option>
+                                    <option value='бывший супруг'>бывший супруг</option>
                                 </select>
                                 <label>Описание</label><input type='text' name='ClPropDesc'>                                
                             </p>
@@ -659,7 +660,7 @@
                         
                                     echo("<form method='get' autocomplete='off'>");
                                     (new MyForm('ATClientAnketaCtrl','DelDeal',$_GET['ClCode'],0))->AddForm();
-                                    echo("<input type='hidden' name='ClDlID' value='{$Property->ID}'>");
+                                    echo("<input type='hidden' name='ClDlID' value='{$Deal->ID}'>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
@@ -693,6 +694,7 @@
                                     <option value='клиент'>клиент</option>
                                     <option value='супруг'>супруг</option>
                                     <option value='совместно нажитое'>совместно нажитое</option>
+                                    <option value='бывший супруг'>бывший супруг</option>
                                 </select>
                             </p>
                             <p>                                
