@@ -14,7 +14,7 @@ class RepPaymentsCtrl extends ControllerMain{
     
     public function actionIndex() {        
         $this->formRep();        
-        $this->render('reports/PaymentsRep',['Report1'=>$this->Payments,'Report2'=>$this->RepPayments]);
+        $this->render('reports/PaymentsRep',['Report1'=>$this->Payments,'Report2'=>$this->RepPayments,'BranchList'=>(new Branch())->getBranchList()]);
     }
     
     public function formRep() {
@@ -29,13 +29,14 @@ class RepPaymentsCtrl extends ControllerMain{
             $this->Payments=(new PaymentMod())->getPaymentFullListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
         }
-        */
+        */        
         if (isset($_GET['DateF']) && isset($_GET['DateL']) && ((!isset($_GET['Branch'])) or ($_GET['Branch']==''))){
             echo('111');
             $this->Payments=(new PaymentMod())->getPaymentFullListDt($_GET['DateF'],$_GET['DateL']);
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt($_GET['DateF'],$_GET['DateL']);
         } 
         if (isset($_GET['DateF']) && isset($_GET['DateL']) && isset($_GET['Branch'])){
+            echo('222');
             $this->Payments=(new PaymentMod())->getPaymentFullListBrDt($_GET['DateF'],$_GET['DateL'],$_GET['Branch']);
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt($_GET['DateF'],$_GET['DateL'],$_GET['Branch']);
         }
@@ -45,10 +46,11 @@ class RepPaymentsCtrl extends ControllerMain{
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListDt(date("d.m.Y"),date("d.m.Y"));
         }
         if (((!isset($_GET['DateF'])) or (!isset($_GET['DateL']))) && (isset($_GET['Branch']))){        
+            echo('444');
             $this->Payments=(new PaymentMod())->getPaymentFullListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
             $this->RepPayments=(new PaymentMod())->getPaymentAggrListBrDt(date("d.m.Y"),date("d.m.Y"),$_GET['Branch']);
         }
-                
+           
         
     }
     

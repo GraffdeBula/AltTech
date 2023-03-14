@@ -580,7 +580,7 @@
                         
                                     echo("<form method='get' autocomplete='off'>");
                                     (new MyForm('ATClientAnketaCtrl','DelProp',$_GET['ClCode'],0))->AddForm();
-                                    echo("<input type='hidden' name='ClDocID' value='{$Property->ID}'>");
+                                    echo("<input type='hidden' name='ClPropID' value='{$Property->ID}'>");
                                     
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");

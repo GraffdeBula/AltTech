@@ -55,6 +55,9 @@
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontPrintCtrl&action=DovTemplate&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button disabled class='btn btn-info disabled'>ШАБЛОН ДОВЕРЕННОСТИ</button></a>");
         
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontPrintCtrl&action=Test&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-secondary'>TEST</button></a>");
+        
         echo("</div>");
     ?>
 

@@ -17,6 +17,16 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
         (new ATMainFormCtrl())->actionIndex();
     }
     
+    public function actionTest(){     
+        $Client=new Client($_GET['ClCode']);
+        if(!$Client->getContPhone()){
+            echo('111');
+        }else{
+            echo('sssss');
+        }
+        exit();
+    }
+
     public function actionExpCont(){        
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
@@ -53,7 +63,7 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
     }
     
     public function actionExpAct(){
-        /*схемапечати акта
+        /*схема печати акта
          * 1. загрузка необходимых данных
          * клиент, его имущество, его сделки, его кредиты, риски по экспертизе
          * для хранения данных сформировать нужные объекты
@@ -123,7 +133,7 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
         foreach($Client->getPropertyList() as $PropRow){
             $Owner=$PropRow->CLPROPOWNER;
             if ($PropRow->CLPROPOWNER=='клиент'){
-                $Owner='заказчик';
+                $Owner='Заказчик';
             } 
             $PropList[]=[                
                 'PROPTYPE'=>$PropRow->CLPROPTYPE,
@@ -237,8 +247,8 @@ class ATContP1FileFrontPrintCtrl extends ControllerMain {
             $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
         }         
         //заполнение стоимости услуг
-        $Act->setValue('CONTSUM',$Front->getFront()->FREXPSUM);
-        $Act->setValue('CONTSUMSTR',$Front->getFront()->FREXPSUM);
+        $Act->setValue('CONTSUM',$Cont->getFront()->FREXPSUM);
+        $Act->setValue('CONTSUMSTR',(new PrintFunctions())->SumToStr($Cont->getFront()->FREXPSUM));
         //БЛОК 4
         $FileName="Отчёт ЭПЭ {$Client->getClRec()->CLFIO}";
         $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/AltTech/documents/{$FileName}.docx");

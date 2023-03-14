@@ -13,12 +13,16 @@
                 <label>|  C  |</label><input type='date' name='DateF' value='<?=$_GET['DateF']?>'>
                 <label>|  по  |</label><input type='date' name='DateL' value='<?=$_GET['DateL']?>'>
                 <?php
-                if (isset($_GET['Branch'])){
-                    echo("<label>|  филиал  |</label><input type='text' name='Branch' value='{$_GET['Branch']}'>");
-                }
-                if (!isset($_GET['Branch'])){
-                    echo("<label>|  филиал  |</label><input type='text' name='Branch' value=''>");
-                }
+                    $Branch='';
+                    if (isset($_GET['Branch'])){
+                        $Branch=$_GET['Branch'];
+                    }                
+                    echo("<label>|  филиал  |</label><select name='Branch' value='{$Branch}'>");
+                    echo("<option value='{$Branch}'>$Branch</option>");
+                    foreach($BranchList as $Branch){
+                        echo("<option value='{$Branch->BRNAME}'>$Branch->BRNAME</option>");
+                    }
+                    echo("</select>");
                 ?>        
                 <button>Получить отчёт</button>
             </form>  

@@ -40,6 +40,9 @@ class Client {
                 " кв.".$this->ClRec->CLADRFAPP;
         $this->Pasport=(new ATClientMod())->getDocument($ClCode,'паспорт');
         $this->Phone=(new ATClientMod())->getPhone($ClCode,'мобильный');
+        if (!$this->Phone){
+            $this->Phone=new ClientRec();
+        }
         //get lists
         $this->IncomeList=(new ATClientMod())->GetClIncomesList($ClCode);
         $this->PropertyList=(new ATClientMod())->GetClPropertyList($ClCode);
