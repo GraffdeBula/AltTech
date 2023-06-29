@@ -10,6 +10,9 @@
 class Client {
     public $ClRec=[];
     protected $Pasport=[];
+    protected $Penscard=[];
+    protected $INN=[];
+    protected $Famcont=[];
     protected $Phone;
     protected $Adr=[];
     protected $IncomeList;
@@ -39,6 +42,9 @@ class Client {
                 " д.".$this->ClRec->CLADRFHOUSE.
                 " кв.".$this->ClRec->CLADRFAPP;
         $this->Pasport=(new ATClientMod())->getDocument($ClCode,'паспорт');
+        $this->Penscard=(new ATClientMod())->getDocument($ClCode,'СНИЛС');
+        $this->INN=(new ATClientMod())->getDocument($ClCode,'ИНН');
+        $this->Famcont=(new ATClientMod())->getDocument($ClCode,'брачный договор');
         $this->Phone=(new ATClientMod())->getPhone($ClCode,'мобильный');
         if (!$this->Phone){
             $this->Phone=new ClientRec();
@@ -63,6 +69,18 @@ class Client {
     
     public function getPasport(){
         return $this->Pasport;
+    }
+    
+    public function getINN(){
+        return $this->INN;
+    }
+    
+    public function getPens(){
+        return $this->Penscard;
+    }
+    
+    public function getFamcont(){
+        return $this->Famcont;
     }
     
     public function getContPhone(){

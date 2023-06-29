@@ -1,4 +1,13 @@
-<?php?>
+<?php
+    $DocName='';
+    $Model='';
+    if (isset($_GET['DocName'])){
+        $DocName=$_GET['DocName'];
+    }
+    if (isset($_GET['Model'])){
+        $Model=$_GET['Model'];
+    }
+?>
 <!DOCTYPE html>
 
 <html>
@@ -16,13 +25,13 @@
                     (new MyForm('ATDRCtrl','BookmarkAdd'))->AddForm2();
                 ?>
                 <p>
-                <label for='in1'>Документ</label><input type='text' id='in1' name='BMDOCNAME' value='' autocomplete="off">               
+                <label for='in1'>Документ</label><input type='text' id='in1' name='BMDOCNAME' value='<?=$DocName?>' autocomplete="off">               
                 <label for='in2'>Закладка</label><input type='text' id='in2' name='BMNAME' value='' autocomplete="off">
-                <label for='in3'>Модель</label><input type='text' id='in3' name='BMTABLE' value='' autocomplete="off">
+                <label for='in3'>Модель</label><input type='text' id='in3' name='BMTABLE' value='<?=$Model?>' autocomplete="off">
                 <label for='in4'>Поле</label><input type='text' id='in4' name='BMFIELD' value='' autocomplete="off">
                 </p>
                 <p>
-                <label for='in5'>Тип данных</label><input type='text' id='in5' name='BMTYPE' value='' autocomplete="off">               
+                <label for='in5'>Тип данных</label><input type='text' id='in5' name='BMTYPE' value='string' autocomplete="off">               
                 <label for='in6'>Тип преобразования</label><input type='text' id='in6' name='BMCHANGE' value='' autocomplete="off">
                 <label for='in7'>Поле для сравнения</label><input type='text' id='in7' name='BMCHECKDATA' value='' autocomplete="off">
                 <label for='in8'>Значение для вставки при сравнении</label><input type='text' id='in8' name='BMINSDATA' value='' autocomplete="off">

@@ -11,6 +11,8 @@
 class Payment {    
     protected $PaymentType; //список типов платежей
     protected $PaymentList; //список платежей по договору
+    protected $TotalSum=[]; //общие суммы по договору P1
+    
     protected $ClCode;
     protected $ContCode;
     protected $ProdCode;
@@ -47,46 +49,77 @@ class Payment {
         $this->ProdCode=$ProdCode;
         
         $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
-        $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode);        
+        $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$ProdCode); 
+        $this->TotalSum=[ 
+            'TotalInc'=>(new PaymentMod())->countPayments($this->ContCode,3,9),
+            'TotalDep'=>(new PaymentMod())->countPayments($this->ContCode,11,12)
+        ];
     }
     
     public function addPayment(){
         $ClFIO=(new Client($_GET['ClCode']))->getClRec()->CLFIO;
-        $this->PayPr=$_GET['PAYPR'];
-        
+        $this->PayPr=$_GET['PAYPR'];        
         foreach($this->PaymentType as $Type){            
             if ($this->PayPr==$Type->NAME){
-                $this->PayType=$Type->PAYTYPE1;                
-                (new logger())->logToFile("find: ".$Type->NAME." code ".$Type->PAYTYPE1);
+                $this->PayType=$Type->PAYTYPE1;                                
             }            
         }        
         if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
             $this->PaySum=$this->PaySum*(-1);
+        }        
+        if ($_GET['FROFFICE']==''){
+            $this->ContBranch=$_SESSION['EmBranch'];
+        }else{
+            $this->ContBranch=$_GET['FROFFICE'];
+        }                
+        $OrgPref=(new Branch($this->ContBranch))->getRec()->BRORGPREF;        
+        (new PaymentMod())->addPayment($_SESSION['EmName'],$this->ProdCode,$this->ContCode,$this->PaySum,$_GET['PAYDATE'],$_GET['PAYPR'],
+                $_SESSION['EmBranch'],$OrgPref,$this->ContBranch,$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType);
+        
+        if ($this->PayType==3){
+            (new ContP1($this->ContCode))->updFirstPayDate();
         }
         
-        (new PaymentMod())->addPayment($_SESSION['EmName'],$this->ProdCode,$this->ContCode,$this->PaySum,$_GET['PAYDATE'],$_GET['PAYPR'],
-                $_SESSION['EmBranch'],'Альт',$_GET['FROFFICE'],$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType);
-        //$Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType
         $this->getLastPaymentRec();
-        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
+        
+        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){            
             $this->printReturn();
-        } else {
+        } else {            
             $this->printPayment();
         }
+    }
         
+    public function formPayBill($BillNum) {
+        $this->getLastPaymentRec($BillNum);
+        if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){            
+            $this->printReturn();
+        } else {            
+            $this->printPayment();
+        }
     }
     
-    public function getLastPaymentRec(){//получение реквизитов последнего платежа для вывода на печать
-        $LastPay=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode)[0];
-        #var_dump($LastPay);
-        #exit();
-        $Branch=new Branch($this->ContBranch);
+    public function getLastPaymentRec($i=0){//получение реквизитов последнего платежа для вывода на печать
+        (new logger('_pay'))->logToFile($_SESSION['EmName']." started getting PaymentRec on ORG ".$this->OrgName." client ".$this->ContClient);
+        $LastPay=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode)[$i];        
+        $Branch=new Branch($LastPay->CONTBRANCH);    
         
         $Org=new Organization($Branch->getRec()->BRORGPREF);
-        
+        #new MyCheck($Org,0);
         $Client=new Client($this->ClCode);
-        $Cont=new ContP1($this->ContCode);
-        $this->ContPr="по договору №{$Cont->getFront()->CONTCODE} от {$Cont->getFront()->FRCONTDATE}";
+        if (($this->ProdCode==1)&&($this->PayType<10)){
+            $Cont=new ContP1($this->ContCode);
+            $this->ContPr="по договору №{$Cont->getFront()->CONTCODE}-Б от {$Cont->getFront()->FRCONTDATE}";
+        }
+        
+        if (($this->ProdCode==1)&&($this->PayType>10)){
+            $Cont=new ContP1($this->ContCode);
+            $this->ContPr="Компенсация расходов Исполнителя за оплату депозита/госпошлины/публикаций и пр.";
+        }
+        #if ($this->ProdCode==4){
+        #    $Cont=new ContP4($this->ContCode);
+        #}
+        #$this->ContPr="по договору №{$Cont->getFront()->CONTCODE} от {$Cont->getFront()->FRCONTDATE}";
+        
         $this->ContClient=$Client->getClRec()->CLFNAME.' '.$Client->getClRec()->CL1NAME.' '.$Client->getClRec()->CL2NAME;
         $this->PayCode=$LastPay->PAYCODE;
         $this->PaySum=$LastPay->PAYSUM;
@@ -99,6 +132,7 @@ class Payment {
             $this->BuchName=$Branch->getRec()->BRBUCH1;
             $this->KassName=$Branch->getRec()->BRKASS1;
         }
+        (new logger('_pay'))->logToFile($_SESSION['EmName']." got PaymentRec on ORG ".$this->OrgName." client ".$this->ContClient);
     }
             
     public function getTypeList(){
@@ -107,6 +141,10 @@ class Payment {
     
     public function getPaymentList(){
         return $this->PaymentList;
+    }
+    
+    public function getTotalSum(){
+        return $this->TotalSum;
     }
     
     protected function printPayment(){
@@ -135,6 +173,7 @@ class Payment {
         
         
         $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ContCode}.xlsx";
+        (new logger('_pay'))->logToFile($_SESSION['EmName']." printed PKO ".$FileName);
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);
     }
@@ -155,6 +194,7 @@ class Payment {
         $sheet->setCellValue("AG37", $this->KassName);
                       
         $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ContCode}.xlsx";
+        (new logger('_pay'))->logToFile($_SESSION['EmName']." printed RKO ".$FileName);
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);
     }

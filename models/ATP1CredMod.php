@@ -12,16 +12,16 @@ class ATP1CredMod extends Model{
     protected $Data=[];
     
     public function GetP1CredList($ContCode){ //получение списка 
-        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrCode DESC;";                
+        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrOpenDat, CrCode DESC;";                
         $Params=[$ContCode];
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
     }
     
-//    public function GetP1CredList($ContCode){ //получение списка 
-//        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? ORDER BY CrCode;";                
-//
-//        return $this->Data=db2::getInstance()->FetchAll($Sql,[$ContCode]);    
-//    }
+    public function GetP1IskList($ContCode){ //получение списка 
+        $Sql="SELECT * FROM tblP1Credits LEFT JOIN tbl8DrBanks ON tblP1Credits.CRBANKCURINN=tbl8DrBanks.BnINN WHERE ContCode=? ORDER BY CrOpenDat, CrCode DESC;";                
+        $Params=[$ContCode];
+        return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
+    }
     
     public function GetP1Credit($CrCode){ 
         $Sql="SELECT * FROM tblP1Credits WHERE CrCode=?;";                
@@ -32,6 +32,18 @@ class ATP1CredMod extends Model{
     public function InsP1Credit($ContCode){
         $Sql="INSERT INTO tblP1Credits (ContCode,lgEmp) values (?,?)";
         $Params=[$ContCode,'admin'];
+        db2::getInstance()->Query($Sql,$Params); 
+    }
+    
+    public function CopyP1Credit($CrCode){
+        $Sql="INSERT INTO tblP1Credits (ContCode,LgEmp,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
+            CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
+            CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName) 
+            SELECT ContCode,LgEmp,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
+            CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
+            CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName
+            FROM tblP1Credits WHERE CrCode=?";
+        $Params=[$CrCode];
         db2::getInstance()->Query($Sql,$Params); 
     }
     
@@ -74,6 +86,12 @@ class ATP1CredMod extends Model{
     public function InsCrDoc($ContCode,$CrCode,$CrDocName,$CrDocPages,$CrDocNum,$CrDocDate){
         $Sql="INSERT INTO tblP1CrDocs (ContCode,CrCode,CrDocName,CrDocPages,CrDocNum,CrDocDate)VALUES (?,?,?,?,?,?)";
         $Params=[$ContCode,$CrCode,$CrDocName,$CrDocPages,$CrDocNum,$CrDocDate];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    //удаление документа из списка
+    public function DelCredDoc($CrCode,$ContCode){
+        $Sql="DELETE FROM tblP1CrDocs WHERE ID=? AND ContCode=?";    
+        $Params=[$CrCode,$ContCode];
         db2::getInstance()->Query($Sql,$Params);
     }
     //работа со списками для анкеты

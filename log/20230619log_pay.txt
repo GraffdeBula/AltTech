@@ -1,0 +1,264 @@
+2023-06-19 02:13:01 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 02:13:02 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Мокрова Ирина  Витальевна
+
+2023-06-19 02:13:02 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7042.xlsx
+
+2023-06-19 02:24:18 --> Татьяна Юртаева started getting PaymentRec on ORG  client 
+
+2023-06-19 02:24:19 --> Татьяна Юртаева got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Громов Александр Владимирович
+
+2023-06-19 02:24:19 --> Татьяна Юртаева printed PKO /var/www/html/AltTech/payments/7256.xlsx
+
+2023-06-19 03:07:57 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 03:07:58 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Мокрова Ирина  Витальевна
+
+2023-06-19 03:07:58 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7042.xlsx
+
+2023-06-19 03:11:01 --> Юлия Плахина started getting PaymentRec on ORG  client 
+
+2023-06-19 03:11:01 --> Юлия Плахина got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Никифорова Марина Владимировна
+
+2023-06-19 03:11:01 --> Юлия Плахина printed PKO /var/www/html/AltTech/payments/7103.xlsx
+
+2023-06-19 03:31:08 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 03:31:09 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Смирнова Лариса Викторовна
+
+2023-06-19 03:31:09 --> Евгения Сомова printed PKO /var/www/html/AltTech/payments/6586.xlsx
+
+2023-06-19 03:31:15 --> Денис Поляков started getting PaymentRec on ORG  client 
+
+2023-06-19 03:31:16 --> Денис Поляков got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Лебедева Тамара Дмитриевна
+
+2023-06-19 03:31:16 --> Денис Поляков printed PKO /var/www/html/AltTech/payments/6870.xlsx
+
+2023-06-19 03:42:21 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 03:42:22 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Сунгатулина Елена Владимировна
+
+2023-06-19 03:42:22 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/7035.xlsx
+
+2023-06-19 03:55:35 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 03:55:36 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Алифанов Александр Михайлович
+
+2023-06-19 03:55:36 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/2836.xlsx
+
+2023-06-19 04:03:51 --> Ольга Щеглова started getting PaymentRec on ORG  client 
+
+2023-06-19 04:03:52 --> Ольга Щеглова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Олесеюк Анастасия  Анатольевна
+
+2023-06-19 04:03:52 --> Ольга Щеглова printed PKO /var/www/html/AltTech/payments/7389.xlsx
+
+2023-06-19 04:28:02 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 04:28:03 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Ткалун Ирина  Сергеевна
+
+2023-06-19 04:28:03 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7032.xlsx
+
+2023-06-19 04:35:57 --> Анастасия Шаравина started getting PaymentRec on ORG  client 
+
+2023-06-19 04:35:58 --> Анастасия Шаравина got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Хорошавина Роза Анатольевна
+
+2023-06-19 04:35:58 --> Анастасия Шаравина printed PKO /var/www/html/AltTech/payments/7395.xlsx
+
+2023-06-19 04:51:41 --> Елена Сапонова started getting PaymentRec on ORG  client 
+
+2023-06-19 04:51:42 --> Елена Сапонова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Брагин Юрий Валентинович
+
+2023-06-19 04:51:42 --> Елена Сапонова printed PKO /var/www/html/AltTech/payments/6259.xlsx
+
+2023-06-19 04:54:34 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 04:54:35 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Козлова Марина Сергеевна
+
+2023-06-19 04:54:35 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7057.xlsx
+
+2023-06-19 04:55:44 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 04:55:45 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Козлов Виктор Петрович
+
+2023-06-19 04:55:45 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7058.xlsx
+
+2023-06-19 05:02:58 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 05:02:58 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Майгова Наталья  Юрьевна
+
+2023-06-19 05:02:58 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/6991.xlsx
+
+2023-06-19 05:18:50 --> Кристина Алексеева started getting PaymentRec on ORG  client 
+
+2023-06-19 05:18:51 --> Кристина Алексеева got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Зволева Ольга Николаевна
+
+2023-06-19 05:18:51 --> Кристина Алексеева printed PKO /var/www/html/AltTech/payments/7207.xlsx
+
+2023-06-19 05:38:18 --> Елизавета Михайловская started getting PaymentRec on ORG  client 
+
+2023-06-19 05:38:19 --> Елизавета Михайловская got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Гофман Светлана Юрьевна
+
+2023-06-19 05:38:19 --> Елизавета Михайловская printed PKO /var/www/html/AltTech/payments/6877.xlsx
+
+2023-06-19 05:39:34 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 05:39:35 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Юркова Татьяна Анатольевна
+
+2023-06-19 05:39:35 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/6875.xlsx
+
+2023-06-19 05:41:53 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 05:41:53 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Бардина Лариса Владимировна
+
+2023-06-19 05:41:53 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/2511.xlsx
+
+2023-06-19 05:51:00 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 05:51:01 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Вишкурева Лилия Викторовна
+
+2023-06-19 05:51:01 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/6961.xlsx
+
+2023-06-19 05:56:00 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 05:56:01 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Чурикова Ольга Николаевна
+
+2023-06-19 05:56:01 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/7172.xlsx
+
+2023-06-19 05:59:32 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 05:59:32 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Рыжов Владимир Анатольевич
+
+2023-06-19 05:59:32 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/7223.xlsx
+
+2023-06-19 06:06:47 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 06:06:48 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Величко Инна Валерьевна
+
+2023-06-19 06:06:48 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/7176.xlsx
+
+2023-06-19 06:20:01 --> Кристина Алексеева started getting PaymentRec on ORG  client 
+
+2023-06-19 06:20:01 --> Кристина Алексеева got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Березина Олеся Романовна
+
+2023-06-19 06:20:01 --> Кристина Алексеева printed PKO /var/www/html/AltTech/payments/7397.xlsx
+
+2023-06-19 06:21:17 --> Юлия Плахина started getting PaymentRec on ORG  client 
+
+2023-06-19 06:21:18 --> Юлия Плахина got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Дубровский  Сергей Алексеевич
+
+2023-06-19 06:21:18 --> Юлия Плахина printed PKO /var/www/html/AltTech/payments/6521.xlsx
+
+2023-06-19 06:29:47 --> Максим Малиновский started getting PaymentRec on ORG  client 
+
+2023-06-19 06:29:47 --> Максим Малиновский got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Новокшенова Тамара Ивановна
+
+2023-06-19 06:29:47 --> Максим Малиновский printed PKO /var/www/html/AltTech/payments/7201.xlsx
+
+2023-06-19 06:30:55 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 06:30:56 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Русских Юрий Федорович
+
+2023-06-19 06:30:56 --> Евгения Сомова printed PKO /var/www/html/AltTech/payments/7396.xlsx
+
+2023-06-19 06:34:18 --> Елизавета Михайловская started getting PaymentRec on ORG  client 
+
+2023-06-19 06:34:19 --> Елизавета Михайловская got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Пичугина  Наталья  Николаевна
+
+2023-06-19 06:34:19 --> Елизавета Михайловская printed PKO /var/www/html/AltTech/payments/6892.xlsx
+
+2023-06-19 07:01:36 --> Анастасия Шаравина started getting PaymentRec on ORG  client 
+
+2023-06-19 07:01:36 --> Анастасия Шаравина got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Попова Валентина Васильевна
+
+2023-06-19 07:01:37 --> Анастасия Шаравина printed PKO /var/www/html/AltTech/payments/6551.xlsx
+
+2023-06-19 07:05:18 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-19 07:05:19 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Вауленко  Виктор Федотович
+
+2023-06-19 07:05:19 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7126.xlsx
+
+2023-06-19 07:17:41 --> Денис Поляков started getting PaymentRec on ORG  client 
+
+2023-06-19 07:17:41 --> Денис Поляков got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Белорукова Елена Борисовна
+
+2023-06-19 07:17:41 --> Денис Поляков printed PKO /var/www/html/AltTech/payments/7100.xlsx
+
+2023-06-19 07:21:06 --> Елена Сапонова started getting PaymentRec on ORG  client 
+
+2023-06-19 07:21:06 --> Елена Сапонова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Смирнов Алексей Юрьевич
+
+2023-06-19 07:21:06 --> Елена Сапонова printed PKO /var/www/html/AltTech/payments/5799.xlsx
+
+2023-06-19 08:13:10 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 08:13:11 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Бутылина Ольга Владимировна
+
+2023-06-19 08:13:11 --> Евгения Сомова printed PKO /var/www/html/AltTech/payments/7284.xlsx
+
+2023-06-19 08:34:27 --> Ольга Щеглова started getting PaymentRec on ORG  client 
+
+2023-06-19 08:34:27 --> Ольга Щеглова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Червова  Сабина Шафа Кызы
+
+2023-06-19 08:34:27 --> Ольга Щеглова printed PKO /var/www/html/AltTech/payments/7398.xlsx
+
+2023-06-19 08:43:37 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 08:43:38 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Пупкова Мария Николаевна
+
+2023-06-19 08:43:38 --> Евгения Сомова printed PKO /var/www/html/AltTech/payments/6901.xlsx
+
+2023-06-19 08:57:40 --> Максим Малиновский started getting PaymentRec on ORG  client 
+
+2023-06-19 08:57:41 --> Максим Малиновский got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Глебова Марина Петровна
+
+2023-06-19 08:57:41 --> Максим Малиновский printed PKO /var/www/html/AltTech/payments/6547.xlsx
+
+2023-06-19 08:58:38 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 08:58:39 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Андреев Александр Андреевич
+
+2023-06-19 08:58:39 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/6520.xlsx
+
+2023-06-19 08:58:48 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 08:58:49 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Вайс Сергей Александрович
+
+2023-06-19 08:58:49 --> Евгения Сомова printed RKO /var/www/html/AltTech/payments/7247.xlsx
+
+2023-06-19 08:59:25 --> Максим Малиновский started getting PaymentRec on ORG  client 
+
+2023-06-19 08:59:26 --> Максим Малиновский got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Глебов Александр Владимирович
+
+2023-06-19 08:59:26 --> Максим Малиновский printed PKO /var/www/html/AltTech/payments/6548.xlsx
+
+2023-06-19 09:03:23 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 09:03:24 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Суворов Евгений Олегович
+
+2023-06-19 09:03:24 --> Евгения Сомова printed RKO /var/www/html/AltTech/payments/6640.xlsx
+
+2023-06-19 09:32:16 --> Евгения Сомова started getting PaymentRec on ORG  client 
+
+2023-06-19 09:32:16 --> Евгения Сомова got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Иванова Наталья Валерьевна
+
+2023-06-19 09:32:16 --> Евгения Сомова printed PKO /var/www/html/AltTech/payments/6999.xlsx
+
+2023-06-19 10:10:47 --> Денис Поляков started getting PaymentRec on ORG  client 
+
+2023-06-19 10:10:48 --> Денис Поляков got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Белоусенко Вячеслав Викторович
+
+2023-06-19 10:10:48 --> Денис Поляков printed PKO /var/www/html/AltTech/payments/7026.xlsx
+
+2023-06-19 10:23:45 --> Максим Малиновский started getting PaymentRec on ORG  client 
+
+2023-06-19 10:23:46 --> Максим Малиновский got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Сафонов Александр Владимирович
+
+2023-06-19 10:23:46 --> Максим Малиновский printed PKO /var/www/html/AltTech/payments/7037.xlsx
+
+2023-06-19 10:40:08 --> Вячеслав Истомин started getting PaymentRec on ORG  client 
+
+2023-06-19 10:40:09 --> Вячеслав Истомин got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Хусаенов Ирик Ирикович
+
+2023-06-19 10:40:09 --> Вячеслав Истомин printed PKO /var/www/html/AltTech/payments/6974.xlsx
+

@@ -2,22 +2,73 @@
 
 /**
  * модель для работы с пакетами и тарифами
- *
+ * 
+ * получение и изменение списка пакетов
+ * получение и изменение списка тарифов
+ * 
+ * получение тарифа по имени и сумме долга для договора
  * @author Andrey
  */
 class TarifMod extends Model{
     protected $Data=[]; //для полученных данных
+    
+    public function getPacFullList(){
+        $Sql="SELECT * FROM tblP1Pacs ORDER BY PcAct,PcProg,PcTemplateRoot,PcPeriod";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
+    }
+    
+    public function addPac($PcProg,$PcPac,$PcAct,$PcTemplateRoot,$PcBookmarkList,$PcPeriod){
+        $Sql="INSERT INTO tblP1Pacs (PcProg,PcPac,PcAct,PcTemplateRoot,PcBookmarksList,PcPeriod) VALUES (?,?,?,?,?,?)";
+        db2::getInstance()->Query($Sql,[$PcProg,$PcPac,$PcAct,$PcTemplateRoot,$PcBookmarkList,$PcPeriod]);
+    }
+    
+    public function updPac(){
         
+    }
+    
+    public function delPac($Id){
+        $Sql="DELETE FROM tblP1Pacs WHERE ID=?";
+        db2::getInstance()->Query($Sql,[$Id]);
+    }
+    
+    public function getPacBranchList(){
+        $Sql="SELECT tblP1PacBranchTypes.ID as ID,pcTemplateRoot,pacName,pacBrName,pacContType,pcPeriod FROM tblP1PacBranchTypes INNER JOIN tblP1Pacs "
+                . "ON tblP1PacBranchTypes.pacName=tblP1Pacs.pcPac WHERE pcAct=? ORDER BY pacBrName,pacName ";
+        return db2::getInstance()->FetchAll($Sql,[1]);
+    }
+    
+    public function getPacBranch($Pac,$Branch){
+        $Sql="SELECT * FROM tblP1PacBranchTypes WHERE pacName=? AND pacBrName=?";
+        return db2::getInstance()->FetchOne($Sql,[$Pac,$Branch]);
+    }
+    
+    public function updPacBranch($Id,$PayType){
+        $Sql="UPDATE tblP1PacBranchTypes SET pacContType=? WHERE Id=?";
+        db2::getInstance()->Query($Sql,[$PayType,$Id]);
+    }
+    
     public function getTarifList(){
         $Sql="SELECT TrName FROM tblp1tarif WHERE TrStatus=? GROUP BY TrName";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[1]);
     }
 
     public function getTarifFullList(){
-//        $Sql="INSERT INTO tblP1Tarif (trStatus,trName,trComment,trPac,trSumMin,trSumMax,trType,trSumFix,trSumAnn) 
-//            VALUES (?,?,?,?,?,?,?,?,?)";
-//        db2::getInstance()->Query($Sql,$Params);
-        return [];
+        $Sql="SELECT * FROM tblP1Tarif ORDER BY TrName,TrSumMin";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
+    }
+    
+    public function addTarif($TrStatus,$TrDate,$TrName,$TrComment,$TrPac,$TrSumMin,$TrSumMax,$TrType,$TrSumFix,$TrSumAnn,$TrSumPerc){
+        $Sql="INSERT INTO tblP1Tarif (TrStatus,TrDate,TrName,TrComment,TrPac,TrSumMin,TrSumMax,TrType,TrSumFix,TrSumAnn,TrSumPerc) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        db2::getInstance()->Query($Sql,[$TrStatus,$TrDate,$TrName,$TrComment,$TrPac,$TrSumMin,$TrSumMax,$TrType,$TrSumFix,$TrSumAnn,$TrSumPerc]);
+    }
+    
+    public function updTarif(){
+        
+    }
+    
+    public function delTarif($Id){
+        $Sql="DELETE FROM tblP1Tarif WHERE ID=?";
+        db2::getInstance()->Query($Sql,[$Id]);
     }
 
     public function getPacList(){
@@ -27,7 +78,7 @@ class TarifMod extends Model{
     }
     
     public function getTarif($TrName,$DebtSum){
-        $Sql="SELECT * FROM tblp1tarif WHERE TrName=? AND TrSumMin<=? AND TrSumMax>=?";
+        $Sql="SELECT * FROM tblp1tarif WHERE TrName=? AND TrSumMin<=? AND TrSumMax>=? AND TrStatus=1";
         return $this->Data=db2::getInstance()->FetchOne($Sql,[$TrName,$DebtSum,$DebtSum]);
     }
            

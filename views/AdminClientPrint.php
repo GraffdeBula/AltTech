@@ -44,17 +44,17 @@
                         </div>
                         <div class='f-input'>
                             <label for='crdebt'>Долг</label>
-                            <input type='text' name='crdebt' value='<?=$Contract->CRDEBTSUM?>' id='crdebt' autocomplete="off">
+                            <input type='text' name='crdebt' value='<?=$Contract->AKCREDTOTSUM?>' id='crdebt' autocomplete="off">
 
                             <label for='crdelay'>Просроченный долг</label>
-                            <input type='text' name='crdelay' value='<?=$Contract->CRDEBTDELAYSUM?>' id='crdelay' autocomplete="off">
+                            <input type='text' name='crdelay' value='<?=$Contract->AKCREDTOTSUM?>' id='crdelay' autocomplete="off">
 
                             <label for='crfee'>Штрафы</label>
-                            <input type='text' name='crfee' value='<?=$Contract->CRDEBTFEESUM?>' id='crfee' autocomplete="off">
+                            <input type='text' name='crfee' value='<?=$Contract->AKCREDTOTSUM?>' id='crfee' autocomplete="off">
                         </div>
                         <div class='f-input'>
                             <label for='iskDate'>Дата подписания иска</label>
-                            <input type='date' name='iskDate' value='<?=$Contract->BOISKSIGNEDDAT?>' id='iskDate' autocomplete="off">
+                            <input type='date' name='iskDate' value='<?=$Contract->AKCREDTOTSUM?>' id='iskDate' autocomplete="off">
                         </div>      
                         </div>
                     <div class='f-actions'>

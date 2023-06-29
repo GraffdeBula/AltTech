@@ -32,6 +32,10 @@ class ATP1ContMod extends Model{
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP1Expert WHERE contCode='{$ContCode}';");        
     }
     
+    public function GetBackOf($ContCode){ //метод возвращает строку из таблицы p1Expert
+        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP1BackOf WHERE contCode='{$ContCode}';");        
+    }
+    
     public function GetCont($ContCode){ 
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM vwP1ContList WHERE contCode='{$ContCode}';");        
     }
@@ -94,4 +98,75 @@ class ATP1ContMod extends Model{
         $Params=[$ContCode];
         db2::getInstance()->Query($Sql,$Params);  
     }
+    
+    public function updP1Front1($Key=['lgDat','lgEmp','ContCode'],$Params=['current_timeset','admin',0]) {
+        $i=0;
+        $Sql="UPDATE tblP1Anketa SET ";
+        $Len=count($Key);
+        echo($Len."<br>===<br>");
+        foreach($Key as $Field){
+            if ($i<=$Len-3){
+                $Sql=$Sql.$Field."=?,";
+            } elseif ($i==$Len-2){
+                $Sql=$Sql.$Field."=?";
+            } else {
+                $Sql=$Sql." WHERE ".$Field."=?";
+            }            
+            $i++;
+        }
+        var_dump($Sql);
+        exit();
+        db2::getInstance()->Query($Sql,$Params);  
+        
+    }
+    
+    public function updP1BackOf($Key=['lgDat','lgEmp','ContCode'],$Params=['current_timestamp','admin',0]) {
+        $i=0;
+        $Sql="UPDATE tblP1BackOf SET lgdat=current_timestamp,";
+        $Len=count($Key);        
+        foreach($Key as $Field){
+            if ($i<=$Len-3){
+                $Sql=$Sql.$Field."=?,";
+            } elseif ($i==$Len-2){
+                $Sql=$Sql.$Field."=?";
+            } else {
+                $Sql=$Sql." WHERE ".$Field."=?";
+            }            
+            $i++;
+        }        
+        db2::getInstance()->Query($Sql,$Params);  
+        
+    }
+    
+    /*методы для построения отчёта по Действующей базе (P1)
+     * 
+     * 
+     */
+    
+    public function getPaysByBranch($Branch,$DateF,$DateL){
+        $Sql="SELECT tblClients.ClCode,tblp1Anketa.ContCode,ClFIO,FrContDate,FrContProg,FrContTarif,FrContSum,PaySum,PayDate,frOffice,PayLastDate,PayTotSum,DiscSum"
+                ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
+                ." INNER JOIN tblP1Front ON tblp1Anketa.ContCode=tblP1Front.ContCode"
+                ." INNER JOIN tblP1PayCalend on tblp1Anketa.ContCode=tblP1PayCalend.ContCode"
+                ." INNER JOIN vwTmpTotalPay on tblp1Anketa.ContCode=vwTmpTotalPay.ContCode"
+                ." INNER JOIN vwDiscountTotal on tblp1Anketa.ContCode=vwDiscountTotal.ContCode"
+                ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND (PayTotSum+DiscSum)<FrContSum AND FrContDate<?"
+                ." AND frContPac NOT IN ('pac24','pac33','pac38','pac39','pac40','pac57') AND FrContTarif NOT LIKE ? ORDER BY ClFIO";                
+            
+        return db2::getInstance()->FetchAll($Sql,[$Branch,$DateF,$DateL,$DateF,"%сразу%"]);
+    }
+    
+    public function getPaysByBranchCred($Branch,$DateF,$DateL){
+        $Sql="SELECT tblClients.ClCode,tblp1Anketa.ContCode,ClFIO,FrContDate,FrContProg,FrContTarif,FrContSum,PaySum,PayDate,frOffice,PayLastDate,PayTotSum,DiscSum"
+                ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
+                ." INNER JOIN tblP1Front ON tblp1Anketa.ContCode=tblP1Front.ContCode"
+                ." INNER JOIN tblP1PayCalend on tblp1Anketa.ContCode=tblP1PayCalend.ContCode"
+                ." INNER JOIN vwTmpTotalPay on tblp1Anketa.ContCode=vwTmpTotalPay.ContCode"
+                ." INNER JOIN vwDiscountTotal on tblp1Anketa.ContCode=vwDiscountTotal.ContCode"
+                ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND FrContDate<?"
+                ." AND frContPac IN ('pac24','pac33','pac38','pac39','pac40','pac57') ORDER BY ClFIO ";
+        return db2::getInstance()->FetchAll($Sql,[$Branch,$DateF,$DateL,$DateF]);
+    }
+    
+    
 }

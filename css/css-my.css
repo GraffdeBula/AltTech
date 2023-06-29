@@ -1,0 +1,291 @@
+﻿/*стили для классов*/
+/*общие*/
+.h3_my{
+    color: #008500;
+}
+
+#my_calc{
+    position: fixed;
+    top: 120px;
+    right: 0;
+    left: 120px;
+    bottom: 0;
+    z-index: 101;
+    display: none;
+}
+
+#my_background{
+    background-color: rgba(0,0,0,0.6);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+}
+
+.my_form{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 800px;
+    width: 1880px;
+}
+/*для списка клиентов*/
+.client_list{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 600px;
+}
+
+.client_search{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 200px;
+}
+
+.client_ins{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 250px;    
+}
+/*для списка договоров*/
+.cont_list{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 300px;
+}
+
+/*досье ЭКСПЕРТИЗА*/
+.exp_cred_list{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 200px;
+}
+.exp_risk_list{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 200px;
+}
+/*для списка регионов*/
+.reg_list {		
+	outline: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px;
+	overflow: scroll;
+	height: 60%;
+}
+.reg_ins {		
+	outline: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px;
+	overflow: scroll;
+	height: 35%;
+}
+
+/*для списка сотрудников*/
+.emp_list {		
+	outline: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px;
+	overflow: scroll;
+	height: 100%;
+
+}
+.emp_info {		
+	outline: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px;
+	overflow: scroll;
+	height: 33%;
+	width: 100%;
+}
+
+.cred_list {		
+	outline: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px;
+	overflow: scroll;
+	height: 80%;
+	width: 45%;
+}
+/*для вьюшки ПКО*/
+/*формат карточки для отображения на одном экране*/
+.pko_card{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    height: 80vh;
+    width: 100vh;    
+}
+.pko_block1{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 33%;
+    width: 100%;
+}
+.pko_block2{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 33%;
+    width: 100%;
+}
+.pko_block3{
+    outline: 1px solid #ccc;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    height: 33%;
+    width: 100%;
+}
+
+.my_total{
+	font: bold 12pt sans-serif;
+}	
+
+/*формат кнопки ПОИСК*/
+.f-bu-find{
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.f-bu-find:link,
+.f-bu-find:visited,
+.f-bu-find:hover,
+.f-bu-find:active {
+  color: #ffffff;
+}
+.f-bu-find {
+  background-color: #4afaff;
+  background-image: -moz-linear-gradient(#80fcff, #4afaff);
+  background-image: -ms-linear-gradient(#80fcff, #4afaff);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #80fcff), color-stop(100%, #4afaff));
+  background-image: -webkit-linear-gradient(#80fcff, #4afaff);
+  background-image: -o-linear-gradient(#80fcff, #4afaff);
+  background-image: linear-gradient(#80fcff, #4afaff);
+}
+.f-bu-find:hover {
+  background-color: #23c9ce;
+  background-image: -moz-linear-gradient(#6cd2d4, #23c9ce);
+  background-image: -ms-linear-gradient(#6cd2d4, #23c9ce);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6cd2d4), color-stop(100%, #23c9ce));
+  background-image: -webkit-linear-gradient(#6cd2d4, #23c9ce);
+  background-image: -o-linear-gradient(#6cd2d4, #23c9ce);
+  background-image: linear-gradient(#6cd2d4, #23c9ce);
+}
+/*формат кнопка ВЫХОД*/
+.f-bu-exit{
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.f-bu-exit:link,
+.f-bu-exit:visited,
+.f-bu-exit:hover,
+.f-bu-exit:active {
+  color: #ffffff;
+}
+.f-bu-exit {
+  background-color: #be65fd;
+  background-image: -moz-linear-gradient(#deafff, #be65fd);
+  background-image: -ms-linear-gradient(#deafff, #be65fd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #deafff), color-stop(100%, #be65fd));
+  background-image: -webkit-linear-gradient(#deafff, #be65fd);
+  background-image: -o-linear-gradient(#deafff, #be65fd);
+  background-image: linear-gradient(#deafff, #be65fd);
+}
+.f-bu-exit:hover {
+  background-color: #9b51d0;
+  background-image: -moz-linear-gradient(#c99ee7, #9b51d0);
+  background-image: -ms-linear-gradient(#c99ee7, #9b51d0);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c99ee7), color-stop(100%, #9b51d0));
+  background-image: -webkit-linear-gradient(#c99ee7, #9b51d0);
+  background-image: -o-linear-gradient(#c99ee7, #9b51d0);
+  background-image: linear-gradient(#c99ee7, #9b51d0);
+}
+/*
+.my_header {
+	background: #9C6;
+	margin: ;
+}
+
+.my_button {
+  display:block;
+  width:200px;
+  height:30px;
+}
+*/
+
+/*стили для тэгов
+header {
+	height:150px;
+	background: #c8b;
+	text-align: center;
+	vertical-align: middle; 
+}
+*/
+.my-row {
+  zoom: 1;
+  margin: 20px 0 0;
+}
+.my-row:before,
+.my-row:after {
+  display: table;
+  content: '';
+}
+.my-row:after {
+  clear: both;
+}
+.my-row:first-child {
+  margin-top: 0;
+}
+.my-row > [class^='g-'] {
+  float: left;
+  margin: 0 0 0 20px;
+}
+.my-row > [class^='g-']:first-child {
+  margin-left: 0;
+}
+.my-row {		
+	outline: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px;
+	overflow: scroll;
+	height: 80%;
+	width: 100%;
+}
+input[type="text"] {
+    background-color: #f0dfc2;
+}
+
+input[type="date"] {
+    background-color: #f0dfc2;
+}
+
+select {
+    background-color: #f0dfc2;
+}
+
+.hr-block {
+    background-color: #151742;
+}
+
+.hr-tab {
+    background-color: #8d90c7;
+}

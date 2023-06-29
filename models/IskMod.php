@@ -41,6 +41,18 @@ class IskMod extends Model{
     public function getBookMarks3(){
     	return $this->Data=db::getInstance()->fetch_all("SELECT *  FROM tblPrintIsk3 ORDER BY bmName;");
     }
+    
+    //получение таблицы соответствия для новых догоовров
+    public function getBookMarks2_1(){
+    	return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblDocBookMarks WHERE BmDocName=? AND BmCheckData>? ORDER BY bmName;",['Isk1',0]);
+    }        
+    public function getBookMarks2_2(){
+    	return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblDocBookMarks WHERE BmDocName=? AND BmCheckData>? ORDER BY bmName;",['Isk2',0]);
+    }
+    public function getBookMarks2_3(){
+    	return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblDocBookMarks WHERE BmDocName=? AND BmCheckData>? ORDER BY bmName;",['Isk3',0]);
+    }
+    
     //сохранение инф по договору для иска
     public function UpdIskDat($params){
         $sql="UPDATE tblP2BackOf SET boIskSignedDat=? WHERE contCode=?;";

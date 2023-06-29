@@ -8,6 +8,11 @@
  */
 class AT7ReferProg extends Model{
     public function GetAgentList(){
+        $Sql="SELECT FIRST 200 * FROM tbl7ReferProg WHERE Status=1 ORDER BY ID DESC";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
+    }
+    
+    public function GetAgentFullList(){
         $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
@@ -27,9 +32,24 @@ class AT7ReferProg extends Model{
         return $this->Data=db2::getInstance()->FetchOne($Sql,[$Name]);
     }
     
-    public function UpdAgent($ID,$Name,$Code,$Refer){
-        $Sql="UPDATE tbl7ReferProg SET Name=?,Code=?,Refer=? WHERE ID=?";
-        db2::getInstance()->FetchOne($Sql,[$Name,$Code,$Refer,$ID]);
+    public function GetAgentByName($Name){
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Name LIKE ?";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Name."%"]);
+    }
+    
+    public function GetAgentByCode($Code){
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Code LIKE ?";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Code."%"]);
+    }
+    
+    public function GetAgentByPhone($Phone){
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Phone LIKE ?";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Phone."%"]);
+    }
+    
+    public function UpdAgent($ID,$Name,$Code,$Refer,$Phone){
+        $Sql="UPDATE tbl7ReferProg SET Name=?,Code=?,Refer=?,Phone=? WHERE ID=?";
+        db2::getInstance()->FetchOne($Sql,[$Name,$Code,$Refer,$Phone,$ID]);
     }
     
     public function DelAgent($ID,$Comment){

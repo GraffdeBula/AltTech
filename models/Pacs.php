@@ -13,8 +13,13 @@ class Pacs extends Model{
     }
     
     public function getPacByName($PacName){ //получение пакета по имени
-        return $this->Data=db::getInstance()->fetch_one("SELECT * FROM tblp1p2Pacs WHERE pcPac='{$PacName}'");
+        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblp1Pacs WHERE pcPac='{$PacName}'");
     }
+    
+//    ###на удаление  24/04/2023
+//    public function getPacByName($PacName){ //получение пакета по имени
+//        return $this->Data=db::getInstance()->fetch_one("SELECT * FROM tblp1p2Pacs WHERE pcPac='{$PacName}'");
+//    }
         
     public function saveNewPac($pacParams){
         $strSql="INSERT INTO tblP1P2Pacs (pcprog,pcPac,pcAct,pcTemplateRoot,pcBookmarkList) VALUES (?,?,?,?,?')";

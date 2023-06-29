@@ -18,9 +18,10 @@ class ClInfoCtrl extends Controller{
     
     protected function actionSearchData(){
         $this->ContCode=$_POST['contCode'];
-        $this->ClCode=(new Anketa1)->getAnketaByCode($_POST['contCode'])->CLCODE;
-        $this->Client=(new ClientMod)->getClientById($this->ClCode);
-        $this->Cont=(new IskMod)->getContract($this->ContCode);
+        $this->Cont=(new ContP1($_POST['contCode']))->getAnketa();
+        $this->ClCode=$this->Cont->CLCODE;
+        $this->Client=(new Client($this->ClCode))->getClRec();
+        #$this->Cont=(new IskMod)->getContract($this->ContCode);
         $args=['Client'=>$this->Client,'Contract'=>$this->Cont];
         $this->render('AdminClientPrint', $args);
         

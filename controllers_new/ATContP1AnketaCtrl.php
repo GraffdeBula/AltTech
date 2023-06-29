@@ -47,6 +47,13 @@ class ATContP1AnketaCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionCopyCred(){
+        $Model=new ATP1CredMod();
+        $Model->CopyP1Credit($_GET['CrCode']);
+                
+        header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionUpdCred(){
         $Model=new ATP1CredMod();
         $Model->UpdP1Credit(['CRBANKCONTTYPE'=>$_GET['CRBANKCONTTYPE'],'CRBANKCONTNAME'=>$_GET['CRBANKCONTNAME'],'CRBANKCONTINN'=>$_GET['CRBANKCONTINN'],
@@ -86,19 +93,25 @@ class ATContP1AnketaCtrl extends ControllerMain {
         
         header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    
+       
+    public function actionDelCred(){
+        $Model=new ATP1CredMod();
+        $Model->DelP1Credit($_GET['CrCode']);
+        header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+        
     public function actionNewCredDoc(){
         $Model=new ATP1CredMod();
         $Model->InsCrDoc($_GET['ContCode'],$_GET['CRCODE'],$_GET['CRDOCNAME'],$_GET['CRDOCPAGES'],$_GET['CRDOCNUM'],$_GET['CRDOCDATE']);
         header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionDelCred(){
+    public function actionDelCredDoc(){
         $Model=new ATP1CredMod();
-        $Model->DelP1Credit($_GET['CrCode']);
+        $Model->DelCredDoc($_GET['CrDocId'],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-            
+    
     public function ChangeStatus($StatNum){
         (new ATP1ContMod)->ChangeStatus($StatNum,$this->ContCode);
     }

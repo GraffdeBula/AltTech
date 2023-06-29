@@ -7,17 +7,18 @@
  */
 class PrintFunctions {
     public function CredList($ContCode){
-        $List=(new CreditorsMod)->getBankList($ContCode);
+        $List=(new CreditorsMod)->getCredAll($ContCode);
         $CredList='';
         foreach($List as $Key => $Name){
             if ($Key==0){
-                $CredList=$Name->CRNAME;
+                $CredList=$Name->CRBANKCURNAME;
             } else {
-                $CredList=$CredList.', '.$Name->CRNAME;
+                $CredList=$CredList.', '.$Name->CRBANKCURNAME;
             }
         }
         return $CredList;
     }
+    
     
     public function Discounts($Bookmark,$CredSum,$TrPac,$Period,$ContSum){
         $Tarif=(new Pacs)->getTarifByName($TrPac, $CredSum);

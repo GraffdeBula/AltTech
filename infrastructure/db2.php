@@ -3,8 +3,7 @@
 class db2{
     //имя и путь к БД
     //имя подключения к рабочей базе
-    #const DB_NAME='firebird:dbname=37.194.45.101:client2;';       
-    const DB_NAME='firebird:dbname=127.0.0.1:client2;';       
+    const DB_NAME='firebird:dbname=192.168.154.252:client2';       
     //логин и пароль к БД
     protected $dblogin;
     protected $dbpass;
@@ -38,14 +37,14 @@ class db2{
     public function Query($sql,$params=[]) {//вызов запроса к БД c параметрами        
         try {
             $query=$this->getConnection()->prepare($sql);                     
-        } catch (\PDOException $e) {
-            new MyCheck($sql,2);
+        } catch (\PDOException $e) {            
+            new MyCheck($e,$sql,2);
         }
         
         try {
             $query->execute($params);            
         } catch (\PDOException $e) {
-            new MyCheck([$sql,$params],2);
+            new MyCheck([$e,$sql,$params],1);
         }                
         return $query;//->execute($params);                         
     }
@@ -66,29 +65,7 @@ class db2{
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }                
-    }
-        
-    
-    //удалить после рефакторинга
-    public function fetch_all($sql,$params=[]) {//разбор нескольких строк
-        try{
-            $result=$this->Query($sql,$params);
-            return $result->fetchAll(\PDO::FETCH_OBJ); //каждая строка таблицы возвращается в виде объекта, а все образуют массив
-        } catch (\PDOException $e) {
-            echo $e->getMessage();
-        }                
-    }
-        
-    public function fetch_one($sql='',$params=[]) {//разбор одной строки
-        try{
-            $result=$this->Query($sql,$params);
-            return $result->fetch(\PDO::FETCH_OBJ); //строка возвращается в виде объекта
-        } catch (\PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-    
-    
+    }          
         
 }
 

@@ -29,15 +29,55 @@ class ATContP4FileFrontCtrl extends ControllerMain {
         $this->GetComments();
         $this->ShowFile();
     }
-          
-    public function actionFrontSave(){                
-        $this->FrontSave();        
+    
+    public function actionCons(){
+        (new ATP4ContMod())->updP4Cons($_GET['FROFFICE'],$_SESSION['EmName'],$_GET['FRCONSDATE'],$_SESSION['EmName'],$_GET['ContCode']);
+        (new Status())->ChangeP4Status(2, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    //$FrOffice,$FrPersManager,$FrConsDate,$Emp,$ContCode
+    public function actionContSigned(){
+        (new ATP4ContMod())->updP4Cont($_GET['FROFFICE'],$_SESSION['EmName'],$_GET['FRCONTDATE'],$_GET['FRCONTSUM'],$_SESSION['EmName'],$_GET['ContCode']);
+        (new Status())->ChangeP4Status(4, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionChangeBranch(){      
+        (new ATP4ContMod())->updP4Office($_GET['FROFFICE'],$_SESSION['EmName'],$_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDovGet(){
+        (new ATP4ContMod())->updP4Dov($_GET['FROFFICE'],$_SESSION['EmName'],$_GET['FRDOVDATE'],$_SESSION['EmName'],$_GET['ContCode']);
+        (new Status())->ChangeP4Status(6, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionJurSave(){
+        (new ATP4ContMod())->updP4Jurist($_GET['FRJURIST'],$_SESSION['EmName'],$_GET['ContCode']);        
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionWorkFinal(){
+        (new ATP4ContMod())->updP4FinWork($_SESSION['EmName'],$_GET['ContCode']);        
+        (new Status())->ChangeP4Status(10, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionServiceSave(){
+        (new ATP4ContMod())->updP4FrontService($_GET['ContCode'],$_GET['FrContService'],$_GET['FrJurBranch'],$_GET['FrAttrChannel'],$_GET['FrContResult'],$_GET['FrJurist'],$_GET['FrFinWorkDate']);
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+       
     public function actionAddPayment(){
         (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],4,$_GET['PAYCONTTYPE'],$_GET['PAYSUM']))->addPayment();
         
+        header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDelPayment(){
+        (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
+        (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -50,18 +90,6 @@ class ATContP4FileFrontCtrl extends ControllerMain {
         (new ATCommentMod)->DelComment($_GET('Id'));
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }   
-    
-    protected function FrontSave(){
-        $Params=[];
-        foreach($_GET as $Key => $Param){
-            if (in_array($Key,$this->TblP4Front)){
-                $Params[$Key]=$Param;
-            }
-        }        
-        
-        $Model=new ATP4ContMod();        
-        $Model->UpdP1Front($Params,$_GET['ContCode']);        
-    }
 
     protected function GetClient(){
         $Model=new ATClientMod();
@@ -92,7 +120,7 @@ class ATContP4FileFrontCtrl extends ControllerMain {
             'Front'=>$this->TblP4Front,            
             'Comments'=>$this->Comments,
             'Payment'=>new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],4),
-            'Tarif'=>new TarifP1(),
+            'EmpList'=>(new Employee(''))->getEmpList()
         ];
         $this->render('ATContP4FileFront',$args);
     }

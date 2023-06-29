@@ -23,8 +23,8 @@
                 <th scope="col">Код</th>
                 <th scope="col">Значение</th>
                 <th scope="col">Префикс</th>
-                <th scope="col">Открыть</th>
                 <th scope="col">Удалить</th>
+                <th scope="col">Открыть</th>
             </thead>
             <tbody>
                 <?php

@@ -1,0 +1,42 @@
+2023-06-17 02:24:07 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-17 02:24:08 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Синагулова Инна  Сергеевна
+
+2023-06-17 02:24:08 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/6949.xlsx
+
+2023-06-17 02:26:17 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-17 02:26:18 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Сарвиро Ольга Анатольевна
+
+2023-06-17 02:26:18 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7181.xlsx
+
+2023-06-17 04:03:00 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-17 04:03:01 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Казанцева Юлия Александровна
+
+2023-06-17 04:03:01 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7354.xlsx
+
+2023-06-17 04:08:28 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-17 04:08:29 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Казанцева Юлия Александровна
+
+2023-06-17 04:08:29 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/7354.xlsx
+
+2023-06-17 04:46:33 --> Анастасия Шаравина started getting PaymentRec on ORG  client 
+
+2023-06-17 04:46:33 --> Анастасия Шаравина got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Макян Елена Дерениковна
+
+2023-06-17 04:46:33 --> Анастасия Шаравина printed PKO /var/www/html/AltTech/payments/5932.xlsx
+
+2023-06-17 04:49:10 --> Анастасия Шаравина started getting PaymentRec on ORG  client 
+
+2023-06-17 04:49:11 --> Анастасия Шаравина got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Мизгулина Мария Владимировна
+
+2023-06-17 04:49:11 --> Анастасия Шаравина printed PKO /var/www/html/AltTech/payments/3509.xlsx
+
+2023-06-17 05:04:07 --> Евгения Эрдман started getting PaymentRec on ORG  client 
+
+2023-06-17 05:04:07 --> Евгения Эрдман got PaymentRec on ORG ООО ФПК "АЛЬТЕРНАТИВА" client Дубров Александр Александрович
+
+2023-06-17 05:04:07 --> Евгения Эрдман printed PKO /var/www/html/AltTech/payments/6784.xlsx
+

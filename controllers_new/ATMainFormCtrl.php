@@ -22,10 +22,7 @@ class ATMainFormCtrl extends ControllerMain {
     }
     
     public function actionClSearch(){
-        #var_dump($_GET);
-        #echo(ucfirst($_GET['ClFName']));
-        #exit();
-        $this->Params=[ucfirst($_GET['ClFName']),ucfirst($_GET['Cl1Name']),ucfirst($_GET['Cl2Name'])];
+        $this->Params=[ucfirst($_GET['ClFName']),ucfirst($_GET['Cl1Name']),ucfirst($_GET['Cl2Name']),$_GET['ClPasSer'],$_GET['ClPasNum']];
         $this->LoadList();
         $this->GetEmpWorkData();
         $this->GetRefers();       
@@ -35,7 +32,8 @@ class ATMainFormCtrl extends ControllerMain {
     
     public function actionClIns(){
         $this->ClIns();        
-        header("Location: index_admin.php?controller=ATMainFormCtrl&action=ClSearch&ClFName={$_GET['ClFName']}&Cl1Name={$_GET['Cl1Name']}&Cl2Name={$_GET['Cl2Name']}");
+        header("Location: index_admin.php?controller=ATMainFormCtrl&action=ClSearch"
+            . "&ClFName={$_GET['ClFName']}&Cl1Name={$_GET['Cl1Name']}&Cl2Name={$_GET['Cl2Name']}&ClPasSer={$_GET['ClPasSer']}&ClPasNum={$_GET['ClPasNum']}");
     }
             
     public function actionClDel(){
@@ -109,7 +107,7 @@ class ATMainFormCtrl extends ControllerMain {
             $this->ClList=$Model->GetClientList();
         } else {
             $Model=new ATClientMod();
-            $this->ClList=$Model->SearchClient($this->Params[0],$this->Params[1],$this->Params[2]);
+            $this->ClList=$Model->SearchClient($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4]);
         }
     }
     
@@ -130,48 +128,12 @@ class ATMainFormCtrl extends ControllerMain {
         } else {
             $this->Refers=(new AT7ReferProg())->GetAgentList();
         }
-        $this->ExportToExcel();
+        
     }
     
     /*формирование эксель файла с выгрузкой списка реферальнй программы
      * 
      */
-    protected function ExportToExcel(){
-        //вывод отчёта в EXCEL
-        // Создаем объект класса PHPExcel
-        $xls = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        // Устанавливаем индекс активного листа
-        $xls->setActiveSheetIndex(0);
-        // Получаем активный лист
-        $sheet = $xls->getActiveSheet();
-        // Подписываем лист
-        $sheet->setTitle('Агенты по реферальной программе');
-        // Вставляем заголовки таблицы
-        $sheet->setCellValue("A1", "Агенты по реферальной программе");
-        $sheet->setCellValue("A2", "ID");
-        $sheet->setCellValue("B2", "ФИО");
-        $sheet->setCellValue("C2", "Код");
-        $sheet->setCellValue("D2", "Ссылка");
-        $sheet->setCellValue("E2", "Телефон");
-        $sheet->setCellValue("F2", "Кто внёс");
-        $sheet->setCellValue("G2", "ДАТА");        
-        $i=3;
-        
-        foreach ($this->Refers as $reprow){
-            $sheet->setCellValueByColumnAndRow(1,$i,$reprow->ID);
-            $sheet->setCellValueByColumnAndRow(2,$i,$reprow->NAME);
-            $sheet->setCellValueByColumnAndRow(3,$i,$reprow->CODE);
-            $sheet->setCellValueByColumnAndRow(4,$i,$reprow->REFER);
-            $sheet->setCellValueByColumnAndRow(5,$i,$reprow->PHONE);
-            $sheet->setCellValueByColumnAndRow(6,$i,$reprow->LGEMP);
-            $sheet->setCellValueByColumnAndRow(7,$i,$reprow->LGDATE);            
-            $i++;
-        }
-        //create file name  
-        $fileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/downloads/RefRefers.xlsx";
-        //вывод в файл и сохранение
-        $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xls);
-        $objWriter->save($fileName);
-    }
+    
 }
 

@@ -39,6 +39,8 @@ MyButton1.addEventListener('mouseover',function(){
     document.getElementById('fname-f').value=document.getElementById('fname').value;
     document.getElementById('1name-f').value=document.getElementById('1name').value;
     document.getElementById('2name-f').value=document.getElementById('2name').value;
+    document.getElementById('pass-f').value=document.getElementById('ClPasSer').value;
+    document.getElementById('pasn-f').value=document.getElementById('ClPasNum').value;
 });
 
 /*ФУНКЦИЯ 3*/

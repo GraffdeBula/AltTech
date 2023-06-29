@@ -13,10 +13,10 @@
  */
 class logger {
     const FILE_PATH='/AltTech/log/';
-    protected $fileName;
+    protected $FileName;    
 
-    public function __construct(){
-        $this->fileName=$_SERVER["DOCUMENT_ROOT"].self::FILE_PATH.date("Ymd")."log.txt";                
+    public function __construct($LogType=''){
+        $this->fileName=$_SERVER["DOCUMENT_ROOT"].self::FILE_PATH.date("Ymd")."log".$LogType.".txt";                
     }
 
     public function logToFile($info){

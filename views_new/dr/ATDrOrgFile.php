@@ -10,9 +10,9 @@
             <?php (new MyForm('OrgDrCtrl','OrgUpd',0,0))->AddForm2();?>
             <input type='hidden' name='OrgID' value="<?=$Org->ID?>">
             <p>                
-                <label>Префикс</label><input name='ORGPREF' value="<?=$Org->ORGPREF?>">
-                <label>Наименование</label><input name='ORGNAME' value='<?=$Org->ORGNAME?>'>
-                <label>Полное наименование</label><input name='ORGFNAME' value='<?=$Org->ORGFNAME?>'>
+                <label>Префикс</label><input name='ORGPREF' value="<?=$Org->ORGPREF?>" size='15'>
+                <label>Наименование</label><input name='ORGNAME' value='<?=$Org->ORGNAME?>' size='30'>
+                <label>Полное наименование</label><input name='ORGFNAME' value='<?=$Org->ORGFNAME?>' size='90'>
             </p>
             <p>
                 <label>ОГРН</label><input name='ORGOGRN' value="<?=$Org->ORGOGRN?>">
@@ -20,15 +20,15 @@
                 <label>КПП</label><input name='ORGKPP' value="<?=$Org->ORGKPP?>">
             </p>            
             <p>
-                <label>Адрес</label><input name='ORGOFADR' value="<?=$Org->ORGOFADR?>">
-                <label>e-mail</label><input name='ORGEMAIL' value="<?=$Org->ORGEMAIL?>">
-                <label>ФИО директора</label><input name='ORGDIRNAME' value="<?=$Org->ORGDIRNAME?>">                
+                <label>Адрес</label><input name='ORGOFADR' value='<?=$Org->ORGOFADR?>' size='80'>
+                <label>e-mail</label><input name='ORGEMAIL' value='<?=$Org->ORGEMAIL?>'>
+                <label>ФИО директора</label><input name='ORGDIRNAME' value='<?=$Org->ORGDIRNAME?>' size='35'> 
             </p>
             <p>
-                <label>Банк</label><input name='ORGBANKNAME' value="<?=$Org->ORGBANKNAME?>">
-                <label>р/с</label><input maxlength="20" name='ORGBANKACC' value="<?=$Org->ORGBANKACC?>">
-                <label>БИК</label><input maxlength="9" name='ORGBANKBIK' value="<?=$Org->ORGBANKBIK?>">
-                <label>к/с</label><input maxlength="20" name='ORGBANKCORR' value="<?=$Org->ORGBANKCORR?>">
+                <label>Банк</label><input name='ORGBANKNAME' value='<?=$Org->ORGBANKNAME?>' size='35'>
+                <label>р/с</label><input maxlength="20" name='ORGBANKACC' value="<?=$Org->ORGBANKACC?>" size='35'>
+                <label>БИК</label><input maxlength="9" name='ORGBANKBIK' value="<?=$Org->ORGBANKBIK?>" size='35'>
+                <label>к/с</label><input maxlength="20" name='ORGBANKCORR' value="<?=$Org->ORGBANKCORR?>" size='35'>
             </p>
             <button type='submit' class='btn btn-warning'>СОХРАНИТЬ</button>
         </form>

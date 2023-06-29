@@ -29,5 +29,10 @@ class CreditorsMod extends Model{
     public function getBankList($contCode){
         return $this->Data=db::getInstance()->fetch_all("SELECT crName FROM vwIskCreditors WHERE contCode={$contCode} GROUP BY crName;");
     }
-     
+    
+    /*работа с новой базой данных*/
+    public function getCredAll($СontCode){ //метод возвращает список кредитов
+        $Sql="SELECT crBankCurName FROM tblP1Credits WHERE ContCode=? GROUP BY crBankCurName";        
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[$СontCode]);
+    } 
 }

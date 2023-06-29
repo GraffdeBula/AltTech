@@ -96,6 +96,12 @@ class PrintDoc{
                 $this->PasteDataSimple($BookMark->BMNAME,'Нет');
             }    
             
+        } elseif ($BookMark->BMCHANGE==9){ //вставка графика платежей
+            $this->PastePayCalend();
+        } elseif ($BookMark->BMCHANGE==10){ //вставка таблицы с собственностью
+            $this->PasteClProperty();
+        } elseif ($BookMark->BMCHANGE==11){ //вставка таблицы со сделками
+            $this->PasteClDeals();
         }
     }
     
@@ -152,6 +158,44 @@ class PrintDoc{
     protected function PasteCreditors($BookMark){//вставка куска текста про кредиторов
         $CredList=(new PrintFunctions)->CredList($this->DocData['Front']->CONTCODE);
         $this->DocObj->setValue($BookMark, $CredList);
+    }
+    
+    protected function PastePayCalend(){
+        $PayCalend=[];
+        foreach($this->DocData['PayCalend'] as $Pay){
+            $PayCalend[]=[
+                'PAYID'=>$Pay->PAYNUM." платёж" ,
+                'PAYSUM'=>$Pay->PAYSUM." рублей",
+                'PAYDATE'=>$this->StrToDate($Pay->PAYDATE)
+            ];
+        }
+        $this->DocObj->cloneRowAndSetValues('PAYID', $PayCalend);
+    }
+    
+    protected function PasteClProperty(){
+        $PropertyList=[];
+        foreach($this->DocData['ClProperty'] as $Property){
+            $PropertyList[]=[
+                'CLPROPTYPE'=>$Property->CLPROPTYPE,
+                'CLPROPDESC'=>$Property->CLPROPDESC,
+                'CLPROPCOST'=>$Property->CLPROPCOST,
+                'CLPROPOWNER'=>$Property->CLPROPOWNER,
+            ];
+        }        
+        $this->DocObj->cloneRowAndSetValues('CLPROPTYPE', $PropertyList);
+    }
+    
+    protected function PasteClDeals(){
+        $DealList=[];
+        foreach($this->DocData['ClDeals'] as $Deal){
+            $DealList[]=[
+                'CLDLOBJ'=>$Deal->CLDLOBJ,
+                'CLDLCOMMENT'=>$Deal->CLDLCOMMENT,
+                'CLDLSUM'=>$Deal->CLDLSUM,
+                'CLDLOWNER'=>$Deal->CLDLOWNER
+            ];
+        }
+        $this->DocObj->cloneRowAndSetValues('CLDLOBJ', $DealList);
     }
     
     protected function SumStr($SumFloat){//преобразование чила прописью - вынести во вне

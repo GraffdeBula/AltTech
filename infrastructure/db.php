@@ -2,8 +2,7 @@
 
 class db{    
     //имя подключения к рабочей базе
-    const DB_NAME='firebird:dbname=127.0.0.1:client1;charset=win1251;'; 
-    #const DB_NAME='firebird:dbname=37.194.45.101:client1;charset=win1251;';
+    const DB_NAME='firebird:dbname=192.168.154.252:client1;charset=win1251;';    
     //логин и пароль к БД
     protected $dblogin;
     protected $dbpass;

@@ -40,7 +40,7 @@ class report1_ctrl extends Controller{
     }
     
     public function actionShowCompanyList1(){
-        $Model=new Report1();
+        $Model=new ReportDeposit();
         $this->repTotal=$Model->getTotalRep();
         $this->repTotalEx(); //формирование файла excel
         $args=['rep'=>$this->repTotal];        
@@ -49,7 +49,7 @@ class report1_ctrl extends Controller{
     }
     
     public function actionShowBranchList1($brName) {
-        $Model=new Report1();
+        $Model=new ReportDeposit();
         $this->repBranch=$Model->getBranchRep($brName);
         $this->repBranchEx(); //формирование файла excel
         $args=['rep'=>$this->repBranch];   
@@ -57,7 +57,7 @@ class report1_ctrl extends Controller{
     }
     
     public function actionShowCompanyList2($repDat1,$repDat2){        
-        $Model=new Report1();
+        $Model=new ReportDeposit();
         $this->repTotal=$Model->getTotalRep2($repDat1,$repDat2);        
         $this->repTotal2Ex(); //формирование файла excel        
         $args=['rep'=>$this->repTotal,'repDat1'=>$repDat1,'repDat2'=>$repDat2];        
@@ -67,7 +67,7 @@ class report1_ctrl extends Controller{
     }
     
     public function actionShowBranchList2($brName,$repDat1,$repDat2) {
-        $Model=new Report1();
+        $Model=new ReportDeposit();
         $this->repBranch=$Model->getBranchRep2($brName,$repDat1,$repDat2);
         $this->repBranch2Ex(); //формирование файла excel
         $args=['rep'=>$this->repBranch];   

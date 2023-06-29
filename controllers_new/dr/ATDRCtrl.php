@@ -12,72 +12,8 @@ class ATDRCtrl extends ControllerMain {
     
     public function actionIndex(){ //если действие не передано, то уходим в главное меню
         header("Location: index_admin.php?controller=AdminMainController");
-    }            
-    //Справочник регионов
-    public function actionShowDRRegions(){
-        $Args=['RegList'=>(new ATDrRegionsMod)->GetRegList()];
-        $this->render('dr/ATDrRegions',$Args);
-    }
+    }     
     
-    public function actionRegionAdd(){
-        (new ATDrRegionsMod)->RegIns($_GET['REGNAME']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRRegions");
-    }
-    
-    public function actionRegionDel(){
-        (new ATDrRegionsMod)->RegDel($_GET['RegID']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRRegions");
-    }    
-    //справочник рисков по экспертизе
-    public function actionShowDRExpRisks(){
-        $this->ViewName='Справочник рисков по ЭПЭ';
-        $Args=['RiskList'=>(new ExpertMod)->GetRiskDr(['Risk'])];
-        $this->render('dr/ATDrRisks',$Args);
-    }
-    
-    public function actionExpRiskAdd(){
-        (new ExpertMod)->AddRiskDr($_GET['ExpRisk']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRExpRisks");
-    }
-    
-    public function actionExpRiskDel(){
-        (new ExpertMod)->DelRiskDr($_GET['ExpRiskID']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRExpRisks");
-    }
-    
-    //справочник полей для анкеты кредита
-    public function actionShowDRCredit(){
-        $this->ViewName='Справочник анкеты кредита';
-        $Args=['AnketaList'=>(new ATP1CredMod)->GetAnketaDr()];
-        $this->render('dr/ATDrCredit',$Args);
-    }
-    
-    public function actionCreditDrAdd(){
-        (new ATP1CredMod)->AddAnketaDr($_GET['DrName'],$_GET['DrValue']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRCredit");
-    }
-    
-    public function actionCreditDrDel(){
-        (new ATP1CredMod)->DelAnketaDr($_GET['DrID']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRCredit");
-    }
-    
-    //справочник сотрудников
-    public function actionShowDREmployee(){
-        $this->ViewName='Справочник сотрудников';
-        $Args=['EmpList'=>(new ATEmployeeMod)->GetEmpList(),'BrList'=>(new ATDrBranchMod)->GetBrList()];
-        $this->render('dr/ATDrEmployee',$Args);
-    }
-    
-    public function actionEmpAdd(){
-        (new ATEmployeeMod)->AddEmpDr($_GET['EmpName'],$_GET['EmpBranch']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmployee");
-    }
-    
-    public function actionEmpDel(){
-        (new ATEmployeeMod)->DelEmpDr($_GET['EmpID']);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmployee");
-    }
     //справочник организаций
     public function actionShowDROrg(){
         $this->ViewName='Справочник организаций';
@@ -110,7 +46,106 @@ class ATDRCtrl extends ControllerMain {
         (new ATDrBranchMod)->DelBranch($_GET['BranchID']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRBranch");
     }
+    //справочник регионов
+    public function actionShowDRRegions(){
+        $Args=['RegList'=>(new ATDrRegionsMod)->GetRegList()];
+        $this->render('dr/ATDrRegions',$Args);
+    }
     
+    public function actionRegionAdd(){
+        (new ATDrRegionsMod)->RegIns($_GET['REGNAME']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRRegions");
+    }
+    
+    public function actionRegionDel(){
+        (new ATDrRegionsMod)->RegDel($_GET['RegID']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRRegions");
+    }    
+
+    //справочник сотрудников
+    public function actionShowDREmployee(){
+        $this->ViewName='Справочник сотрудников';
+        $Args=['EmpList'=>(new ATEmployeeMod)->GetEmpListAct(),'BrList'=>(new ATDrBranchMod)->GetBrList()];
+        $this->render('dr/ATDrEmployee',$Args);
+    }
+    
+    public function actionEmpAdd(){
+        (new ATEmployeeMod)->AddEmpDr($_GET['EmpName'],$_GET['EmpBranch']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmployee");
+    }
+    
+    public function actionEmpDel(){
+        (new ATEmployeeMod)->DelEmpDr($_GET['EmpID']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmployee");
+    }
+    
+    //### справочники вторая колонка
+    //справочник пакетов тарифов
+    public function actionShowDRPac(){
+        $this->ViewName='Справочник пакетов';
+        $Model=new TarifMod();
+        $Args=['PacList'=>$Model->getPacFullList()];
+        $this->render('dr/ATDrPac',$Args);
+    }
+    
+    public function actionAddPac(){        
+        $Model=new TarifMod();
+        $Model->addPac($_GET['PCPROG'],$_GET['PCPAC'],$_GET['PCACT'],$_GET['PCTEMPLATEROOT'],$_GET['PCBOOKMARKSLIST'],$_GET['PCPERIOD']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRPac");
+    }
+    
+    public function actionUpdPac(){        
+        $Model=new TarifMod();
+        #$Model->addPac();
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRPac");
+    }
+    
+    public function actionDelPac(){        
+        $Model=new TarifMod();
+        $Model->delPac($_GET['Id']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRPac");
+    }
+    
+    //справочник тарифов
+    public function actionShowDRTarif(){
+        $this->ViewName='Справочник тарифов';
+        $Model=new TarifMod();
+        $Args=['TarifList'=>$Model->getTarifFullList()];
+        $this->render('dr/ATDrTarif',$Args);
+    }
+    
+    public function actionAddTarif(){        
+        $Model=new TarifMod();
+        $Model->addTarif($_GET['TRSTATUS'],$_GET['TRDATE'],$_GET['TRNAME'],$_GET['TRCOMMENT'],$_GET['TRPAC'],$_GET['TRSUMMIN'],$_GET['TRSUMMAX'],
+            $_GET['TRTYPE'],$_GET['TRSUMFIX'],$_GET['TRSUMANN'],$_GET['TRSUMPERC']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRTarif");
+    }
+    
+    public function actionUpdTarif(){        
+        $Model=new TarifMod();
+        #$Model->addPac();
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRTarif");
+    }
+    
+    public function actionDelTarif(){        
+        $Model=new TarifMod();
+        $Model->delTarif($_GET['Id']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRTarif");
+    }
+    //справочник типов пакетов по филиалам
+    public function actionShowDRPacBranch(){
+        $this->ViewName='Справочник пакетов по филалам';
+        $Model=new TarifMod();
+        $Args=['PacList'=>$Model->getPacBranchList()];
+        $this->render('dr/ATDrPacBranch',$Args);
+    }
+    
+    public function actionUpdPacBr(){        
+        (new TarifMod())->updPacBranch($_GET['PacId'],$_GET['PacContType']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRPacBranch");
+    }
+    
+    //### справочники третья колонка
     //справочник банков
     public function actionShowDRBanks(){
         $this->ViewName='Справочник банков';
@@ -153,7 +188,7 @@ class ATDRCtrl extends ControllerMain {
             $_GET['BMCHECKDATA'],
             $_GET['BMINSDATA']            
         ]);
-        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks");
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks&DocName={$_GET['BMDOCNAME']}&Model={$_GET['BMTABLE']}");
     }
     
     public function actionBookmarkDel(){
@@ -209,5 +244,40 @@ class ATDRCtrl extends ControllerMain {
         
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks");
     }
+    
+    //###########справочник рисков по экспертизе
+    public function actionShowDRExpRisks(){
+        $this->ViewName='Справочник рисков по ЭПЭ';
+        $Args=['RiskList'=>(new ExpertMod)->GetRiskDr(['Risk'])];
+        $this->render('dr/ATDrRisks',$Args);
+    }
+    
+    public function actionExpRiskAdd(){
+        (new ExpertMod)->AddRiskDr($_GET['ExpRisk']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRExpRisks");
+    }
+    
+    public function actionExpRiskDel(){
+        (new ExpertMod)->DelRiskDr($_GET['ExpRiskID']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRExpRisks");
+    }
+    
+    //###########справочник полей для анкеты кредита
+    public function actionShowDRCredit(){
+        $this->ViewName='Справочник анкеты кредита';
+        $Args=['AnketaList'=>(new ATP1CredMod)->GetAnketaDr()];
+        $this->render('dr/ATDrCredit',$Args);
+    }
+    
+    public function actionCreditDrAdd(){
+        (new ATP1CredMod)->AddAnketaDr($_GET['DrName'],$_GET['DrValue']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRCredit");
+    }
+    
+    public function actionCreditDrDel(){
+        (new ATP1CredMod)->DelAnketaDr($_GET['DrID']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRCredit");
+    }
+    
     
 }

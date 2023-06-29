@@ -15,6 +15,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     protected $CredList=[];
     protected $Expert=[];
     protected $RiskList=[];
+    protected $MinIncList=[];
     protected $WorkHist=[];
     protected $IncHist=[];
     protected $Comments=[];
@@ -35,7 +36,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         
     public function actionExpRes(){        
         if ($_GET['EXRES']=='ЭПЭ проведена'){
-            (new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
+            #(new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
         }
         #(new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);        
         (new ATP1ContMod())->UpdP1Expert([$_GET['EXTOTDEBTSUM'],$_GET['EXMAINDEBTSUM'],$_GET['EXANNTOTPAY'],$_GET['EXANNTOTINC'],$_GET['EXPRODREC'],$_GET['EXRES'],$_GET['ContCode']]);
@@ -44,6 +45,11 @@ class ATContP1FileExpertCtrl extends ControllerMain {
 
     public function actionAddToJurist(){ 
         (new ExpertMod())->AddToJurist($_GET['EXCOMMENT'],$_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionAddFromJurist(){ 
+        (new ExpertMod())->AddFromJurist($_GET['EXJURCOMMENT'],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
@@ -80,11 +86,22 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionUpdRisk(){//добавить инф о согласии юриста работать с этим риском
+        (new ExpertMod())->updExpRisk($_GET['RiskValue2'],$_GET['RiskValue3'],$_GET['RiskID']);                
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
     public function actionDelRisk(){//удалить риск заключения БФЛ
-        #echo($_GET['RiskID']);
-        #exit();
-        (new ExpertMod)->DelExpRisk([$_GET['RiskID']]);
-        
+        (new ExpertMod)->DelExpRisk([$_GET['RiskID']]);        
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionSaveMinInc(){//сохранить расчёт прожиточного минимума
+        (new ExpertMod())->delExpMinInc($_GET['ContCode']);
+        (new ExpertMod())->addExpMinInc($_GET['ContCode'],'Avg',$_GET['MinIncAvg']);
+        (new ExpertMod())->addExpMinInc($_GET['ContCode'],'Work',$_GET['MinIncWork']);
+        (new ExpertMod())->addExpMinInc($_GET['ContCode'],'Pens',$_GET['MinIncPens']);
+        (new ExpertMod())->addExpMinInc($_GET['ContCode'],'Child',$_GET['MinIncChild']);
+        (new ExpertMod())->addExpMinInc($_GET['ContCode'],'Result',$_GET['MinIncResult']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -109,14 +126,25 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->CredList=(new ATP1CredMod)->GetP1CredList($_GET['ContCode']);
         $this->Expert=(new ExpertMod)->GetExp($_GET['ContCode']);
         $this->RiskList=(new ExpertMod)->GetExpRiskList($_GET['ContCode']);
+        $this->MinIncList=(new ExpertMod)->getExpMinInc($_GET['ContCode']);
         #$this->WorkHist=(new ATClientMod)->GetExp($_GET['ContCode']);
         #$this->IncHist=(new ATClientMod)->GetExp($_GET['ContCode']);
         $this->Comments=(new ATCommentMod())->GetContComments($_GET['ClCode'],$_GET['ContCode'],1);
         $this->RiskListDr=(new ExpertMod)->GetRiskDr(['Risk']);
-        
-        
+               
         if (isset($_GET['CrCode'])){
             $this->Credit=(new ATP1CredMod)->GetP1Credit($_GET['CrCode']);
+        }
+        
+        $NewMinInc=[
+            'Avg'=>'',
+            'Work'=>'',
+            'Pens'=>'',
+            'Child'=>'',
+            'Result'=>''
+        ];
+        foreach($this->MinIncList as $Inc){
+            $NewMinInc[$Inc->EXLISTVALUE]=$Inc->EXLISTVALUE2;
         }
         
         $this->Args=[
@@ -125,10 +153,9 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'CredList'=>$this->CredList,
             'Expert'=>$this->Expert,            
             'Comments'=>$this->Comments,
-            'RiskList'=>$this->RiskList,
-            
+            'RiskList'=>$this->RiskList,            
             'RiskListDr'=>$this->RiskListDr,
-            
+            'MinIncList'=>$NewMinInc,
             'Credit'=>$this->Credit,
             'WorkHist'=>$this->WorkHist,
             'IncHist'=>$this->IncHist

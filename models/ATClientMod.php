@@ -36,8 +36,8 @@ class ATClientMod extends Model{
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);
     }
     
-    public function SearchClient($ClFName,$Cl1Name,$Cl2Name){
-        $Sql="SELECT tblClients.clCode AS CLCODE,clFName,cl1Name,cl2Name,clDocSer,clDocNum FROM tblClients INNER JOIN tblClDocuments ON tblClients.clCode=tblClDocuments.clCode WHERE clDocName=?";
+    public function SearchClient($ClFName,$Cl1Name,$Cl2Name,$ClPasS,$ClPasN){
+        $Sql="SELECT FIRST 50 tblClients.clCode AS CLCODE,clFName,cl1Name,cl2Name,clDocSer,clDocNum FROM tblClients INNER JOIN tblClDocuments ON tblClients.clCode=tblClDocuments.clCode WHERE clDocName=?";
         $Params=['паспорт'];
         if ($ClFName!=''){
             $Sql=$Sql." AND clFName=?";
@@ -50,6 +50,14 @@ class ATClientMod extends Model{
         if ($Cl2Name!=''){
             $Sql=$Sql." AND cl2Name=?";
             array_push($Params,$Cl2Name);
+        }
+        if ($ClPasS!=''){
+            $Sql=$Sql." AND clDocSer=?";
+            array_push($Params,$ClPasS);
+        }
+        if ($ClPasN!=''){
+            $Sql=$Sql." AND clDocNum=?";
+            array_push($Params,$ClPasN);
         }
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);
     }

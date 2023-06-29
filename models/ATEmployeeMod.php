@@ -9,9 +9,13 @@ class ATEmployeeMod extends Model{
     public function GetEmpList(){//возвращает список сотрудников
         return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee ",[]);
     }
+    
+    public function GetEmpListAct(){//возвращает список сотрудников
+        return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee WHERE EmStatus=? ORDER BY EmBranch,EmName",['работает']);
+    }
    
     public function AddEmpDr($EmpName,$EmpBranch){//добавить сотрудника
-       db2::getInstance()->Query("INSERT INTO tbl9DrEmployee (EmName,EmBranch) VALUES (?,?)",[$EmpName,$EmpBranch]);       
+       db2::getInstance()->Query("INSERT INTO tbl9DrEmployee (EmName,EmBranch,EmStatus) VALUES (?,?,?)",[$EmpName,$EmpBranch,'работает']);       
     }
    
     public function DelEmpDr($EmpID){//удалить сотрудника
@@ -19,11 +23,15 @@ class ATEmployeeMod extends Model{
     }
 
     public function UpdEmp($Param){//изменить информацию по сотруднику
-       db2::getInstance()->Query("UPDATE tbl9DrEmployee SET EMNAME=?, EMLOGIN=?,EMSEX=?,EMBRANCH=?,EMPOS=?,EMROLE=? WHERE ID=?",$Param);
+       db2::getInstance()->Query("UPDATE tbl9DrEmployee SET EMNAME=?, EMLOGIN=?,EMSEX=?,EMBRANCH=?,EMPOS=?,EMROLE=?,EMFNAME1=?,EMFNAME2=?,EMFNAME3=? WHERE ID=?",$Param);
     }
     
     public function UpdEmpPass($Param){//изменение пароля
         db2::getInstance()->Query("UPDATE tbl9DrEmployee SET EMPASS=? WHERE ID=?",$Param);
+    }
+    
+    public function UpdEmpPasport($Param){//изменить информацию по сотруднику
+       db2::getInstance()->Query("UPDATE tbl9DrEmployee SET EMDATEBIRTH=?,EMPASSER=?,EMPASNUM=?,EMPASORG=?,EMPASDATE=?,EMPASCODE=?,EMADRREG=? WHERE ID=?",$Param);
     }
     
     public function GetEmp($EmpID){//выбирает сотрудника из таблицы по Id

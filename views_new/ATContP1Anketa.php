@@ -37,14 +37,15 @@
                 <div class='accordion-item'>
                     <h2 class='accordion-header' id='heading{$Cred->CRCODE}'>
                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse{$Cred->CRCODE}' aria-expanded='false' aria-controls='collapse{$Cred->CRCODE}'>
-                            <p>Договор с  <strong>{$Cred->CRBANKCONTNAME}</strong>  номер <strong>{$Cred->CRCONTNUM}</strong> от <strong>{$CrDate}</strong> 
+                            <p>Договор с  <strong>{$Cred->CRBANKCONTNAME}</strong> Текущий кредитор: <strong>{$Cred->CRBANKCURNAME}</strong> номер <strong>{$Cred->CRCONTNUM}</strong>
+                                от <strong>{$CrDate}</strong> 
                                 Сумма кредита: <strong>{$Cred->CRSUM}</strong> Вид кредита: <strong>{$Cred->CRPROG}</strong> Остаток долга: <strong>{$Cred->CRSUMREST}</strong>                                    
+                                
                             </p>
-                        </button>
+                        </button>                        
                     </h2>
                     <div id='collapse{$Cred->CRCODE}' class='accordion-collapse collapse' aria-labelledby='heading{$Cred->CRCODE}' data-bs-parent='#accordionExample' style=''>
-                        <div class='accordion-body'>   
-                        
+                        <div class='accordion-body' style='background-color: #ede8cc;'>                           
                         ");
                         echo("
                             <ul  class='nav nav-tabs ' role='tablist'>
@@ -113,17 +114,26 @@
                                         <option value='расписка'>расписка</option>                              
                                         <option value='рефинансирование'>рефинансирование</option>                              
                                     </select>
-                                    <label>Сумма</label><input type='text' name='CRSUM' value='{$Cred->CRSUM}' autocomplete='off'>
-                                    <label>Ставка</label><input type='text' name='CRRATE' value='{$Cred->CRRATE}' autocomplete='off'>
-                                    <label>Срок</label><input type='text' name='CRPERIOD' value='{$Cred->CRPERIOD}' autocomplete='off'>
-                                    </p>
-                                    <p>    
-                                    <label>Остаток долга</label><input type='text' name='CRSUMREST' value='{$Cred->CRSUMREST}' autocomplete='off'>
-                                    <label>Остаток основного долга</label><input type='text' name='CRSUMRESTMAIN' value='{$Cred->CRSUMRESTMAIN}' autocomplete='off'>
-                                    </p>
-                                    <p> 
-                                    <label>Сумма платежа</label><input type='text' name='CRPAYSUM' value='{$Cred->CRPAYSUM}' autocomplete='off'>
-                                    <label>День платежа</label><input type='text' name='CRPAYDAY' value='{$Cred->CRPAYDAY}' autocomplete='off'>
+                                    <label>Сумма</label><input type='text' name='CRSUM' value='{$Cred->CRSUM}' autocomplete='off'>");
+                                    if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
+                                        $AnketaShowField="text";                                            
+                                        $AnketaEnableField="";
+                                    }else{
+                                        $AnketaShowField="hidden";
+                                        $AnketaEnableField="disabled";
+                                    }                                    
+                                    echo("<label>Ставка</label><input type='{$AnketaShowField}' name='CRRATE' value='{$Cred->CRRATE}' autocomplete='off'>
+                                        <label>Срок</label><input type='{$AnketaShowField}' name='CRPERIOD' value='{$Cred->CRPERIOD}' autocomplete='off'>                                    
+                                        </p>
+                                        <p>    
+                                        <label>Остаток долга</label><input type='{$AnketaShowField}' name='CRSUMREST' value='{$Cred->CRSUMREST}' autocomplete='off'>
+                                        <label>Остаток основного долга</label><input type='{$AnketaShowField}' name='CRSUMRESTMAIN' value='{$Cred->CRSUMRESTMAIN}' autocomplete='off'>
+                                        </p>
+                                        <p> 
+                                        <label>Сумма платежа</label><input type='{$AnketaShowField}' name='CRPAYSUM' value='{$Cred->CRPAYSUM}' autocomplete='off'>
+                                        <label>День платежа</label><input type='{$AnketaShowField}' name='CRPAYDAY' value='{$Cred->CRPAYDAY}' autocomplete='off'>");
+                                    
+                                    echo("
                                     <label>Сумма последнего платежа</label><input type='text' name='CRPAYLASTSUM' value='{$Cred->CRPAYLASTSUM}' autocomplete='off'>
                                     </p>
                                     <p>    
@@ -147,7 +157,7 @@
                                         
                                     </div>                                
                                     <div class='col-lg-2'>");                                            
-                                    if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1AnketaCtrl','DelCred')){    
+                                    if (((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1AnketaCtrl','DelCred')) or ($_SESSION['EmName']=='Максим Малиновский')){    
                                         echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=DelCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
                                             <button class='btn btn-danger'>Удалить</button></a>");
                                     }
@@ -239,6 +249,16 @@
                                     </p>
                                     <button type='submit' class='btn btn-warning'>Сохранить доп информацию</button>
                                 </form>
+                                <div class='row'>
+                                    <div class='col-lg-4'>
+                                        
+                                    </div>                                
+                                    <div class='col-lg-2'>");                                                                                
+                                    echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=CopyCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
+                                        <button class='btn btn-secondary'>Копировать кред договор</button></a>");                                    
+                                echo("</div>                                    
+                                </div>
+
                             </div><!--дополнительная инф по кредиту-->
                             <div class='tab-pane fade' id='creddocs{$Cred->CRCODE}'>
                                 <form method='get' autocomplete='off'>");
@@ -257,16 +277,22 @@
                                             <th>Число страниц</th>
                                             <th>Номер документа</th>
                                             <th>Дата</th>
+                                            <th>Удаление</th>
                                         </tr>
                                     </thead>
                                     <tbody>");
                                         foreach($CredDocList[$Cred->CRCODE] as $Doc){
-                                            echo("<tr class='table-secondary'>");
+                                            echo("<tr class='table-secondary'><form method='get'>");
+                                            (new MyForm('ATContP1AnketaCtrl','DelCredDoc',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                            echo("<input type='hidden' name='CrDocId' value='$Doc->ID'>");                                            
                                             echo("<td>{$Doc->CRDOCNAME}</td>");
                                             echo("<td>{$Doc->CRDOCPAGES}</td>");
                                             echo("<td>{$Doc->CRDOCNUM}</td>");
                                             echo("<td>{$Doc->CRDOCDATE}</td>");
-                                            echo("</tr>");
+                                            if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1AnketaCtrl','DelCredDoc')){
+                                                echo("<td><button class='btn btn-danger'>УДАЛИТЬ</button></td>");
+                                            }
+                                            echo("</form></tr>");
                                         }    
                                         echo("
                                     </tbody>

@@ -61,17 +61,17 @@
                 <input type="hidden" name='action' value='ClIns'>
                 <div>
                     <label>Фамилия</label>
-                    <input type="text" name="ClFName" value="" id='fname'>
+                    <input type="text" name="ClFName" value="" required id='fname'>
                     <label>Имя</label>
-                    <input type="text" name="Cl1Name" value="" id='1name'>
+                    <input type="text" name="Cl1Name" value="" required id='1name'>
                     <label>Отчество</label>
-                    <input type="text" name="Cl2Name" value="" id='2name'>
+                    <input type="text" name="Cl2Name" value="" required id='2name'>
                 </div>
                 <div>
                     <label>паспорт серия</label>
-                    <input type="text" name="ClPasSer" value="" id="ClPasSer" maxlength="4">
+                    <input type="text" name="ClPasSer" value="" required id="ClPasSer" maxlength="4">
                     <label>номер</label>
-                    <input type="text" name="ClPasNum" value="" id="ClPasNum" maxlength="6">
+                    <input type="text" name="ClPasNum" value="" required id="ClPasNum" maxlength="6">
                 </div>            
             </form>
 
@@ -81,13 +81,15 @@
                 <input type="hidden" name="ClFName" value="" id='fname-f'>
                 <input type="hidden" name="Cl1Name" value="" id='1name-f'>
                 <input type="hidden" name="Cl2Name" value="" id='2name-f'>                        
+                <input type="hidden" name="ClPasSer" value="" id='pass-f'>
+                <input type="hidden" name="ClPasNum" value="" id='pasn-f'>
             </form>
             
-                    <button type='submit' class='btn btn-info' id='btn-find'>НАЙТИ</button>
+                <button type='submit' class='btn btn-info' id='btn-find'>НАЙТИ</button>
             -----
-                    <button type='submit' class='btn btn-warning' id='btn-add'>ДОБАВИТЬ</button> 
+                <button type='submit' class='btn btn-warning' id='btn-add'>ДОБАВИТЬ</button> 
             -----  
-                    <button class='btn btn-secondary' id='btn-clear'>ОЧИСТИТЬ</button>
+                <button class='btn btn-secondary' id='btn-clear'>ОЧИСТИТЬ</button>
                 
                         
             <?php  
@@ -105,64 +107,9 @@
                 }
             ?>
         </div><!--список клиентов-->
+        
         <div class="tab-pane fade" id="refer">
-            <div class='row'>
-                <div class='col-lg-5'>
-                    <form method='get' autocomplete="off">
-                        <?php (new MyForm('ATMainFormCtrl','Index',0,0))->AddForm2();?>
-                        <label>Внесены за период c </label><input type='date' name='DateF'>
-                        <label> до </label><input type='date' name='DateL'>
-                        <button type='submit' class='btn btn-primary'>Выбрать за период</button>                
-                    </form>
-                </div>
-                <div class='col-lg-1'>
-                    <form>
-                        <button type='submit' class='btn btn-info'>Сбросить период</button>                
-                    </form>
-                </div>
-            </div>
-            <a target="_blank" href='downloads/RefRefers.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>
-            <form method='get'autocomplete="off">
-                <?php (new MyForm('ATMainFormCtrl','SaveAgent',0,0))->AddForm2();?>
-                <label>ФИО</label><input name='AgName'>
-                <label>Телефон</label><input name='AgPhone' maxlength="12">                
-                <button type='submit' class='btn btn-warning'>Добавить</button>
-            </form>
-            <table class="table table-hover">
-                <thead>
-                    <tr>                      
-                      <th scope="col">ФИО</th>
-                      <th scope="col">Телефон</th>
-                      <th scope="col">ПромоКод</th>
-                      <th scope="col">Реферальная ссылка</th>
-                      <th scope="col">Кто внёс</th>
-                      <th scope="col">Удалить</th>
-                      <th scope="col">Причина удаления</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <?php               
-                        foreach($Refers as $Refer){//таблица
-                            echo("<tr class='table-info'>");
-                            echo("<td>$Refer->NAME</td>");
-                            echo("<td>$Refer->PHONE</td>");
-                            echo("<td>$Refer->CODE</td>");
-                            echo("<td>$Refer->REFER</td>");
-                            echo("<td>$Refer->LGEMP</td>");
-                            if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='admin')){
-                            echo("<form method='get' class='delAgForm'>");
-                            (new MyForm('ATMainFormCtrl','DelAgent',0,0))->AddForm2();
-                            echo("<input type='hidden' name='RefId' value='{$Refer->ID}'>");
-                            echo("<td><button type='submit' class='btn btn-danger delAgBtn'>Удалить</button></td>");
-                            echo("<td><input name='DelComment' class='delComment' value=''></td>");
-                            echo("</form>");
-                            }
-                            echo("</tr>");
-                        }                                
-                    ?>    
-                </tbody>
-            </table>
+            <a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Список агентов</button></a>
         </div><!--Реферальная программа-->
         <div  class='tab-pane fade' id='expert'>
             <ul class="nav nav-tabs">
@@ -219,20 +166,31 @@
             <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
             <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
             <p><a target="_blank" href="index_admin.php?controller=ExpReportCtrl"><button class="btn btn-success">ЭКСПЕРТИЗЫ</button></a></p>
+            <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ContP1Rep"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
             <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-success">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
             
             <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-info">Отчёт по разовым услугам</button></p>
-            <p><a target="_blank" href="index_admin.php?controller=ATPaysCtrl"><button class="btn btn-outline-primary">Отчёт по действующим клиентам</button></p>
+            <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-dark">Списки плановых платежей</button></p>
+            <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></p>
         </div>
         <div class="tab-pane fade" id="lists">
-            <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDREmployee"><button class="btn btn-success">Сотрудники [НОВАЯ БД]</button></a></p>            
-            <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks"><button class="btn btn-warning">Закладки для документов / НОВАЯ БД</button></a></p>            
-            
-            <p><a target="_blank" href="index_admin.php?controller=ATOldClientsCtrl"><button class="btn btn-warning">Ручное исправление статусов</button></a></p>            
-            <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBanks"><button class="btn btn-primary">Банки/МФО/Коллекторы [НОВАЯ БД]</button></a></p>
-            <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDROrg"><button class="btn btn-warning">Организации [НОВАЯ БД]</button></a></p>
-            <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBranch"><button class="btn btn-info">Филиалы [НОВАЯ БД]</button></a></p>
-            <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRRegions"><button class="btn btn-success">Регионы [НОВАЯ БД]</button></a></p>
+            <div class="row">
+                <div class="col-lg-2">
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDROrg"><button class="btn btn-warning">Организации</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBranch"><button class="btn btn-info">Филиалы</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRRegions"><button class="btn btn-success">Регионы</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDREmployee"><button class="btn btn-success">Сотрудники</button></a></p>       
+                </div>
+                <div class="col-lg-2">
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPac"><button class="btn btn-warning">Пакеты тарифов</button></a></p>                                    
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif"><button class="btn btn-primary">Тарифы</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPacBranch"><button class="btn btn-warning">Типы пакетов по филиалам</button></a></p>
+                </div>
+                <div class="col-lg-2">
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks"><button class="btn btn-warning">Закладки для документов</button></a></p>                                    
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBanks"><button class="btn btn-primary">Банки/МФО/Коллекторы</button></a></p>
+                </div>
+            </div>
         </div>
         <div class="tab-pane fade" id="tests">
             <div>
@@ -248,8 +206,11 @@
         </div>     
         <div class="tab-pane fade" id="adminka">
             <a target='_blank' href="index_admin.php?controller=PkoListCtrl&action=Index"><button class="btn btn-outline-primary">Платежи</button></a>
-            <br>            
+                <br>            
             <a target='_blank' href="index_admin.php?controller=ATPaysCtrl&action=ShowDate"><button class="btn btn-outline-primary">Дата</button></a>
+            <br>
+            
+            <a target='_blank' href="index_admin.php?controller=MedTest1&action=GetWord"><button class="btn btn-outline-primary">Чтение док</button></a>
             <br>
             
         </div>
@@ -264,6 +225,8 @@
             document.getElementById('fname-f').value=document.getElementById('fname').value;
             document.getElementById('1name-f').value=document.getElementById('1name').value;
             document.getElementById('2name-f').value=document.getElementById('2name').value;
+            document.getElementById('pass-f').value=document.getElementById('ClPasSer').value;
+            document.getElementById('pasn-f').value=document.getElementById('ClPasNum').value;
         });
         MyButton.addEventListener('click',function(){
             FormFind.submit();

@@ -14,15 +14,28 @@
                 <label>|  по  |</label><input type='date' name='DateL' value='<?=$_GET['DateL']?>'>
                 <?php
                     $Branch='';
+                    $ContType='';
                     if (isset($_GET['Branch'])){
                         $Branch=$_GET['Branch'];
                     }                
+                    if ((isset($_GET['ContType'])) && ($_GET['ContType']==1)){
+                        $ContType='по ПКО';
+                    }
+                    if ((isset($_GET['ContType'])) && ($_GET['ContType']==2)){
+                        $ContType='по чеку';
+                    }
                     echo("<label>|  филиал  |</label><select name='Branch' value='{$Branch}'>");
                     echo("<option value='{$Branch}'>$Branch</option>");
                     foreach($BranchList as $Branch){
                         echo("<option value='{$Branch->BRNAME}'>$Branch->BRNAME</option>");
                     }
                     echo("</select>");
+                    
+                    #echo("<label>|  тип платежа  |</label><select name='ContType'>");
+                    #echo("<option value='{$ContType}'>{$ContType}</option>");
+                    #echo("<option value=1>по ПКО</option>");
+                    #echo("<option value=2>по чеку</option>");    
+                    #echo("</select>");
                 ?>        
                 <button>Получить отчёт</button>
             </form>  
@@ -31,6 +44,9 @@
                 <li class="nav-item">
                   <a class="nav-link active" data-bs-toggle="tab" href="#repaggr">Отчёт по выручке</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#repcomp">Отчёт по выручке компания</a>
+                </li>                
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#repfull">Реестр платежей</a>
                 </li> 
@@ -50,7 +66,32 @@
                                 foreach ($Report2 as $Pay){
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->PAYNAME}</td>");                              
-                                    echo("<td>{$Pay->PAYBRANCH}</td>");
+                                    echo("<td>{$Pay->CONTBRANCH}</td>");
+                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+                                    echo("<tr>");
+                                }                    
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="tab-pane fade" id="repcomp">
+                    <table class='table table-hover'>
+                        <thead>
+                            <tr>                       
+                                <th scope='col'>Вид выручки</th>                                
+                                <th scope='col'>Сумма</th>                                                                         
+                            </tr>
+                        </thead>
+                        <tbody>                    
+                            <?php
+                                echo("<tr class='table-dark'>");
+                                echo("<td>Выручка всего</td>");                                                                  
+                                echo("<td>{$TotalIncome->PAYSUM}</td>");                                    
+                                echo("<tr>");
+                                foreach ($Report3 as $Pay){
+                                    echo("<tr class='table-secondary'>");
+                                    echo("<td>{$Pay->PAYNAME}</td>");                                                                  
                                     echo("<td>{$Pay->PAYSUM}</td>");                                    
                                     echo("<tr>");
                                 }                    
@@ -79,7 +120,7 @@
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->ID}</td>");                              
                                     echo("<td>{$Pay->PAYCODE}</td>");
-                                    echo("<td>{$Pay->PAYBRANCH}</td>");
+                                    echo("<td>{$Pay->CONTBRANCH}</td>");
                                     echo("<td>{$Pay->PAYDATE}</td>");
                                     echo("<td>{$Pay->PAYSUM}</td>");
                                     echo("<td>{$Pay->PAYPR}</td>");

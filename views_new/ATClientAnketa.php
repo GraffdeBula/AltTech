@@ -15,13 +15,15 @@
             echo("<label>ФАМИЛИЯ</label><input type='text' name='CLFNAME' value='{$Client->CLFNAME}'>");
             echo("<label>ИМЯ</label><input type='text' name='CL1NAME' value='{$Client->CL1NAME}'>");
             echo("<label>ОТЧЕСТВО</label><input type='text' name='CL2NAME' value='{$Client->CL2NAME}'>");
-            echo("<br>");
-            echo("<label>Дата рождения</label><input type='date' name='CLBIRTHDATE' value='{$Client->CLBIRTHDATE}'>");
-            echo("<label>Место рождения</label><input type='text' class='input-comment' name='CLBIRTHPLACE' value='{$Client->CLBIRTHPLACE}'>");        
+            #echo("<br>");
+            echo("<label>Дата рождения</label><input type='date' name='CLBIRTHDATE' value='{$Client->CLBIRTHDATE}'>");            
             echo("<label>Пол</label><select name='CLSEX'>"
-                . "<option >{$Client->CLSEX}</option>"
+                . "<option value={$Client->CLSEX}>{$Client->CLSEX}</option>"
                 . "<option value='муж'>муж</option>"
                 . "<option value='жен'>жен</option></select>");
+            echo("<br>");
+            echo("<label>Место рождения</label><input type='text' class='input-comment' name='CLBIRTHPLACE' value='{$Client->CLBIRTHPLACE}' size=118>");        
+            echo("<br>");
             ?>
             <button class="btn btn-warning">СОХРАНИТЬ ОБЩУЮ ИНФ</button>
             <button class="btn btn-info">ПЕЧАТЬ АНКЕТЫ</button>
@@ -175,8 +177,9 @@
                 echo("<label>Дата развода</label><input type='date' name='CLDIVORCEDATE' value='{$Client->CLDIVORCEDATE}'>");
                 echo("<label>Платит алименты</label><select name='CLALIMENTYN' value='{$Client->CLALIMENTYN}'>"
                     . "<option >{$Client->CLALIMENTYN}</option>"
-                    . "<option value='да'>да</option>"
-                    . "<option value='нет'>нет</option></select>");
+                    . "<option value='не платит'>не платит</option>"
+                    . "<option value='платит официально'>платит официально</option>"
+                    . "<option value='платит не официально'>платит не официально</option></select>");
                 echo("<label>Сумма алиментов</label><input type='text' name='CLALIMENTSUM' value='{$Client->CLALIMENTSUM}'></p>");
             ?>
             <button type="submit" class="btn btn-warning">СОХРАНИТЬ ИНФ О СЕМЬЕ</button>
@@ -189,8 +192,8 @@
                     echo("<form method='get'>");
                     (new MyForm('ATClientAnketaCtrl','UpdRelative',$_GET['ClCode'],0))->AddForm();
                     echo("<input type='hidden' name='ClRelID' value='{$Relative->ID}'>");
-                    echo("<label>Имя</label>");
-                    echo("<input type='text' name='ClRelName' value='{$Relative->CLRELNAME}'>");
+                    echo("<label>ФИО</label>");
+                    echo("<input type='text' name='ClRelName' value='{$Relative->CLRELNAME}' style='width:400'>");
                     echo("<label>кем приходится</label>");
                     echo("<input type='text' name='ClRelStatus' value='{$Relative->CLRELSTATUS}'>");
                     echo("<label>дата рождения</label>");
@@ -206,7 +209,7 @@
                         
                     echo("<form method='get' autocomplete='off'>");
                     (new MyForm('ATClientAnketaCtrl','DelRelative',$_GET['ClCode'],0))->AddForm();
-                    echo("<input type='hidden' name='ClDocID' value='{$Relative->ID}'>");
+                    echo("<input type='hidden' name='ClRelID' value='{$Relative->ID}'>");
                         
                     echo("<button type='submit' class='btn btn-danger'>удалить</button></form>");
                     
@@ -442,6 +445,7 @@
                                     <th>Сумма факт.</th>
                                     <th>На карту</th>
                                     <th>Банк</th>
+                                    <th>Дата назначения пенсии</th>
                                     <th>Комментарий</th>
                                     <th>---</th>
                                     <th>---</th>
@@ -460,6 +464,7 @@
                                     echo("<td>$Income->CLINCSUMREAL</td>");
                                     echo("<td>$Income->CLINCCARDYN</td>");
                                     echo("<td>$Income->CLINCBANK</td>");
+                                    echo("<td>$Income->CLINCPENSDATE</td>");
                                     echo("<td>$Income->CLINCCOMMENT</td>");
                                     #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
@@ -483,6 +488,7 @@
                                     <option value='пенсия'>пенсия</option>
                                     <option value='аренда'>аренда</option>
                                     <option value='алименты'>алименты</option>
+                                    <option value='декретные выплаты'>декретные выплаты</option>
                                     <option value='пособия'>пособия</option>
                                     <option value='пенсия на ребёнка'>пенсия на ребёнка</option>
                                     <option value='доход супруга'>доход супруга</option>
@@ -518,6 +524,7 @@
                             echo("<option value='ИП'>ИП</option>");
                             echo("<option value='самозанятый'>самозанятый</option>");
                             echo("<option value='в декрете'>в декрете</option>");
+                            echo("<option value='пенсионер'>пенсионер</option>");
                             echo("<option value='не работает'>не работает</option>");
                             echo("</select>");
                             echo("<label>Место работы (организация)</label><input type='text' name='CLWORKORG' value='{$Client->CLWORKORG}'>");
@@ -534,6 +541,7 @@
                             echo("<option value='ИП'>ИП</option>");
                             echo("<option value='самозанятый'>самозанятый</option>");
                             echo("<option value='в декрете'>в декрете</option>");
+                            echo("<option value='пенсионер'>пенсионер</option>");
                             echo("<option value='не работает'>не работает</option>");
                             echo("</select>");
                             echo("<label>Место работы супруга</label><input type='text' name='CLWORKPARTORG' value='{$Client->CLWORKPARTORG}'>"); 

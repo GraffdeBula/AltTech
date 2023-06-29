@@ -30,6 +30,7 @@
             <li class="nav-item">
                 <a class="nav-link active" data-bs-toggle="tab" href="#result">Результат ЭПЭ</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
             </li>
@@ -40,11 +41,18 @@
                 <a class="nav-link" data-bs-toggle="tab" href="#risks">Риски</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#work">Сведения о работе</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#mininc">Расчёт прожиточного минимума</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#work">Сведения о работе</a>
+            </li>
+            
+            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#incomes">История доходов</a>
-            </li>            
+            </li>   
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#jurist">Заключение юриста</a>
+            </li>
         </ul>
         
         <div id="myTabContent" class="tab-content">
@@ -84,7 +92,7 @@
                                         if (($_SESSION['EmRole']=='admin') 
                                                 or ($_SESSION['EmRole']=='jurist') 
                                                 or ($_SESSION['EmRole']=='top')
-                                                or ($_SESSION['EmName']=='Ольга Щеглова')
+                                                or ($_SESSION['EmRole']=='expert')                                                
                                             ){                                    
                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                         }
@@ -133,9 +141,11 @@
                                 echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
                                 echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
                                 echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
-                                echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");
+                                echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");                            
+                                if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
+                                    echo("<button type='summit' class='btn btn-info'>Сохранить результат</button>");
+                                }
                             ?>
-                            <button type='summit' class='btn btn-info'>Сохранить результат</button>
                         </form>
                     </div>
                     <div class='col-lg-3'>
@@ -145,7 +155,11 @@
                                 <label for="exampleTextarea" class="form-label mt-4">Причина согласования юристом</label>
                                 <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXCOMMENT' maxlength=250 ><?=$Expert->EXCOMMENT?></textarea>
                             </div>
-                            <button type='summit' class='btn btn-warning'>Сохранить причину</button>               
+                            <?php
+                            if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
+                                echo("<button type='summit' class='btn btn-warning'>Сохранить причину</button>");
+                            }    
+                            ?>
                         </form>                        
                     </div>
                 </div>
@@ -270,13 +284,64 @@
                     ?>
                 </form>
             </div>
-            <div class="tab-pane fade" id="work">
-                <div class="g-2">
+            <div class="tab-pane fade" id="mininc">                            
+                <form autocomplete='off'>
+                    <?php (new MyForm('ATContP1FileExpertCtrl','SaveMinInc',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
+                    <label>в расчете на душу населения</label><input name='MinIncAvg' value='<?=$MinIncList['Avg']?>'><br>
+                    <label>для трудоспособного населения</label><input name='MinIncWork' value='<?=$MinIncList['Work']?>'><br>
+                    <label>для пенсионеров</label><input name='MinIncPens' value='<?=$MinIncList['Pens']?>'><br>
+                    <label>для детей</label><input name='MinIncChild' value='<?=$MinIncList['Child']?>'><br>                
+                    <div class="form-group">
+                        <label for="exampleTextarea" class="form-label mt-4">Расчёт</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 60px;" name='MinIncResult' maxlength=500 ><?=$MinIncList['Result']?></textarea>
+                    </div>
+                    <button type='summit' class='btn btn-info'>Сохранить результат</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="work">            
                 <a target='_blank' href="index_admin.php?controller=ATContP1FileExpertCtrl&action=ShowAddViewInc&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Cont->CONTCODE?>"><button class='f-bu f-bu-default'>Сведения о работе</button></a>
             </div>
-            </div>
+            
             <div class="tab-pane fade" id="incomes">
                 <a href="index_admin.php?controller=ATContP1FileExpertCtrl&action=ShowIncHist&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Cont->CONTCODE?>"><button class='btn btn-primary'>Расчитать сведения о доходах</button></a>
+            </div>
+            <div class="tab-pane fade" id="jurist">
+                <form method='get'>
+                    <?php (new MyForm('ATContP1FileExpertCtrl','AddFromJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
+                    <div class="form-group">
+                        <label for="exampleTextarea" class="form-label mt-4"></label>
+                        <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXJURCOMMENT' maxlength=5000 ><?=$Expert->EXJURCOMMENT?></textarea>
+                    </div>
+                    <button type='summit' class='btn btn-info'>Сохранить заключение</button>           
+                </form>  
+                <?php
+                foreach($RiskList as $Risk){
+                    echo("<form>
+                    <div class='row'>
+                        ");
+                            (new MyForm('ATContP1FileExpertCtrl','UpdRisk',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                            echo("<div class='col-lg-3'>
+                                <p>{$Risk->EXLISTVALUE}</p>
+                            </div>
+                            <div class='col-lg-2'>
+                                <label>Готовность работы с риском</label><select name='RiskValue2'>
+                                <option value='{$Risk->EXLISTVALUE2}'>{$Risk->EXLISTVALUE2}</option>
+                                <option value='да'>да</option>
+                                <option value='нет'>нет</option>
+                                </select>
+                                <input type='hidden' name='RiskID' value='{$Risk->ID}'>
+                                <button class='btn btn-warning'>СОХРАНИТЬ</button>
+                            </div>
+                            <div class='col-lg-3'>
+                                <label>Имущество, попадающее под данный риск</label>
+                                <textarea class='form-control' id='exampleTextarea' rows='3' style='height: 40px;' name='RiskValue3' maxlength=500 >{$Risk->EXLISTVALUE3}</textarea>
+                            </div>
+                        
+                    </div></form>
+                    ");
+                }
+                ?>  
+                
             </div>
         </div>                                                                                              
                                                                               

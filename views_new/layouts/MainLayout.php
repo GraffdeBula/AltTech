@@ -1,5 +1,6 @@
 <?php    
     if ((isset($_SESSION['EmRole']))&&($_SESSION['EmRole']=='admin')) {var_dump($_SESSION);}    
+    #var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,11 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/_bootswatch.scss">
         <link rel="stylesheet" type="text/css" href="css/_variables.scss">
-        
+        <style>
+            body{
+            background-color: #ede8cc; /* Цвет фона веб-страницы */
+       } 
+    </style>
     </head>
     <body>
         <div>

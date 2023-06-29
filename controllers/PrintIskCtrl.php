@@ -8,6 +8,11 @@
  */
 class PrintIskCtrl extends Controller{
     protected $Client; //клиент
+    protected $ClientPas; //клиент
+    protected $ClientPens; //клиент
+    protected $ClientInn; //клиент
+    protected $ClientAdr; //клиент
+    protected $ClientRel; //клиент массив
     protected $Contract;
     protected $Court;
     protected $Nalog;
@@ -21,7 +26,7 @@ class PrintIskCtrl extends Controller{
     protected $ClCode;
     protected $ContCode;
     
-    public function actionIndex(){            
+    public function actionIndex(){
         $this->ClCode=$_GET['ClCode'];
         $this->ContCode=$_GET['ContCode'];
         $this->IskPack=[
@@ -37,6 +42,16 @@ class PrintIskCtrl extends Controller{
             
         ];
         
+        if ($this->ContCode<=1){
+            $this->actionFormOldIsk();
+        } else {
+            $this->actionFormIsk();
+        }
+        
+    }
+    
+    public function actionFormOldIsk(){            
+                
         $this->GetData();        
         
         foreach($this->IskPack as $i => $IskDoc){
@@ -44,14 +59,26 @@ class PrintIskCtrl extends Controller{
             $Isk->DocID=$IskDoc;
             $Isk->DocName=$this->Client->CLNAMEIP.' '.$this->IskNames[$i];
             $Isk->Data=$this->CreateData($i);            
-            #var_dump($Isk->Data);
-            #echo("<br>=======<br>");
-            #echo(json_encode($Isk->Data));
-            #exit;
-            #$Isk->action='TestAc';
             $Isk->run();            
         }
                 
+        header("Location: https://afpc24.doczilla.pro"); //
+    }
+    
+    public function actionFormIsk(){                
+        ####Формирование набора данных для иска
+        $this->GetDataNew();        
+        
+        foreach($this->IskPack as $i => $IskDoc){
+            $Isk=new DZCtrl(); //создание нового объекта curl для формирования иска            
+            $Isk->DocID=$IskDoc;
+            $Isk->DocName=$this->Client->CLFIO.' '.$this->IskNames[$i];
+            $Isk->Data=$this->CreateData($i);            
+            $Isk->run();            
+            #var_dump($this->Data);
+            #echo("<br>==============================================<br>");
+        }
+        #exit();
         header("Location: https://afpc24.doczilla.pro"); //
     }
           
@@ -59,30 +86,49 @@ class PrintIskCtrl extends Controller{
         $this->Data=[];
 
         foreach ($this->BookMarks[$i] as $BookMark) {                        
-
             if ($BookMark->BMARRKEY>=0){
                 
-                if (isset($this->{$BookMark->BMMODEL}[$BookMark->BMARRKEY]->{$BookMark->BMFIELD})){
+                if (isset($this->{$BookMark->BMTABLE}[$BookMark->BMARRKEY]->{$BookMark->BMFIELD})){
                     
-                    $this->Data[$BookMark->BMNAME]=$this->{$BookMark->BMMODEL}[$BookMark->BMARRKEY]->{$BookMark->BMFIELD};
+                    $this->Data[$BookMark->BMNAME]=$this->{$BookMark->BMTABLE}[$BookMark->BMARRKEY]->{$BookMark->BMFIELD};
                 } else {
                     
                 }
-                #echo ($this->{$BookMark->BMMODEL}{intval($BookMark->BMARRKEY)}->{$BookMark->BMFIELD});
-                #echo("<br>".$this->{$BookMark->BMMODEL}[0]->{$BookMark->BMFIELD});                            
+                       
             }
              
             else {
-                $this->Data[$BookMark->BMNAME]=$this->{$BookMark->BMMODEL}->{$BookMark->BMFIELD};               
-//                echo("<br>".$this->{$BookMark->BMMODEL}->{$BookMark->BMFIELD});
-//                echo("<br>Контроль: ".$this->Data["ID".$BookMark->BMNAME]);
+                if (isset($this->{$BookMark->BMTABLE}->{$BookMark->BMFIELD})){
+                    $this->Data[$BookMark->BMNAME]=$this->{$BookMark->BMTABLE}->{$BookMark->BMFIELD};               
+                }
             }
          
         }    
-
+        
         return $this->Data;
     }
-
+    
+    protected function GetDataNew(){
+        $IskData=new IskMod();
+        $Client=new Client($this->ClCode);
+        $this->Client=$Client->getClRec();
+        $this->ClientPas=$Client->getPasport();
+        $this->ClientPens=$Client->getPens();
+        $this->ClientInn=$Client->getINN();
+        $this->ClientAdr=$Client->getAdr();
+        $this->ClientRel=$Client->getRelativeList();
+        
+        $Contract=new ContP1($this->ContCode);
+        $this->Contract=$Contract->getAnketa();
+        $this->Creditors=$Contract->getCredList();
+        #var_dump($this->Contract);
+        #exit();
+        
+        $this->BookMarks[1]=$IskData->getBookMarks2_1();
+        $this->BookMarks[2]=$IskData->getBookMarks2_2();
+        $this->BookMarks[3]=$IskData->getBookMarks2_3();    
+    }
+    
     protected function GetData(){
         $IskData=new IskMod();
         $this->Client=$IskData->getClient($this->ClCode);
@@ -91,14 +137,9 @@ class PrintIskCtrl extends Controller{
         $this->Documents=$IskData->getDocuments($this->ContCode);
         $this->Court=$IskData->getCourt($this->ContCode);
         $this->Nalog=$IskData->getNalog($this->ContCode);
-        #$this->AU=$IskData->getAU($this->ContCode);
+        
         $this->BookMarks[1]=$IskData->getBookMarks1();
         $this->BookMarks[2]=$IskData->getBookMarks2();
         $this->BookMarks[3]=$IskData->getBookMarks3();    
-//        echo('test1 14-07-2021 <br>');
-//        var_dump($this->BookMarks[1]);
-//        echo("<br>");
-//        var_dump($this->BookMarks[3]);
-//        exit();
     }
 }

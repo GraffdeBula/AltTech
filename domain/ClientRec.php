@@ -5,4 +5,7 @@ class ClientRec {
     public $CLADRFACT='';
 
     public $CLPHONE='';
+    public $CLDOCNAME='';
+    public $CLDOCDATE='';
+    
 }

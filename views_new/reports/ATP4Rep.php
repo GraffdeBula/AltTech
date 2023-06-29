@@ -31,7 +31,7 @@
                         <th scope='col'>Юрист</th>
                         <th scope='col'>Отрасль</th>
                         <th scope='col'>Услуга</th>
-                        <th scope='col'>Результат</th>
+                        <th scope='col'>Комментарий</th>
                         
                     </tr>
                 </thead>

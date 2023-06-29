@@ -55,5 +55,6 @@ class WebChecker {
             $this->ToSession();
             return True;
         } else return False;
+        #return True;
     }
 }

@@ -29,13 +29,17 @@ class ExpertMod extends Model{
     }
     //получение списка рисков
     public function GetExpRiskList($ContCode){
-        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,DrValueType 
+        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3,DrValueType 
             FROM tblP1ExpList INNER JOIN tbl1DrExpList ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
             WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
-    }
+    }    
     //добавление нового риска
     public function InsExpRisk($param){
         db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue) VALUES (?,?,?)',$param); //должен получить массив из одного строкового элемента
+    }
+    //обновление инф по работе с риском
+    public function updExpRisk($ExListValue2,$ExListValue3,$Id){
+        db2::getInstance()->Query('UPDATE tblP1ExpList SET ExListValue2=?,ExListValue3=? WHERE ID=?',[$ExListValue2,$ExListValue3,$Id]);
     }
     //удаление лишнего риска
     public function DelExpRisk($param){        
@@ -52,6 +56,19 @@ class ExpertMod extends Model{
     //удаление риска из справочника
     public function DelRiskDr($DrID){//удалить запись из справочника
         return db2::getInstance()->Query('DELETE FROM tbl1DrExpList WHERE id=?',[$DrID]);
+    }
+    //сохранение инф о прожиточном минимуме
+    public function addExpMinInc($ContCode,$Value,$Value2){
+        $Params=[$ContCode,'MinInc',$Value,$Value2];
+        db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,ExListName,ExListValue,ExListValue2) VALUES (?,?,?,?)',$Params);
+    }
+    //получение инф о прожиточном минимуме
+    public function getExpMinInc($ContCode){
+        return db2::getInstance()->FetchAll('SELECT * FROM tblP1ExpList WHERE ExListName=? AND ContCode=?',['MinInc',$ContCode]);
+    }
+    //удаление инф о прожиточном минимуме
+    public function delExpMinInc($ContCode){
+        return db2::getInstance()->Query('DELETE FROM tblP1ExpList WHERE ExListName=? AND ContCode=?',['MinInc',$ContCode]);
     }
     //сохранение результатов ЭПЭ
     public function UpdExp($ExTotDebtSum,$ExMainDebtSum,$ExAnnTotPay,$ExAnnTotInc,$ContCode){
@@ -73,6 +90,9 @@ class ExpertMod extends Model{
     public function AddToJurist($ExComment,$ContCode){
         db2::getInstance()->Query('UPDATE tblP1Expert SET ExComment=? WHERE ContCode=?',[$ExComment,$ContCode]);
     }
+    public function AddFromJurist($ExComment,$ContCode){
+        db2::getInstance()->Query('UPDATE tblP1Expert SET ExJurComment=? WHERE ContCode=?',[$ExComment,$ContCode]);
+    }
 
     //***списки договоров на ЭПЭ
     //список для андеррайтера
@@ -89,7 +109,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NOT NULL AND tblP1Expert.ExJurSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExRes=? AND tblP1Expert.ExJurSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2,'Требуется согласование юриста']);
     }
     //список для руководителя
     public function getExpDirList(){
@@ -97,7 +117,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NOT NULL AND tblP1Expert.ExDirSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
+                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExJurSoglDate IS NOT NULL AND tblP1Expert.ExDirSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
     }
     
 }

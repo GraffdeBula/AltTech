@@ -15,9 +15,9 @@ class P4ReportCtrl extends ControllerMain{
     public function actionShowRep() {
         
         if (isset($_GET['DateF']) && isset($_GET['DateL'])){
-            $this->ReportExp=(new ATP4ContMod())->GetP4Rep($_GET['DateF'],$_GET['DateL']);
+            $this->ReportExp=(new ATP4ContMod())->getP4RepNew($_GET['DateF'],$_GET['DateL']);
         } else {
-            $this->ReportExp=(new ATP4ContMod())->GetP4Rep(date("d.m.Y"),date("d.m.Y"));
+            $this->ReportExp=(new ATP4ContMod())->getP4RepNew(date("d.m.Y"),date("d.m.Y"));
         }
         
         $this->ExportToExcel();
@@ -54,13 +54,13 @@ class P4ReportCtrl extends ControllerMain{
             $sheet->setCellValueByColumnAndRow(1,$i,$reprow->CLCODE);
             $sheet->setCellValueByColumnAndRow(2,$i,$reprow->CONTCODE);
             $sheet->setCellValueByColumnAndRow(3,$i,$reprow->CLNAME);
-            $sheet->setCellValueByColumnAndRow(4,$i,$reprow->FRCONTOFFICE);
-            $sheet->setCellValueByColumnAndRow(5,$i,$reprow->FRCONTEMP);
-            $sheet->setCellValueByColumnAndRow(6,$i,$reprow->FRCONTPAY1SUM);
-            $sheet->setCellValueByColumnAndRow(7,$i,$reprow->FRCONTDAT);
+            $sheet->setCellValueByColumnAndRow(4,$i,$reprow->FROFFICE);
+            $sheet->setCellValueByColumnAndRow(5,$i,$reprow->FRPERSMANAGER);
+            $sheet->setCellValueByColumnAndRow(6,$i,$reprow->FRCONTSUM);
+            $sheet->setCellValueByColumnAndRow(7,$i,$reprow->FRCONTDATE);
             $sheet->setCellValueByColumnAndRow(8,$i,$reprow->FRJURIST);
             $sheet->setCellValueByColumnAndRow(9,$i,$reprow->FRJURBRANCH);
-            $sheet->setCellValueByColumnAndRow(10,$i,$reprow->FRCONTUSLUGA);
+            $sheet->setCellValueByColumnAndRow(10,$i,$reprow->FRCONTSERVICE);
             $sheet->setCellValueByColumnAndRow(11,$i,$reprow->FRCONTRESULT);
             $i++;
         }

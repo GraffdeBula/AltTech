@@ -25,6 +25,17 @@ abstract class ControllerMain {
             header('Location: ../error.php');
         }
         //вызываем выбранный метод
+        if (isset($_SESSION['EmName'])){
+            $EmName=$_SESSION['EmName'];
+        }else{
+            $EmName='Not authorized';
+        }
+        if (isset($_GET['ClCode'])){
+            $ClCode=$_GET['ClCode'];
+        }else{
+            $ClCode=0;
+        }
+        (new logger('_action'))->logToFile($EmName." ran action ".$this->action." on Client ".$ClCode);
         $this->$method();
     }
 

@@ -53,7 +53,7 @@
                     echo("<a target='_blank' href='index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-primary'>Анкета договора (кредиты)</button></a>");
                     echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ МЕНЕДЖЕРА</button></a>");
                     echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-info'>ДОСЬЕ ДЛЯ ЭКСПЕРТИЗЫ</button></a>");
-                    echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileJuristCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ ЮРИСТА</button></a>");
+                    echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ ЮРИСТА</button></a>");
                     if ((new CheckRole)->Check($_SESSION['EmRole'],'ATClientFileCtrl','ContP1Del')){
                         echo("<a href='index_admin.php?controller=ATClientFileCtrl&action=ContP1Del&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-danger'>УДАЛИТЬ</button></a>");
                     }
@@ -61,7 +61,7 @@
                 }
             ?>
         </div><!--форма с договорами БФЛ-->
-        <div class="tab-pane fade active show " id="contlist4">
+        <div class="tab-pane fade" id="contlist4">
             <form method='get' class='newContFormP4'>
                 <input type='hidden' name='controller' value='ATClientFileCtrl'><br>
                 <input type='hidden' name='action' value='ContP4Create'><br>
@@ -73,12 +73,12 @@
                 foreach($ContP4List as $Cont){
                     echo("<div> ID договора: ".$Cont->CONTCODE."</div><div> Дата анкеты: ".$Cont->AKDAT."</div><div> Дата договора: ".$Cont->FRCONTDATE."</div><div> Статус договора: ".$Cont->STATUS."</div>");
                     echo("<div>");
-                    echo("<a target='_blank' href='index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ МЕНЕДЖЕРА</button></a>");
+                    echo("<a target='_blank' href='index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДОГОВОРА</button></a>");
                     echo("</div>");                    
                 }
             ?>
         </div><!--форма с разовыми договорами-->
-        <div class="tab-pane fade active show " id="comments">
+        <div class="tab-pane fade" id="comments">
             <div>
                 <form>
                     <?php (new MyForm('ATClientFileCtrl','AddComment',$_GET['ClCode'],0))->AddForm(); ?>
