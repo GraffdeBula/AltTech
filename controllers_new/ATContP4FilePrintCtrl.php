@@ -59,7 +59,7 @@ class ATContP4FilePrintCtrl extends ControllerMain {
     
     public function actionDovCompJur(){
         $this->getData();
-
+        
         $Printer=new PrintDoc('DovCompJurP4','Доверенность РУ передоверие',[
             'Client'=>$this->Data['Client']->getClRec(),
             'ClientPas'=>$this->Data['Client']->getPasport(),
@@ -71,7 +71,8 @@ class ATContP4FilePrintCtrl extends ControllerMain {
             'Org'=>$this->Data['Org']->getRec(),
             'Branch'=>$this->Data['Branch']->getRec(),
             'Director'=>$this->Data['DirectorComp']->getEmp(),
-            'DirectorDov'=>$this->Data['Director']->getEmpDov()            
+            'DirectorDov'=>$this->Data['Director']->getEmpDov(),
+            'Jurist'=>$this->Data['Jurist']->getEmp(),
         ]);
         $DocName=$Printer->PrintDoc();        
         header("Location: ".$DocName);

@@ -102,7 +102,7 @@ class PrintDoc{
             $this->PasteClProperty();
         } elseif ($BookMark->BMCHANGE==11){ //вставка таблицы со сделками
             $this->PasteClDeals();
-        }
+        } 
     }
     
     protected function InsBookMark2($BookMark){
@@ -127,7 +127,7 @@ class PrintDoc{
         }
     }
     
-    protected function StrToDate($StrDate){//вставка датыв корректном формате
+    protected function StrToDate($StrDate){//вставка даты в корректном формате
         $day=substr($StrDate,8,2); //день начала периода
         $month=substr($StrDate,5,2); //месяц начала периода
         $year=substr($StrDate,0,4);

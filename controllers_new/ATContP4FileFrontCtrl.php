@@ -54,7 +54,7 @@ class ATContP4FileFrontCtrl extends ControllerMain {
     }
     
     public function actionJurSave(){
-        (new ATP4ContMod())->updP4Jurist($_GET['FRJURIST'],$_SESSION['EmName'],$_GET['ContCode']);        
+        (new ATP4ContMod())->updP4Jurist($_GET['FRJURIST'],$_GET['FRJURDOVDATE'],$_SESSION['EmName'],$_GET['ContCode']);        
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     

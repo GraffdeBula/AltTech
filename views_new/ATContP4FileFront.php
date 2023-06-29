@@ -120,6 +120,7 @@
                     
                 echo("<form method='get' autocomplete='off'>");
                     (new MyForm('ATContP4FileFrontCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    echo("<p><lable>Дата передоверия</lable><input type='date' name='FRJURDOVDATE' value='{$Front->FRJURDOVDATE}'> ");
                     echo("<p><lable>Ответственный юрист</lable><select name='FRJURIST'>");
                     echo("<option value='{$Front->FRJURIST}'>{$Front->FRJURIST}</option>");
                     foreach($EmpList as $Emp){

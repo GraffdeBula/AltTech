@@ -54,9 +54,9 @@ class ATP4ContMod extends Model{
         db2::getInstance()->Query($Sql,$Params);
     }
     
-    public function updP4Jurist($Jurist,$Emp,$ContCode){
-        $Sql="UPDATE tblP4Front SET FrJurist=?,lgEmp=? WHERE ContCode=?";
-        $Params=[$Jurist,$Emp,$ContCode];
+    public function updP4Jurist($Jurist,$JurDovDate,$Emp,$ContCode){
+        $Sql="UPDATE tblP4Front SET FrJurist=?,FrJurDovDate=?,lgEmp=? WHERE ContCode=?";
+        $Params=[$Jurist,$JurDovDate,$Emp,$ContCode];
         db2::getInstance()->Query($Sql,$Params);
     }
     
