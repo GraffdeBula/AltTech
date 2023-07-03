@@ -158,7 +158,7 @@ class ATNewDZTest extends Controller{
 
         $this->MyRequest=$this->CurlRequest();
         $this->Arg=['List'=>$this->MyRequest];
-        #(new MyCheck($this->MyRequest))->ShowCheck2();
+        
         $this->actionIndex();
         
     }
@@ -232,7 +232,7 @@ class ATNewDZTest extends Controller{
             #'request' =>  'login'
         ];
         $this->MyAuth=$this->CurlRequest();
-        $this->MySession=$this->MyAuth->session;
+        $this->MySession=$this->MyAuth->user->session;
     }
     
     protected function CurlRequest($type=0){        

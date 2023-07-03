@@ -30,13 +30,13 @@ class PrintIskCtrl extends Controller{
         $this->ClCode=$_GET['ClCode'];
         $this->ContCode=$_GET['ContCode'];
         $this->IskPack=[
-            1=>'6ADEFCFB6-3587-40BF-AC70-0033F3EE87B5',
+            #1=>'6ADEFCFB6-3587-40BF-AC70-0033F3EE87B5',
             2=>'2818C72E-FC0E-39FF-A57F-AA69E9A1B3CB',            
             3=>'16FB5551-717B-363F-9037-BE764201D7AB'
             
         ];
         $this->IskNames=[
-            1=>'Исковое заявление',
+            #1=>'Исковое заявление',
             2=>'Приложение 1 кредиторы',
             3=>'Приложение 2 имущество'
             
@@ -75,10 +75,9 @@ class PrintIskCtrl extends Controller{
             $Isk->DocName=$this->Client->CLFIO.' '.$this->IskNames[$i];
             $Isk->Data=$this->CreateData($i);            
             $Isk->run();            
-            #var_dump($this->Data);
-            #echo("<br>==============================================<br>");
+            
         }
-        #exit();
+
         header("Location: https://afpc24.doczilla.pro"); //
     }
           

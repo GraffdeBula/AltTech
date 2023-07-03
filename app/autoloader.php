@@ -31,6 +31,8 @@ class autoloader {
         UPPER_ROOT.'/models/reports',
         UPPER_ROOT.'/models/transfer',
         UPPER_ROOT.'/dto',
+        
+        UPPER_ROOT.'/jsontest',
                 
     ];
     

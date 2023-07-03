@@ -202,6 +202,9 @@
             <div>
                 <a target='_blank' href="index_admin.php?controller=TabIskBookmarkCtrl&action=ShowList"><button class="btn btn-warning">ИскЗакладки</button></a>
             </div>
+            <div>
+                <a target='_blank' href="index_admin.php?controller=JsonCtrl"><button class="btn btn-info">JSON</button></a>
+            </div>
                         
         </div>     
         <div class="tab-pane fade" id="adminka">

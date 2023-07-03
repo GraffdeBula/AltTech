@@ -21,6 +21,7 @@ class DZCtrl extends Controller{
     protected $MyList;
     
     public function actionIndex(){ //метод по умолчанию
+        
         $this->getSession();        
         $this->curlCopyDoc(); 
         $this->curlFillAnketa();
@@ -28,7 +29,7 @@ class DZCtrl extends Controller{
 
     //методы для обработки результатов
     protected function getSession(){
-        return $this->MySession=$this->curlAuth()->session; 
+        return $this->MySession=$this->curlAuth()->user->session; 
     }
     //методы для работы с curl   
     protected function curlFillAnketa(){ //Передача данных в анкету
@@ -62,7 +63,7 @@ class DZCtrl extends Controller{
             'folder'=>'95ED3C8F-B6C2-3563-A250-78FB9F78F4C4',
             'name'=> $this->DocName
         ];   
-                
+        new MyCheck($this->CurlRequest(),0);
         $this->MyDoc=$this->CurlRequest()->data[0];
     }
                
@@ -74,6 +75,7 @@ class DZCtrl extends Controller{
         );		
 
         $this->CurlLink = curl_init('https://afpc24.doczilla.pro/request.json');
+                
         return $this->MyAuth=$this->curlRequest();
     }
     
