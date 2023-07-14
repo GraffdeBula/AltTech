@@ -46,7 +46,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>                      
-                  <th scope="col">ФИО></th>
+                  <th scope="col">ФИО</th>
                   <th scope="col">Телефон</th>
                   <th scope="col">ПромоКод</th>
                   <th scope="col">Реферальная ссылка</th>

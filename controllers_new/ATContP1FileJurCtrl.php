@@ -46,8 +46,8 @@ class ATContP1FileJurCtrl extends ControllerMain {
             'Anketa'=>$this->TblP1Anketa,
             'Front'=>$this->TblP1Front,
             'BackOf'=>(new ContP1($_GET['ContCode']))->getBackOf(),
-            'EmpList'=>(new Employee(''))->getEmpList()
-            
+            'EmpList'=>(new Employee(''))->getEmpList(),
+            'CreditList'=>(new ContP1($_GET['ContCode']))->getCreditList()->getList(),
         ];
         $this->render('ATContP1FileJur',$args);
     }

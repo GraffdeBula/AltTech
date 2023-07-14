@@ -64,7 +64,23 @@
                         <tbody>                    
                             <?php
                                 foreach ($Report2 as $Pay){
-                                    echo("<tr class='table-secondary'>");
+                                    switch($Pay->PAYNAME){
+                                        case 'Новые договоры':
+                                            echo("<tr class='table-success'>");
+                                            break;
+                                        case 'Действующие договоры':
+                                            echo("<tr class='table-info'>");
+                                            break;
+                                        case 'Разовые услуги юристов':
+                                        case 'Разовые услуги менеджеров':
+                                            echo("<tr class='table-warning'>");
+                                            break;
+                                        case 'Ответственное хранение':
+                                            echo("<tr class='table-dark'>");
+                                            break;
+                                        
+                                    }
+                                    
                                     echo("<td>{$Pay->PAYNAME}</td>");                              
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
                                     echo("<td>{$Pay->PAYSUM}</td>");                                    

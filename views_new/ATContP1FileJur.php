@@ -60,6 +60,9 @@
           <a class="nav-link active" data-bs-toggle="tab" href="#Main">Основная инф</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#CredList">Список кредиторов</a>
+        </li>        
+        <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Add">дополнительное</a>
         </li>        
     </ul>
@@ -78,6 +81,39 @@
                 <button class='btn btn-warning'>save</button>
             </form>
         </div>
+        <div class="tab-pane fade" id="CredList">
+            <h5>Список кредиторов</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>                      
+                            <th scope="col">Кредитор</th>
+                            <th scope="col">ИНН</th>
+                            <th scope="col">ОГРН</th>
+                            <th scope="col">Номер договора</th>
+                            <th scope="col">Дата договора</th>
+                            <th scope="col">Долг по ЭПЭ</th>
+                            <th scope="col">Просроченный долг</th>
+                            <th scope="col">Штрафы</th>
+                        </tr
+                    </thead>
+                    <tbody>                    
+                    <?php
+                        foreach($CreditList as $Credit){
+                            echo("<tr>");
+                            echo("<td><p>{$Credit->CRBANKCONTNAME}</p><p>ИНН: {$Credit->CRBANKCONTINN}</p></td>");
+                            echo("<td>{$Credit->CRBANKCONTINN}</td>");
+                            echo("<td>{$Credit->CRBANKCONTINN}</td>");
+                            echo("<td>{$Credit->CRCONTNUM}</td>");
+                            echo("<td>{$Credit->CROPENDAT}</td>");
+                            echo("<td>{$Credit->CRSUMREST}</td>");
+                            echo("<td>{$Credit->CRSUMOVERDUE}</td>");
+                            echo("<td>{$Credit->CRSUMFINE}</td>");
+                            echo("</tr>");
+                        }
+                    ?>         
+                    </tbody>
+                </table>
+        </div>    
         <div class="tab-pane fade" id="Add">
             <h5>этапы например</h5>
                        

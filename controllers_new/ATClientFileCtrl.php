@@ -44,6 +44,11 @@ class ATClientFileCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     
+    public function actionContP4Del(){        
+        (new ATP4ContMod())->DelP4Anketa($_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
     public function actionAddComment(){
         (new ATCommentMod())->AddComment($_GET['ClCode'],0,0,$_GET['NewComment'],$_SESSION['EmName']);
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");

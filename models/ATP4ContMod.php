@@ -36,6 +36,12 @@ class ATP4ContMod extends Model{
         db2::getInstance()->Query($Sql,$Params); 
     }
     
+    public function DelP4Anketa($ContCode){
+        $Sql="DELETE FROM tblP4Anketa WHERE contCode=?";
+        $Params=[$ContCode];
+        db2::getInstance()->Query($Sql,$Params);  
+    }
+    
     public function updP4Cons($FrOffice,$FrPersManager,$FrConsDate,$Emp,$ContCode){
         $Sql="UPDATE tblP4Front SET FrOffice=?,FrPersManager=?,FrConsDate=?,lgEmp=? WHERE ContCode=?";
         $Params=[$FrOffice,$FrPersManager,$FrConsDate,$Emp,$ContCode];

@@ -73,8 +73,9 @@
                 foreach($ContP4List as $Cont){
                     echo("<div> ID договора: ".$Cont->CONTCODE."</div><div> Дата анкеты: ".$Cont->AKDAT."</div><div> Дата договора: ".$Cont->FRCONTDATE."</div><div> Статус договора: ".$Cont->STATUS."</div>");
                     echo("<div>");
-                    echo("<a target='_blank' href='index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДОГОВОРА</button></a>");
-                    echo("</div>");                    
+                    echo("<a target='_blank' href='index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДОГОВОРА</button></a>");                    
+                    echo("<a target='_blank' href='index_admin.php?controller=ATClientFileCtrl&action=ContP4Del&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-danger'>УДАЛИТЬ</button></a>");
+                    echo("</div>");  
                 }
             ?>
         </div><!--форма с разовыми договорами-->
