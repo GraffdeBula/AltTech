@@ -86,30 +86,34 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>                      
-                            <th scope="col">Кредитор</th>
-                            <th scope="col">ИНН</th>
-                            <th scope="col">ОГРН</th>
+                            <th scope="col">Кредитор по договору</th>                            
                             <th scope="col">Номер договора</th>
                             <th scope="col">Дата договора</th>
+                            <th scope="col">Кредитор текущий</th>
                             <th scope="col">Долг по ЭПЭ</th>
                             <th scope="col">Просроченный долг</th>
                             <th scope="col">Штрафы</th>
+                            <th scope="col">Сохранение инф.</th>
+                            <th scope="col">ПЕЧАТЬ ДОКУМЕНТОВ</th>
                         </tr
                     </thead>
                     <tbody>                    
                     <?php
+                          
                         foreach($CreditList as $Credit){
                             echo("<tr>");
-                            echo("<td><p>{$Credit->CRBANKCONTNAME}</p><p>ИНН: {$Credit->CRBANKCONTINN}</p></td>");
-                            echo("<td>{$Credit->CRBANKCONTINN}</td>");
-                            echo("<td>{$Credit->CRBANKCONTINN}</td>");
-                            echo("<td>{$Credit->CRCONTNUM}</td>");
-                            echo("<td>{$Credit->CROPENDAT}</td>");
-                            echo("<td>{$Credit->CRSUMREST}</td>");
-                            echo("<td>{$Credit->CRSUMOVERDUE}</td>");
-                            echo("<td>{$Credit->CRSUMFINE}</td>");
+                            echo("<td><p>{$Credit->getRec()->CRBANKCONTNAME}</p><p>ИНН: {$Credit->getRec()->CRBANKCONTINN}</p><p>ОГРН: {$Credit->getBnContRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p></td>");                            
+                            echo("<td>{$Credit->getRec()->CRCONTNUM}</td>");
+                            echo("<td>{$Credit->getRec()->CROPENDAT}</td>");
+                            echo("<td><p>{$Credit->getRec()->CRBANKCURNAME}</p><p>ИНН: {$Credit->getRec()->CRBANKCURINN}</p><p>ОГРН: {$Credit->getBnCurRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnCurRec()->BNADRREG}</p></td>");
+                            echo("<td>{$Credit->getRec()->CRSUMREST}</td>");
+                            echo("<td>{$Credit->getRec()->CRSUMOVERDUE}</td>");
+                            echo("<td>{$Credit->getRec()->CRSUMFINE}</td>");
+                            echo("<td><button class='btn btn-warning'>Сохранить</button></td>");
+                            echo("<td><button class='btn btn-info'>Запрос документов</button></td>");
                             echo("</tr>");
-                        }
+                        }                     
+ 
                     ?>         
                     </tbody>
                 </table>

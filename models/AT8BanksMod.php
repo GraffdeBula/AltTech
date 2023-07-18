@@ -20,6 +20,12 @@ class AT8BanksMod extends Model{
        db2::getInstance()->Query("DELETE FROM tbl8DrBanks WHERE ID=?",[$BankID]);
     }
 
+    public function getBankByName($BnName){//возвращает список банков
+        return db2::getInstance()->FetchOne("SELECT * FROM tbl8DrBanks WHERE BnName=?",[$BnName]);
+    }
     
+    public function getBankByINN($INN){
+        return db2::getInstance()->FetchOne("SELECT * FROM tbl8DrBanks WHERE bnINN=?",[$INN]);
+    }
                       
 }

@@ -69,8 +69,8 @@ class ATContP1AnketaCtrl extends ControllerMain {
         $this->UpdCredInfo();
         
         //меняем название банка на офф.
-        $BankCont=(new DrBanksMod())->getByINN($_GET['CRBANKCONTINN']);
-        $BankCur=(new DrBanksMod())->getByINN($_GET['CRBANKCURINN']);
+        $BankCont=(new AT8BanksMod())->getBankByINN($_GET['CRBANKCONTINN']);
+        $BankCur=(new AT8BanksMod())->getBankByINN($_GET['CRBANKCURINN']);
         if ($BankCont){
             $Model->UpdBankCont($_GET['CRCODE'], $BankCont->BNNAME, $BankCont->BNTYPE, $BankCont->BNINN);
         }
