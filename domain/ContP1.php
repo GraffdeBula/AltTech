@@ -29,7 +29,7 @@ class ContP1 {
         $this->BackOf=(new ATP1ContMod())->GetBackOf($ContCode);
         
         $this->CreditList=new CreditList($ContCode);
-        $this->CredList=$this->CreditList->getList();
+        $this->CredList=$this->CreditList->getCreditList();
         
         $this->RiskList=(new ExpertMod())->GetExpRiskList($ContCode);
         $this->Pac=(new Pacs())->getPacByName($this->Front->FRCONTPAC);

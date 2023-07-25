@@ -9,10 +9,8 @@
  * класс получает информацию какой документ напечатать и какой информацией его заполнить. он сам отвечает только за то, чтобы
  * правильно заполнить нужный шаблон имеющейся информацией.
  * 
- * может прийти только массив данных по клиету, а может массив по клиенту и договору, а может по кредиту, 
- * 
- * $DocName - в каком виде идёт??? ведь это может было договор ЭПЭ... а может быть договор услуг по опр. тарифу
- * ContExp, ConpPac31 ,ContPac41 - может так?
+ * может прийти только массив данных по клиенту, а может массив по клиенту и договору, а может по кредиту, 
+ *  
  */
 class PrintDoc{
     protected $DocClass='';        
@@ -102,6 +100,8 @@ class PrintDoc{
             $this->PasteClProperty();
         } elseif ($BookMark->BMCHANGE==11){ //вставка таблицы со сделками
             $this->PasteClDeals();
+        } elseif ($BookMark->BMCHANGE==12){ //вставка списка договоров на кредиты
+            $this->PasteCredContList();
         } 
     }
     
@@ -196,6 +196,14 @@ class PrintDoc{
             ];
         }
         $this->DocObj->cloneRowAndSetValues('CLDLOBJ', $DealList);
+    }
+    
+    protected function PasteCredContList(){
+        $CredContList='';
+        foreach($this->DocData['CreditorContList'] as $CredCont){
+            $CredContList=$CredContList.', договор '.$CredCont->CRCONTNUM.' от '.$CredCont->CROPENDAT;
+        }
+        $this->DocObj->setValue('CREDLIST', $CredContList);
     }
     
     protected function SumStr($SumFloat){//преобразование чила прописью - вынести во вне

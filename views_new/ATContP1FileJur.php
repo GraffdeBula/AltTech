@@ -99,18 +99,23 @@
                     </thead>
                     <tbody>                    
                     <?php
-                          
-                        foreach($CreditList as $Credit){
-                            echo("<tr>");
-                            echo("<td><p>{$Credit->getRec()->CRBANKCONTNAME}</p><p>ИНН: {$Credit->getRec()->CRBANKCONTINN}</p><p>ОГРН: {$Credit->getBnContRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p></td>");                            
-                            echo("<td>{$Credit->getRec()->CRCONTNUM}</td>");
-                            echo("<td>{$Credit->getRec()->CROPENDAT}</td>");
-                            echo("<td><p>{$Credit->getRec()->CRBANKCURNAME}</p><p>ИНН: {$Credit->getRec()->CRBANKCURINN}</p><p>ОГРН: {$Credit->getBnCurRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnCurRec()->BNADRREG}</p></td>");
-                            echo("<td>{$Credit->getRec()->CRSUMREST}</td>");
-                            echo("<td>{$Credit->getRec()->CRSUMOVERDUE}</td>");
-                            echo("<td>{$Credit->getRec()->CRSUMFINE}</td>");
+                                     
+                        foreach($CreditListArr as $Credit){
+                            #new MyCheck($Credit->getBnCurRec(),0);
+                            echo("<tr>"); 
+                            echo("<td><p>{$Credit->getCrRec()->CRBANKCONTNAME}</p><p>ИНН: {$Credit->getCrRec()->CRBANKCONTINN}</p><p>ОГРН: {$Credit->getBnContRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p></td>");                            
+                            echo("<td>{$Credit->getCrRec()->CRCONTNUM}</td>");
+                            echo("<td>{$Credit->getCrRec()->CROPENDAT}</td>");
+                            echo("<td><p>{$Credit->getCrRec()->CRBANKCURNAME}</p><p>ИНН: {$Credit->getCrRec()->CRBANKCURINN}</p><p>ОГРН: {$Credit->getBnCurRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnCurRec()->BNADRREG}</p></td>");
+                            echo("<td>{$Credit->getCrRec()->CRSUMREST}</td>");
+                            echo("<td>{$Credit->getCrRec()->CRSUMOVERDUE}</td>");
+                            echo("<td>{$Credit->getCrRec()->CRSUMFINE}</td>");
                             echo("<td><button class='btn btn-warning'>Сохранить</button></td>");
-                            echo("<td><button class='btn btn-info'>Запрос документов</button></td>");
+                            echo("<td><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqCompP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>"
+                            . "<button class='btn btn-info'>Запрос документов (представитель)</button></a>"
+                            . "<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>"
+                            . "<button class='btn btn-success'>Запрос документов (клиент)</button></a>"
+                            . "</td>");
                             echo("</tr>");
                         }                     
  

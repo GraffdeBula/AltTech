@@ -23,6 +23,12 @@ class ATP1CredMod extends Model{
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
     }
     
+    public function getP1CredContList($ContCode,$CrName){ //получение списка по данному кредитору
+        $Sql="SELECT * FROM tblP1Credits WHERE ContCode=? AND CrBankContName=?";                
+        $Params=[$ContCode,$CrName];
+        return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
+    }
+    
     public function GetP1Credit($CrCode){ 
         $Sql="SELECT * FROM tblP1Credits WHERE CrCode=?;";                
         $Params=[$CrCode];

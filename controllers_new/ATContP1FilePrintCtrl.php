@@ -438,4 +438,45 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         header("Location: ".$DocName);
     }
     
+    public function actionReqCompP1(){
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        $Credit=new CreditP1($_GET['CrCode']);
+        
+        $Printer=new PrintDoc('ReqComp1P1','Запрос в банк юрист',[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),             
+            'ClientAdr'=>$Client->getAdr(),            
+            'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
+            'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
+            
+            ]
+                
+        );
+        
+        $DocName=$Printer->PrintDoc();        
+        header("Location: ".$DocName);
+    }
+    
+    public function actionReqClientP1(){
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        $Credit=new CreditP1($_GET['CrCode']);
+        
+        $Printer=new PrintDoc('ReqComp1P1','Запрос в банк юрист',[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),             
+            'ClientAdr'=>$Client->getAdr(),            
+            'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
+            'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
+            
+            ]
+                
+        );
+        
+        $DocName=$Printer->PrintDoc();        
+        header("Location: ".$DocName);
+    }
 }
