@@ -464,10 +464,11 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $ContP1=new ContP1($_GET['ContCode']);     
         $Credit=new CreditP1($_GET['CrCode']);
         
-        $Printer=new PrintDoc('ReqComp1P1','Запрос в банк юрист',[
+        $Printer=new PrintDoc('ReqComp1P1','Запрос в банк клиент',[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientAdr'=>$Client->getAdr(),            
+            'ClientPhone'=>$Client->getContPhone(),
             'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
             'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
             'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
