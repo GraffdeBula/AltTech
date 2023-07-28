@@ -442,11 +442,17 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
         $Credit=new CreditP1($_GET['CrCode']);
+        if ($Credit->getCrRec()->CRBANKCONTTYPE=='Банк'){
+            $DocTmpName='Запрос в банк юрист';
+        } else {
+            $DocTmpName='Запрос в МФО юрист';
+        }
         
-        $Printer=new PrintDoc('ReqComp1P1','Запрос в банк юрист',[
+        $Printer=new PrintDoc('ReqComp1P1',$DocTmpName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
-            'ClientAdr'=>$Client->getAdr(),            
+            'ClientAdr'=>$Client->getAdr(),       
+            'ClientPhone'=>$Client->getContPhone(),
             'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
             'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
             'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
@@ -463,8 +469,13 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
         $Credit=new CreditP1($_GET['CrCode']);
+        if ($Credit->getCrRec()->CRBANKCONTTYPE=='Банк'){
+            $DocTmpName='Запрос в банк клиент';
+        } else {
+            $DocTmpName='Запрос в МФО клиент';
+        }
         
-        $Printer=new PrintDoc('ReqComp1P1','Запрос в банк клиент',[
+        $Printer=new PrintDoc('ReqComp1P1',$DocTmpName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientAdr'=>$Client->getAdr(),            

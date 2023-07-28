@@ -30,6 +30,30 @@
                 <button class="btn btn-success">ДОБАВИТЬ</button>
             </div>               
         </form>
+        <form method='get'>
+            <div>
+                <input type='hidden' name='controller' value='ATDRCtrl'>
+                <input type='hidden' name='action' value='EmpSearch'>
+                <label for='in3'>Филиал</label>
+                <select id='in3' name='EmpBranch'>
+                    <option value=''></option>
+                <?php
+                    foreach($BrList as $key=>$Branch){
+                    echo("<option value='{$Branch->BRNAME}'>{$Branch->BRNAME}</option>");
+                    }
+                ?>
+                </select>  
+                <label for='in4'>Роль</label>
+                <select id='in4' name='EmpRole'>
+                    <option value=''></option>
+                    <option value='front'>менеджер</option>
+                    <option value='jurist'>юрист</option>
+                    <option value='director'>руководитель филиала</option>
+                    <option value='top'>сотрудник ГО</option>
+                </select>  
+                <button class='btn btn-success'>ПОИСК</button>
+            </div>
+        </form>
         <div>
             <table class='table table-hover'>
                 <thead>

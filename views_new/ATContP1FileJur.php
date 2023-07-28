@@ -78,7 +78,7 @@
                     }   
                     echo("</select>");
                 ?>   
-                <button class='btn btn-warning'>save</button>
+                <button class='btn btn-warning'>Сохранить</button>
             </form>
         </div>
         <div class="tab-pane fade" id="CredList">

@@ -6,12 +6,27 @@ class ATEmployeeMod extends Model{
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE emLogin=? and emPass=?;",[$_SESSION['login'],md5($_SESSION['pass'])]);
     }
     
-    public function GetEmpList(){//возвращает список сотрудников
+    public function GetEmpList(){//возвращает список сотрудников ВСЕХ
         return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee ",[]);
     }
     
-    public function GetEmpListAct(){//возвращает список сотрудников
+    public function GetEmpListAct(){//возвращает список сотрудников только тех, кто работает
         return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee WHERE EmStatus=? ORDER BY EmBranch,EmName",['работает']);
+    }
+    
+    public function getEmpSearchAct($Branch='',$Role=''){//возвращает список сотрудников только тех, кто работает
+        if (($Branch=='') && ($Role=='')){
+            return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee WHERE EmStatus=? ORDER BY EmBranch,EmName",['работает']);
+        }            
+        if (($Branch=='') && ($Role!='')){
+            return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee WHERE EmStatus=? AND EmRole=? ORDER BY EmBranch,EmName",['работает',$Role]);
+        }            
+        if (($Branch!='') && ($Role=='')){
+            return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee WHERE EmStatus=? AND EmBranch=? ORDER BY EmBranch,EmName",['работает',$Branch]);
+        }            
+        if (($Branch!='') && ($Role!='')){
+            return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmployee WHERE EmStatus=? AND EmBranch=? AND EmRole=? ORDER BY EmBranch,EmName",['работает',$Branch,$Role]);
+        }               
     }
    
     public function AddEmpDr($EmpName,$EmpBranch){//добавить сотрудника
@@ -42,7 +57,7 @@ class ATEmployeeMod extends Model{
        return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE EmName=?",[$EmName]);
     }
     
-    public function getEmpDovName($EmName){//выбирает сотрудника из таблицы по Имени
+    public function getEmpDovName($EmName){//выбирает сотрудника из таблицы доверенностей по Имени
        return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmpDov WHERE EmName=?",[$EmName]);
     }
                       

@@ -69,6 +69,18 @@ class ATDRCtrl extends ControllerMain {
         $this->render('dr/ATDrEmployee',$Args);
     }
     
+    public function actionEmpSearch(){
+        $this->ViewName='Справочник сотрудников';
+        $Model=new ATEmployeeMod();                
+        
+        $EmpList=$Model->getEmpSearchAct($_GET['EmpBranch'],$_GET['EmpRole']);
+        
+        #new MyCheck($EmpList,0);
+        
+        $Args=['EmpList'=>$EmpList,'BrList'=>(new ATDrBranchMod)->GetBrList()];
+        $this->render('dr/ATDrEmployee',$Args);
+    }
+    
     public function actionEmpAdd(){
         (new ATEmployeeMod)->AddEmpDr($_GET['EmpName'],$_GET['EmpBranch']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmployee");
