@@ -23,6 +23,10 @@ class ATCommentMod extends Model{
         db2::getInstance()->Query("INSERT INTO tblClComments (ClCode,ContCode,ProdNum,CmText,CmAuthor) VALUES (?,?,?,?,?)",[$ClCode,$ContCode,$ProdNum,$Text,$Author]);
     }
     
+    public function UpdComment($Id=0,$Text=''){
+        db2::getInstance()->Query("UPDATE tblClComments SET CmText=? WHERE Id=?",[$Text,$Id]);
+    }
+    
     public function DelComment($Id){
         db2::getInstance()->Query("DELETE FROM tblClComments WHERE Id=?",[$Id]);
     }

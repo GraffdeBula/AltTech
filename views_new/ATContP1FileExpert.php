@@ -181,6 +181,7 @@
                           <th scope="col">Дата</th>
                           <th scope="col">Автор</th>
                           <th scope="col">Текст</th>
+                          <th scope="col">Изменить</th>
                           <th scope="col">Удалить</th>
                         </tr>
                     </thead>
@@ -188,7 +189,20 @@
                         <?php
                             foreach($Comments as $Comment){
                                 echo("<tr class='table-active'>");
-                                echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td><td>{$Comment->CMTEXT}</td>");
+                                echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td>"); 
+                                echo("<form method='get' autocomplete='off'>");
+                                (new MyForm('ATContP1FileExpertCtrl','UpdComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                echo("<td><input type='text' name='CmText' value='{$Comment->CMTEXT}'></td>");
+                                echo("<input type='hidden' name='Id' value='{$Comment->ID}'>");
+                                if ($Comment->CMAUTHOR==$_SESSION['EmName']){
+                                    echo("<td><button class='btn btn-success btn-sm'>Изменить</button></td>");
+                                                                                                            
+                                } else {
+                                    echo("<td>-----</td>");                                    
+                                }
+                                echo("</form>");
+                                #echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
+                                echo("<td>-----</td>");
                                 echo("</tr>");
                             }
                         ?>

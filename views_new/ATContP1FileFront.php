@@ -404,7 +404,7 @@
                         echo('<tr class="table-active">');
                         echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td><td>{$Comment->CMTEXT}</td><td>");
                         if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
-                            echo("<button class='btn btn-danger>УДАЛИТЬ</button>");
+                            echo("<button class='btn btn-danger'>УДАЛИТЬ</button>");
 
                         }
                         echo('</td></tr>');
@@ -412,7 +412,6 @@
                     ?>
                 </tbody>
             </table>
-            <div><?php #var_dump($Comments); ?></div>
                         
         </div>
         <div class="tab-pane fade" id="Archive">            

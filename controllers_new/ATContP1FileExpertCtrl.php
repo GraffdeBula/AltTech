@@ -105,9 +105,18 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionAddComment(){//добавить риск заключения БФЛ
+    public function actionAddComment(){//добавить комментарий
         (new ATCommentMod)->AddComment($_GET['ClCode'],$_GET['ContCode'],1,$_GET['NewComment'],$_SESSION['EmName']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionUpdComment(){//изменить комментарий
+        (new ATCommentMod)->UpdComment($_GET['Id'],$_GET['CmText']);
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDelComment(){//удалить комментарий
+        
     }
     
     public function actionShowIncHist(){
