@@ -737,15 +737,17 @@
                             </thead>
                             <tbody>
                             <?php
-                                foreach($ClBankAccsList as $Acc){                
+                                foreach($ClBankAccsList as $Acc){        
+                                    $OpenDate=(new PrintFunctions())->DateToStr($Acc->CLBNOPENDAT);
+                                    $CloseDate=(new PrintFunctions())->DateToStr($Acc->CLBNCLOSEDAT);
                                     echo("<tr class='table-secondary'><form method='get'>");
                                     (new MyForm('ATClientAnketaCtrl','DelBankAcc',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClAccID' value='{$Acc->ID}'>");
                                     echo("<td>$Acc->CLBNNAME</td>");
                                     echo("<td>$Acc->CLBNACC</td>");
                                     echo("<td>$Acc->CLBNSUM</td>");                                    
-                                    echo("<td>$Acc->CLBNOPENDAT</td>");
-                                    echo("<td>$Acc->CLBNCLOSEDAT</td>");
+                                    echo("<td>$OpenDate</td>");
+                                    echo("<td>$CloseDate</td>");
                                     echo("<td>$Acc->CLBNCOMMENT</td>");  
                                     #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
