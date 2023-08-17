@@ -54,8 +54,13 @@ class ATClientFileCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     
+    public function actionUpdComment(){//изменить комментарий
+        (new ATCommentMod)->UpdComment($_GET['ComID'],$_GET['CmText']);
+        header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
     public function actionDelComment(){
-        (new ATCommentMod())->DelComment($_GET['ClAccID']);        
+        (new ATCommentMod())->DelComment($_GET['ComID']);        
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
            

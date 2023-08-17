@@ -147,9 +147,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         (new ATCommentMod)->AddComment($_GET['ClCode'],$_GET['ContCode'],1,$_GET['NewComment'],$_SESSION['EmName']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
+    
+    public function actionUpdComment(){//изменить комментарий
+        (new ATCommentMod)->UpdComment($_GET['ComID'],$_GET['CmText']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
            
     public function actionDelComment(){
-        (new ATCommentMod)->DelComment($_GET('Id'));
+        (new ATCommentMod)->DelComment($_GET['ComID']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }   
     

@@ -95,24 +95,38 @@
                             <th>Дата</th>
                             <th>Кто оставил</th>
                             <th>Комментарий</th>                                    
-                            <th>Удаление</th>
+                            <th>Изменить</th>
+                            <th>Удалить</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php                          
                         foreach($Comments as $Comment){
                             echo("<tr class='table-secondary'><form method='get'>");
-                            (new MyForm('ATClientFileCtrl','DelComment',$_GET['ClCode'],0))->AddForm();
-                            echo("<input type='hidden' name='ClAccID' value='{$Comment->ID}'>");
+                            
+                            
                             echo("<td>$Comment->CMDATE</td>");
                             echo("<td>$Comment->CMAUTHOR</td>");
-                            echo("<td>$Comment->CMTEXT</td>");
+                            echo("<form method='get' autocomplete='off'>");
+                            (new MyForm('ATClientFileCtrl','UpdComment',$_GET['ClCode'],0))->AddForm();
+                            echo("<td><textarea type='text' name='CmText' size=120 rows='5' style='height: 90px; width: 900px;'>$Comment->CMTEXT</textarea></td>");
                             if ($Comment->CMAUTHOR==$_SESSION['EmName']){
-                                echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
+                                echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                                echo("<td><button class='btn btn-success btn-sm'>Изменить</button></td>");
                             } else {
                                 echo("<td>-----</td>");
                             }
-                            echo("</form></tr>");
+                            echo("</form>");
+                            if (($Comment->CMAUTHOR==$_SESSION['EmName'])){
+                                echo("<form method='get'>");
+                                (new MyForm('ATClientFileCtrl','DelComment',$_GET['ClCode'],0))->AddForm();
+                                echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                                echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
+                                echo("</form>");
+                            } else {
+                                echo("<td>-----</td>");
+                            }
+                            echo("</tr>");
                         }
                     ?>
                     </tbody>    

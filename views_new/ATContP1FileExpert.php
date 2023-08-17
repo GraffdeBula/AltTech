@@ -153,7 +153,7 @@
                             <?php (new MyForm('ATContP1FileExpertCtrl','AddToJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
                             <div class="form-group">
                                 <label for="exampleTextarea" class="form-label mt-4">Причина согласования юристом</label>
-                                <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXCOMMENT' maxlength=250 ><?=$Expert->EXCOMMENT?></textarea>
+                                <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 160px;" name='EXCOMMENT' maxlength=250 ><?=$Expert->EXCOMMENT?></textarea>
                             </div>
                             <?php
                             if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
@@ -192,8 +192,8 @@
                                 echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td>"); 
                                 echo("<form method='get' autocomplete='off'>");
                                 (new MyForm('ATContP1FileExpertCtrl','UpdComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                echo("<td><input type='text' name='CmText' value='{$Comment->CMTEXT}'></td>");
-                                echo("<input type='hidden' name='Id' value='{$Comment->ID}'>");
+                                echo("<td><textarea type='text' name='CmText' size=120 rows='5' style='height: 90px; width: 900px;'>$Comment->CMTEXT</textarea></td>");
+                                echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
                                 if ($Comment->CMAUTHOR==$_SESSION['EmName']){
                                     echo("<td><button class='btn btn-success btn-sm'>Изменить</button></td>");
                                                                                                             
@@ -201,8 +201,16 @@
                                     echo("<td>-----</td>");                                    
                                 }
                                 echo("</form>");
-                                #echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
-                                echo("<td>-----</td>");
+                                
+                                if ($Comment->CMAUTHOR==$_SESSION['EmName']){
+                                    echo("<form method='get'>");
+                                    (new MyForm('ATContP1FileExpertCtrl','DelComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                                    echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
+                                    echo("</form>");
+                                } else {
+                                    echo("<td>-----</td>");
+                                }
                                 echo("</tr>");
                             }
                         ?>

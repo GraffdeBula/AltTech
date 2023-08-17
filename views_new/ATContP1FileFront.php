@@ -395,6 +395,7 @@
                       <th scope="col">Дата</th>
                       <th scope="col">Автор</th>
                       <th scope="col">Текст</th>
+                      <th scope="col">Изменить</th>
                       <th scope="col">Удалить</th>
                     </tr>
                 </thead>
@@ -402,12 +403,28 @@
                     <?php
                     foreach($Comments as $Comment){
                         echo('<tr class="table-active">');
-                        echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td><td>{$Comment->CMTEXT}</td><td>");
+                        echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td>");
+                        echo("<form method='get' autocomplete='off'>");
+                            (new MyForm('ATContP1FileFrontCtrl','UpdComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                            echo("<td><textarea type='text' name='CmText' size=120 rows='5' style='height: 90px; width: 900px;'>$Comment->CMTEXT</textarea></td>");                        
                         if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
-                            echo("<button class='btn btn-danger'>УДАЛИТЬ</button>");
-
+                            echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                            echo("<td><button class='btn btn-success'>ИЗМЕНИТЬ</button></td>");
+                        } else {
+                            echo("<td>-----</td>");
                         }
-                        echo('</td></tr>');
+                        echo("</form>");
+                                                
+                        if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
+                            echo("<form method='get'>");
+                            (new MyForm('ATContP1FileFrontCtrl','DelComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                            echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                            echo("<td><button class='btn btn-danger'>УДАЛИТЬ</button></td>");
+                            echo("</form>");
+                        } else {
+                            echo("<td>-----</td>");
+                        }
+                        echo('</tr>');
                     }
                     ?>
                 </tbody>

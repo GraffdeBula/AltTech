@@ -454,6 +454,7 @@
                             <tbody>
                             <?php
                                 foreach($ClIncomesList as $Income){                
+                                    $IncomePensDate=(new PrintFunctions())->DateToStr($Income->CLINCPENSDATE);
                                     echo("<tr class='table-secondary'><form method='get'>");
                                     (new MyForm('ATClientAnketaCtrl','DelIncome',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClIncID' value='{$Income->ID}'>");
@@ -464,7 +465,7 @@
                                     echo("<td>$Income->CLINCSUMREAL</td>");
                                     echo("<td>$Income->CLINCCARDYN</td>");
                                     echo("<td>$Income->CLINCBANK</td>");
-                                    echo("<td>$Income->CLINCPENSDATE</td>");
+                                    echo("<td>$IncomePensDate</td>");
                                     echo("<td>$Income->CLINCCOMMENT</td>");
                                     #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
