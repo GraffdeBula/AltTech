@@ -101,9 +101,7 @@ class ATClientAnketaCtrl extends ControllerMain {
                 'CLWORKPARTSTATUS'=>$_GET['CLWORKPARTSTATUS'],'CLWORKPARTORG'=>$_GET['CLWORKPARTORG'],'CLWORKPARTPOS'=>$_GET['CLWORKPARTPOS']],$_GET['ClCode']);
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
-    
-    
-                
+                        
     //добавдение записей в связанные таблицы, удаление записей
     public function actionAddPhone(){
         if ((isset($_GET['ClPhone']))&&($_GET['ClPhone']!='')){
