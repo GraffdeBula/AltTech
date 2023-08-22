@@ -108,6 +108,7 @@ class ATClientMod extends Model{
         $Params=[$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
+    
     //операции с таблицей Родственники
     public function GetClRelativesList($ClCode){
         $Sql="SELECT * FROM tblClRelatives WHERE ClCode=?";
@@ -132,6 +133,7 @@ class ATClientMod extends Model{
         $Params=[$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
+    
     //операции с таблицей Документы
     public function GetClDocumentsList($ClCode){
         $Sql="SELECT * FROM tblClDocuments WHERE ClCode=?";
@@ -153,8 +155,7 @@ class ATClientMod extends Model{
             $ClDocAttr1,$ClDocAttr2,$ClDocAttr3,$ID,$ClCode];
         db2::getInstance()->Query($Sql,$Params);
     }
-    
-    
+        
     public function DelDocument($ClCode,$ID){
         $Sql="DELETE FROM tblClDocuments WHERE ClCode=? AND ID=?";
         $Params=[$ClCode,$ID];
@@ -165,6 +166,7 @@ class ATClientMod extends Model{
         $Sql="SELECT * FROM tblClDocuments WHERE ClCode=? AND ClDocName=?";
         return db2::getInstance()->FetchOne($Sql,[$ClCode,$Name]);
     }
+    
     //операции с таблицей Доходы
     public function GetClIncomesList($ClCode){
         $Sql="SELECT * FROM tblClIncomes WHERE ClCode=?";
@@ -183,10 +185,17 @@ class ATClientMod extends Model{
         $Params=[$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
+    
     //операции с таблицей Собственность
     public function GetClPropertyList($ClCode){
         $Sql="SELECT * FROM tblClProperty WHERE ClCode=?";
         $Params=[$ClCode];
+        return db2::getInstance()->FetchAll($Sql,$Params);
+    }
+    
+    public function GetClPropertyByDesc($ClCode,$Desc){
+        $Sql="SELECT * FROM tblClProperty WHERE ClCode=? AND ClPropDesc=?";
+        $Params=[$ClCode,$Desc];
         return db2::getInstance()->FetchAll($Sql,$Params);
     }
     
@@ -207,6 +216,7 @@ class ATClientMod extends Model{
         $Params=[$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
+    
     //операции с таблицей Сделки
     public function GetClDealsList($ClCode){
         $Sql="SELECT * FROM tblClDeals WHERE ClCode=?";
@@ -231,6 +241,7 @@ class ATClientMod extends Model{
         $Params=[$ClCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
+    
     //операции с таблицей Банковские счета
     public function GetClBankAccsList($ClCode){
         $Sql="SELECT * FROM tblClBankAccs WHERE ClCode=?";

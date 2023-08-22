@@ -40,6 +40,11 @@ class ATClientAnketaCtrl extends ControllerMain {
         $Model->updClient(['CLADRRZIP'=>$_GET['CLADRRZIP'],'CLADRRREG'=>$_GET['CLADRRREG'],'CLADRRDIST'=>$_GET['CLADRRDIST'],
             'CLADRRCITY'=>$_GET['CLADRRCITY'],'CLADRRSTR'=>$_GET['CLADRRSTR'],'CLADRRHOUSE'=>$_GET['CLADRRHOUSE'],'CLADRRCORP'=>$_GET['CLADRRCORP'],'CLADRRAPP'=>$_GET['CLADRRAPP'],
             'CLADRRPROPYN'=>$_GET['CLADRRPROPYN'],'CLADRRCOMMENT'=>$_GET['CLADRRCOMMENT'] ],$_GET['ClCode']);
+        if ($_GET['CLADRRPROPYN']=='да'){
+            $ClPropertyDesc=$_GET['CLADRRREG'].','.$_GET['CLADRRDIST'].','.$_GET['CLADRRCITY'].','.
+                $_GET['CLADRRSTR'].','.$_GET['CLADRRHOUSE'].','.$_GET['CLADRRCORP'].','.$_GET['CLADRRAPP'];
+            (new ClProperty($_GET['ClCode'], $ClPropertyDesc))->CheckProperty();
+        }
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
     }
     
