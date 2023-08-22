@@ -3,7 +3,7 @@
 class ATEmployeeMod extends Model{
     protected $Data;    
     public function GetEmpWorkData(){ //метод возвращает строку из таблицы Employee по логину и паролю (при авторизации) для помещения в сессию. переименовать метод
-        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE emLogin=? and emPass=?;",[$_SESSION['login'],md5($_SESSION['pass'])]);
+        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE emLogin=? and emPass=?;",[$_SESSION['login'],$_SESSION['pass']]);
     }
     
     public function GetEmpList(){//возвращает список сотрудников ВСЕХ

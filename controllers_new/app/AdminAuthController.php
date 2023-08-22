@@ -7,15 +7,16 @@
  */
 class AdminAuthController extends Controller{
     public function actionIndex(){ //метод по умолчанию показывает форму для авторизации
+        #echo('ih bin auth');
+        #exit();
         if(isset($_POST['usAuth'])){
-            if((new WebChecker)->GetLogPass($_POST['usLogin'],$_POST['usPass'])){
-                #header("Location: http://37.193.61.130/AltTech/index_admin.php");
-                header("Location: index_admin.php");
+            if((new SessionChecker)->getLogPass($_POST['usLogin'],$_POST['usPass'])){                
+                header("Location: index_admin.php");//авторизация удалась переход на основной файл
             } else {
-                $this->render('AdminAuthFail');
+                $this->render('AdminAuthFail');//неудачная авторизация
             }                  
         }
-        else $this->render('AdminAuth');
+        else $this->render('AdminAuth');//авторизации не было, показ формы авторизации
         exit();
     }
     

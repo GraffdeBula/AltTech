@@ -21,9 +21,7 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
 //сначала проверим hash
-#(new Hash())->CheckHash($_GET['hash']);
-$WebChecker=new WebChecker();
-$WebChecker->CheckHash();
+(new SessionChecker())->checkSession();
 
 (new AdminMainController())->run();
 
