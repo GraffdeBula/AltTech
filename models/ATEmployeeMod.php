@@ -60,5 +60,18 @@ class ATEmployeeMod extends Model{
     public function getEmpDovName($EmName){//выбирает сотрудника из таблицы доверенностей по Имени
        return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmpDov WHERE EmName=?",[$EmName]);
     }
+    
+    public function getEmpDovList(){//показывает список доверенностей
+       return db2::getInstance()->FetchAll("SELECT * FROM tbl9DrEmpDov ORDER BY Id DESC",[]);
+    }
+    
+    public function addEmpDov($EmName,$DovNum){//добавляет доверенность в список
+       db2::getInstance()->Query("INSERT INTO tbl9DrEmpDov (EmName,EmDov) VALUES (?,?)",[$EmName,$DovNum]);
+    }
+    
+    public function updEmpDov($EmName,$EmDov,$EmDovDate,$EmDovEndDate,$EmDovComment,$Id){//вносит изменения в доверенность
+        $Sql="UPDATE tbl9DrEmpDov SET EmName=?,EmDov=?,EmDovDate=?,EmDovEndDate=?,EmDovComment=? WHERE Id=?";
+        db2::getInstance()->Query($Sql,[$EmName,$EmDov,$EmDovDate,$EmDovEndDate,$EmDovComment,$Id]);
+    }
                       
 }

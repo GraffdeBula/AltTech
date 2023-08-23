@@ -90,6 +90,22 @@ class ATDRCtrl extends ControllerMain {
         (new ATEmployeeMod)->DelEmpDr($_GET['EmpID']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmployee");
     }
+    //справочник доверенностей сотрудников
+    public function actionShowDREmpDov(){
+        $this->ViewName='Справочник доверенностей';
+        $Args=['DovList'=>(new ATEmployeeMod)->getEmpDovList()];
+        $this->render('dr/ATDrEmpDov',$Args);
+    }
+    
+    public function actionEmpDovAdd(){
+        (new ATEmployeeMod)->addEmpDov($_GET['EmName'],$_GET['EmDov']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmpDov");
+    }
+    
+    public function actionEmpDovUpd(){
+        (new ATEmployeeMod)->updEmpDov($_GET['EmName'],$_GET['EmDov'],$_GET['EmDovDate'],$_GET['EmDovEndDate'],$_GET['EmDovComment'],$_GET['Id']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDREmpDov");
+    }
     
     //### справочники вторая колонка
     //справочник пакетов тарифов

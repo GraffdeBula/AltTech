@@ -181,7 +181,8 @@
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDROrg"><button class="btn btn-warning">Организации</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBranch"><button class="btn btn-info">Филиалы</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRRegions"><button class="btn btn-success">Регионы</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDREmployee"><button class="btn btn-success">Сотрудники</button></a></p>       
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDREmployee"><button class="btn btn-success">Сотрудники</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDREmpDov"><button class="btn btn-primary">Доверенности</button></a></p>
                 </div>
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPac"><button class="btn btn-warning">Пакеты тарифов</button></a></p>                                    

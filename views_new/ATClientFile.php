@@ -42,7 +42,7 @@
                 <input type='hidden' name='controller' value='ATClientFileCtrl'><br>
                 <input type='hidden' name='action' value='ContP1Create'><br>
                 <input type='hidden' name='ClCode' value='<?php echo($Client->CLCODE);?>'><br>
-                <label>ID сделки (amoCRM)</label><input type='text' maxlength='10' class='MyID'><br>
+                <label>ID сделки (amoCRM)</label><input type='text' maxlength='12' class='MyID'><br>
                 <button type='submit' class='btn btn-warning newContBtn'>Добавить договор БФЛ</button><br>        
             </form>
             <?php  
