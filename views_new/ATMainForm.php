@@ -208,7 +208,12 @@
             <div>
                 <a target='_blank' href="index_admin.php?controller=JsonCtrl"><button class="btn btn-info">JSON</button></a>
             </div>
-                        
+            <div>
+                <?php
+                $text=(new PrintFunctions())->SumToStr(1500.00);
+                echo($text);
+                ?>
+            </div>            
         </div>     
         <div class="tab-pane fade" id="adminka">
             <a target='_blank' href="index_admin.php?controller=PkoListCtrl&action=Index"><button class="btn btn-outline-primary">Платежи</button></a>

@@ -169,8 +169,15 @@ class PrintFunctions {
                 }
 
                 // добавляем обозначение порядка или валюту
+                
                 $digits[] = $dic[1][$i][(($last%=100)>4 && $last<20) ? 2 : $dic[2][min($last%10,5)]];
-
+                $j=array_key_last($digits);
+                if (($digits[$j]=='тысяча')&&($digits[$j-1]=='один')){
+                    $digits[$j-1]='одна';
+                }
+                if (($digits[$j]=='тысячи')&&($digits[$j-1]=='два')){
+                    $digits[$j-1]='две';
+                }
                 // объединяем составные числа в единый текст и добавляем в переменную, которую вернет функция
                 array_unshift($string, join(' ', $digits));
             }
