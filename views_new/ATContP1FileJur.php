@@ -87,34 +87,63 @@
                     <thead>
                         <tr>                      
                             <th scope="col">Кредитор по договору</th>                            
-                            <th scope="col">Номер договора</th>
-                            <th scope="col">Дата договора</th>
+                            <th scope="col">Договор</th>                            
                             <th scope="col">Кредитор текущий</th>
-                            <th scope="col">Долг по ЭПЭ</th>
-                            <th scope="col">Просроченный долг</th>
-                            <th scope="col">Штрафы</th>                            
+                            <th scope="col">Текущий долг</th>                            
                             <th scope="col">ПЕЧАТЬ ДОКУМЕНТОВ</th>
                         </tr
                     </thead>
-                    <tbody>                    
+                    <tbody>                                            
                     <?php
                                      
                         foreach($CreditListArr as $Credit){
                             #new MyCheck($Credit->getBnCurRec(),0);
                             echo("<tr>"); 
-                            echo("<td width='250'><p>{$Credit->getCrRec()->CRBANKCONTNAME}</p><p>ИНН: {$Credit->getCrRec()->CRBANKCONTINN}</p><p>ОГРН: {$Credit->getBnContRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p></td>");                            
-                            echo("<td>{$Credit->getCrRec()->CRCONTNUM}</td>");
-                            echo("<td>{$Credit->getCrRec()->CROPENDAT}</td>");
-                            echo("<td width='250'><p>{$Credit->getCrRec()->CRBANKCURNAME}</p><p>ИНН: {$Credit->getCrRec()->CRBANKCURINN}</p><p>ОГРН: {$Credit->getBnCurRec()->BNOGRN}</p><p>АДРЕС: {$Credit->getBnCurRec()->BNADRREG}</p></td>");
-                            echo("<td>{$Credit->getCrRec()->CRSUMREST}</td>");
-                            echo("<td>{$Credit->getCrRec()->CRSUMOVERDUE}</td>");
-                            echo("<td>{$Credit->getCrRec()->CRSUMFINE}</td>");                            
-                            echo("<td><p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqCompP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>"
-                            . "<button class='btn btn-info'>Запрос документов (представитель)</button></a></p>"
-                            . "<p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>"
-                            . "<button class='btn btn-success'>Запрос документов (клиент)</button></a></p>"
-                            . "<p><button class='btn btn-warning'>Сохранить</button></p>"
-                            . "</td>");
+                            echo("<td width='250'>");//колонка кредитор по договору
+                                echo("<p>{$Credit->getCrRec()->CRBANKCONTNAME}</p>");
+                                echo("<p>ИНН: {$Credit->getCrRec()->CRBANKCONTINN}</p>");
+                                echo("<p>ОГРН: {$Credit->getBnContRec()->BNOGRN}</p>");
+                                echo("<p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p>");
+                            echo("</td>");//конец колонки кредитор по договору
+                            
+                            echo("<td width='250'>");//колонка ДОГОВОР
+                                echo("<p>Номер: {$Credit->getCrRec()->CRCONTNUM}</p>");
+                                echo("<p>Дата: {$Credit->getCrRec()->CROPENDAT}</p>");
+                            echo("</td>");//конец колонки ДОГОВОР
+                            
+                            echo("<td width='250'>");//колонка ТЕКУЩИЙ КРЕДИТОР                            
+                                echo("<p>{$Credit->getCrRec()->CRBANKCURNAME}</p>");
+                                echo("<p>ИНН: {$Credit->getCrRec()->CRBANKCURINN}</p>");
+                                echo("<p>ОГРН: {$Credit->getBnContRec()->BNOGRN}</p>");
+                                echo("<p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p>");
+                            echo("</td>");//конец колонки ТЕКУЩИЙ КРЕДИТОР
+                            
+                            echo("<td width='250'>");//колонка ДОЛГ
+                                echo("<p>Долг по ЭПЭ: {$Credit->getCrRec()->CRSUMREST}</p>");
+                                echo("<p>Просроченный: {$Credit->getCrRec()->CRSUMOVERDUE}</p>");
+                                echo("<p>Штраф: {$Credit->getCrRec()->CRSUMFINE}</p>");                            
+                            echo("</td>");//конец колонки ДОЛГ
+                                
+                            echo("<td width='250'>");//колонка ПЕЧАТЬ ДОКУМЕНТОВ
+                            echo("<p>");
+                                echo("<p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqCompP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
+                                echo("<button class='btn btn-info btn-sm'>Запрос документов (представитель)</button></a>");
+                            echo("</p>");
+                            echo("<p>");
+                                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
+                                echo("<button class='btn btn-success btn-sm'>Запрос документов (клиент)</button></a>");
+                            echo("</p>");
+                            echo("<p>");
+                                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
+                                echo("<button class='btn btn-warning btn-sm'>Сохранить</button>");
+                            echo("</p>");
+                            
+                                                                                    
+                            
+                            
+                            echo("</td>");//конец колонки ПЕЧАТЬ ДОКУМЕНТОВ                          
+                       
+                            
                             echo("</tr>");
                         }                     
  

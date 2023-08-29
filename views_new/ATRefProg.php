@@ -73,7 +73,7 @@
                             echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                         }
                         echo("</form>");                        
-                        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmName']=='Алёна Пышняк')){
+                        if (($_SESSION['EmRole']=='admin') or (in_array($_SESSION['EmName'],['Алёна Пышняк','Алина Смородина']))){
                             echo("<form method='get' class='delAgForm'>");
                             (new MyForm('ATRefProgCtrl','DelAgent',0,0))->AddForm2();
                             echo("<input type='hidden' name='RefId' value='{$Refer->ID}'>");
