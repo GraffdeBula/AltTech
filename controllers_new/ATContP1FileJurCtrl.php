@@ -32,8 +32,20 @@ class ATContP1FileJurCtrl extends ControllerMain {
         $this->ShowFile();
     }
     
-     public function actionJurSave(){
+    public function actionJurSave(){
         $this->updBackOf();
+        
+        header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionUpdDebt(){
+        $Model=new ATP1CredMod();
+        $Params=[
+            'CRSUMREST'=>$_GET['CRSUMREST'],
+            'CRSUMOVERDUE'=>$_GET['CRSUMOVERDUE'],
+            'CRSUMFINE'=>$_GET['CRSUMFINE'],
+        ];
+        $Model->UpdP1Credit($Params,$_GET['CrCode']);
         
         header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }

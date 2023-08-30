@@ -63,8 +63,9 @@
           <a class="nav-link" data-bs-toggle="tab" href="#CredList">Список кредиторов</a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#Add">дополнительное</a>
-        </li>        
+          <a class="nav-link" data-bs-toggle="tab" href="#PrintIsk">Печать Иска</a>
+        </li>  
+         
     </ul>
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active show" id="Main">  
@@ -118,11 +119,14 @@
                                 echo("<p>АДРЕС: {$Credit->getBnContRec()->BNADRREG}</p>");
                             echo("</td>");//конец колонки ТЕКУЩИЙ КРЕДИТОР
                             
-                            echo("<td width='250'>");//колонка ДОЛГ
-                                echo("<p>Долг по ЭПЭ: {$Credit->getCrRec()->CRSUMREST}</p>");
-                                echo("<p>Просроченный: {$Credit->getCrRec()->CRSUMOVERDUE}</p>");
-                                echo("<p>Штраф: {$Credit->getCrRec()->CRSUMFINE}</p>");                            
-                            echo("</td>");//конец колонки ДОЛГ
+                            echo("<td width='250'><form method='get'>");//колонка ДОЛГ
+                                (new MyForm('ATContP1FileJurCtrl','UpdDebt',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                echo("<input type='hidden' name='CrCode' value={$Credit->getCrRec()->CRCODE}>");
+                                echo("<p>Долг по ЭПЭ: <input name='CRSUMREST' value={$Credit->getCrRec()->CRSUMREST}></p>");
+                                echo("<p>Просроченный: <input name='CRSUMOVERDUE' value={$Credit->getCrRec()->CRSUMOVERDUE}></p>");
+                                echo("<p>Штраф: <input name='CRSUMFINE' value={$Credit->getCrRec()->CRSUMFINE}></p>"); 
+                                echo("<button class='btn btn-warning btn-sm'>Сохранить</button>");
+                            echo("</form></td>");//конец колонки ДОЛГ
                                 
                             echo("<td width='250'>");//колонка ПЕЧАТЬ ДОКУМЕНТОВ
                             echo("<p>");
@@ -134,13 +138,10 @@
                                 echo("<button class='btn btn-success btn-sm'>Запрос документов (клиент)</button></a>");
                             echo("</p>");
                             echo("<p>");
-                                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
-                                echo("<button class='btn btn-warning btn-sm'>Сохранить</button>");
+                                #echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
+                                #echo("<button class='btn btn-warning btn-sm'>Сохранить</button>");
                             echo("</p>");
-                            
-                                                                                    
-                            
-                            
+                                                                                                                                                                        
                             echo("</td>");//конец колонки ПЕЧАТЬ ДОКУМЕНТОВ                          
                        
                             
@@ -151,9 +152,10 @@
                     </tbody>
                 </table>
         </div>    
-        <div class="tab-pane fade" id="Add">
-            <h5>этапы например</h5>
-                       
+        <div class="tab-pane fade" id="PrintIsk">
+            <a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
+                <button class="btn btn-outline-warning">ПЕЧАТЬ ИСКА</button>
+            </a>
         </div>        
     </div>
                 
