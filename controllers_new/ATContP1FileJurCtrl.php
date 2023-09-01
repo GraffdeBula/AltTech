@@ -48,7 +48,7 @@ class ATContP1FileJurCtrl extends ControllerMain {
         $Model->UpdP1Credit($Params,$_GET['CrCode']);
         
         header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
+    }    
     
     protected function ShowFile(){    
         $this->ViewName='Досье договора '.$this->Client->CLFNAME;

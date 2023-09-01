@@ -19,6 +19,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     protected $ClientAdr; //клиент
     protected $ClientRel; //клиент массив
     protected $Contract;
+    protected $BackOf;
     protected $Court;
     protected $Nalog;
     protected $Creditors;
@@ -527,20 +528,21 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         ];
         
         ####Формирование набора данных для иска
-        $this->GetDataNew();
+        $this->GetDataForIsk();
         
         foreach($this->IskPack as $i => $IskDoc){
             $Isk=new DZCtrl(); //создание нового объекта curl для формирования иска            
             $Isk->DocID=$IskDoc;
             $Isk->DocName=$this->Client->CLFIO.' '.$this->IskNames[$i];
-            $Isk->Data=$this->CreateData($i);            
+            $Isk->Data=$this->CreateDataForIsk($i); 
+            #if ($i==1) {new MyCheck($Isk->Data,1);}
             $Isk->run();                        
         }
         
         header("Location: https://afpc24.doczilla.pro"); //пересылка на докзиллу для скачивания файла
     }
     
-    protected function GetDataNew(){
+    protected function GetDataForIsk(){
         $IskData=new IskMod();
         $Client=new Client($this->ClCode);
         $this->Client=$Client->getClRec();
@@ -552,14 +554,15 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         
         $Contract=new ContP1($this->ContCode);
         $this->Contract=$Contract->getAnketa();
-        $this->Creditors=$Contract->getCredList();
+        $this->BackOf=$Contract->getBackOf();
+        $this->Creditors=$Contract->getCredList();                
         
         $this->BookMarks[1]=$IskData->getBookMarks2_1();
         $this->BookMarks[2]=$IskData->getBookMarks2_2();
         $this->BookMarks[3]=$IskData->getBookMarks2_3();    
     }
     
-    protected function CreateData($i){//
+    protected function CreateDataForIsk($i){//
         $this->Data=[];
 
         foreach ($this->BookMarks[$i] as $BookMark) {                        

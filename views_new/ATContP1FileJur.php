@@ -51,7 +51,10 @@
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovCompJur&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Передоверие</button></a>");
-                
+        
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-outline-warning'>ПЕЧАТЬ ИСКА</button></a>");
+                    
         echo("</div>");
     ?>
 
@@ -79,6 +82,13 @@
                     }   
                     echo("</select>");
                 ?>   
+                <button class='btn btn-warning'>Сохранить</button>
+            </form>
+            <form method='get' autocomplete="off">
+                <?php
+                    (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    echo("Дата составления иска: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                ?>
                 <button class='btn btn-warning'>Сохранить</button>
             </form>
         </div>
@@ -153,9 +163,10 @@
                 </table>
         </div>    
         <div class="tab-pane fade" id="PrintIsk">
-            <a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
+
+            <p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
                 <button class="btn btn-outline-warning">ПЕЧАТЬ ИСКА</button>
-            </a>
+            </a></p>
         </div>        
     </div>
                 
