@@ -553,8 +553,6 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Contract=new ContP1($this->ContCode);
         $this->Contract=$Contract->getAnketa();
         $this->Creditors=$Contract->getCredList();
-        #var_dump($this->Contract);
-        #exit();
         
         $this->BookMarks[1]=$IskData->getBookMarks2_1();
         $this->BookMarks[2]=$IskData->getBookMarks2_2();

@@ -6,7 +6,7 @@
  * @author realb
  */
 class SessionChecker {
-    protected object $Data;        
+    protected $Data;        
     
     public function checkSession(){
         session_start();
@@ -28,8 +28,7 @@ class SessionChecker {
             $_SESSION['hash']=$this->Data->EMPASS;
             $_SESSION['pass']=$this->Data->EMPASS;
             $_SESSION['login']=$this->Data->EMLOGIN;
-            #var_dump($_SESSION);
-            #exit();
+            
             return true;
         } else {
             return false;

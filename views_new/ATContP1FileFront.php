@@ -139,8 +139,8 @@
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
                     if ($Anketa->STATUS>3){
-                    echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}></p>
-                        <button type='submit' class='btn btn-warning'>Заключён договор услуг</button>");     
+                        echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}></p>
+                            <button type='submit' class='btn btn-warning'>Заключён договор услуг</button>");     
                     }
                 echo("</form>");     
                 echo("<form method='get' autoload='off'>");
@@ -267,9 +267,13 @@
                 foreach($Tarif->getTarifList() as $TarifName ){
                     echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
                 }
-                echo("</select>        
-                <button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ</button>
-            </form>");
+                echo("</select>");        
+                    
+                if ($Anketa->STATUS>3){
+                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ</button>");
+                }
+                
+            echo("</form>");
             ?>
          
         </div>
