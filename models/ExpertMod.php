@@ -6,23 +6,7 @@
  */
 class ExpertMod extends Model{
     protected $Data=[];
-    //работа со старым справочником 
-    public function getExpListDr(){
-        return $this->Data=db::getInstance()->fetch_all('SELECT * FROM tblP1ExpertListDr');
-    }
-    
-    public function insExpListDr($param){
-        db::getInstance()->queryInsertOne('INSERT INTO tblP1ExpertListDr (expDrValue) VALUES (?)',$param); //должен получить массив из одного строкового элемента
-    }
-    
-    public function updExpListDr($param){
-        db::getInstance()->query_update('UPDATE tblP1ExpertListDr SET expDrValue=? WHERE ID=?',$param);
-    }
-    
-    public function delExpListDr($param){        
-        db::getInstance()->query_delete2('DELETE FROM tblP1ExpertListDr WHERE ID=?',$param);
-    }
-    //работа с новой БД
+
     //сохранение и получение данных из tblP1Expert
     public function GetExp($ContCode){
         return db2::getInstance()->FetchOne('SELECT * from tblP1Expert WHERE ContCode=?',[$ContCode]);

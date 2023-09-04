@@ -22,9 +22,7 @@
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>На экспертизе</a>
             </li>");        
         ?>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#iski">Иски</a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#reports">Отчёты</a>
         </li>        
@@ -160,10 +158,7 @@
                     ?>
                 </div>
             </div>
-        </div><!--экспертизы-->
-        <div  class='tab-pane fade' id='iski'>
-            <a target="_blank" href="index_admin.php?controller=ClInfoCtrl"><button class="btn btn-outline-warning">ИСКИ</button></a>
-        </div><!--печать исков-->
+        </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
             <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
             <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>

@@ -10,7 +10,7 @@ class SessionChecker {
     
     public function checkSession(){
         session_start();
-        if (isset($_SESSION['hash'])){
+        if (isset($_SESSION['hash'])){            
             return true;
         } else {
             (new AdminAuthController)->run();
@@ -24,14 +24,15 @@ class SessionChecker {
     public function getLogPass(string $login='',string $pass=''){
         $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmployee WHERE EmLogin=? AND EmPass=?",[$login,md5($pass)]);
         if ($this->Data){        
-            
+                        
             $_SESSION['hash']=$this->Data->EMPASS;
             $_SESSION['pass']=$this->Data->EMPASS;
-            $_SESSION['login']=$this->Data->EMLOGIN;
+            $_SESSION['login']=$this->Data->EMLOGIN;            
             
             return true;
         } else {
             return false;
         }
     }
+        
 }

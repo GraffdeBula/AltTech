@@ -9,6 +9,7 @@
  * 
  */
 class ATContP1FileExpertCtrl extends ControllerMain {
+    use FixUrl;
     //Данные для отображения
     protected $Client=[];
     protected $Cont=[];
@@ -31,6 +32,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     public function actionIndex(){
         $this->GetData();
         $this->ViewName='Экспертиза договора '.$this->Client->CLFNAME;
+        $this->getUrl();
         $this->render('ATContP1FileExpert',$this->Args);
     }
         
@@ -54,11 +56,16 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     }
 
     public function actionExpSogl(){
-        (new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
-        if ($this->CheckStatus()){
-            (new Status())->ChangeP1Status(4, $_GET['ContCode']);            
+        if ((new ExpertMod())->getExpMinInc($_GET['ContCode'])){
+
+            (new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
+            if ($this->CheckStatus()){
+                (new Status())->ChangeP1Status(4, $_GET['ContCode']);            
+            }
+            header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+        } else {
+            header("Location: index_admin.php?controller=ErrorCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
         }
-        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionJurSogl(){
