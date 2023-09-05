@@ -187,6 +187,7 @@
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks"><button class="btn btn-warning">Закладки для документов</button></a></p>                                    
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBanks"><button class="btn btn-primary">Банки/МФО/Коллекторы</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDROrganizations"><button class="btn btn-success">СУДЫ/ИФНС/Др.организации</button></a></p>
                 </div>
             </div>
         </div>

@@ -4,11 +4,11 @@
                     
     </head>
     <body>
-        <h3>СПРАВОЧНИК ОРГАНИЗАЦИЙ</h3>
+        <h3>СПРАВОЧНИК ЮРЛИЦ</h3>
         <a href="index_admin.php?controller=MenuCtrl"><button class="btn btn-primary">НАЗАД</button></a><br>
         
 
-        <p>ДОБАВИТЬ ОРГАНИЗАЦИЮ</p>
+        <p>ДОБАВИТЬ ЮРИДИЧЕСКОЕ ЛИЦО</p>
         <form method='get' autocomplete="off">
             <input type="hidden" name='controller' value='ATDRCtrl'>
             <input type="hidden" name='action' value='OrgAdd'>

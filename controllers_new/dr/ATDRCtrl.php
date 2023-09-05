@@ -198,6 +198,27 @@ class ATDRCtrl extends ControllerMain {
         (new AT8BanksMod)->DelBank($_GET['BnID']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRBanks");
     }
+    //справочник прочих организаций
+    public function actionShowDROrganizations(){
+        $this->ViewName='Справочник прочих организаций';
+        $Args=['OrgList'=>(new OrganizationsMod())->getOrgList(),'RegList'=>(new ATDrRegionsMod)->GetRegList()];        
+        $this->render('dr/ATDrOrganizations',$Args);
+    }
+    
+    public function actionOrganizationAdd(){      
+        (new OrganizationsMod())->addOrganization($_GET['ORGNAME'],$_GET['ORGTYPE'],$_GET['ORGREGION'],$_GET['ORGADDRESS'],$_GET['ORGADRNAME'],$_GET['ORGPHONE']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDROrganizations");
+    }
+    
+    public function actionOrganizationUpd(){        
+        (new OrganizationsMod())->updOrganization($_GET['ID'],$_GET['ORGNAME'],$_GET['ORGTYPE'],$_GET['ORGREGION'],$_GET['ORGADDRESS'],$_GET['ORGADRNAME'],$_GET['ORGPHONE']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDROrganizations");
+    }
+    
+    public function actionOrganizationDel(){   
+        (new OrganizationsMod())->delOrganization($_GET['ID']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDROrganizations");
+    }
     //BOOKMARKS справочник закладок для документов
     public function actionShowDRBookmarks(){
         $this->ViewName='Справочник закладок для документов';
