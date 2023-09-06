@@ -558,7 +558,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $this->BackOf=$Contract->getBackOf();
         $this->Creditors=$Contract->getCredList();                
         
-        $this->Court=(new OrganizationOther('Суд',$this->Client->CLADRRREG))->getRec();
+        $this->Court=(new OrganizationOther('Арбитражный суд',$this->Client->CLADRRREG))->getRec();
         $this->Nalog=(new OrganizationOther('Налоговая',$this->Client->CLADRRREG))->getRec();
                         
         $this->BookMarks[1]=$IskData->getBookMarks2_1();
