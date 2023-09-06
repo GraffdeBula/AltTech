@@ -18,13 +18,18 @@ class OrganizationsMod extends Model{
     }
     
     public function getOrgList(){
-        $Sql="SELECT * FROM tbl8DROrganizations WHERE Id>?";
+        $Sql="SELECT * FROM tbl8DROrganizations WHERE Id>? ORDER BY Id DESC";
         return db2::getInstance()->FetchAll($Sql,[0]);
     }
     
     public function delOrganization($Id){
         $Sql="DELETE FROM tbl8DROrganizations WHERE Id=?";
         db2::getInstance()->Query($Sql,[$Id]);
+    }
+    
+    public function getOrgByTypeRegion($OrgType='',$OrgRegion=''){
+        $Sql="SELECT * FROM tbl8DROrganizations WHERE OrgType=? AND OrgRegion=?";
+        return db2::getInstance()->FetchOne($Sql,[$OrgType,$OrgRegion]);
     }
 
 }

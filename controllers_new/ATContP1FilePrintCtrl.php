@@ -26,7 +26,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     protected $Documents;
     protected $IskPack;
     protected $IskNames;
-
+    
     protected $Data; //данные для формирования иска
     protected $BookMarks;       
     protected $ClCode;
@@ -535,6 +535,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $Isk->DocID=$IskDoc;
             $Isk->DocName=$this->Client->CLFIO.' '.$this->IskNames[$i];
             $Isk->Data=$this->CreateDataForIsk($i); 
+            #new MyCheck($Isk->Data,0);
             #if ($i==1) {new MyCheck($Isk->Data,1);}
             $Isk->run();                        
         }
@@ -557,6 +558,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $this->BackOf=$Contract->getBackOf();
         $this->Creditors=$Contract->getCredList();                
         
+        $this->Court=(new OrganizationOther('Суд',$this->Client->CLADRRREG))->getRec();
+        $this->Nalog=(new OrganizationOther('Налоговая',$this->Client->CLADRRREG))->getRec();
+                        
         $this->BookMarks[1]=$IskData->getBookMarks2_1();
         $this->BookMarks[2]=$IskData->getBookMarks2_2();
         $this->BookMarks[3]=$IskData->getBookMarks2_3();    

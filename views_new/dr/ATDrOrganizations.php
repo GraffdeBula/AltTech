@@ -46,9 +46,9 @@
                 <?php                    
                     foreach($OrgList as $Org){
                         echo("<tr class='table-light'>");
-                        echo("<form method='get'>");
+                        echo("<form method='get' autocomplete='off'>");
                         (new MyForm('ATDRCtrl','OrganizationUpd'))->AddForm2();
-                        echo("<td width=100px><input name='ID' value='{$Org->ID}'></td>");
+                        echo("<td width=100px ><input name='ID' value='{$Org->ID}'></td>");
                         echo("<td width=100px><input name='ORGTYPE' value='{$Org->ORGTYPE}'></td>");
                         echo("<td width=100px><input name='ORGNAME' value='{$Org->ORGNAME}'></td>");
                         echo("<td width=100px><input name='ORGREGION' value='{$Org->ORGREGION}'></td>");
