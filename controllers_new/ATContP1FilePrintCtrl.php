@@ -485,6 +485,29 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         header("Location: ".$DocName);
     }
     
+    public function actionReqCurrCompP1(){
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        $Credit=new CreditP1($_GET['CrCode']);
+        $DocTmpName='Запрос переуступка юрист';
+        
+        $Printer=new PrintDoc('ReqCurrCompP1',$DocTmpName,[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),             
+            'ClientAdr'=>$Client->getAdr(),       
+            'ClientPhone'=>$Client->getContPhone(),
+            'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
+            'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
+            
+            ]
+                
+        );
+        
+        $DocName=$Printer->PrintDoc();        
+        header("Location: ".$DocName);
+    }
+    
     public function actionReqClientP1(){
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
@@ -503,6 +526,51 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
             'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
             'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
+            
+            ]
+                
+        );
+        
+        $DocName=$Printer->PrintDoc();        
+        header("Location: ".$DocName);
+    }
+    
+    public function actionReqCurrClientP1(){
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        $Credit=new CreditP1($_GET['CrCode']);        
+        $DocTmpName='Запрос переуступка клиент';
+                
+        $Printer=new PrintDoc('ReqCurrClientP1',$DocTmpName,[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),             
+            'ClientAdr'=>$Client->getAdr(),            
+            'ClientPhone'=>$Client->getContPhone(),
+            'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
+            'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
+            
+            ]
+                
+        );
+        
+        $DocName=$Printer->PrintDoc();        
+        header("Location: ".$DocName);
+    }
+    
+    public function actionReqEntStatus(){//запрос о статусе индивидуального предпринимателя
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        #$Credit=new CreditP1($_GET['CrCode']);        
+        $DocTmpName='Запрос статус ИП';
+                
+        $Printer=new PrintDoc('ReqEntStatus',$DocTmpName,[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),             
+            'ClientINN'=>$Client->getINN(),             
+            'ClientAdr'=>$Client->getAdr(),            
+            'ClientPhone'=>$Client->getContPhone(),
+            'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),            
             
             ]
                 

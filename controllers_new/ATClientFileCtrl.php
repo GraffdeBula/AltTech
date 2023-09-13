@@ -28,13 +28,26 @@ class ATClientFileCtrl extends ControllerMain {
     }
     
     public function actionContP1Create(){
-        $Model=new ATP1ContMod();        
+        $Model=new ATP1ContMod();
         $Model->InsP1Anketa($_GET['ClCode'],$_SESSION['EmBranch'],$_SESSION['EmName']);
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     
     public function actionContP1Del(){        
         (new ATP1ContMod())->DelP1Anketa($_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
+    }
+    
+    public function actionContP1Copy(){
+        $Model=new ATP1ContMod();
+        $Model->CopyP1Anketa($_GET['ContCode'],$_SESSION['EmName']);        
+        $ContCode=$Model->GetLastAnketa($_GET['ClCode'])->CONTCODE;
+        $CredMod=new ATP1CredMod();
+        $CredList=$CredMod->GetP1CredList($_GET['ContCode']);
+        foreach($CredList as $Credit){
+            $CredMod->CopyP1Credit2($Credit->CRCODE,$ContCode);
+        }
+        
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     

@@ -252,7 +252,8 @@ class ATClientAnketaCtrl extends ControllerMain {
             'ClIncomesList'=>$Model->GetClIncomesList($_GET['ClCode']),
             'ClPropertyList'=>$Model->GetClPropertyList($_GET['ClCode']),
             'ClDealsList'=>$Model->GetClDealsList($_GET['ClCode']),
-            'ClBankAccsList'=>$Model->GetClBankAccsList($_GET['ClCode'])
+            'ClBankAccsList'=>$Model->GetClBankAccsList($_GET['ClCode']),
+            'DRRegionsList'=>(new ATDrRegionsMod())->GetRegList(),
         ];
         $this->render('ATClientAnketa',$args);
     }

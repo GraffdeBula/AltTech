@@ -46,6 +46,19 @@ class ATP1ContMod extends Model{
         db2::getInstance()->Query($Sql,$Params); 
     }
     
+    public function CopyP1Anketa($ContCode,$LgEmp){
+        $Sql="INSERT INTO tblP1Anketa (lgEmp,ClCode,AkDat,AkBranch,AkLeadId,AkCredNum,AkCredTotSum,AkCredMainSum,AkComment,Status,AkType)"
+            . "SELECT ?,ClCode,current_date,AkBranch,AkLeadId,AkCredNum,AkCredTotSum,AkCredMainSum,AkComment,1,AkType FROM tblP1Anketa WHERE ContCode=?";
+        $Params=[$LgEmp,$ContCode];
+        db2::getInstance()->Query($Sql,$Params);        
+    }
+    
+    public function GetLastAnketa($ClCode){ //метод возвращает строку из таблицы p1Anketa
+        $Sql="SELECT FIRST 1 * FROM tblP1Anketa WHERE ClCode=? ORDER BY ContCode DESC";
+        $Params=[$ClCode];
+        return $this->Data=db2::getInstance()->FetchOne($Sql,$Params);       
+    }
+    
     public function UpdP1Anketa($Param=[],$ContCode){
         $Sql="UPDATE tblP1Anketa SET lgdat=current_timestamp";
         $Params=[];

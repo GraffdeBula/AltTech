@@ -105,7 +105,12 @@
                         (new MyForm('ATClientAnketaCtrl','SaveClAdrR',$_GET['ClCode'],0))->AddForm();
                         echo("<p>");
                         echo("<label>ИНДЕКС</label><input type='text' name='CLADRRZIP' value='{$Client->CLADRRZIP}' maxlength=6>");
-                        echo("<label>РЕГИОН</label><input type='text' name='CLADRRREG' value='{$Client->CLADRRREG}'>");
+                        echo("<label>РЕГИОН</label><select name='CLADRRREG'>");
+                            echo("<option value='{$Client->CLADRRREG}'>{$Client->CLADRRREG}</option>");
+                            foreach($DRRegionsList as $Region){
+                                echo("<option value='{$Region->REGNAME}'>{$Region->REGNAME}</option>");
+                            }                            
+                        echo("</select>");
                         echo("<label>РАЙОН</label><input type='text' name='CLADRRDIST' value='{$Client->CLADRRDIST}'>");
                         echo("</p>");
                         echo("<p>");
@@ -135,8 +140,13 @@
                     echo("<form method='get'>");
                         (new MyForm('ATClientAnketaCtrl','SaveClAdrF',$_GET['ClCode'],0))->AddForm();
                         echo("<p>");
-                        echo("<label>ИНДЕКС</label><input type='text' name='CLADRFZIP' value='{$Client->CLADRFZIP}' maxlength=6>");
-                        echo("<label>РЕГИОН</label><input type='text' name='CLADRFREG' value='{$Client->CLADRFREG}'>");
+                        echo("<label>ИНДЕКС</label><input type='text' name='CLADRFZIP' value='{$Client->CLADRFZIP}' maxlength=6>");                        
+                        echo("<label>РЕГИОН</label><select name='CLADRFREG'>");
+                            echo("<option value='{$Client->CLADRFREG}'>{$Client->CLADRFREG}</option>");
+                            foreach($DRRegionsList as $Region){
+                                echo("<option value='{$Region->REGNAME}'>{$Region->REGNAME}</option>");
+                            }                            
+                        echo("</select>");                        
                         echo("<label>РАЙОН</label><input type='text' name='CLADRFDIST' value='{$Client->CLADRFDIST}'>");
                         echo("</p>");
                         echo("<p>");

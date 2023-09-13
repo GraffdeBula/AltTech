@@ -42,7 +42,8 @@ class ATP1CredMod extends Model{
     }
     
     public function CopyP1Credit($CrCode){
-        $Sql="INSERT INTO tblP1Credits (ContCode,LgEmp,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
+        $Sql="INSERT INTO tblP1Credits (ContCode,LgEmp,
+            ,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
             CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
             CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName) 
             SELECT ContCode,LgEmp,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
@@ -50,6 +51,26 @@ class ATP1CredMod extends Model{
             CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName
             FROM tblP1Credits WHERE CrCode=?";
         $Params=[$CrCode];
+        db2::getInstance()->Query($Sql,$Params); 
+    }
+    
+    public function CopyP1Credit2($CrCode,$ContCodeNew){
+        $Sql="INSERT INTO tblP1Credits (ContCode,LgEmp,
+            CrBankContName,CrBankContInn,CrBankContType,CrBankCurName,CrBankCurInn,CrBankCurType,
+            CrProg,CrContNum,CrOpenDat,CrPeriod,CrSum,CrSumRest,CrPaySum,CrRate,CrPayLastDat,
+            CrCardLimitSum,CrCardMinPay,CrDelayYN,CrCollAgYN,CrCollAgName,CrContDocsYN,
+            CrReason,CrReasonComment,CrWarrantYN,CrWarrantName,
+            CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
+            CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge) 
+            SELECT ?,LgEmp,
+            CrBankContName,CrBankContInn,CrBankContType,CrBankCurName,CrBankCurInn,CrBankCurType,
+            CrProg,CrContNum,CrOpenDat,CrPeriod,CrSum,CrSumRest,CrPaySum,CrRate,CrPayLastDat,
+            CrCardLimitSum,CrCardMinPay,CrDelayYN,CrCollAgYN,CrCollAgName,CrContDocsYN,
+            CrReason,CrReasonComment,CrWarrantYN,CrWarrantName,
+            CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
+            CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge
+            FROM tblP1Credits WHERE CrCode=?";
+        $Params=[$ContCodeNew,$CrCode];
         db2::getInstance()->Query($Sql,$Params); 
     }
     
@@ -62,9 +83,6 @@ class ATP1CredMod extends Model{
         }
         $Sql=$Sql." WHERE CrCode=?";
         $Params[]=$CrCode;      
-        #var_dump($Sql);
-        #echo("<br>=============<br>");
-        #var_dump($Params);
         db2::getInstance()->Query($Sql,$Params);
     }
     

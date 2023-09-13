@@ -33,7 +33,7 @@ class db2{
             echo $e->getMessage();
         }  
     }
-    
+        
     public function Query($sql,$params=[]) {//вызов запроса к БД c параметрами        
         try {
             $query=$this->getConnection()->prepare($sql);                     

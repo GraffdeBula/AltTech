@@ -160,8 +160,8 @@
                 <input type='hidden' name='FRPERSMANAGER' value='<?=$Front->FRPERSMANAGER?>'>
                 <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
                 <div class='col-10'>
-                    <label>Сумма</label><input type='text' value='0' name='PAYSUM'>
-                    <label>Дата</label><input type='date' name='PAYDATE' value=''>
+                    <label>Сумма</label><input type='text' required value='0' name='PAYSUM'>
+                    <label>Дата</label><input type='date' required name='PAYDATE' value=''>
                     <label>Тип</label><select name='PAYCONTTYPE'>
                         
                         <option value='1'>по ПКО</option>
@@ -169,7 +169,7 @@
                     </select>
                 </div>
                 <div class='col-10'>
-                    <label>Назначение платежа</label><select  name='PAYPR'>
+                    <label>Назначение платежа</label><select required name='PAYPR'>
                         <option></option>
                         <?php
                             foreach($Payment->getTypeList() as $PayPr){

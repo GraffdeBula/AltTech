@@ -42,10 +42,10 @@
                 <input type='hidden' name='controller' value='ATClientFileCtrl'><br>
                 <input type='hidden' name='action' value='ContP1Create'><br>
                 <input type='hidden' name='ClCode' value='<?php echo($Client->CLCODE);?>'><br>
-                <label>ID сделки (amoCRM)</label><input type='text' maxlength='12' class='MyID'><br>
-                <button type='submit' class='btn btn-warning newContBtn'>Добавить договор БФЛ</button><br>        
+                <label>ID сделки (amoCRM)</label><input type='text' required maxlength='12' class='MyID'><br>
+                <button type='submit' class='btn btn-warning newContBtn'>Добавить договор БФЛ</button><br>
             </form>
-            <?php  
+            <?php
                 foreach($ContP1List as $Cont){
 
                     echo("<div> ID договора: ".$Cont->CONTCODE."</div><div> Дата анкеты: ".$Cont->AKDAT."</div><div> Дата договора: ".$Cont->FRCONTDATE."</div><div> Статус договора: ".$Cont->STATUS."</div>");
@@ -54,6 +54,7 @@
                     echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ МЕНЕДЖЕРА</button></a>");
                     echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-info'>ДОСЬЕ ДЛЯ ЭКСПЕРТИЗЫ</button></a>");
                     echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ ЮРИСТА</button></a>");
+                    echo("<a target='_blank' href='index_admin.php?controller=ATClientFileCtrl&action=ContP1Copy&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>Копировать</button></a>");
                     if ((new CheckRole)->Check($_SESSION['EmRole'],'ATClientFileCtrl','ContP1Del')){
                         echo("<a href='index_admin.php?controller=ATClientFileCtrl&action=ContP1Del&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-danger'>УДАЛИТЬ</button></a>");
                     }

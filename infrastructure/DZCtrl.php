@@ -63,7 +63,7 @@ class DZCtrl extends Controller{
             'folder'=>'95ED3C8F-B6C2-3563-A250-78FB9F78F4C4',
             'name'=> $this->DocName
         ];   
-        new MyCheck($this->CurlRequest(),0);
+        #new MyCheck($this->CurlRequest(),0);
         $this->MyDoc=$this->CurlRequest()->data[0];
     }
                
