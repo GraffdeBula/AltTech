@@ -43,7 +43,7 @@ class ATP1CredMod extends Model{
     
     public function CopyP1Credit($CrCode){
         $Sql="INSERT INTO tblP1Credits (ContCode,LgEmp,
-            ,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
+            CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
             CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
             CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName) 
             SELECT ContCode,LgEmp,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,

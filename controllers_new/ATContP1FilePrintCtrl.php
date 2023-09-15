@@ -490,6 +490,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $ContP1=new ContP1($_GET['ContCode']);     
         $Credit=new CreditP1($_GET['CrCode']);
         $DocTmpName='Запрос переуступка юрист';
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }
         
         $Printer=new PrintDoc('ReqCurrCompP1',$DocTmpName,[
             'Client'=>$Client->getClRec(),
@@ -498,9 +504,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'ClientPhone'=>$Client->getContPhone(),
             'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
             'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            'CreditorCurr'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
             'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
-            
-            ]
+            'Branch'=>$Branch->getRec(),            ]
                 
         );
         
@@ -525,6 +531,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'ClientPhone'=>$Client->getContPhone(),
             'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
             'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            #'CreditorCurr'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
             'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
             
             ]
@@ -540,6 +547,13 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $ContP1=new ContP1($_GET['ContCode']);     
         $Credit=new CreditP1($_GET['CrCode']);        
         $DocTmpName='Запрос переуступка клиент';
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }
+        
                 
         $Printer=new PrintDoc('ReqCurrClientP1',$DocTmpName,[
             'Client'=>$Client->getClRec(),
@@ -548,8 +562,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'ClientPhone'=>$Client->getContPhone(),
             'Jurist'=>(new Employee($ContP1->getBackOf()->BOJURNAME))->getEmp(),
             'Creditor'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
+            'CreditorCurr'=>$Credit->getBnContRec(), //здесь должны быть наименование и адрес организации
             'CreditorContList'=>(new ATP1CredMod())->getP1CredContList($_GET['ContCode'],$Credit->getCrRec()->CRBANKCONTNAME),
-            
+            'Branch'=>$Branch->getRec(),
             ]
                 
         );
