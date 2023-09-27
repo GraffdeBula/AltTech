@@ -32,7 +32,7 @@ class ATClientAnketaCtrl extends ControllerMain {
     public function actionSaveClEmail(){
         $Model=new ATClientMod();
         $Model->updClient(['CLEMAIL'=>$_GET['CLEMAIL']],$_GET['ClCode']);
-        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");
+        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}#accounts");
     }
     
     public function actionSaveClAdrR(){

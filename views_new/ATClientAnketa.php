@@ -286,7 +286,7 @@
                     <input type="hidden" name="ClCode" value="<?php echo($Client->CLCODE);?>">
                     <p>
                     <label>вид документа</label>
-                    <select name="ClDocName" value="">
+                    <select name="ClDocName" value="" id="DocTypeSel">
                         <option value=""></option>
                         <option value="паспорт">паспорт</option>
                         <option value="СНИЛС">СНИЛС</option>
@@ -297,7 +297,7 @@
                         <option value="свидетельство о смерти">свидетельство о смерти</option>
                         <option value="иной документ">иной документ</option>
                     </select>
-                    <label>серия</label><input type="text" name="ClDocSer">
+                    <label>серия</label><input type="text" name="ClDocSer" id="ClDocSerInp">
                     <label>номер</label><input type="text" name="ClDocNum">
                     <label>Комментарий</label><input type="text" name="ClDocComment">
                     </p>
@@ -790,7 +790,7 @@
             </div> <!--вкладки вкладки доходы и собственность-->
         </div> <!--Доходы и собственность-->
     </div> <!--вкладки анкеты-->
-    
+    <script src="./js/ClAnketa.js"></script>
 </body>
 </html>
 

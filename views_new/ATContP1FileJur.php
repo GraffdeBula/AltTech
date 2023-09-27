@@ -50,13 +50,13 @@
         echo("<button class='btn btn-success'>ОТКРЫТЬ АНКЕТУ ДОГОВОРА</button></a>");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovCompJur&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>Передоверие</button></a>");
+        . "<button class='btn btn-outline-info'>Передоверие</button></a>");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-outline-warning'>ПЕЧАТЬ ИСКА</button></a>");
+        . "<button class='btn btn-outline-info'>ПЕЧАТЬ ИСКА</button></a>");
                     
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqEntStatus&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>Статус ИП</button></a>");
+        . "<button class='btn btn-outline-info'>Статус ИП</button></a>");
         echo("</div>");
     ?>
 
@@ -143,19 +143,19 @@
                             echo("<td width='250'>");//колонка ПЕЧАТЬ ДОКУМЕНТОВ
                             echo("<p>");
                                 echo("<p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqCompP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
-                                echo("<button class='btn btn-info btn-sm'>Запрос документов (представитель)</button></a>");
+                                echo("<button class='btn btn-outline-info btn-sm'>Запрос документов (представитель)</button></a>");
                             echo("</p>");
                             echo("<p>");
                                 echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
-                                echo("<button class='btn btn-success btn-sm'>Запрос документов (клиент)</button></a>");
+                                echo("<button class='btn btn-outline-success btn-sm'>Запрос документов (клиент)</button></a>");
                             echo("</p>");
                             echo("<p>");
                                 echo("<p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqCurrCompP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
-                                echo("<button class='btn btn-info btn-sm'>у текущего кредитора (представитель)</button></a>");
+                                echo("<button class='btn btn-outline-info btn-sm'>у текущего кредитора (представитель)</button></a>");
                             echo("</p>");
                             echo("<p>");
                                 echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqCurrClientP1&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&CrCode={$Credit->getCrRec()->CRCODE}'>");
-                                echo("<button class='btn btn-success btn-sm'>у текущего кредитора (клиент)</button></a>");
+                                echo("<button class='btn btn-outline-success btn-sm'>у текущего кредитора (клиент)</button></a>");
                             echo("</p>");                                                                                                                                            
                             echo("</td>");//конец колонки ПЕЧАТЬ ДОКУМЕНТОВ                          
                        

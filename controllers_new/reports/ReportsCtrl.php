@@ -7,9 +7,7 @@
 class ReportsCtrl extends ControllerMain{
     protected $Report;
     public function actionContP1Rep(){
-        $this->Report=(new ReportsMod())->getContP1();
-        #var_dump($this->Report);
-        #exit();
+        $this->Report=(new ReportsMod())->getContP1();        
         $this->render('reports/ContP1Rep',['Report'=> $this->Report]);
     }
     

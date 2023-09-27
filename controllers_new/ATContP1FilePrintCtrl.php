@@ -331,7 +331,8 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'Pac'=>$ContP1->getPac(),
             'PayCalend'=>$ContP1->getPayCalend(),
             'ClProperty'=>$Client->getPropertyList(),
-            'ClDeals'=>$Client->getDealList()
+            'ClDeals'=>$Client->getDealList(),
+            'ClIncome'=>$Client->getIncomeList(),
         ]
                 
         );
@@ -360,8 +361,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }else{
             $FamCont=$Client->getFamcont();
         }
-        #var_dump($Emp->getEmp());
-        #exit();
+        
         $Printer=new PrintDoc('DovNot','Доверенность БФЛ',[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(), 
@@ -376,7 +376,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             ]
                 
         );
-        
+                     
         $DocName=$Printer->PrintDoc();        
         header("Location: ".$DocName);
     }

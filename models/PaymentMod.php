@@ -31,6 +31,11 @@ class PaymentMod extends Model{
         return db2::getInstance()->FetchOne($Sql,[$ContCode,$Type1,$Type2,1]); 
     }
     
+    public function getPaymentById($Id,$ContCode){
+        $Sql='SELECT * FROM tbl5Payments WHERE Id=? AND ContCode=?';
+        return db2::getInstance()->FetchOne($Sql,[$Id,$ContCode]); 
+    }
+    
     public function getPaymentList($ContCode,$ProdCode){
         $Sql='SELECT * FROM tbl5Payments WHERE ContCode=? AND ProdCode=? ORDER BY ID DESC';
         return db2::getInstance()->FetchAll($Sql,[$ContCode,$ProdCode]); 
