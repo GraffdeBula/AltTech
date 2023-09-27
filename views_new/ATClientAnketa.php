@@ -49,6 +49,15 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#incprop">Доходы и собственность</a>
         </li>
+        <?php
+            if (($_SESSION['EmRole']=='top')or ($_SESSION['EmRole']=='admin')){
+                echo("
+                   <li class='nav-item'>
+                        <a class='nav-link' data-bs-toggle='tab' href='#reserv'>Резерв</a>
+                    </li> 
+                ");
+            }
+        ?>
     </ul><!--заголовки вкладок анкеты-->
         
     <div id="myTabContent" class="tab-content"> 
@@ -789,6 +798,15 @@
                 </div><!--Счета-->
             </div> <!--вкладки вкладки доходы и собственность-->
         </div> <!--Доходы и собственность-->
+        <div class="tab-pane fade" id="reserv">
+            <?php
+            foreach($PhonesRes as $Phone){
+                #var_dump($Phone);
+                echo($Phone->CLPHONE." :: ".$Phone->CLPHTEXT);
+                echo("<br>=================<br>");
+            }
+            ?>
+        </div>
     </div> <!--вкладки анкеты-->
     <script src="./js/ClAnketa.js"></script>
 </body>
