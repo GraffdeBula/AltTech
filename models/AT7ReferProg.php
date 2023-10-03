@@ -38,7 +38,12 @@ class AT7ReferProg extends Model{
     }
     
     public function GetAgentByCode($Code){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Code LIKE ?";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND ((Code LIKE ?) OR (Code=?))";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Code."%",$Code]);
+    }
+    
+    public function GetAgentByFullCode($Code){
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Code=?";
         return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Code."%"]);
     }
     

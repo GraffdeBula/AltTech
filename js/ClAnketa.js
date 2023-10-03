@@ -10,11 +10,11 @@ var DocSerInput = document.querySelector('#ClDocSerInp');
 
 DocTypeInput.addEventListener('change',function(){
     if(DocTypeInput.value=='ИНН'){
-        DocSerInput.disabled=true;
+        DocSerInput.type='hidden';
     } else if (DocTypeInput.value=='СНИЛС'){            
-        DocSerInput.disabled=true;
+        DocSerInput.type='hidden';
     } else {
-        DocSerInput.disabled=false;
+        DocSerInput.type='text';
     }
 
 });

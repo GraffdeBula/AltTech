@@ -30,12 +30,14 @@ class ATRefProgCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATRefProgCtrl");
     }
     public function actionSearchAgent(){
+        #new MyCheck($_GET['AgCode'],0);
         $this->GetRefers();
         if ((isset($_GET['AgName']))&&($_GET['AgName']!='')){
             $this->Refers=(new AT7ReferProg())->GetAgentByName($_GET['AgName']);
         }
         if ((isset($_GET['AgCode']))&&($_GET['AgCode']!='')){
             $this->Refers=(new AT7ReferProg())->GetAgentByCode($_GET['AgCode']);
+            #new MyCheck($_GET['AgCode'],0);
         }
         if ((isset($_GET['AgPhone']))&&($_GET['AgPhone']!='')){
             $this->Refers=(new AT7ReferProg())->GetAgentByPhone($_GET['AgPhone']);
