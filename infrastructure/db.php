@@ -2,7 +2,7 @@
 
 class db{    
     //имя подключения к рабочей базе
-    const DB_NAME='firebird:dbname=192.168.154.252:client1;charset=win1251;';    
+    const DB_NAME='firebird:dbname=192.168.154.252:oldclient.fdb;charset=win1251;';    
     //логин и пароль к БД
     protected $dblogin;
     protected $dbpass;
@@ -10,7 +10,7 @@ class db{
     protected $conn; //подключение к бд
     protected static $instance; //свойство для хранения экземпляра класса
 
-    private function __construct($login='superad',$pass='adm$0906'){ //закрываем конструктор для доступа снаружи
+    private function __construct($login='superad',$pass='adm$%0106'){ //закрываем конструктор для доступа снаружи
         $this->dblogin='superad';
         $this->dbpass='adm$%0106';
         $this->conn = new \PDO(self::DB_NAME, $this->dblogin, $this->dbpass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
