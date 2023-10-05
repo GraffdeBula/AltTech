@@ -94,7 +94,20 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         }
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-
+    
+    public function actionAddCalend(){
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionUpdCalend(){
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDelCalend(){
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+            
     public function actionAddDiscount(){
         $Cont=new ContP1($_GET['ContCode']);
         $Model=new P1DiscountMod();
