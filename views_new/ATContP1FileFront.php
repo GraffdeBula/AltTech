@@ -175,6 +175,15 @@
             <div class='row'>-</div>
             <div class='row'>
                 <div class='col-lg-4'><h5>График плановых платежей</h5>
+                    <form method='get'>
+                        <?php
+                            (new MyForm('ATContP1FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
+                        ?>
+                        <input type='number' name='PayNum' value='' size='8'>
+                        <input type='date' name='PayDate' value='' size='11'>
+                        <input type='text' name='PaySum' value='0' size='11'>
+                        <button class='btn btn-success'>Добавить</button>
+                    </form>
                     <table class="table table-hover">
                         <thead>
                             <tr>                            
@@ -187,9 +196,19 @@
                             <?php
                                 foreach($ContP1->getPayCalend() as $PlanPay){
                                     $PayDate=(new PrintFunctions)->DateToStr($PlanPay->PAYDATE);
-                                    echo("<tr><th>Платёж {$PlanPay->PAYNUM}</th>");
-                                    echo("<th>$PayDate</th>");
-                                    echo("<th>$PlanPay->PAYSUM</th></tr>");
+                                    echo("<tr>");
+                                    echo("<form method='get'>");
+                                        (new MyForm('ATContP1FileFrontCtrl','UpdPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                        echo("<input type='hidden' name='ID' value={$PlanPay->ID}>");
+                                        echo("<th>Платёж <input type=text name='PayNum' value={$PlanPay->PAYNUM} size=1></th>");                                    
+                                        echo("<th><input type=date name='PayDate' value={$PlanPay->PAYDATE} size=7></th>");
+                                        echo("<th><input type=text name='PaySum' value={$PlanPay->PAYSUM} size=7></th>");
+                                        echo("<th><button class='btn btn-success'>V</button></th>");
+                                    echo("</form>");
+                                    echo("<th><form method='get'>");
+                                    (new MyForm('ATContP1FileFrontCtrl','DelPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    echo("<input type=hidden name='ID' value='{$PlanPay->ID}'>");
+                                    echo("<button class='btn btn-danger'>X</button></form></th></tr>");
                                 }
                             ?>
                         </tbody>

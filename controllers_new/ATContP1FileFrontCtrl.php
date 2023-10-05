@@ -95,16 +95,21 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionAddCalend(){
-        
+    public function actionAddPayCalend(){//добавить платёж в график
+        $Model=new PayCalend();
+        $Model->addPlanPay($_GET['ContCode'],$_GET['PayNum'],$_GET['PaySum'],$_GET['PayDate']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionUpdCalend(){
+    public function actionUpdPayCalend(){//исправить
+        $Model=new PayCalend();
+        $Model->updPlanPay($_GET['PayNum'],$_GET['PayDate'],$_GET['PaySum'],$_GET['ContCode'],$_GET['ID']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionDelCalend(){
+    public function actionDelPayCalend(){//удалить платёж из графика
+        $Model=new PayCalend();
+        $Model->delPlanPay($_GET['ContCode'],$_GET['ID']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
             

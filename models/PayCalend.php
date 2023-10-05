@@ -9,7 +9,7 @@ class PayCalend{
     protected $Data=[];
     
     public function getPayCalend($ContCode){ //метод возвращает график платежей БФЛ
-        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblP1PayCalend WHERE ContCode={$ContCode} ORDER BY ID");        
+        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblP1PayCalend WHERE ContCode={$ContCode} ORDER BY PayNum,PayDate");        
     }
     
     public function addPlanPay($ContCode,$PayNum,$PaySum,$PayDate){
@@ -21,6 +21,12 @@ class PayCalend{
     public function delPlanPay($ContCode,$ID){
         $Sql="DELETE FROM tblP1PayCalend WHERE ContCode=? AND ID=?";
         $Params=[$ContCode,$ID];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
+    public function updPlanPay($PayNum,$PayDate,$PaySum,$ContCode,$ID){
+        $Sql="UPDATE tblP1PayCalend SET PayNum=?,PayDate=?,PaySum=? WHERE ContCode=? AND ID=?";
+        $Params=[$PayNum,$PayDate,$PaySum,$ContCode,$ID];
         db2::getInstance()->Query($Sql,$Params);
     }
     

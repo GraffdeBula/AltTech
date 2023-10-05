@@ -11,7 +11,7 @@ class P1DiscountMod extends Model{
     }
     
     public function getDiscount($ContCode){
-        $Sql="SELECT * FROM tblP1Discounts WHERE ContCode=? ORDER BY ID DESC";
+        $Sql="SELECT * FROM tblP1Discounts WHERE ContCode=? AND DiscountSum>0 ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[$ContCode]);
     }
 
