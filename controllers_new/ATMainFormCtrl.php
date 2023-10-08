@@ -21,6 +21,15 @@ class ATMainFormCtrl extends ControllerMain {
         $this->ShowList();
     }
     
+    /* выход из системы
+     */
+    public function actionExit(){
+        $sessName='PHPSESSID';
+	setcookie($sessName,'',time()-1,'/');
+        header('Location: index_admin.php');
+    }
+    /* поиск клиента
+     */
     public function actionClSearch(){
         $this->Params=[ucfirst($_GET['ClFName']),ucfirst($_GET['Cl1Name']),ucfirst($_GET['Cl2Name']),$_GET['ClPasSer'],$_GET['ClPasNum']];
         $this->LoadList();
@@ -29,52 +38,22 @@ class ATMainFormCtrl extends ControllerMain {
         $this->getExpList();
         $this->ShowList();
     }
-    
+    /* добавление клиента
+     */
     public function actionClIns(){
-        $this->ClIns();        
+        $Model=new ATClientMod();        
+        $Model->NewClient($_GET['ClFName'],$_GET['Cl1Name'],$_GET['Cl2Name'],$_GET['ClPasSer'],$_GET['ClPasNum'],$_SESSION['EmName'],$_SESSION['EmBranch']);
         header("Location: index_admin.php?controller=ATMainFormCtrl&action=ClSearch"
             . "&ClFName={$_GET['ClFName']}&Cl1Name={$_GET['Cl1Name']}&Cl2Name={$_GET['Cl2Name']}&ClPasSer={$_GET['ClPasSer']}&ClPasNum={$_GET['ClPasNum']}");
     }
-            
+    /* удаление клиента
+     */        
     public function actionClDel(){
         $Model=new ATClientMod();
         $Model->delClient($_GET['ClCode']);
         header("Location: index_admin.php?controller=ATMainFormCtrl");
     }
-    
-    public function actionSaveAgent(){//реферальная программа
-        $Model=new AT7ReferProg();
-        $Model->InsAgent($_GET['AgName'],$_GET['AgPhone'],$_SESSION['EmName']);
-        
-        $NewAg=$Model->GetAgent($_GET['AgName']);
-        $ID=2731+$NewAg->ID;
-        $Code='AGENT'.$ID;
-        $ReferLink="https://fpk-alternativa.ru/bankrotstvo?utm_term=promo&kod={$Code}";
-        $Model->UpdAgent($NewAg->ID, $NewAg->NAME, $Code, $ReferLink);
-
-        header("Location: index_admin.php?controller=ATMainFormCtrl");
-    }
-    /* удаление агента из списка
-     */
-    public function actionDelAgent(){
-        $DelComment="{'Date':'".Date('d.m.Y')."','Name':'".$_SESSION['EmName']."','Comment':'".$_GET['DelComment']."'}";
-        (new AT7ReferProg())->DelAgent($_GET['RefId'], $DelComment);
-        header("Location: index_admin.php?controller=ATMainFormCtrl");
-    }
-    /* выход из системы
-     */
-    public function actionExit(){
-        $sessName='PHPSESSID';
-	setcookie($sessName,'',time()-1,'/');
-        header('Location: index_admin.php');
-    }
-    /* сохранение нового клиента
-     */    
-    protected function ClIns(){
-        $Model=new ATClientMod();        
-        $Model->NewClient($_GET['ClFName'],$_GET['Cl1Name'],$_GET['Cl2Name'],$_GET['ClPasSer'],$_GET['ClPasNum'],$_SESSION['EmName'],$_SESSION['EmBranch']);
-    }
-            
+                    
     /* загрузка формы
      */   
     protected function ShowList(){       

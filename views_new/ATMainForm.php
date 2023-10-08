@@ -59,11 +59,11 @@
                 <input type="hidden" name='action' value='ClIns'>
                 <div>
                     <label>Фамилия</label>
-                    <input type="text" name="ClFName" value="" required id='fname'>
+                    <input type="text" name="ClFName" value="" required id='fname' style="::placeholder{color:red}">
                     <label>Имя</label>
-                    <input type="text" name="Cl1Name" value="" required id='1name'>
+                    <input type="text" name="Cl1Name" value="" required id='1name' required>
                     <label>Отчество</label>
-                    <input type="text" name="Cl2Name" value="" required id='2name'>
+                    <input type="text" name="Cl2Name" value="" required id='2name' required>
                 </div>
                 <div>
                     <label>паспорт серия</label>
@@ -209,12 +209,8 @@
             <div>
                 <a target='_blank' href="index_admin.php?controller=JsonCtrl"><button class="btn btn-info">JSON</button></a>
             </div>
-            <div>
-                <?php
-                $text=(new PrintFunctions())->SumToStr(1500.00);
-                echo($text);
-                ?>
-            </div>            
+            
+            
         </div>     
         <div class="tab-pane fade" id="adminka">
             <a target='_blank' href="index_admin.php?controller=PkoListCtrl&action=Index"><button class="btn btn-outline-primary">Платежи</button></a>
@@ -229,41 +225,9 @@
               
                 
     </div>
-    <script>
-        const MyButton=document.getElementById('btn-find');
-        const FormFind=document.getElementById('frm-find');
-
-        MyButton.addEventListener('mouseover',function(){
-            document.getElementById('fname-f').value=document.getElementById('fname').value;
-            document.getElementById('1name-f').value=document.getElementById('1name').value;
-            document.getElementById('2name-f').value=document.getElementById('2name').value;
-            document.getElementById('pass-f').value=document.getElementById('ClPasSer').value;
-            document.getElementById('pasn-f').value=document.getElementById('ClPasNum').value;
-        });
-        MyButton.addEventListener('click',function(){
-            FormFind.submit();
-        });
-        
-
-        const MyButton2=document.getElementById('btn-clear');
-        MyButton2.addEventListener('click',function(){            
-            document.getElementById('fname').value='';
-            document.getElementById('1name').value='';
-            document.getElementById('2name').value='';
-            document.getElementById('ClPasSer').value='';
-            document.getElementById('ClPasNum').value='';            
-        });
-
-        const MyButton3=document.getElementById('btn-add');
-        const FormAdd=document.getElementById('frm-add');
-        MyButton3.addEventListener('click',function(){
-            FormAdd.submit();
-        });
-
-        console.log('yes4')
-    </script>
-    <!--
+    
+    <!---->
     <script src="./js/MainForm.js"></script>
-    -->
+    <!---->
 </body>
 </html>
