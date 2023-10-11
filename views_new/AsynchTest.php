@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <?=json_encode($json)?>
+    
                 
 </body>
 </html>
