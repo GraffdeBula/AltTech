@@ -89,8 +89,8 @@ class Payment {
         }
     }
         
-    public function formPayBill($BillNum) {
-        $this->getLastPaymentRec($BillNum);
+    public function formPayBill($Id,$ContCode,$ProdCode) {        
+        $this->getPaymentRecById($Id,$ContCode,$ProdCode);
         if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){            
             $this->printReturn();
         } else {            
@@ -98,13 +98,25 @@ class Payment {
         }
     }
     
+    public function getPaymentRecById($Id,$ContCode,$ProdCode){
+        (new logger('_pay'))->logToFile($_SESSION['EmName']." started getting PaymentRec on ORG ".$this->OrgName." client ".$this->ContClient);
+        $SelectedPay=(new PaymentMod())->getPaymentById($Id,$ContCode,$ProdCode);
+//        new MyCheck([$SelectedPay],0);
+        $this->getPaymentRec($SelectedPay);
+    }
+    
     public function getLastPaymentRec($i=0){//получение реквизитов последнего платежа для вывода на печать
         (new logger('_pay'))->logToFile($_SESSION['EmName']." started getting PaymentRec on ORG ".$this->OrgName." client ".$this->ContClient);
-        $LastPay=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode)[$i];        
+        $LastPay=(new PaymentMod())->getPaymentList($this->ContCode,$this->ProdCode)[$i];
+        $this->getPaymentRec($LastPay);
+    }
+    
+    public function getPaymentRec($LastPay){
+        
         $Branch=new Branch($LastPay->CONTBRANCH);    
         
         $Org=new Organization($Branch->getRec()->BRORGPREF);
-        #new MyCheck($Org,0);
+        
         $Client=new Client($this->ClCode);
         if (($this->ProdCode==1)&&($this->PayType<10)){
             $Cont=new ContP1($this->ContCode);
