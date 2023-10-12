@@ -26,6 +26,8 @@ class autoloader {
         UPPER_ROOT.'/controllers_new/transfer',
         
         UPPER_ROOT.'/controllers',
+        
+        UPPER_ROOT.'/form_handlers',
                         
         UPPER_ROOT.'/models',
         UPPER_ROOT.'/models/reports',

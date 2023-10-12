@@ -62,8 +62,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $this->FrontSave();
         (new Status())->ChangeP1Status(9, $_GET['ContCode']);
         $Cont=new ContP1($_GET['ContCode']);
+        if ($Cont->getFront()->FROFFICE==''){
+            $Branch=$_SESSION['EmBranch'];
+        } else {
+            $Branch=$Cont->getFront()->FROFFICE;
+        }
+        
         $Tarif=(new TarifP1())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM);
-        $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$_SESSION['EmBranch']);        
+        $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$Branch);        
         
         $Params=[
             'FRCONTSUM'=>$Tarif->TRSUMFIX,

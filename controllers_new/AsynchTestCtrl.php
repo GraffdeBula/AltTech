@@ -18,6 +18,13 @@ class AsynchTestCtrl extends ControllerMain{
     protected $MyJson="{1: test}";
     
     public function actionIndex(){
+        $this->MyJson=(new SettingsMod())->getSettings('test1');
+        #new MyCheck($this->MyJson,0);
+        $this->render('AsynchTest',['json'=>$this->MyJson]);
+    }
+    
+    public function actionSave(){
+        (new SettingsMod())->addSettings($_GET['SetComment'],$_GET['SetValue']);
         $this->render('AsynchTest',['json'=>$this->MyJson]);
     }
 }

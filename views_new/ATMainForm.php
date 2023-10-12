@@ -207,7 +207,7 @@
                 <a target='_blank' href="index_admin.php?controller=TabIskBookmarkCtrl&action=ShowList"><button class="btn btn-warning">ИскЗакладки</button></a>
             </div>
             <div>
-                <a target='_blank' href="index_admin.php?controller=JsonCtrl"><button class="btn btn-info">АСИНХРОННОЕ СОХРАНЕНИЕ</button></a>
+                <a target='_blank' href="index_admin.php?controller=AsynchTestCtrl"><button class="btn btn-info">АСИНХРОННОЕ СОХРАНЕНИЕ</button></a>
             </div>
             
             
