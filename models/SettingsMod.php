@@ -11,8 +11,8 @@ class SettingsMod {
         return db2::getInstance()->FetchAll($Sql,[$SetType]);            
     }
     
-    public function addSettings($SetComment,$SetValue){
+    public function addSettings($SetType,$SetComment,$SetValue){
         $Sql="INSERT INTO tbl0Settings (SetType,SetComment,SetValue) VALUES (?,?,?)";
-        db2::getInstance()->Query($Sql,['test1',$SetComment,$SetValue]);
+        db2::getInstance()->Query($Sql,[$SetType,$SetComment,$SetValue]);
     }
 }

@@ -23,8 +23,18 @@ class AsynchTestCtrl extends ControllerMain{
         $this->render('AsynchTest',['json'=>$this->MyJson]);
     }
     
-    public function actionSave(){
-        (new SettingsMod())->addSettings($_GET['SetComment'],$_GET['SetValue']);
-        $this->render('AsynchTest',['json'=>$this->MyJson]);
+    public function actionSave1(){
+        (new SettingsMod())->addSettings('test111',$_GET['SetComment'],$_GET['SetValue']);
+        #$this->render('AsynchTest',['json'=>$this->MyJson]);
+    }
+    
+    public function actionSave2(){
+        (new SettingsMod())->addSettings('test222',$_GET['SetComment'],$_GET['SetValue']);
+        #$this->render('AsynchTest',['json'=>$this->MyJson]);
+    }
+    
+    public function actionGetSetList(){
+        $SetList=(new SettingsMod())->getSettings('test111');
+        echo json_encode($SetList);
     }
 }
