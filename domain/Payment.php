@@ -29,6 +29,7 @@ class Payment {
     protected $PayBranch;
     protected $PayFirm;
     protected $PayType;
+    protected $PayMethod;
     protected $BuchName;
     protected $KassName;
     protected $OrgName;
@@ -37,7 +38,7 @@ class Payment {
     protected $Emp;
     
     public function __construct($ClCode=0,$ContCode=0,$ContBranch='',$ContEmp='',$ProdCode=0,$ContType=1,
-        $PaySum=0,$PayDate='',$PayPr=''){
+        $PaySum=0,$PayDate='',$PayPr='',$PayMethod=''){
         $this->ClCode=$ClCode;
         $this->ContCode=$ContCode;
         $this->ContBranch=$ContBranch;
@@ -47,6 +48,7 @@ class Payment {
         $this->PayDate=$PayDate;
         $this->PayPr=$PayPr;
         $this->ProdCode=$ProdCode;
+        $this->PayMethod=$PayMethod;
         
         $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
         $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$ProdCode); 
@@ -57,6 +59,7 @@ class Payment {
     }
     
     public function addPayment(){
+        #new MyCheck($this->PayMethod,0);
         $ClFIO=(new Client($_GET['ClCode']))->getClRec()->CLFIO;
         $this->PayPr=$_GET['PAYPR'];        
         foreach($this->PaymentType as $Type){            
@@ -74,7 +77,7 @@ class Payment {
         }                
         $OrgPref=(new Branch($this->ContBranch))->getRec()->BRORGPREF;        
         (new PaymentMod())->addPayment($_SESSION['EmName'],$this->ProdCode,$this->ContCode,$this->PaySum,$_GET['PAYDATE'],$_GET['PAYPR'],
-                $_SESSION['EmBranch'],$OrgPref,$this->ContBranch,$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType);
+                $_SESSION['EmBranch'],$OrgPref,$this->ContBranch,$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType,$this->PayMethod);
         
         if ($this->PayType==3){
             (new ContP1($this->ContCode))->updFirstPayDate();
@@ -112,7 +115,7 @@ class Payment {
     }
     
     public function getPaymentRec($LastPay){
-        
+        $this->ID=$LastPay->ID;
         $Branch=new Branch($LastPay->CONTBRANCH);    
         
         $Org=new Organization($Branch->getRec()->BRORGPREF);
@@ -184,7 +187,7 @@ class Payment {
         $sheet->setCellValue("N37", $this->KassName);
         
         
-        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ContCode}.xlsx";
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ID}.xlsx";
         (new logger('_pay'))->logToFile($_SESSION['EmName']." printed PKO ".$FileName);
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);
@@ -205,7 +208,7 @@ class Payment {
         $sheet->setCellValue("AK27", $this->BuchName);
         $sheet->setCellValue("AG37", $this->KassName);
                       
-        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ContCode}.xlsx";
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ID}.xlsx";
         (new logger('_pay'))->logToFile($_SESSION['EmName']." printed RKO ".$FileName);
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);

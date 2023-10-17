@@ -332,6 +332,14 @@
                         ?>
                         </select>
                 </div>
+                <div class='col-10'>
+                    <label>Способ внесения платежа</label><select required name='PAYMETHOD'>
+                        <option></option>
+                        <option>Наличные ДС</option>
+                        <option>Перевод на карту</option>
+                        <option>Оплата картой/QR-код/Перевод по реквизитам в банк</option>
+                        </select>
+                </div>
             </form>
             <div class='col-6'>
             <table class="table table-hover">
@@ -354,7 +362,7 @@
                         echo("<td>{$Pay->PAYSUM}</td>");
                         echo("<td>{$Pay->PAYPR}</td>");
                         
-                        echo("<td><a href='payments/{$Pay->CONTCODE}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
+                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
                         
                         
                         echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
