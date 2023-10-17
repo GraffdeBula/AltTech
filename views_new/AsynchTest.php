@@ -12,29 +12,26 @@
 <body>
     <?php
         
-        #echo($_SERVER['DOCUMENT_ROOT']);
-        #echo("<form method='get' autocomplete='off' action='index_admin.php?controller=AsynchTestCtrl&action=Save'>");
-        
-        #(new MyForm('AsynchTestCtrl','Save',0,0))->AddForm2();
-        
+                
         echo("SetComment<input id='SetComment' name='SetComment' type='text' value='NewComment'>SetValue<input id='SetValue' name='SetValue' type='text' value='NewValue'><br>");
         echo("<button id ='SetButton1' class='btn btn-success'>ADD1</button>");
         echo("<button id ='SetButton2' class='btn btn-warning'>ADD2</button>");
-        #echo("</form>");
-                        
+        
     ?>
-    <div class='SetList'>
+    <div id='SetList'>
         
     </div>
 </body>
-
     <script>
+        var DivSetList=document.getElementById('SetList');
+        getSetList();
+        
         var SetComment=document.getElementById('SetComment');
         var SetValue=document.getElementById('SetValue');
         var SetButton1=document.getElementById('SetButton1');
         var SetButton2=document.getElementById('SetButton2');
-        var DivSetList=document.getElementById('SetList');
-        
+             
+                
         SetButton1.addEventListener('click',function(){ 
             event.preventDefault();
             console.log(SetComment.value);
@@ -60,12 +57,28 @@
             req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=GetSetList',true);
             req.onload = function(){
                 var SetList=JSON.parse(this.responseText);
-                DivSetList.innerHTML='<p>'+this.responseText+'</p>';
-//                
-//                var output=SetList;
-//                DivSetList.innerHTML='<p>'+output+'</p>';
+                output='';
+                for (var i in SetList ){
+                    
+                output+='<ul>'+
+                        '<li>ID: '+SetList[i].ID+'<button id="DelBtn'+SetList[i].ID+'" class="btn btn-danger" onclick=DelSetting('+SetList[i]+')>X</button>  </li>'+
+                        '<li>ID: '+SetList[i].SETCOMMENT+'</li>'+
+                        '<li>ID: '+SetList[i].SETVALUE+'</li>'+
+                        '</ul>';
+                }
+                DivSetList.innerHTML=output;
             }
             req.send();
+        }
+        
+        function DelSetting(DelId){ 
+            event.preventDefault();
+            console.log(SetComment.value);
+            console.log(SetValue.value);
+            var req= new XMLHttpRequest();
+            req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=Del&Id='+DelId,true);
+            req.send();
+            getSetList();
         }
         
     </script>
