@@ -10,6 +10,7 @@
 
 </head>
 <body>
+    
     <?php
         
                 
@@ -26,6 +27,26 @@
         var DivSetList=document.getElementById('SetList');
         getSetList();
         
+        function getSetList(){
+            var req2=new XMLHttpRequest();
+            req2.open('GET','index_admin.php?controller=AsynchTestCtrl&action=GetSetList',true);
+            req2.onload = function(){
+                var SetList=JSON.parse(this.responseText);
+                output='';
+                for (var i in SetList ){
+                    
+                    output+="<ul>"+
+                        "<li>ID: "+SetList[i].ID+"<button onclick=DelSetting("+SetList[i].ID+") class='btn btn-danger btnDel')>X</button>  </li>"+
+                        "<li>ID: "+SetList[i].SETCOMMENT+"</li>"+
+                        "<li>ID: "+SetList[i].SETVALUE+"</li>"+
+                        "</ul>";
+                                                           
+                }
+                DivSetList.innerHTML=output;
+            }
+            req2.send();
+        }
+
         var SetComment=document.getElementById('SetComment');
         var SetValue=document.getElementById('SetValue');
         var SetButton1=document.getElementById('SetButton1');
@@ -40,46 +61,52 @@
             req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=Save1&SetComment='+SetComment.value+'&SetValue='+SetValue.value,true);
             req.send();
             getSetList();
+            console.log('Add1Done');
         });
+//        
+//        SetButton2.addEventListener('click',function(){ 
+//            event.preventDefault();
+//            console.log(SetComment.value);
+//            console.log(SetValue.value);
+//            var req= new XMLHttpRequest();
+//            req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=Save2&SetComment='+SetComment.value+'&SetValue='+SetValue.value,true);
+//            req.send();
+//            getSetList();
+//            console.log('Add2Done');
+//        });
         
-        SetButton2.addEventListener('click',function(){ 
-            event.preventDefault();
-            console.log(SetComment.value);
-            console.log(SetValue.value);
-            var req= new XMLHttpRequest();
-            req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=Save1&SetComment='+SetComment.value+'&SetValue='+SetValue.value,true);
-            req.send();
-            getSetList();
-        });
+//        function DelSetting(DelId){             
+//            console.log(DelId);
+//            console.log(SetValue.value);
+//            var req1= new XMLHttpRequest();
+//            req1.open('GET','index_admin.php?controller=AsynchTestCtrl&action=Del&Id='+DelId,true);
+//            req1.send();
+//            setTimeout(getSetList(),1000);
+//            
+//            console.log('DelDone');
+//        }
+//        
+//        function getSetList(){
+//            var req2=new XMLHttpRequest();
+//            req2.open('GET','index_admin.php?controller=AsynchTestCtrl&action=GetSetList',true);
+//            req2.onload = function(){
+//                var SetList=JSON.parse(this.responseText);
+//                output='';
+//                for (var i in SetList ){
+//                    
+//                    output+="<ul>"+
+//                        "<li>ID: "+SetList[i].ID+"<button onclick=DelSetting("+SetList[i].ID+") class='btn btn-danger btnDel')>X</button>  </li>"+
+//                        "<li>ID: "+SetList[i].SETCOMMENT+"</li>"+
+//                        "<li>ID: "+SetList[i].SETVALUE+"</li>"+
+//                        "</ul>";
+//                                                           
+//                }
+//                DivSetList.innerHTML=output;
+//            }
+//            req2.send();
+//        }
         
-        function getSetList(){
-            var req=new XMLHttpRequest();
-            req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=GetSetList',true);
-            req.onload = function(){
-                var SetList=JSON.parse(this.responseText);
-                output='';
-                for (var i in SetList ){
-                    
-                output+='<ul>'+
-                        '<li>ID: '+SetList[i].ID+'<button id="DelBtn'+SetList[i].ID+'" class="btn btn-danger" onclick=DelSetting('+SetList[i]+')>X</button>  </li>'+
-                        '<li>ID: '+SetList[i].SETCOMMENT+'</li>'+
-                        '<li>ID: '+SetList[i].SETVALUE+'</li>'+
-                        '</ul>';
-                }
-                DivSetList.innerHTML=output;
-            }
-            req.send();
-        }
         
-        function DelSetting(DelId){ 
-            event.preventDefault();
-            console.log(SetComment.value);
-            console.log(SetValue.value);
-            var req= new XMLHttpRequest();
-            req.open('GET','index_admin.php?controller=AsynchTestCtrl&action=Del&Id='+DelId,true);
-            req.send();
-            getSetList();
-        }
         
     </script>
 </html>
