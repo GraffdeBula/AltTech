@@ -5,7 +5,7 @@
  */
 header('Content-Type: text/html; charset=utf8');
 //подключение моего автолоадера
-include_once "{$_SERVER['DOCUMENT_ROOT']}/AltTech/app/autoloader.php";
+include_once "{$_SERVER['DOCUMENT_ROOT']}/AltTest/app/autoloader.php";
 spl_autoload_register([new autoloader(), 'getClass']);
 
 //подключение composer
