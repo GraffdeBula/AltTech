@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="css/_variables.scss">
         <style>
             body{
-            background-color: #ede8cc; /* Цвет фона веб-страницы */
+            background-color: #7dcbe3; /* Цвет фона веб-страницы */
        } 
     </style>
     </head>
