@@ -137,12 +137,13 @@
                                     <label>Сумма последнего платежа</label><input type='text' name='CRPAYLASTSUM' value='{$Cred->CRPAYLASTSUM}' autocomplete='off'>
                                     </p>
                                     <p>    
-                                    <label>Дата последнего платежа</label><input type='date' name='CRPAYLASTDAT' value='{$Cred->CRPAYLASTDAT}' autocomplete='off'>
-                                    <label>Наличие просрочки</label><select type='text' name='CRDELAYYN' autocomplete='off'>
-                                        <option value='$Cred->CRDELAYYN'>{$Cred->CRDELAYYN}</option>
-                                        <option value='да'>да</option>
-                                        <option value='нет'>нет</option>
-                                    </select>
+                                        <label>Дата последнего платежа</label><input type='date' name='CRPAYLASTDAT' value='{$Cred->CRPAYLASTDAT}' autocomplete='off'>
+                                        <label>Наличие просрочки</label><select type='text' name='CRDELAYYN' autocomplete='off'>
+                                            <option value='$Cred->CRDELAYYN'>{$Cred->CRDELAYYN}</option>
+                                            <option value='да'>да</option>
+                                            <option value='нет'>нет</option>
+                                        </select>
+                                        <label>Число внесённых платежей</label><input type='text' name='CRPAYSNUM' value='{$Cred->CRPAYSNUM}' maxlength='50' autocomplete='off'> 
                                     </p>
                                     <p>
                                     <h5>Для кредитной карты</h5>
