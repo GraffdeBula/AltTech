@@ -1,0 +1,45 @@
+<?php    
+    if ((isset($_SESSION['EmRole']))&&($_SESSION['EmRole']=='admin')) {var_dump($_SESSION);}    
+    #var_dump($_SESSION);
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title><?=$title?></title>
+        <!--
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/sandstone/bootstrap.min.css">
+        -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/_bootswatch.scss">
+        <link rel="stylesheet" type="text/css" href="css/_variables.scss">
+        <style>
+            body{
+            background-color: #f0e3c5; /* Цвет фона веб-страницы */
+       } 
+    </style>
+    </head>
+    <body>
+        <div>
+            <div>                    
+                <h4>                    
+                    <p>Информационная система АЛЬТ-ТЕХ (КЛИЕНТ 2.0)   ООО ФПК АЛЬТЕРНАТИВА      
+                        <a href="index_admin.php?controller=ATMainFormCtrl&action=Exit"><button class='btn btn-secondary'>ВЫХОД</button></a>
+                    </p>
+                </h4>                
+            </div>
+            <?=$content?>
+        </div>
+        
+        <script src="js/jquery.min.js"></script>
+        
+        <script src="js/bootstrap.bundle.min.js"></script>
+        
+        <script src="js/prism.js" data-manual=""></script>
+        <!--
+        
+        
+        -->
+    </body>
+</html>
