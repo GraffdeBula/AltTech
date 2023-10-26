@@ -352,10 +352,8 @@
                       <th scope="col">Скачать</th>
                     </tr>
                 </thead>
-                <tbody>        
-                    <div id='PaymentList'>
-
-                    </div>
+                <tbody id='PaymentList'>        
+                    
                     <?php
 //                    foreach($Payment->getPaymentList() as $i => $Pay){
 //                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
