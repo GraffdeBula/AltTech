@@ -7,6 +7,9 @@
                     
     </head>
     <body>
+        <p>
+            <a href="index_admin.php?controller=ATDRCtrl&action=ShowDRBranch"><button class="btn btn-outline-secondary">НАЗАД</button></a><br>
+        </p>
         <h4>Карточка филиала</h4>
         <h5><?=$Branch->BRNAME?></h5>
         <form method="get" autocomplete="off">

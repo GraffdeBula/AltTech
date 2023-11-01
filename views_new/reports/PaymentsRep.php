@@ -128,6 +128,7 @@
                                 <th scope='col'>Назначение платежа</th>
                                 <th scope='col'>Номер договора</th>
                                 <th scope='col'>Клиент</th>                                                
+                                <th scope='col'>Способ платежа</th>
                             </tr>
                         </thead>
                         <tbody>                    
@@ -142,6 +143,7 @@
                                     echo("<td>{$Pay->PAYPR}</td>");
                                     echo("<td>{$Pay->CONTCODE}</td>");
                                     echo("<td>{$Pay->CONTCLIENT}</td>");
+                                    echo("<td>{$Pay->PAYMETHOD}</td>");
                                     echo("<tr>");
                                 }                    
                             ?>

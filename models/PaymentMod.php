@@ -79,6 +79,23 @@ class PaymentMod extends Model{
         return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$ContType]); 
     }
     
+    public function getPaymentMethCompListDt($DateF,$DateL,$ContType){        
+        $Sql="SELECT PayMethod as PayName,SUM(tbl5payments.paysum) as PaySum
+            FROM tbl5payments
+            WHERE paydate BETWEEN ? AND ? AND ContType>=? 
+            GROUP BY PayMethod ORDER BY PayMethod";
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$ContType]); 
+    }
+    
+    public function getPaymentMethBrListDt($DateF,$DateL,$ContType){        
+        $Sql="SELECT ContBanch,PayMethod,SUM(tbl5payments.paysum) as PaySum
+            FROM tbl5payments
+            WHERE paydate BETWEEN ? AND ? AND ContType>=? 
+            GROUP BY ContBanch,PayMethod ORDER BY ContBanch,PayMethod";
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$ContType]); 
+    }
+    
+    
     public function getIncomeCompTotal($DateF,$DateL){
         $Sql="SELECT SUM(tbl5payments.paysum) as PaySum
             FROM tbl5payments WHERE paydate BETWEEN ? AND ? AND PayType<?";
