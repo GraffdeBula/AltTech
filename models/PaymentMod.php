@@ -80,7 +80,7 @@ class PaymentMod extends Model{
     }
     
     public function getPaymentMethCompListDt($DateF,$DateL,$ContType){        
-        $Sql="SELECT PayMethod as PayName,SUM(tbl5payments.paysum) as PaySum
+        $Sql="SELECT '' as ContBranch,PayMethod,SUM(tbl5payments.paysum) as PaySum
             FROM tbl5payments
             WHERE paydate BETWEEN ? AND ? AND ContType>=? 
             GROUP BY PayMethod ORDER BY PayMethod";

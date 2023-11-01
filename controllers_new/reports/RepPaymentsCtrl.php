@@ -21,7 +21,7 @@ class RepPaymentsCtrl extends ControllerMain{
                 ['Report1'=>$this->Payments,
                     'Report2'=>$this->RepPayments,
                     'Report3'=>$this->RepCompPayments,
-                    'Report4'=>$this->RepCompPayments,
+                    'Report4'=>$this->RepMethodPayments,
                     'TotalIncome'=>$this->TotalIncome,
                     'BranchList'=>(new Branch())->getBranchList()]);
     }

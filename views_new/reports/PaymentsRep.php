@@ -50,6 +50,9 @@
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#repfull">Реестр платежей</a>
                 </li> 
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#repmethod">Отчёт по способу платежа</a>
+                </li> 
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active show" id="repaggr">
@@ -149,7 +152,31 @@
                             ?>
                         </tbody>
                     </table>
-                </div>    
+                </div>
+                
+                <div class="tab-pane fade" id="repmethod">
+                    <table class='table table-hover'>
+                        <thead>
+                            <tr>                       
+                                <th scope='col'>ContBranch</th>
+                                <th scope='col'>PayMethod</th>
+                                <th scope='col'>PaySum</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>                    
+                            <?php
+                            var_dump($Report4);
+//                                foreach ($Report4 as $Pay){
+//                                    echo("<tr class='table-secondary'>");                                                                                               
+//                                    echo("<td>{$Pay->CONTBRANCH}</td>");
+//                                    echo("<td>{$Pay->PAUMETHOD}</td>");
+//                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+//                                    echo("<tr>");
+//                                }                    
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
                                                                     
                     
