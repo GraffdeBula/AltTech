@@ -30,7 +30,7 @@ function getPayList(){
                 "<td>"+PaymentList[i].PAYDATE+"</td>"+
                 "<td>"+PaymentList[i].PAYSUM+"</td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+
-                "<td><a href='payments/"+PaymentList[i]+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
+                "<td><a href='payments/"+PaymentList[i].ID+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
                 "</tr>";
 
         }
