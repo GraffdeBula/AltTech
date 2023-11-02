@@ -16,4 +16,12 @@ class ContP1FileGetDataCtrl extends ControllerMain {
         echo json_encode($this->PaymentList);        
     }
     
+    public function actionAddPayment(){
+        (new PaymentMod())->getPaymentList($_GET['ContCode'],1);                
+    }
+    
+    public function actionDelPayment(){
+        
+    }
+    
 }
