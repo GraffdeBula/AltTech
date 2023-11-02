@@ -21,7 +21,7 @@ class ReportsMod extends Model {
             . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
             . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
             . " INNER JOIN ExpP1FirstPay ON tblP1Anketa.ContCode=ExpP1FirstPay.ContCode"
-            . " WHERE FrExpDate>=? ORDER BY FrExpDate DESC";
+            . " WHERE PayDate>=? ORDER BY PayDate DESC";
         
         return db2::getInstance()->FetchAll($Sql,['01.03.2023']);
     }
