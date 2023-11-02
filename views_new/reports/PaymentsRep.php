@@ -165,14 +165,14 @@
                         </thead>
                         <tbody>                    
                             <?php
-                            var_dump($Report4);
-//                                foreach ($Report4 as $Pay){
-//                                    echo("<tr class='table-secondary'>");                                                                                               
-//                                    echo("<td>{$Pay->CONTBRANCH}</td>");
-//                                    echo("<td>{$Pay->PAUMETHOD}</td>");
-//                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
-//                                    echo("<tr>");
-//                                }                    
+                            #var_dump($Report4);
+                                foreach ($Report4 as $Pay){
+                                    echo("<tr class='table-secondary'>");                                                                                               
+                                    echo("<td>{$Pay->CONTBRANCH}</td>");
+                                    echo("<td>{$Pay->PAYMETHOD}</td>");
+                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+                                    echo("<tr>");
+                                }                    
                             ?>
                         </tbody>
                     </table>
