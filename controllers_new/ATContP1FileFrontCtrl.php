@@ -149,7 +149,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         (new Status())->ChangeP1Status(13, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    
+
     public function actionAddPayment(){        
         (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1,$_GET['PAYCONTTYPE'],$_GET['PAYSUM'],'','',$_GET['PAYMETHOD']))->addPayment();
         #new MyCheck($_GET,0);

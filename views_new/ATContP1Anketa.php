@@ -143,6 +143,7 @@
                                             <option value='да'>да</option>
                                             <option value='нет'>нет</option>
                                         </select>
+                                        <label>Число внесённых платежей</label><input type='text' name='CRPAYSNUM' value='{$Cred->CRPAYSNUM}' maxlength='50' autocomplete='off'> 
                                         <label>Число внесённых платежей</label><input type='number' value='{$Cred->CRPAYSNUM}' autocomplete='off'> 
                                     </p>
                                     <p>

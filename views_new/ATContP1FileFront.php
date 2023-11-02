@@ -33,7 +33,7 @@
                     echo("<option value='{$Branch->BRNAME}'>{$Branch->BRNAME}</option>");
                 }                
                 echo("</select>");
-                if (in_array($_SESSION['EmName'],['Трубенева Галина','Никита Прокопьев','Андрей Булавский','Лунева Тамара','Илья Ковтун','Александра Речнова'])){
+                if (in_array($_SESSION['EmName'],['Галина Новоселова','Никита Прокопьев','Андрей Булавский','Тамара Лунева','Илья Ковтун','Александра Речнова'])){
                     echo("<button class='btn btn-warning'>Сменить</button>");
                 }
             ?>
@@ -352,26 +352,27 @@
                       <th scope="col">Скачать</th>
                     </tr>
                 </thead>
-                <tbody>                
+                <tbody id='PaymentList'>        
+                    
                     <?php
-                    foreach($Payment->getPaymentList() as $i => $Pay){
-                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
-                        echo('<tr class="table-active">');
-                        echo("<td>{$Pay->PAYCODE}</td>");
-                        echo("<td>{$PayDate}</td>");
-                        echo("<td>{$Pay->PAYSUM}</td>");
-                        echo("<td>{$Pay->PAYPR}</td>");
-                        
-                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
-                        
-                        
-                        echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
-                        
-                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
-                            echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
-                        }
-                        echo('</tr>');
-                    }
+//                    foreach($Payment->getPaymentList() as $i => $Pay){
+//                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
+//                        echo('<tr class="table-active">');
+//                        echo("<td>{$Pay->PAYCODE}</td>");
+//                        echo("<td>{$PayDate}</td>");
+//                        echo("<td>{$Pay->PAYSUM}</td>");
+//                        echo("<td>{$Pay->PAYPR}</td>");
+//                        
+//                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
+//                        
+//                        
+//                        echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
+//                        
+//                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
+//                            echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
+//                        }
+//                        echo('</tr>');
+//                    }
                     ?>
                 </tbody>
             </table>
@@ -489,5 +490,6 @@
         
     </div>
         
+    <script src="./js/ContP1FileFront.js"></script>
 </body>
 </html>

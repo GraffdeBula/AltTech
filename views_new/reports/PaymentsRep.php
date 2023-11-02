@@ -50,6 +50,9 @@
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#repfull">Реестр платежей</a>
                 </li> 
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#repmethod">Отчёт по способу платежа</a>
+                </li> 
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active show" id="repaggr">
@@ -128,26 +131,53 @@
                                 <th scope='col'>Назначение платежа</th>
                                 <th scope='col'>Номер договора</th>
                                 <th scope='col'>Клиент</th>                                                
+                                <th scope='col'>Способ платежа</th>
                             </tr>
                         </thead>
                         <tbody>                    
                             <?php
                                 foreach ($Report1 as $Pay){
+                                    $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->ID}</td>");                              
                                     echo("<td>{$Pay->PAYCODE}</td>");
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
-                                    echo("<td>{$Pay->PAYDATE}</td>");
+                                    echo("<td>{$PayDate}</td>");
                                     echo("<td>{$Pay->PAYSUM}</td>");
                                     echo("<td>{$Pay->PAYPR}</td>");
                                     echo("<td>{$Pay->CONTCODE}</td>");
                                     echo("<td>{$Pay->CONTCLIENT}</td>");
+                                    echo("<td>{$Pay->PAYMETHOD}</td>");
                                     echo("<tr>");
                                 }                    
                             ?>
                         </tbody>
                     </table>
-                </div>    
+                </div>
+                
+                <div class="tab-pane fade" id="repmethod">
+                    <table class='table table-hover'>
+                        <thead>
+                            <tr>                       
+                                <th scope='col'>ContBranch</th>
+                                <th scope='col'>PayMethod</th>
+                                <th scope='col'>PaySum</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>                    
+                            <?php
+                            #var_dump($Report4);
+                                foreach ($Report4 as $Pay){
+                                    echo("<tr class='table-secondary'>");                                                                                               
+                                    echo("<td>{$Pay->CONTBRANCH}</td>");
+                                    echo("<td>{$Pay->PAYMETHOD}</td>");
+                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+                                    echo("<tr>");
+                                }                    
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
                                                                     
                     

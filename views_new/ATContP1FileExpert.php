@@ -70,7 +70,11 @@
                                     <?php
                                         (new MyForm('ATContP1FileExpertCtrl','ExpSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                     
-                                        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
+                                        if (($_SESSION['EmRole']=='admin') 
+                                                or ($_SESSION['EmRole']=='expert') 
+                                                or ($_SESSION['EmRole']=='top')
+                                                or ($_SESSION['EmRole']=='director')
+                                            ){
                                             echo("<button type='submit' class='btn btn-dark'>Согласовать заключение договора</button>");
                                         }                                        
                                     ?>            
