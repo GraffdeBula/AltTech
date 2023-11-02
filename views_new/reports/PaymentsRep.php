@@ -137,11 +137,12 @@
                         <tbody>                    
                             <?php
                                 foreach ($Report1 as $Pay){
+                                    $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->ID}</td>");                              
                                     echo("<td>{$Pay->PAYCODE}</td>");
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
-                                    echo("<td>{$Pay->PAYDATE}</td>");
+                                    echo("<td>{$PayDate}</td>");
                                     echo("<td>{$Pay->PAYSUM}</td>");
                                     echo("<td>{$Pay->PAYPR}</td>");
                                     echo("<td>{$Pay->CONTCODE}</td>");
