@@ -13,6 +13,7 @@
 var url=new URL(window.location.href);
 var ContCode=url.searchParams.get('ContCode');
 var DivPaymentList=document.getElementById('PaymentList');
+var AddPayBtn=document.getElementById('AddPayBtn');
 
 getPayList();
 
@@ -31,6 +32,7 @@ function getPayList(){
                 "<td>"+PaymentList[i].PAYSUM+"</td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+
                 "<td><a href='payments/"+PaymentList[i].ID+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
+                "<td><a><button class='btn btn-danger'>DELETE</button></a></td>"+
                 "</tr>";
 
         }
@@ -38,4 +40,12 @@ function getPayList(){
     }
     PaymentListReq.send();
 
+}
+
+function addPayment(){
+    
+}
+
+function delPayment(){
+    
 }
