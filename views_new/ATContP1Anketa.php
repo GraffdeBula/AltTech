@@ -144,12 +144,13 @@
                                             <option value='нет'>нет</option>
                                         </select>
                                         <label>Число внесённых платежей</label><input type='text' name='CRPAYSNUM' value='{$Cred->CRPAYSNUM}' maxlength='50' autocomplete='off'> 
+                                        <label>Число внесённых платежей</label><input type='number' value='{$Cred->CRPAYSNUM}' autocomplete='off'> 
                                     </p>
                                     <p>
-                                    <h5>Для кредитной карты</h5>
-                                    <label>Общий лимит по карте</label><input type='text' name='CRCARDLIMITSUM' value='{$Cred->CRCARDLIMITSUM}' autocomplete='off'>
-                                    <label>Израсходованный лимит</label><input type='text' name='CRCARDUSEDSUM' value='{$Cred->CRCARDUSEDSUM}' autocomplete='off'>
-                                    <label>Минимальный платёж</label><input type='text' name='CRCARDMINPAY' value='{$Cred->CRCARDMINPAY}' autocomplete='off'>
+                                        <h5>Для кредитной карты</h5>
+                                        <label>Общий лимит по карте</label><input type='text' name='CRCARDLIMITSUM' value='{$Cred->CRCARDLIMITSUM}' autocomplete='off'>
+                                        <label>Израсходованный лимит</label><input type='text' name='CRCARDUSEDSUM' value='{$Cred->CRCARDUSEDSUM}' autocomplete='off'>
+                                        <label>Минимальный платёж</label><input type='text' name='CRCARDMINPAY' value='{$Cred->CRCARDMINPAY}' autocomplete='off'>
                                     </p>
                                     <button type='submit' class='btn btn-warning' id='btnSaveMain'>Сохранить основную информацию</button>       
                                 </form>    
