@@ -302,7 +302,7 @@
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>
             </div>
             <form method='get'>
-                <button class='btn btn-primary'>Принять платёж</button>
+                <button class='btn btn-primary' id='AddPayBtn'>Принять платёж</button>
                 <?php (new MyForm('ATContP1FileFrontCtrl','AddPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
                 <input type='hidden' name='FRPERSMANAGER' value='<?=$Front->FRPERSMANAGER?>'>
                 <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
