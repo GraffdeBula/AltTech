@@ -13,6 +13,7 @@
 var url=new URL(window.location.href);
 var ContCode=url.searchParams.get('ContCode');
 var DivPaymentList=document.getElementById('PaymentList');
+var AddPayBtn=document.getElementById('AddPayBtn');
 
 getPayList();
 
@@ -31,6 +32,7 @@ function getPayList(){
                 "<td>"+PaymentList[i].PAYSUM+"</td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+
                 "<td><a href='payments/"+PaymentList[i].ID+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
+                "<td><a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить_"+PaymentList[i].ID+"</button></a></td>"+
                 "</tr>";
 
         }
@@ -38,4 +40,18 @@ function getPayList(){
     }
     PaymentListReq.send();
 
+}
+
+function addPayment(){
+    
+}
+
+function delPayment(DelId){
+    
+    var PaymentDelReq=new XMLHttpRequest();
+    PaymentDelReq.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ContCode='+ContCode+'&PayId='+DelId,true);
+    PaymentDelReq.send();
+    alert('Платёж удалён');
+    setTimeout(getPayList(),1000);
+    
 }

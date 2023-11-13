@@ -38,7 +38,7 @@ class ATEmployeeMod extends Model{
     }
 
     public function UpdEmp($Param){//изменить информацию по сотруднику
-       db2::getInstance()->Query("UPDATE tbl9DrEmployee SET EMNAME=?, EMLOGIN=?,EMSEX=?,EMBRANCH=?,EMPOS=?,EMROLE=?,EMFNAME1=?,EMFNAME2=?,EMFNAME3=? WHERE ID=?",$Param);
+       db2::getInstance()->Query("UPDATE tbl9DrEmployee SET EMNAME=?, EMLOGIN=?,EMSEX=?,EMBRANCH=?,EMPOS=?,EMROLE=?,EMFNAME1=?,EMFNAME2=?,EMFNAME3=?,EMSTATUS=? WHERE ID=?",$Param);
     }
     
     public function UpdEmpPass($Param){//изменение пароля

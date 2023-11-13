@@ -21,7 +21,7 @@ class ContP1FileGetDataCtrl extends ControllerMain {
     }
     
     public function actionDelPayment(){
-        
+        (new PaymentMod())->delPayment($_GET['ID'],$_GET['ContCode']);
     }
     
 }
