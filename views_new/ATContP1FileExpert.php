@@ -96,7 +96,8 @@
                                         if (($_SESSION['EmRole']=='admin') 
                                                 or ($_SESSION['EmRole']=='jurist') 
                                                 or ($_SESSION['EmRole']=='top')
-                                                or ($_SESSION['EmRole']=='expert')                                                
+                                                or ($_SESSION['EmRole']=='expert')
+                                                or ($_SESSION['EmRole']=='director')
                                             ){                                    
                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                         }
@@ -116,7 +117,9 @@
                                 <form method='get'>
                                     <?php
                                         (new MyForm('ATContP1FileExpertCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='director') or ($_SESSION['EmRole']=='top')){                                    
+                                        if (($_SESSION['EmRole']=='admin') 
+                                                or ($_SESSION['EmRole']=='director') 
+                                                or ($_SESSION['EmRole']=='top')){                                    
                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                         }
                                     ?>    
@@ -140,7 +143,8 @@
                                 echo("<label>Рекомендуемая программа</label><select name='EXPRODREC'>");
                                 echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
                                 echo("<option value='Банкротство физлиц'>Банкротство физлиц</option>");
-                                echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");
+                                echo("<option value='Внесудебное банкротство'>Внесудебное банкротство</option>");
+                                echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
                                 echo("</select></p>");
                                 echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
                                 echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
