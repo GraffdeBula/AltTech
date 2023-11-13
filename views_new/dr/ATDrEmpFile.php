@@ -36,7 +36,13 @@
                     echo("<input type='hidden' name='EmpID' value={$Employee->ID}>");
                     echo("<p><label for='in1'>Имя</label><input id='in1' type='text' name='EMNAME' autocomplete='off' value='$Employee->EMNAME'>");
                     echo("<label for='in2'>Логин</label><input id='in2' type='text' name='EMLOGIN' autocomplete='off' value='$Employee->EMLOGIN'>");
-                    echo("<label for='in3'>пол</label><input id='in3' type='text' name='EMSEX' autocomplete='off' value='$Employee->EMSEX'></p>");
+                    echo("<label for='in3'>пол</label><input id='in3' type='text' name='EMSEX' autocomplete='off' value='$Employee->EMSEX'>");
+                    echo("<label for='in7'>статус</label><select id='in7' name='EMSTATUS' value='$Employee->EMSTATUS'>"
+                            . "<option value='$Employee->EMSTATUS'>$Employee->EMSTATUS</option>"
+                            . "<option value='работает'>работает</option>"
+                            . "<option value='в декрете'>в декрете</option>"
+                            . "<option value='уволен'>уволен</option>"
+                            . "</select></p>");                                        
                     echo("<p><label for='in4'>Филиал</label><input id='in4' type='text' name='EMBRANCH' autocomplete='off' value='$Employee->EMBRANCH'>");
                     echo("<label for='in5'>Должность</label><input id='in5' type='text' name='EMPOS' autocomplete='off' value='$Employee->EMPOS' size=40>");
                     echo("<label for='in6'>Роль</label><input id='in6' type='text' name='EMROLE' autocomplete='off' value='$Employee->EMROLE'></p>");

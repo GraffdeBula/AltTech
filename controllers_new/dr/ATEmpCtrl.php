@@ -20,7 +20,7 @@ class ATEmpCtrl extends ControllerMain {
     
     public function actionEmpUpd(){
         (new ATEmployeeMod)->UpdEmp([$_GET['EMNAME'],$_GET['EMLOGIN'],$_GET['EMSEX'],$_GET['EMBRANCH'],$_GET['EMPOS'],
-            $_GET['EMROLE'],$_GET['EMFNAME1'],$_GET['EMFNAME2'],$_GET['EMFNAME3'],$_GET['EmpID']]);
+            $_GET['EMROLE'],$_GET['EMFNAME1'],$_GET['EMFNAME2'],$_GET['EMFNAME3'],$_GET['EMSTATUS'],$_GET['EmpID']]);
         header("Location: index_admin.php?controller=ATEmpCtrl&EmpID={$_GET['EmpID']}");
     }
     
