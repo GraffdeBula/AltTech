@@ -59,7 +59,8 @@
         echo("<div>");            
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>");
         echo("<button class='btn btn-success'>ОТКРЫТЬ АНКЕТУ ДОГОВОРА</button></a>");
-        
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-danger'>Согласие на обработку ПД</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>ДОГОВОР ЭПЭ</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
