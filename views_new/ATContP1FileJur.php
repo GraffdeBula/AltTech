@@ -47,14 +47,14 @@
     //кнопки для анкеты и печати документов
         echo("<div>");            
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>");
-        echo("<button class='btn btn-success'>ОТКРЫТЬ АНКЕТУ ДОГОВОРА</button></a>");
+        echo("<button class='btn btn-success'>ОТКРЫТЬ АНКЕТУ ДОГОВОРА</button></a>_");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovCompJur&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-outline-info'>Передоверие</button></a>");
-        
+        . "<button class='btn btn-outline-info'>Передоверие</button></a>_");
+        /*
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-outline-info'>ПЕЧАТЬ ИСКА</button></a>");
-                    
+        */          
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqEntStatus&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-outline-info'>Статус ИП</button></a>");
         echo("</div>");
