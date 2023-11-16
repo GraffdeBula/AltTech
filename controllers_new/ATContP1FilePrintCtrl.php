@@ -623,5 +623,23 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $DocName=$Printer->PrintDoc();        
         header("Location: ".$DocName);
     }
+    /* документы по внесудебному БФЛ
+     */
+    public function actionPrintMFO1(){
+        $Client=new Client($_GET['ClCode']);    
+        $DocTmpName='Заявление внесуд Ф1';
+    }
+    public function actionPrintMFO2(){
+        $Client=new Client($_GET['ClCode']);  
+        $DocTmpName='Заявление внесуд Ф2';
+    }
+    public function actionPrintMFO3(){
+        $Client=new Client($_GET['ClCode']);             
+        $DocTmpName='Заявление внесуд Ф3';
+    }
+    public function actionPrintMFO4(){
+        $Client=new Client($_GET['ClCode']);             
+        $DocTmpName='Заявление внесуд Ф4';
+    }
             
 }
