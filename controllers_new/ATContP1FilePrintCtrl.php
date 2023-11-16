@@ -424,7 +424,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $FamCont=$Client->getFamcont();
         }
         
-        $Printer=new PrintDoc('DovCompJur','Доверенность БФЛ передоверие',[
+        $DovName='Доверенность БФЛ передоверие';
+        if ($ContP1->getFront()->FRCONTPROG=='Защита от кредиторов'){
+            $DovName='Доверенность ЗОК передоверие';
+        }
+        
+        $Printer=new PrintDoc('DovCompJur',$DovName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(), 
             'ClientINN'=>$Client->getINN(),
