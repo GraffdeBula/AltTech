@@ -57,6 +57,8 @@
     <?php
     //кнопки для анкеты и печати документов
         echo("<div>");                            
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-danger'>Согласие на обработку ПД</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Договор РУ</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=DovComp&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"

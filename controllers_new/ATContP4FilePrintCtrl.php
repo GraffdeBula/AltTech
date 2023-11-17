@@ -18,7 +18,30 @@ class ATContP4FilePrintCtrl extends ControllerMain {
     public function actionIndex(){
         (new ATMainFormCtrl())->actionIndex();
     }
-
+    
+    public function actionPersDataPermit(){        
+        $Client=new Client($_GET['ClCode']);             
+        $ContP4=new ContP1($_GET['ContCode']);     
+        if ($ContP4->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP4->getFront()->FROFFICE);        
+        }                
+        $Org=new Organization($Branch->getRec()->BRORGPREF);
+        $Emp=new Employee($Branch->getRec()->BRDIR);        
+        
+        $Printer=new PrintDoc('PersDataPermit','Согласие на обработку ПД',[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),        
+            'ClientAdr'=>$Client->getAdr(),            
+            'Org'=>$Org->getRec(),            
+        ]
+                
+        );
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);
+    }
        
     public function actionMainCont(){
         $this->getData();
@@ -77,6 +100,8 @@ class ATContP4FilePrintCtrl extends ControllerMain {
         $DocName=$Printer->PrintDoc();        
         header("Location: ".$DocName);
     }
+    
+    
     
     public function actionWorkFinalAct(){
        
