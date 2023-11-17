@@ -628,7 +628,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     public function actionPrintMFO1(){
         $Client=new Client($_GET['ClCode']);    
         $DocTmpName='Заявление внесуд Ф1';
-        $Printer=new PrintDoc('MfoForm',$DocTmpName,[
+        $Printer=new PrintDoc('MfcForm',$DocTmpName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientINN'=>$Client->getINN(),        
@@ -643,7 +643,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     public function actionPrintMFO2(){
         $Client=new Client($_GET['ClCode']);  
         $DocTmpName='Заявление внесуд Ф2';
-        $Printer=new PrintDoc('MfoForm',$DocTmpName,[
+        $Printer=new PrintDoc('MfcForm',$DocTmpName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientINN'=>$Client->getINN(),       
@@ -658,7 +658,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     public function actionPrintMFO3(){
         $Client=new Client($_GET['ClCode']);             
         $DocTmpName='Заявление внесуд Ф3';
-        $Printer=new PrintDoc('MfoForm',$DocTmpName,[
+        $Printer=new PrintDoc('MfcForm',$DocTmpName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientINN'=>$Client->getINN(),           
@@ -673,7 +673,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     public function actionPrintMFO4(){
         $Client=new Client($_GET['ClCode']);             
         $DocTmpName='Заявление внесуд Ф4';
-        $Printer=new PrintDoc('MfoForm',$DocTmpName,[
+        $Printer=new PrintDoc('MfcForm',$DocTmpName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientINN'=>$Client->getINN(),         
