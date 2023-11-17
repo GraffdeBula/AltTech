@@ -58,7 +58,7 @@ class ATEmployeeMod extends Model{
     }
     
     public function getEmpDovName($EmName){//выбирает сотрудника из таблицы доверенностей по Имени
-       return db2::getInstance()->FetchOne("SELECT * FROM tbl9DrEmpDov WHERE EmName=?",[$EmName]);
+       return db2::getInstance()->FetchOne("SELECT FIRST 1 * FROM tbl9DrEmpDov WHERE EmName=? ORDER BY Id DESC",[$EmName]);
     }
     
     public function getEmpDovList(){//показывает список доверенностей
