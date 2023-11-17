@@ -51,10 +51,7 @@
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovCompJur&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-outline-info'>Передоверие</button></a>_");
-        /*
-        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-outline-info'>ПЕЧАТЬ ИСКА</button></a>");
-        */          
+               
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ReqEntStatus&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-outline-info'>Статус ИП</button></a>");
         echo("</div>");
@@ -68,7 +65,7 @@
           <a class="nav-link" data-bs-toggle="tab" href="#CredList">Список кредиторов</a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#PrintIsk">Печать Иска</a>
+          <a class="nav-link" data-bs-toggle="tab" href="#PrintMFO">Документы по внесудебному банкротству</a>
         </li>  
          
     </ul>
@@ -167,10 +164,19 @@
                     </tbody>
                 </table>
         </div>    
-        <div class="tab-pane fade" id="PrintIsk">
+        <div class="tab-pane fade" id="PrintMFO">
 
-            <p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintIsk&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
-                <button class="btn btn-outline-warning">ПЕЧАТЬ ИСКА</button>
+            <p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintMFO1&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
+                <button class="btn btn-outline-warning">ЗАЯВЛЕНИЕ НА ВНЕСУДЕБНОЕ БФЛ</button>
+            </a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintMFO2&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
+                <button class="btn btn-outline-warning">СПИСОК КРЕДИТОРОВ</button>
+            </a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintMFO3&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
+                <button class="btn btn-outline-warning">ОПИСЬ ИМУЩЕСТВО</button>
+            </a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PrintMFO4&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Anketa->CONTCODE?>'>
+                <button class="btn btn-outline-warning">ЗАЯВЛЕНИЯ НА ПОЛУЧЕНИЕ СПРАВОК</button>
             </a></p>
         </div>        
     </div>
