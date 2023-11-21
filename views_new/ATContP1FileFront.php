@@ -279,6 +279,7 @@
                     <label>Программа</label><select name='FRCONTPROG'>
                         <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
                         <option value='Банкротство физлиц'>Банкротство физлиц</option>
+                        <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
                         <option value='Защита от кредиторов'>Защита от кредиторов</option>
                     </select>
                     <label>Тариф</label><select name='FRCONTTARIF'>
