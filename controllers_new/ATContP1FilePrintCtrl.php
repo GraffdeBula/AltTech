@@ -363,11 +363,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $DocName=$Printer->PrintDoc();
         header("Location: ".$DocName);        
     }
-    
-    public function actionMainAct(){
-        echo('Основной акт');
-    }
-    
+        
     public function actionDovTemplate(){
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
@@ -467,7 +463,14 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $FamCont=$Client->getFamcont();
         }
         
-        $Printer=new PrintDoc('WorkFinalAct','Отчёт об исполнении БФЛ',[
+        $PacNum= substr($ContP1->getFront()->FRCONTPAC,-2);        
+        if ($PacNum>45) {
+            $DocName='Отчёт об исполнении БФЛ 2';
+        } else {
+            $DocName='Отчёт об исполнении БФЛ 1';
+        }
+                
+        $Printer=new PrintDoc('WorkFinalAct',$DocName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(), 
             'ClientINN'=>$Client->getINN(),
