@@ -77,9 +77,9 @@ class TarifMod extends Model{
         return [];
     }
     
-    public function getTarif($TrName,$DebtSum){
-        $Sql="SELECT * FROM tblp1tarif WHERE TrName=? AND TrSumMin<=? AND TrSumMax>=? AND TrStatus=1";
-        return $this->Data=db2::getInstance()->FetchOne($Sql,[$TrName,$DebtSum,$DebtSum]);
+    public function getTarif($TrName,$DebtSum,$Branch){
+        $Sql="SELECT * FROM tblp1tarif WHERE TrName=? AND TrSumMin<=? AND TrSumMax>=? AND TrBranch=? AND TrStatus=1";
+        return $this->Data=db2::getInstance()->FetchOne($Sql,[$TrName,$DebtSum,$DebtSum,$Branch]);
     }
            
 }

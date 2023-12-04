@@ -68,7 +68,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $Branch=$Cont->getFront()->FROFFICE;
         }
         
-        $Tarif=(new TarifP1())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM);
+        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch);
         $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$Branch);        
         
         $Params=[

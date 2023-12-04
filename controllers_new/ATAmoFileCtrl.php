@@ -5,7 +5,7 @@
  * функции
  * посмотреть лид по ID
  */
-class ATAmoFileCtrl extends Controller {
+class ATAmoFileCtrl extends ControllerMain {
     protected $data;
     protected $Lead;
     protected $Contact;
@@ -32,9 +32,11 @@ class ATAmoFileCtrl extends Controller {
         $this->ShowFile();
     }
     public function actionGetContact(){        
-        $this->Contact=$_POST['AmoContactID'];
+        $Model=new AmoContactMod();
+        $this->Contact=$Model->getContactById($_GET['AmoContactID']);
         $this->data=['Contact'=>$this->Contact];
         $this->ShowFile();
+        
     }
     public function actionGetContactList(){  
         $this->ContactList=$_POST['AmoContactList'];
