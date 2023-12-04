@@ -9,25 +9,39 @@
 
 </head>
 <body>
-                   <h3>
-                    <p>РАБОТА с АМО</p>
-                </h3>   
+    <h3>
+        <p>РАБОТА с АМО</p>
+    </h3>   
            
+    <form method='get' autocomplete='off'>
+        <input type="hidden" name='controller' value='ATAmoFileCtrl'>
+        <input type="hidden" name='action' value='GetLead'>
+        <label>AMO Lead ID</label><input type='text' name='AmoLeadID' value=''>
+        <button type='submit' class='btn btn-primary'>ПОЛУЧИТЬ ЛИД</button>
+    </form>
+    
+    <form method='get' autocomplete='off'>
+        <input type="hidden" name='controller' value='ATAmoFileCtrl'>
+        <input type="hidden" name='action' value='GetLeadTags'>
+        <label>AMO Lead ID</label><input type='text' name='AmoLeadID' value=''>
+        <button type='submit' class='btn btn-primary'>ПОЛУЧИТЬ ТЭГИ</button>
+    </form>
 
-            <form method='get'>
-                <input type="hidden" name='controller' value='ATAmoFileCtrl'>
-                <input type="hidden" name='action' value='GetLead'>
-                <label>AMO Lead ID</label><input type='text' name='AmoLeadID' value=''>
-                <button type='submit' class='f-bu f-bu-warnning'>ПОЛУЧИТЬ ЛИД</button>
-            </form>
-
-
-            <form method='get'>
-                <input type="hidden" name='controller' value='ATAmoFileCtrl'>
-                <input type="hidden" name='action' value='GetContact'>
-                <label>AMO Contact ID</label><input type='text' name='AmoContactID' value=''>
-                <button type='submit' class='f-bu f-bu-warnning'>ВЗЯТЬ КОНТАКТ</button>
-            </form>
+    <form method='get' autocomplete='off'>
+        <input type="hidden" name='controller' value='ATAmoFileCtrl'>
+        <input type="hidden" name='action' value='GetContact'>
+        <label>AMO Contact ID</label><input type='text' name='AmoContactID' value=''>
+        <button type='submit' class='btn btn-primary'>ВЗЯТЬ КОНТАКТ</button>
+    </form>
+    
+    <form method='get' autocomplete='off'>
+        <input type="hidden" name='controller' value='ATAmoFileCtrl'>
+        <input type="hidden" name='action' value='AddTag'>
+        <label>AMO Lead ID</label><input type='text' name='LeadId' value=''>
+        <label>Тэг</label><input type='text' name='TagName' value=''>
+        <button type='submit' class='btn btn-primary'>Добавить тэг</button>
+    </form>
+    
                 
         <?php
             if (isset($Lead)){
@@ -45,6 +59,25 @@
                     echo("<br>=====================================<br>");
                 }
             }
+            
+            if (isset($Tags)){
+                var_dump($Tags);
+                /*
+                foreach($Tags as $key=>$Atr){
+                    echo($key." ::: ");
+                    if ($key=='custom_fields'){
+                        foreach($Atr as $key=>$field){
+                            var_dump($field);
+                            echo("<br>.....................................<br>");
+                        }
+                    }
+                    else{
+                        var_dump($Atr);
+                    }
+                    echo("<br>=====================================<br>");
+                }*/
+            }
+            
             if (isset($LeadList)){
 //                foreach($LeadList['_embedded']['leads'] as $key => $Element){
 //                    echo($key." ::: ");

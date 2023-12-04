@@ -4,7 +4,7 @@
  *  AMO TOOLS для тестирования в интерфейсе AltTech
  * 
  */
-class AmoTools0{
+class AmoRequests{
     protected $AmoLink='';
     protected $AmoHeader=false;
     protected $AmoData=[];
