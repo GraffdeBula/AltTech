@@ -13,6 +13,7 @@ class autoloader {
         UPPER_ROOT.'/app',
         UPPER_ROOT.'/app/service',
         UPPER_ROOT.'/infrastructure',
+        UPPER_ROOT.'/integrations',
         UPPER_ROOT.'/domain',
         
         UPPER_ROOT.'/functions',        
@@ -23,8 +24,7 @@ class autoloader {
         UPPER_ROOT.'/controllers_new/app',        
         UPPER_ROOT.'/controllers_new/dr',        
         UPPER_ROOT.'/controllers_new/reports',
-        UPPER_ROOT.'/controllers_new/transfer',
-        
+                
         UPPER_ROOT.'/controllers',
         
         UPPER_ROOT.'/form_handlers',

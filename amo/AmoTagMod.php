@@ -1,21 +1,21 @@
 <?php
 /**
  * Модель для работы в АМО со статусами воронок
- * использует инструменты AmoTools0
+ * использует инструменты AmoRequests
  *
  * @author Andrey
  */
 class AmoTagMod {
     
     public function getTagList(){
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads/tags?page=1&limit=250');
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request();
     }
     
     public function addTag($LeadID,$TagName){
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/leads/{$LeadID}");                
         $Amo->setVar('AmoHeader',array('Content-Type: application/json'));
         $Amo->setVar('AmoMethod','PATCH');
@@ -32,7 +32,7 @@ class AmoTagMod {
     }
     
     public function dellTag($LeadID){
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/leads/{$LeadID}");                
         $Amo->setVar('AmoHeader',array('Content-Type: application/json'));
         $Amo->setVar('AmoMethod','PATCH');

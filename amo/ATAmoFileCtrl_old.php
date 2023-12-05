@@ -36,7 +36,6 @@ class ATAmoFileCtrl extends ControllerMain {
         $this->Contact=$Model->getContactById($_GET['AmoContactID']);
         $this->data=['Contact'=>$this->Contact];
         $this->ShowFile();
-        
     }
     public function actionGetContactList(){  
         $this->ContactList=$_POST['AmoContactList'];
@@ -60,7 +59,8 @@ class ATAmoFileCtrl extends ControllerMain {
     
     //работа с тэгами
     public function actionAddTag(){
-        (new AmoTagMod)->addTag($_GET['LeadId'],$_GET['TagName']);        
+        (new AmoTagMod)->addTag($_GET['LeadId'],$_GET['TagName']);       
+        $this->data=[];
         $this->ShowFile();                
     }
     

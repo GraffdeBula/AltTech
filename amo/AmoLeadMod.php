@@ -8,14 +8,14 @@
 class AmoLeadMod {
     
     public function getLeadsFiltList($PipeLineId,$StatusId){
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/leads?filter[statuses][0][pipeline_id]={$PipeLineId}&filter[statuses][0][status_id]={$StatusId}");
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request();
     }
     
     public function getLeadById($LeadID=''){       
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadID}");
         $Amo->setVar('AmoHeader',false);
         $Amo->setVar('AmoMethod','GET');
@@ -23,7 +23,7 @@ class AmoLeadMod {
     }
     
     public function getLeadFromPost(){       
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadID}");
         $Amo->setVar('AmoHeader',false);
         $Amo->setVar('AmoMethod','GET');
@@ -31,7 +31,7 @@ class AmoLeadMod {
     }
     
     public function updLead($LeadID,$NewInfo=[]){
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/leads/{$LeadID}");
         $Amo->setVar('AmoHeader',array('Content-Type: application/json'));
         $Amo->setVar('AmoMethod','PATCH');
