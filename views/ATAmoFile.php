@@ -43,11 +43,11 @@
         </div>
         
         <div class="f-row">
-            <form method='post'>
+            <form method='get'>
                 <input type="hidden" name='controller' value='ATAmoFileCtrl'>
                 <input type="hidden" name='action' value='GetContact'>
                 <label>AMO Contact ID</label><input type='text' name='AmoContactID' value=''>
-                <button type='submit' class='f-bu f-bu-warnning'>ПОЛУЧИТЬ КОНТАКТ</button>
+                <button type='submit' class='f-bu f-bu-warnning'>ВЗЯТЬ КОНТАКТ</button>
             </form>
         </div>
         
