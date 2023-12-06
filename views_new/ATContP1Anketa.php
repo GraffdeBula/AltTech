@@ -105,6 +105,7 @@
                                         <option value='{$Cred->CRPROG}'>{$Cred->CRPROG}</option>
                                         <option value='потребительский'>потребительский</option>
                                         <option value='кред.карта'>кред.карта</option>
+                                        <option value='Карта овердрафтом'>Карта овердрафтом</option>
                                         <option value='товарный'>товарный</option>
                                         <option value='ипотека'>ипотека</option>                              
                                         <option value='займ/микрозайм'>займ/микрозайм</option>                              
