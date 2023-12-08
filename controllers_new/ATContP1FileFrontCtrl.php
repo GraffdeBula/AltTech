@@ -68,12 +68,17 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $Branch=$Cont->getFront()->FROFFICE;
         }
         
-        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch);
-        #new MyCheck([$Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch,$Tarif],0);
+        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch);        
         $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$Branch);        
         
+        #увеличение стоимости потарифу классический для 11 и более кредиторов
+        $MailExp=0;
+        if (($Cont->getAnketa()->AKCREDNUM>10)&&(in_array($Tarif->TRPAC,['pac85','pac86','pac87','pac88','pac89']))){
+            $MailExp=10000;
+        }
+        
         $Params=[
-            'FRCONTSUM'=>$Tarif->TRSUMFIX,
+            'FRCONTSUM'=>$Tarif->TRSUMFIX+$MailExp,
             'FRCONTPAC'=>$Tarif->TRPAC,
             'FRCONTTYPE'=>$Pac->PACCONTTYPE
         ];        
