@@ -24,7 +24,8 @@ class PrintFunctions {
         $Tarif=(new TarifMod())->getTarifByPac($TrPac,$CredSum,$Branch);
        
         $TarSums=(new TarifMod())->getTarifByPeriod($Tarif->TRCOMMENT,$CredSum,$Period,$Branch);
-                
+        
+        
         $qryPeriod=3;
         if ($Bookmark=='DISCOUNT18'){$qryPeriod=18;}
         if ($Bookmark=='DISCOUNT12'){$qryPeriod=12;}
@@ -33,28 +34,33 @@ class PrintFunctions {
         if ($Bookmark=='DISCOUNT1'){$qryPeriod=1;}
         
         $TarSums=(new TarifMod())->getTarifByPeriod($Tarif->TRCOMMENT,$CredSum,$qryPeriod,$Branch);
-        (new logger)->logToFile($Bookmark.$CredSum.$TrPac.$Period.$ContSum);
-        if (isset($TarSums->TRSUMFIX)){
-            $DISCSUM=$ContSum-$TarSums->TRSUMFIX;
-            $TOTSUM=$TarSums->TRSUMFIX;
-            
-            if ($qryPeriod==1){
-                $Discount="Стороны согласовали, что если Заказчик оплачивает всю стоимость услуг Исполнителя в течение 30 дней с момента подписания Договора, "
-                    . "то Заказчику предоставляется скидка на услуги Исполнителя в размере {$DISCSUM} руб. от стоимости услуг Исполнителя, указанной в п. 4.1 "
-                    . "настоящего Договора, в этом случае стоимость услуг Исполнителя с учётом скидки составит {$TOTSUM} руб";                
-            } else {
-                $Discount="Стороны согласовали, что если Заказчик оплачивает всю стоимость услуг Исполнителя в течение {$qryPeriod} месяцев с момента подписания Договора, "
-                    . "то Заказчику предоставляется скидка на услуги Исполнителя в размере {$DISCSUM} руб. от стоимости услуг Исполнителя, указанной в п. 4.1 "
-                    . "настоящего Договора, в этом случае стоимость услуг Исполнителя с учётом скидки составит {$TOTSUM} руб";            
-            }
-            
-            (new logger)->logToFile($Discount);
-            if ($qryPeriod<$Period){
-                return $Discount;
-            } else {
-                return ' ';
-            }
-        } else return ' ';
+        
+        if (($Branch=='ОП Кемерово')or($Branch=='ФР Берёзовский')){
+        
+            if (isset($TarSums->TRSUMFIX)){
+                $DISCSUM=$ContSum-$TarSums->TRSUMFIX;
+                $TOTSUM=$TarSums->TRSUMFIX;
+
+                if ($qryPeriod==1){
+                    $Discount="Стороны согласовали, что если Заказчик оплачивает всю стоимость услуг Исполнителя в течение 30 дней с момента подписания Договора, "
+                        . "то Заказчику предоставляется скидка на услуги Исполнителя в размере {$DISCSUM} руб. от стоимости услуг Исполнителя, указанной в п. 4.1 "
+                        . "настоящего Договора, в этом случае стоимость услуг Исполнителя с учётом скидки составит {$TOTSUM} руб";                
+                } else {
+                    $Discount="Стороны согласовали, что если Заказчик оплачивает всю стоимость услуг Исполнителя в течение {$qryPeriod} месяцев с момента подписания Договора, "
+                        . "то Заказчику предоставляется скидка на услуги Исполнителя в размере {$DISCSUM} руб. от стоимости услуг Исполнителя, указанной в п. 4.1 "
+                        . "настоящего Договора, в этом случае стоимость услуг Исполнителя с учётом скидки составит {$TOTSUM} руб";            
+                }
+
+                (new logger)->logToFile($Discount);
+                if ($qryPeriod<$Period){
+                    return $Discount;
+                } else {
+                    return ' ';
+                }
+            } else return ' ';
+        } else {
+            return ' ';
+        }
     }
     
     public function DateToStr($Date){

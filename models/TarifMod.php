@@ -83,13 +83,14 @@ class TarifMod extends Model{
     }
     
     public function getTarifByPac($TrPac,$CredSum,$Branch){
-        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP1Tarif WHERE TrPac=? AND TrSumMin<=? AND TrSumMax>=? AND TrBranch=?",
+        return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP1Tarif WHERE TrPac=? AND TrSumMin<=? AND TrSumMax>=? AND TrBranch=? AND TrStatus=1",
             [$TrPac,$CredSum,$CredSum,$Branch]);
     }
     
     public function getTarifByPeriod($TrComment,$CredSum,$Period,$Branch){
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM tblP1Tarif INNER JOIN tblP1Pacs on tblP1Tarif.trPac=tblP1Pacs.pcPac "
-                . "WHERE TrComment=? AND TrSumMin<=? AND TrSumMax>=? AND PCPERIOD=? AND TrBranch=?",[$TrComment,$CredSum,$CredSum,$Period,$Branch]);
+                . "WHERE TrComment=? AND TrSumMin<=? AND TrSumMax>=? AND PCPERIOD=? AND TrBranch=? AND TrStatus=1",
+                [$TrComment,$CredSum,$CredSum,$Period,$Branch]);
     }
            
 }
