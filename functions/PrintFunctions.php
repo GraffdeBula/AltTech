@@ -20,10 +20,10 @@ class PrintFunctions {
     }
     
     
-    public function Discounts($Bookmark,$CredSum,$TrPac,$Period,$ContSum){
-        $Tarif=(new Pacs)->getTarifByName($TrPac, $CredSum);
+    public function Discounts($Bookmark,$CredSum,$TrPac,$Period,$ContSum,$Branch){
+        $Tarif=(new TarifMod())->getTarifByPac($TrPac,$CredSum,$Branch);
        
-        $TarSums=(new Pacs)->getTarifByPeriod($Tarif->TRCOMMENT, $CredSum, $Period);
+        $TarSums=(new TarifMod())->getTarifByPeriod($Tarif->TRCOMMENT,$CredSum,$Period,$Branch);
                 
         $qryPeriod=3;
         if ($Bookmark=='DISCOUNT18'){$qryPeriod=18;}
@@ -32,7 +32,7 @@ class PrintFunctions {
         if ($Bookmark=='DISCOUNT3'){$qryPeriod=3;}
         if ($Bookmark=='DISCOUNT1'){$qryPeriod=1;}
         
-        $TarSums=(new Pacs)->getTarifByPeriod($Tarif->TRCOMMENT, $CredSum, $qryPeriod);
+        $TarSums=(new TarifMod())->getTarifByPeriod($Tarif->TRCOMMENT,$CredSum,$qryPeriod,$Branch);
         (new logger)->logToFile($Bookmark.$CredSum.$TrPac.$Period.$ContSum);
         if (isset($TarSums->TRSUMFIX)){
             $DISCSUM=$ContSum-$TarSums->TRSUMFIX;
