@@ -62,6 +62,10 @@ class PrintDoc{
     }
     
     protected function InsBookMark($BookMark){
+//        if ($BookMark->BMNAME=='CONTSUM'){
+//            new MyCheck($this->DocData['Front'],0);
+//        }
+        
         if ($BookMark->BMCHANGE<4){
             $Data=$this->
                 DocData[$BookMark->BMTABLE]->
@@ -150,10 +154,9 @@ class PrintDoc{
         $this->DocObj->setComplexBlock($BookMark, $this->MyTable);        
     }
     
-    protected function PasteText($BookMark){//вставка куска текста про скидки
-        #$InsData=(new PrintFunctions())->Discounts($BookMark, $this->DocData['Anketa']->AKCREDTOTSUM, $this->DocData['Cont']->FRTARPAC, $this->DocData['Cont']->FRCONTPERIOD,$this->DocData['Cont']->FRCONTSUM);
+    protected function PasteText($BookMark){//вставка куска текста про скидки             
         $InsData=(new PrintFunctions())->Discounts($BookMark, $this->DocData['Anketa']->AKCREDTOTSUM, $this->DocData['Front']->FRCONTPAC, 
-                $this->DocData['Pac']->PCPERIOD,$this->DocData['Front']->FRCONTSUM);
+                $this->DocData['Pac']->PCPERIOD,$this->DocData['Front']->FRCONTSUM,$this->DocData['Front']->FROFFICE);
         $this->DocObj->setValue($BookMark, $InsData);
     }
     
