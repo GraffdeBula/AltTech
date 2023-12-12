@@ -44,8 +44,7 @@ class AmoRequests{
         $Code=curl_getinfo($Curl,CURLINFO_HTTP_CODE);
         //Завершаем сеанс cURL
         curl_close($Curl);
-        $Response=json_decode($Out,true);
-        (new logger())->logToFile(json_encode($Response));
+        $Response=json_decode($Out,true);        
         return $Response;
     }
     
