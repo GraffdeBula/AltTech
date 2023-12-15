@@ -18,12 +18,13 @@ class autoloader {
         
         UPPER_ROOT.'/functions',        
         UPPER_ROOT.'/traits',        
-        UPPER_ROOT.'/amo',
+        UPPER_ROOT.'/amo',        
         
         UPPER_ROOT.'/controllers_new',        
         UPPER_ROOT.'/controllers_new/app',        
         UPPER_ROOT.'/controllers_new/dr',        
         UPPER_ROOT.'/controllers_new/reports',
+        UPPER_ROOT.'/controllers_new/tests',
                 
         UPPER_ROOT.'/controllers',
         

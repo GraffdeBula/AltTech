@@ -30,6 +30,12 @@
         if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
             echo("
             <li class='nav-item'>
+              <a class='nav-link' data-bs-toggle='tab' href='#discounts'>discounts</a>
+            </li>");
+        }
+        if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
+            echo("
+            <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#lists'>Справочники</a>
             </li>");
         }
@@ -196,25 +202,20 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="tests">
-            <div>
-                <a target='_blank' href="index_admin.php?controller=ATNewDZTest"><button class="btn btn-warning">Test new DZ</button></a>
-            </div>
+        <div class="tab-pane fade" id="tests">            
             <div>
                 <a target='_blank' href="index_admin.php?controller=ATAmoFileCtrl"><button class="btn btn-danger">AMO FILE</button></a>
-            </div>
-            <div>
-                <a target='_blank' href="index_admin.php?controller=TabIskBookmarkCtrl&action=ShowList"><button class="btn btn-warning">ИскЗакладки</button></a>
-            </div>
+            </div>            
             <div>
                 <a target='_blank' href="index_admin.php?controller=AsynchTestCtrl"><button class="btn btn-info">АСИНХРОННОЕ СОХРАНЕНИЕ</button></a>
             </div>
-            
+            <div>
+                <a target='_blank' href="index_admin.php?controller=AmoAdminPanelCtrl"><button class="btn btn-info">Админ панель АМО</button></a>
+            </div>
             
         </div>     
         <div class="tab-pane fade" id="adminka">
-            <a target='_blank' href="index_admin.php?controller=PkoListCtrl&action=Index"><button class="btn btn-outline-primary">Платежи</button></a>
-                <br>            
+                     
             <a target='_blank' href="index_admin.php?controller=ATPaysCtrl&action=ShowDate"><button class="btn btn-outline-primary">Дата</button></a>
             <br>
             

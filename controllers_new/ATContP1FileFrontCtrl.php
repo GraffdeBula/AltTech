@@ -139,6 +139,28 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionRequestDiscount(){        
+        $Params=[
+            'FRDISCSUM'=>$_GET['FRDISCSUM'],
+            'FRDISCCOMMENT'=>$_GET['FRDISCCOMMENT'],
+            'FRDISCQUERYDATE'=>Date("d.m.Y"),            
+        ];        
+        (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionApproveDiscount(){
+        $Params=[
+            'FRDISCAPPROVECOMMENT'=>$_GET['FRDISCAPPROVECOMMENT'],
+            'FRDISCAPPROVEEMP'=>$_SESSION['EmName'],
+            'FRDISCAPPROVEDATE'=>Date("d.m.Y"),            
+        ];        
+        (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionDelDiscount(){
         (new P1DiscountMod())->delDiscount($_GET['DiscId']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
