@@ -43,8 +43,7 @@ class AmoMethods {
                 "_embedded" => array(
                     "tags" => $NewTags
         )));
-        #var_dump($this->AmoData);
-        #exit();
+        
         (new logger())->logToFile($this->AmoData);
                         
         $Amo=new AmoRequests();
@@ -55,4 +54,13 @@ class AmoMethods {
                                         
         $Amo->request();
     } 
+    
+    public function getPipeLineList(){
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink', 'https://fpcalternative.amocrm.ru/api/v4/leads/pipelines');
+        $Amo->setVar('AmoHeader', array('Content-Type: application/json'));
+        $Amo->setVar('AmoMethod', 'GET');
+        $Amo->setVar('AmoData', []);
+        return $Amo->request();
+    }
 }

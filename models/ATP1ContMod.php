@@ -99,13 +99,7 @@ class ATP1ContMod extends Model{
         
         return $this->Data=db2::getInstance()->Query($Sql,$Params);
     }
-    
-    public function UpdP1FrontView($ContCode){
-        $Sql="UPDATE tblP1Front WHERE contCode=?";
-        $Params=[$ContCode];
-        db2::getInstance()->Query($Sql,$Params); 
-    }
-    
+        
     public function DelP1Anketa($ContCode){
         $Sql="DELETE FROM tblP1Anketa WHERE contCode=?";
         $Params=[$ContCode];

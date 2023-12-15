@@ -219,6 +219,7 @@
 
                 </div>
                 <div class='col-lg-4'><h5>Скидки</h5>
+                    <hr>                    
                     <form method='get' autocomplete="off">
                         <?php
                             (new MyForm('ATContP1FileFrontCtrl','AddDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
@@ -233,6 +234,27 @@
                         <p><label>Описание</label><input type='text' style='width:400' required name='DiscountComment'></p>
                         <button class='btn btn-warning'>Применить</button>
                     </form>
+                    <hr>
+                    <h6>Согласование скидки с директором</h6>                    
+                    <form method='get' autocomplete="off">
+                        <?php
+                            (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
+                            echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
+                            echo("<p><label>Обоснование</label><br><input type='text' style='width:700' name='FRDISCCOMMENT' value='{$Front->FRDISCCOMMENT}'><br>");
+                            echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
+                        ?>
+                    </form>
+                    <hr>
+                    <form method='get' autocomplete="off">
+                        <?php
+                            (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                        
+                            echo("<label>Комментарий директора</label><input type='text' style='width:400' name='FRDISCAPPROVECOMMENT' value='{$Front->FRDISCAPPROVECOMMENT}'><br>");                            
+                            if (in_array($_SESSION['EmRole'],['top','admin'])){
+                                echo("<button class='btn btn-danger'>Согласовать</button>");
+                            }
+                        ?>
+                    </form>
+                    <hr>
                     <table class="table table-hover">
                         <thead>
                             <tr>
