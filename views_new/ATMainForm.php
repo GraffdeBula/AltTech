@@ -30,7 +30,7 @@
         if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
             echo("
             <li class='nav-item'>
-              <a class='nav-link' data-bs-toggle='tab' href='#discounts'>discounts</a>
+              <a class='nav-link' data-bs-toggle='tab' href='#discounts'>Согласование скидок</a>
             </li>");
         }
         if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
@@ -176,10 +176,19 @@
                 <div class="col-lg-3">
                     <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></p>
+                    <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></a></p>
                 </div>  
             </div>
+        </div><!--отчёты-->   
+        <div class="tab-pane fade" id="discounts"> 
+            <?php
+                foreach($DiscList as $key=>$Cont){
+                    echo("{$Cont->CLFIO} : {$Cont->FROFFICE} : {$Cont->FRDISCSUM} {$Cont->FRDISCCOMMENT}");
+                    echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-info'>Перейти в досье</button></a>");
+                    echo("<br>");
+                }                    
+            ?>
         </div>
         <div class="tab-pane fade" id="lists">
             <div class="row">

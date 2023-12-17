@@ -144,9 +144,19 @@ class ATP1ContMod extends Model{
         db2::getInstance()->Query($Sql,$Params);  
         
     }
-    
+    /*методы для согласования скидок (P1)
+     */
+    public function getContApproveList(){
+        $Sql="SELECT tblClients.ClCode,tblp1anketa.contcode,ClFIO,"
+                . "frDiscSum,frDiscComment,frOffice "
+                . "FROM tblClients INNER JOIN tblp1Anketa ON tblClients.ClCode=tblp1anketa.ClCode "
+                . "INNER JOIN tblp1front ON tblp1anketa.contcode=tblp1front.contcode "
+                . "WHERE frDiscApproveDate is null AND frDiscQueryDate is not null";
+        
+        return db2::getInstance()->FetchAll($Sql,[]);
+    }
+            
     /*методы для построения отчёта по Действующей базе (P1)
-     * 
      * 
      */
     

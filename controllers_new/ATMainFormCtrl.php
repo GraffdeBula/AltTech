@@ -10,13 +10,14 @@ class ATMainFormCtrl extends ControllerMain {
     protected $ClList=[];
     protected $Refers=[];
     protected $ExpList=[];
+    protected $DiscList=[];
     
     
     public function actionIndex(){
         $this->Params=[];
         $this->LoadList();                
         $this->GetEmpWorkData();
-        $this->GetRefers();       
+        $this->getDiscList();       
         $this->getExpList();
         $this->ShowList();
     }
@@ -34,7 +35,7 @@ class ATMainFormCtrl extends ControllerMain {
         $this->Params=[ucfirst($_GET['ClFName']),ucfirst($_GET['Cl1Name']),ucfirst($_GET['Cl2Name']),$_GET['ClPasSer'],$_GET['ClPasNum']];
         $this->LoadList();
         $this->GetEmpWorkData();
-        $this->GetRefers();       
+        $this->getDiscList();       
         $this->getExpList();
         $this->ShowList();
     }
@@ -58,7 +59,7 @@ class ATMainFormCtrl extends ControllerMain {
      */   
     protected function ShowList(){       
         $this->ViewName='Главная форма';
-        $args=['ClList'=>$this->ClList,'Refers'=>$this->Refers,'ExpList'=>$this->ExpList];        
+        $args=['ClList'=>$this->ClList,'DiscList'=>$this->DiscList,'ExpList'=>$this->ExpList];        
         $this->render('ATMainForm',$args);
     }
     
@@ -98,9 +99,14 @@ class ATMainFormCtrl extends ControllerMain {
         $this->ExpList[2]=$Model->getExpJurList();
         $this->ExpList[3]=$Model->getExpDirList();        
     }
-    
+    /*получение списка скидок на согласование*/
+    protected function getDiscList(){
+        $this->DiscList=(new ATP1ContMod())->getContApproveList();
+    }
     /*получение списка реферальных ссылок
      */
+    
+    
     protected function GetRefers(){
         if ((isset($_GET['DateF']))&&($_GET['DateF']!='')&&(isset($_GET['DateL']))&&($_GET['DateL']!='')){            
             $this->Refers=(new AT7ReferProg())->GetAgentListDate($_GET['DateF'],$_GET['DateL']);        
