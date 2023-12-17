@@ -148,7 +148,7 @@ class ATP1ContMod extends Model{
      */
     public function getContApproveList(){
         $Sql="SELECT tblClients.ClCode,tblp1anketa.contcode,ClFIO,"
-                . "frDiscSum,frDiscComment "
+                . "frDiscSum,frDiscComment,frOffice "
                 . "FROM tblClients INNER JOIN tblp1Anketa ON tblClients.ClCode=tblp1anketa.ClCode "
                 . "INNER JOIN tblp1front ON tblp1anketa.contcode=tblp1front.contcode "
                 . "WHERE frDiscApproveDate is null AND frDiscQueryDate is not null";
