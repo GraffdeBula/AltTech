@@ -165,7 +165,7 @@ class ATP1ContMod extends Model{
                 ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
                 ." INNER JOIN tblP1Front ON tblp1Anketa.ContCode=tblP1Front.ContCode"
                 ." INNER JOIN tblP1PayCalend on tblp1Anketa.ContCode=tblP1PayCalend.ContCode"
-                ." INNER JOIN vwTmpTotalPay on tblp1Anketa.ContCode=vwTmpTotalPay.ContCode"
+                ." INNER JOIN vwContP1TotalPay on tblp1Anketa.ContCode=vwContP1TotalPay.ContCode"
                 ." INNER JOIN vwDiscountTotal on tblp1Anketa.ContCode=vwDiscountTotal.ContCode"
                 ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND (PayTotSum+DiscSum)<FrContSum AND FrContDate<?"
                 ." AND frContPac NOT IN ('pac24','pac33','pac38','pac39','pac40','pac57') AND FrContTarif NOT LIKE ? ORDER BY ClFIO";                
