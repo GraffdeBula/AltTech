@@ -24,7 +24,7 @@
                     . "<button class='btn btn-info'>{$Branch->BRNAME} - ноябрь 2023</button></a>"); 
                 echo("<a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.12.2023&DateL=31.12.2023'>"
                     . "<button class='btn btn-success'>{$Branch->BRNAME} - декабрь 2023</button></a>");    
-                echo("<a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.01.2024&DateL=31.12.2024'>"
+                echo("<a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.01.2024&DateL=31.01.2024'>"
                     . "<button class='btn btn-warning'>{$Branch->BRNAME} - январь 2024</button></a>"); 
                 echo("<a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.02.2024&DateL=29.02.2024'>"
                     . "<button class='btn btn-danger'>{$Branch->BRNAME} - февраль 2024</button></a>"); 
