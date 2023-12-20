@@ -165,11 +165,11 @@ class ATP1ContMod extends Model{
                 ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
                 ." INNER JOIN tblP1Front ON tblp1Anketa.ContCode=tblP1Front.ContCode"
                 ." INNER JOIN tblP1PayCalend on tblp1Anketa.ContCode=tblP1PayCalend.ContCode"
-                ." INNER JOIN vwContP1TotalPay on tblp1Anketa.ContCode=vwContP1TotalPay.ContCode"
+                ." INNER JOIN VWCONTP1TOTALPAY on tblp1Anketa.ContCode=VWCONTP1TOTALPAY.ContCode"
                 ." INNER JOIN vwDiscountTotal on tblp1Anketa.ContCode=vwDiscountTotal.ContCode"
                 ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND (PayTotSum+DiscSum)<FrContSum AND FrContDate<?"
                 ." AND frContPac NOT IN ('pac24','pac33','pac38','pac39','pac40','pac57') AND FrContTarif NOT LIKE ? ORDER BY ClFIO";                
-            
+        #new MyCheck($Sql,0);    
         return db2::getInstance()->FetchAll($Sql,[$Branch,$DateF,$DateL,$DateF,"%сразу%"]);
     }
     
@@ -178,7 +178,7 @@ class ATP1ContMod extends Model{
                 ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
                 ." INNER JOIN tblP1Front ON tblp1Anketa.ContCode=tblP1Front.ContCode"
                 ." INNER JOIN tblP1PayCalend on tblp1Anketa.ContCode=tblP1PayCalend.ContCode"
-                ." INNER JOIN vwTmpTotalPay on tblp1Anketa.ContCode=vwTmpTotalPay.ContCode"
+                ." INNER JOIN VWCONTP1TOTALPAY on tblp1Anketa.ContCode=VWCONTP1TOTALPAY.ContCode"
                 ." INNER JOIN vwDiscountTotal on tblp1Anketa.ContCode=vwDiscountTotal.ContCode"
                 ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND FrContDate<?"
                 ." AND frContPac IN ('pac24','pac33','pac38','pac39','pac40','pac57') ORDER BY ClFIO ";
