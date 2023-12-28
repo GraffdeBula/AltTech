@@ -132,7 +132,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }
         
         //БЛОК 2
-        $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/AltTech/templates/Отчёт ЭПЭ.docx");
+        $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ.docx");
         
         //БЛОК 3
         //заполнение шапки отчёта и первого абзаца
@@ -311,7 +311,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Act->setValue('CONTSUMSTR',(new PrintFunctions())->SumToStr($Cont->getFront()->FREXPSUM));
         //БЛОК 4
         $FileName="Отчёт ЭПЭ {$Client->getClRec()->CLFIO}";
-        $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/AltTech/documents/{$FileName}.docx");
+        $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/documents/{$FileName}.docx");
         
         header("Location: documents/{$FileName}.docx");
     }

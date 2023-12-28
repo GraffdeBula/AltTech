@@ -3,7 +3,7 @@
 class db2{
     //имя и путь к БД
     //имя подключения к рабочей базе
-    const DB_NAME='firebird:dbname=192.168.154.252:client2';       
+           
     //логин и пароль к БД
     protected $dblogin;
     protected $dbpass;
@@ -13,8 +13,8 @@ class db2{
 
     private function __construct(){ //закрываем конструктор для доступа снаружи
         $this->dblogin='dbadmin';
-        $this->dbpass='dev$%2501';
-        $this->conn = new \PDO(self::DB_NAME, $this->dblogin, $this->dbpass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+        $this->dbpass='dev$%2501';       
+        $this->conn = new \PDO(DB_NAME_MAIN, $this->dblogin, $this->dbpass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 
     public function getInstance($login='',$pass=''){ //метод создания экземпляра класса		       
@@ -27,7 +27,7 @@ class db2{
 
     public function getConnection(){ //метод создания подключения к БД (как свойства объекта БД)		
         try{
-            $conn = new \PDO(self::DB_NAME, $this->dblogin, $this->dbpass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+            $conn = new \PDO(DB_NAME_MAIN, $this->dblogin, $this->dbpass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
             return $conn;
         } catch (\PDOException $e) {
             echo $e->getMessage();

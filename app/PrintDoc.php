@@ -50,11 +50,11 @@ class PrintDoc{
     }
             
     protected function GetTemplate(){                            
-        $this->DocObj=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/AltTech/templates/{$this->TemplName}.docx");
+        $this->DocObj=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/{$this->TemplName}.docx");
     }
     
     public function SaveDoc(){//сохраняет документ с переданными именем
-        $this->DocObj->saveAs("{$_SERVER['DOCUMENT_ROOT']}/AltTech/documents/{$this->DocName}.docx");
+        $this->DocObj->saveAs("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/documents/{$this->DocName}.docx");
     }
     
     protected function GetBookmarkTable(){

@@ -29,7 +29,7 @@ class ATClientFileCtrl extends ControllerMain {
     
     public function actionContP1Create(){
         $Model=new ATP1ContMod();
-        $Model->InsP1Anketa($_GET['ClCode'],$_SESSION['EmBranch'],$_SESSION['EmName']);
+        $Model->InsP1Anketa($_GET['ClCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],$_GET['AkLeadId']);
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     
