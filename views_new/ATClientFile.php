@@ -42,7 +42,7 @@
                 <input type='hidden' name='controller' value='ATClientFileCtrl'><br>
                 <input type='hidden' name='action' value='ContP1Create'><br>
                 <input type='hidden' name='ClCode' value='<?php echo($Client->CLCODE);?>'><br>
-                <label>ID сделки (amoCRM)</label><input type='text' required maxlength='12' class='MyID'><br>
+                <label>ID сделки (amoCRM)</label><input type='number' required maxlength='12' class='MyID' name='AkLeadId'><br>
                 <button type='submit' class='btn btn-warning newContBtn'>Добавить договор БФЛ</button><br>
             </form>
             <?php
@@ -67,7 +67,7 @@
                 <input type='hidden' name='controller' value='ATClientFileCtrl'><br>
                 <input type='hidden' name='action' value='ContP4Create'><br>
                 <input type='hidden' name='ClCode' value='<?php echo($Client->CLCODE);?>'><br>
-                <label>ID сделки (amoCRM)</label><input type='text' maxlength='10' class='MyIDP4'><br>
+                <label>ID сделки (amoCRM)</label><input type='text' maxlength='10' class='MyIDP4' name='AkLeadId'><br>
                 <button type='submit' class='btn btn-warning newContBtnP4'>Добавить разовый договор</button><br>        
             </form>
             <?php  

@@ -3,15 +3,14 @@
 abstract class ControllerMain {
     protected $action; //название метода (action) который выполняет контроллер
     protected $defaultAction='index';
-    protected $templateRoot='AltTech/views_new';
+    protected $templateRoot=WORK_FOLDER.'/views_new';
     protected $useLayout=true; //по умолчанию всё с лэйаутом
     protected $userLayout='layouts/MainLayout'; // по умолчанию обычный лэйаут
     protected $ViewName='NewView';
     
     //основной метод для каждого контроллера
     public function run() {
-        //проверяем авторизацию, если её нет. то перекидываем на авторизацию. если есть - вытаскиваем имя пользователя
-        
+        //проверяем авторизацию, если её нет. то перекидываем на авторизацию. если есть - вытаскиваем имя пользователя        
         //запускаем нужный экшн
         //проверяем передан ли экшн
         //если не передан, то передаём дефолт экшн

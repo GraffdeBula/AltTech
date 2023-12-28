@@ -40,9 +40,9 @@ class ATP1ContMod extends Model{
         return $this->Data=db2::getInstance()->FetchOne("SELECT * FROM vwP1ContList WHERE contCode='{$ContCode}';");        
     }
     
-    public function InsP1Anketa($ClCode,$Branch,$Emp){
-        $Sql="INSERT INTO tblP1Anketa (ClCode,AkBranch,lgEmp) VALUES (?,?,?)";
-        $Params=[$ClCode,$Branch,$Emp];
+    public function InsP1Anketa($ClCode,$Branch,$Emp,$AkLeadId){
+        $Sql="INSERT INTO tblP1Anketa (ClCode,AkBranch,lgEmp,akLeadId) VALUES (?,?,?,?)";
+        $Params=[$ClCode,$Branch,$Emp,$AkLeadId];
         db2::getInstance()->Query($Sql,$Params); 
     }
     

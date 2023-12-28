@@ -12,7 +12,7 @@ include_once "{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/app/autoloader.php";
 spl_autoload_register([new autoloader(), 'getClass']);
 
 //подключение composer
-require_once "{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/vendor/autoload.php";
+require_once "{$_SERVER['DOCUMENT_ROOT']}/AltTech/vendor/autoload.php";
 
 //запуск обработчика ошибок WHOOPS
 $whoops = new \Whoops\Run;
