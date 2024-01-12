@@ -200,9 +200,9 @@ class report1_ctrl extends Controller{
         foreach ($this->repBranch as $reprow){
             $sheet->setCellValueByColumnAndRow(0,$i,$reprow->CONTCODE);
             $sheet->setCellValueByColumnAndRow(1,$i,$reprow->CLIENT);
-            $sheet->setCellValueByColumnAndRow(2,$i,$reprow->PKODAT);
-            $sheet->setCellValueByColumnAndRow(3,$i,$reprow->PKOSUM);
-            $sheet->setCellValueByColumnAndRow(4,$i,$reprow->PKOBRANCH);
+            $sheet->setCellValueByColumnAndRow(2,$i,$reprow->PAYDATE);
+            $sheet->setCellValueByColumnAndRow(3,$i,$reprow->PAYSUM);
+            $sheet->setCellValueByColumnAndRow(4,$i,$reprow->PAYBRANCH);
             $i++;
         }
         //create file name  
