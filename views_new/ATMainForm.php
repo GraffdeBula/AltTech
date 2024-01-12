@@ -36,6 +36,12 @@
         if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
             echo("
             <li class='nav-item'>
+              <a class='nav-link' data-bs-toggle='tab' href='#amo'>AmoCRM</a>
+            </li>");
+        }
+        if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
+            echo("
+            <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#lists'>Справочники</a>
             </li>");
         }
@@ -189,6 +195,9 @@
                     echo("<br>");
                 }                    
             ?>
+        </div>
+        <div class="tab-pane fade" id="amo"> 
+            <a target="_blank" href="index_admin.php?controller=AmoCtrl"><button class='btn btn-info'>ОТКРЫТЬ ФОРМУ АМО</button></a>
         </div>
         <div class="tab-pane fade" id="lists">
             <div class="row">

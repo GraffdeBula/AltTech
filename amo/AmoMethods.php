@@ -11,6 +11,16 @@ class AmoMethods {
     protected $AmoData=[];
     protected $AmoMethod='PATCH';
     
+    public function getAccount(){
+        echo('getaccount');
+        $Amo=new AmoRequests();
+        
+        $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/private/api/v2/json/accounts/current");        
+        $Amo->setVar('AmoMethod','GET');        
+        
+        return $Amo->request();
+    }
+    
     public function getLeadById($LeadId){
         $Amo=new AmoRequests();
         
@@ -58,7 +68,16 @@ class AmoMethods {
     public function getPipeLineList(){
         $Amo=new AmoRequests();
         $Amo->setVar('AmoLink', 'https://fpcalternative.amocrm.ru/api/v4/leads/pipelines');
-        $Amo->setVar('AmoHeader', array('Content-Type: application/json'));
+        $Amo->setVar('AmoHeader', array('Content-Type: application/json'));        
+        $Amo->setVar('AmoMethod', 'GET');
+        $Amo->setVar('AmoData', []);
+        return $Amo->request();
+    }
+    
+    public function getLeadList(){
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink', 'https://fpcalternative.amocrm.ru/api/v4/leads?limit=10&order[created_at]=desc');
+        #$Amo->setVar('AmoHeader', array('Content-Type: application/json'));
         $Amo->setVar('AmoMethod', 'GET');
         $Amo->setVar('AmoData', []);
         return $Amo->request();
