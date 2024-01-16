@@ -29,9 +29,9 @@
                     echo("<tr>");
                     echo("<td>{$client->CONTCODE}</td>");
                     echo("<td>{$client->CLIENT}</td>");
-                    echo("<td>{$client->PKODAT}</td>");
-                    echo("<td>{$client->PKOSUM}</td>");
-                    echo("<td>{$client->PKOBRANCH}</td>");
+                    echo("<td>{$client->PAYDATE}</td>");
+                    echo("<td>{$client->PAYSUM}</td>");
+                    echo("<td>{$client->PAYBRANCH}</td>");
                     echo("</tr>");
                 }
                 ?>

@@ -12,7 +12,7 @@
  * @author Andrey
  */
 class logger {
-    const FILE_PATH='/AltTech/log/';
+    const FILE_PATH='/'.WORK_FOLDER.'/log/';
     protected $FileName;    
 
     public function __construct($LogType=''){

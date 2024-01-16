@@ -33,8 +33,7 @@
                     echo("<option value='{$Branch->BRNAME}'>{$Branch->BRNAME}</option>");
                 }                
                 echo("</select>");
-                if ((in_array($_SESSION['EmName'],['Галина Новоселова','Никита Прокопьев','Тамара Лунева','Илья Ковтун']))
-                    OR(in_array($_SESSION['EmRole'],['top','admin'])))
+                if (in_array($_SESSION['EmRole'],['top','admin','direcror']))
                 {
                     echo("<button class='btn btn-warning'>Сменить</button>");
                 }

@@ -8,7 +8,7 @@ class AmoRequests{
     protected $AmoLink='';
     protected $AmoHeader=false;
     protected $AmoData=[];
-    protected $AmoMethod='PATCH';
+    protected $AmoMethod='GET';
     protected $User='';
     
     public function __construct() {
@@ -16,7 +16,7 @@ class AmoRequests{
             'USER_LOGIN'=>'adbulavskiy@gmail.com',
             'USER_HASH'=>'b37b351af8831e36a345926b8c2bb6fdd1d60ab7'
         );
-        $this->amoAuth();
+        #$this->amoAuth();
     }
     
     public function setVar($Name,$Value){
@@ -44,11 +44,13 @@ class AmoRequests{
         $Code=curl_getinfo($Curl,CURLINFO_HTTP_CODE);
         //Завершаем сеанс cURL
         curl_close($Curl);
-        $Response=json_decode($Out,true);        
+        $Response=json_decode($Out,true);            
         return $Response;
     }
     
     public function request(){
+        $this->amoAuth();
+        
         $Curl=curl_init(); #Сохраняем дескриптор сеанса cURL
         //Устанавливаем необходимые опции для сеанса cURL
         curl_setopt($Curl,CURLOPT_RETURNTRANSFER,true);
