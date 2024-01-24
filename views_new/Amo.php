@@ -18,8 +18,9 @@
     <input type="date" name="datef">
     <input type="date" name="datel">
     <button class='btn btn-primary btn-sm'>Получить список лидов</button><br>
-    </form>    
     
+    </form>    
+    <a target="_blank" href='downloads/Leads.xlsx'><button class='btn btn-success btn-sm'>Загрузить список лидов</button></a>
     <form>
         <?php
             (new MyForm('AmoCtrl','GetLead',0,0))->AddForm2();

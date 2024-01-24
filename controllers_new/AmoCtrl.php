@@ -51,8 +51,35 @@ class AmoCtrl extends ControllerMain{
         $strParam0='https://fpcalternative.amocrm.ru/api/v2/leads/';
         $strParam=$strParam0.'?limit_rows=500&&limit_offset=1&filter[date_create][from]='.$dtf.'&filter[date_create][to]='.$dtl; 
         
-        $this->AmoResult=(new AmoMethods())->getLeadList($strParam);        
+        $this->AmoResult=(new AmoMethods())->getLeadList($strParam);  
+        $this->ResToExcel($this->AmoResult, 'Leads.xlsx');
         $this->actionIndex();
         
-    }        
+    } 
+    
+    public function ResToExcel($Leads,$File){
+        $xls = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $xls->setActiveSheetIndex(0);
+        $sheet = $xls->getActiveSheet();
+        $sheet->setTitle('Сделки из амо');
+        $sheet->setCellValue("A1", "Сделки из амо");
+        $sheet->setCellValue("A2", "ID");
+        $sheet->setCellValue("B2", "дата создания");
+        $sheet->setCellValue("C2", "статус");
+        $sheet->setCellValue("D2", "воронка");
+     
+        $i=3;
+        foreach ($Leads as $reprow){
+            $sheet->setCellValueByColumnAndRow(1,$i,$reprow['id']);
+            $sheet->setCellValueByColumnAndRow(2,$i,$reprow['created_at']);
+            $sheet->setCellValueByColumnAndRow(3,$i,$reprow['status_id']);
+            $sheet->setCellValueByColumnAndRow(4,$i,$reprow['pipeline_id']);           
+            $i++;
+        }
+        //create file name  
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/downloads/{$File}.xlsx";
+        //вывод в файл и сохранение
+        $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xls);
+        $objWriter->save($FileName);
+    }
 }
