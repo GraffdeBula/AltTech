@@ -13,19 +13,34 @@
     <h1>AMO</h1>
     <form method='get'>
         <?php
-            (new MyForm('AmoCtrl','GetList',0,0))->AddForm2();
+            (new MyForm('AmoCtrl','GetLeadList',0,0))->AddForm2();
         ?>
-    <input type="date" name="datefirst">
-    <input type="date" name="datelast">
-    <button class='btn btn-secondary btn-sm'>ЗАГРУЗИТЬ СПИСОК</button><br>
+    <input type="date" name="datef">
+    <input type="date" name="datel">
+    <button class='btn btn-primary btn-sm'>Получить список лидов</button><br>
+    </form>    
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','GetLead',0,0))->AddForm2();
+        ?>
+        <input type="text" name="leadid">    
+        <button class='btn btn-success btn-sm'>Получить лид</button><br>
     </form>
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','GetContact',0,0))->AddForm2();
+        ?>
+        <input type="text" name="contactid">    
+        <button class='btn btn-info btn-sm'>Получить контакт</button><br>
+    </form>
+       
     <?php
-        if(isset($LeadList)){
-            var_dump($LeadList);
-            foreach($LeadList as $key=>$Lead){
-                var_dump($Lead);
-                echo("<br>============<br>");
-            }
+        foreach($AmoResult as $key=>$value){
+            echo($key." :: ");
+            var_dump($value);        
+            echo("<br>");
         }
     ?>
 </body>   

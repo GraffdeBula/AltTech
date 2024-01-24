@@ -9,7 +9,8 @@ class AmoStatusMod {
     
     //получение списка воронок
     public function getPipelineList(){
-        $Amo=new AmoTools0();
+        (new logger('log_amo'))->logToFile('AmoStatusMod: getPipelineList');
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads/pipelines');
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request();
@@ -17,7 +18,7 @@ class AmoStatusMod {
     
     //получение списка статусов в воронке (по ID)
     public function getStatusList($PipelineId){
-        $Amo=new AmoTools0();
+        $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru//api/v4/leads/pipelines/{$PipelineId}/statuses");
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request();
