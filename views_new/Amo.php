@@ -44,6 +44,14 @@
         <input type="text" name="contactid">    
         <button class='btn btn-warning btn-sm'>Получить список воронок</button><br>
     </form>
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','StrToLower',0,0))->AddForm2();
+        ?>
+        <input type="text" name="mystring">    
+        <button class='btn btn-warning btn-sm'>StrToLower</button><br>
+    </form>
        
     <?php
         foreach($AmoResult as $key=>$value){
