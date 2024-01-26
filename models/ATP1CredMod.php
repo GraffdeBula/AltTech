@@ -43,10 +43,19 @@ class ATP1CredMod extends Model{
     
     public function CopyP1Credit($CrCode){
         $Sql="INSERT INTO tblP1Credits (ContCode,LgEmp,
+            CrBankContName,CrBankContInn,CrBankContType,CrBankCurName,CrBankCurInn,CrBankCurType,
+            CrProg,CrContNum,CrOpenDat,CrPeriod,CrSum,CrSumRest,CrSumRestMain,CrPayDay,CrPaySum,CrRate,
+            CrPayLastDat,CrPayLastSum,CrCardLimitSum,CrCardUsedSum,CrCardMinPay,CrDelayYN,
+            CrSumOverdue,CrSumFine,CrPaysNum,
             CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
             CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
             CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName) 
-            SELECT ContCode,LgEmp,CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
+            SELECT ContCode,LgEmp,
+            CrBankContName,CrBankContInn,CrBankContType,CrBankCurName,CrBankCurInn,CrBankCurType,
+            CrProg,CrContNum,CrOpenDat,CrPeriod,CrSum,CrSumRest,CrSumRestMain,CrPayDay,CrPaySum,CrRate,
+            CrPayLastDat,CrPayLastSum,CrCardLimitSum,CrCardUsedSum,CrCardMinPay,CrDelayYN,
+            CrSumOverdue,CrSumFine,CrPaysNum,
+            CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
             CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
             CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName
             FROM tblP1Credits WHERE CrCode=?";
