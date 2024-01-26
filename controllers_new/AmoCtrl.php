@@ -19,8 +19,11 @@ class AmoCtrl extends ControllerMain{
     }
     
     public function actionGetPipelineList(){
-        $Model=new AmoMethods();
-        $this->AmoResult=$Model->getPipelineList();
+        $Model=new AmoMethods();        
+        $Result=$Model->getPipelineList();
+        foreach ($Result as $key=>$Pipeline){
+            $this->AmoResult[$Pipeline['id']]=$Pipeline['name'];
+        }
         $this->actionIndex();        
     }
     
@@ -34,6 +37,12 @@ class AmoCtrl extends ControllerMain{
     public function actionGetContact(){
         $Model=new AmoMethods();
         $this->AmoResult=$Model->getContact($_GET['contactid']);
+        $this->actionIndex();
+    }
+    
+    public function actionGetContactList(){
+        $Model=new AmoMethods();
+        $this->AmoResult=$Model->getContactList($_GET['contactid']);
         $this->actionIndex();
     }
         
@@ -52,7 +61,7 @@ class AmoCtrl extends ControllerMain{
         $strParam=$strParam0.'?limit_rows=500&&limit_offset=1&filter[date_create][from]='.$dtf.'&filter[date_create][to]='.$dtl; 
         
         $this->AmoResult=(new AmoMethods())->getLeadList($strParam);  
-        $this->ResToExcel($this->AmoResult, 'Leads.xlsx');
+        $this->ResToExcel($this->AmoResult, 'Leads');
         $this->actionIndex();
         
     } 
@@ -71,13 +80,13 @@ class AmoCtrl extends ControllerMain{
         $i=3;
         foreach ($Leads as $reprow){
             $sheet->setCellValueByColumnAndRow(1,$i,$reprow['id']);
-            $sheet->setCellValueByColumnAndRow(2,$i,$reprow['created_at']);
+            $sheet->setCellValueByColumnAndRow(2,$i,date('d.m.Y',$reprow['created_at']));
             $sheet->setCellValueByColumnAndRow(3,$i,$reprow['status_id']);
             $sheet->setCellValueByColumnAndRow(4,$i,$reprow['pipeline_id']);           
             $i++;
         }
         //create file name  
-        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/downloads/{$File}.xlsx";
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/downloads/{$File}.xlsx";
         //вывод в файл и сохранение
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xls);
         $objWriter->save($FileName);

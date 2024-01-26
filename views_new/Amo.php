@@ -20,7 +20,7 @@
     <button class='btn btn-primary btn-sm'>Получить список лидов</button><br>
     
     </form>    
-    <a target="_blank" href='downloads/Leads.xlsx'><button class='btn btn-success btn-sm'>Загрузить список лидов</button></a>
+    <a target="_blank" href='downloads/Leads.xlsx'><button class='btn btn-success btn-sm'>Загрузить список лидов</button></a><br>
     <form>
         <?php
             (new MyForm('AmoCtrl','GetLead',0,0))->AddForm2();
@@ -35,6 +35,14 @@
         ?>
         <input type="text" name="contactid">    
         <button class='btn btn-info btn-sm'>Получить контакт</button><br>
+    </form>
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','GetPipelineList',0,0))->AddForm2();
+        ?>
+        <input type="text" name="contactid">    
+        <button class='btn btn-warning btn-sm'>Получить список воронок</button><br>
     </form>
        
     <?php

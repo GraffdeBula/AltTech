@@ -17,7 +17,7 @@ class AmoMethods {
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadId}");
         $Amo->setVar('AmoHeader',false);
         $Amo->setVar('AmoMethod','GET');
-        return $Amo->request();        
+        return $Amo->request()['_embedded']['items'][0];        
     }
     
     public function getPipelineList(){
@@ -25,7 +25,7 @@ class AmoMethods {
         $Amo=new AmoRequests();
         $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads/pipelines');
         $Amo->setVar('AmoMethod','GET');
-        return $Amo->request();
+        return $Amo->request()['_embedded']['pipelines'];
     }
     
     public function getLeadList($strParam){
@@ -43,6 +43,15 @@ class AmoMethods {
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/contacts/?id={$ContId}");
         $Amo->setVar('AmoHeader',false);
         $Amo->setVar('AmoMethod','GET');
-        return $Amo->request();
+        return $Amo->request()['_embedded']['items'][0];
+    }
+    
+    public function getContactList($ContId){
+        (new logger('log_amo'))->logToFile('AmoMethods: getContactList');
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink',"");
+        $Amo->setVar('AmoHeader',false);
+        $Amo->setVar('AmoMethod','GET');
+        return $Amo->request()['_embedded']['items'][0];
     }
 }

@@ -113,7 +113,8 @@
                                         <option value='автокредит'>автокредит</option>                              
                                         <option value='поручительство'>поручительство</option>                              
                                         <option value='расписка'>расписка</option>                              
-                                        <option value='рефинансирование'>рефинансирование</option>                              
+                                        <option value='рефинансирование'>рефинансирование</option>
+                                        <option value='другое'>другое</option>
                                     </select>
                                     <label>Сумма</label><input type='text' name='CRSUM' value='{$Cred->CRSUM}' autocomplete='off'>");
                                     if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
@@ -158,11 +159,9 @@
                                     <div class='col-lg-5'>
                                         
                                     </div>                                
-                                    <div class='col-lg-2'>");                                            
-                                    if (((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1AnketaCtrl','DelCred')) or ($_SESSION['EmName']=='Максим Малиновский')){    
+                                    <div class='col-lg-2'>");                                             
                                         echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=DelCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
-                                            <button class='btn btn-danger'>Удалить</button></a>");
-                                    }
+                                            <button class='btn btn-danger'>Удалить</button></a>");             
                                 echo("</div>                                    
                                 </div>
                             </div><!--основная инф по кредиту-->
