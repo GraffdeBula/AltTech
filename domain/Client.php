@@ -31,16 +31,27 @@ class Client {
                 ", ".$this->ClRec->CLADRRDIST.
                 ", ".$this->ClRec->CLADRRCITY.
                 ", ул.".$this->ClRec->CLADRRSTR.
-                " д.".$this->ClRec->CLADRRHOUSE.
-                " кв.".$this->ClRec->CLADRRAPP;
+                " д.".$this->ClRec->CLADRRHOUSE;
+        if($this->ClRec->CLADRRCORP!=''){
+            $this->Adr->CLADRREG." корп.".$this->ClRec->CLADRRHOUSE;
+        }
+        if($this->ClRec->CLADRRAPP!=''){
+            $this->Adr->CLADRREG." кв.".$this->ClRec->CLADRRAPP;
+        }
         
         $this->Adr->CLADRFACT=$this->ClRec->CLADRFZIP.
                 ", ".$this->ClRec->CLADRFREG.
                 ", ".$this->ClRec->CLADRFDIST.
                 ", ".$this->ClRec->CLADRFCITY.
                 ", ул.".$this->ClRec->CLADRFSTR.
-                " д.".$this->ClRec->CLADRFHOUSE.
-                " кв.".$this->ClRec->CLADRFAPP;
+                " д.".$this->ClRec->CLADRFHOUSE;
+        if($this->ClRec->CLADRFCORP!=''){
+            $this->Adr->CLADRFACT." корп.".$this->ClRec->CLADRFHOUSE;
+        }
+        if($this->ClRec->CLADRFAPP!=''){
+            $this->Adr->CLADRFACT." кв.".$this->ClRec->CLADRFAPP;
+        }
+        
         $this->Pasport=(new ATClientMod())->getDocument($ClCode,'паспорт');
         $this->Penscard=(new ATClientMod())->getDocument($ClCode,'СНИЛС');
         $this->INN=(new ATClientMod())->getDocument($ClCode,'ИНН');
