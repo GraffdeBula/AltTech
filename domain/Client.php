@@ -32,12 +32,12 @@ class Client {
                 ", ".$this->ClRec->CLADRRCITY.
                 ", ул.".$this->ClRec->CLADRRSTR.
                 " д.".$this->ClRec->CLADRRHOUSE;
-        if($this->ClRec->CLADRRCORP!=''){
-            $this->Adr->CLADRREG." корп.".$this->ClRec->CLADRRHOUSE;
-        }
-        if($this->ClRec->CLADRRAPP!=''){
-            $this->Adr->CLADRREG." кв.".$this->ClRec->CLADRRAPP;
-        }
+        #if($this->ClRec->CLADRRCORP!=''){
+            $this->Adr->CLADRREG=$this->Adr->CLADRREG." корп.".$this->ClRec->CLADRRCORP;
+        #}
+        #if($this->ClRec->CLADRRAPP!=''){
+            $this->Adr->CLADRREG=$this->Adr->CLADRREG." кв.".$this->ClRec->CLADRRAPP;
+        #}
         
         $this->Adr->CLADRFACT=$this->ClRec->CLADRFZIP.
                 ", ".$this->ClRec->CLADRFREG.
@@ -45,12 +45,12 @@ class Client {
                 ", ".$this->ClRec->CLADRFCITY.
                 ", ул.".$this->ClRec->CLADRFSTR.
                 " д.".$this->ClRec->CLADRFHOUSE;
-        if($this->ClRec->CLADRFCORP!=''){
-            $this->Adr->CLADRFACT." корп.".$this->ClRec->CLADRFHOUSE;
-        }
-        if($this->ClRec->CLADRFAPP!=''){
-            $this->Adr->CLADRFACT." кв.".$this->ClRec->CLADRFAPP;
-        }
+        #if($this->ClRec->CLADRFCORP!=''){
+            $this->Adr->CLADRFACT=$this->Adr->CLADRFACT." корп.".$this->ClRec->CLADRFCORP;
+        #}
+        #if($this->ClRec->CLADRFAPP!=''){
+            $this->Adr->CLADRFACT=$this->Adr->CLADRFACT." кв.".$this->ClRec->CLADRFAPP;
+        #}
         
         $this->Pasport=(new ATClientMod())->getDocument($ClCode,'паспорт');
         $this->Penscard=(new ATClientMod())->getDocument($ClCode,'СНИЛС');
