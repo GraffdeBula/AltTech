@@ -45,6 +45,13 @@ class AmoCtrl extends ControllerMain{
         $this->AmoResult=$Model->getContactList($_GET['contactid']);
         $this->actionIndex();
     }
+    
+    public function actionStrToLower(){
+        #$word=mb_convert_case($_GET['mystring'],MB_CASE_LOWER, "UTF-8");
+        $word=mb_convert_case($_GET['mystring'],MB_CASE_TITLE, "UTF-8");
+        $this->AmoResult=[0=>$word];
+        $this->actionIndex();
+    }
         
     public function actionGetLeadList(){
         $repdf=substr($_GET['datef'],8,2); //день начала периода

@@ -31,8 +31,11 @@ class ATMainFormCtrl extends ControllerMain {
     }
     /* поиск клиента
      */
-    public function actionClSearch(){
-        $this->Params=[ucfirst($_GET['ClFName']),ucfirst($_GET['Cl1Name']),ucfirst($_GET['Cl2Name']),$_GET['ClPasSer'],$_GET['ClPasNum']];
+    public function actionClSearch(){        
+        $FName=mb_convert_case($_GET['ClFName'],MB_CASE_TITLE, "UTF-8");        
+        $FirstName=mb_convert_case($_GET['Cl1Name'],MB_CASE_TITLE, "UTF-8");
+        $SecName=mb_convert_case($_GET['Cl2Name'],MB_CASE_TITLE, "UTF-8");
+        $this->Params=[$FName,$FirstName,$SecName,$_GET['ClPasSer'],$_GET['ClPasNum']];
         $this->LoadList();
         $this->GetEmpWorkData();
         $this->getDiscList();       

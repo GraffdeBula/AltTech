@@ -130,11 +130,11 @@ class Payment {
             $Cont=new ContP1($this->ContCode);
             $this->ContPr="Компенсация расходов Исполнителя за оплату депозита/госпошлины/публикаций и пр.";
         }
-        #if ($this->ProdCode==4){
-        #    $Cont=new ContP4($this->ContCode);
-        #}
-        #$this->ContPr="по договору №{$Cont->getFront()->CONTCODE} от {$Cont->getFront()->FRCONTDATE}";
-        
+        if ($this->ProdCode==4){
+            $Cont=new ContP4($this->ContCode);
+            $this->ContPr="по договору №{$Cont->getFront()->CONTCODE} от {$Cont->getFront()->FRCONTDATE}";
+        }
+                
         $this->ContClient=$Client->getClRec()->CLFNAME.' '.$Client->getClRec()->CL1NAME.' '.$Client->getClRec()->CL2NAME;
         $this->PayCode=$LastPay->PAYCODE;
         $this->PaySum=$LastPay->PAYSUM;
@@ -163,7 +163,7 @@ class Payment {
     }
     
     protected function printPayment(){
-        $FileTemplate = \PhpOffice\PhpSpreadsheet\IOFactory::load("{$_SERVER['DOCUMENT_ROOT']}/AltTech/templates/Шаблон ПКО1.xlsx");
+        $FileTemplate = \PhpOffice\PhpSpreadsheet\IOFactory::load("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Шаблон ПКО1.xlsx");
         $sheet = $FileTemplate->getActiveSheet();        
         //ПКО
         $sheet->setCellValue("B6", $this->OrgName);
@@ -187,14 +187,14 @@ class Payment {
         $sheet->setCellValue("N37", $this->KassName);
         
         
-        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ID}.xlsx";
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/payments/{$this->ID}.xlsx";
         (new logger('_pay'))->logToFile($_SESSION['EmName']." printed PKO ".$FileName);
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);
     }
 
     protected function printReturn(){
-        $FileTemplate = \PhpOffice\PhpSpreadsheet\IOFactory::load("{$_SERVER['DOCUMENT_ROOT']}/AltTech/templates/Шаблон РКО1.xlsx");
+        $FileTemplate = \PhpOffice\PhpSpreadsheet\IOFactory::load("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Шаблон РКО1.xlsx");
         $sheet = $FileTemplate->getActiveSheet();        
         //РКО
         $sheet->setCellValue("A6", $this->OrgName);
@@ -208,7 +208,7 @@ class Payment {
         $sheet->setCellValue("AK27", $this->BuchName);
         $sheet->setCellValue("AG37", $this->KassName);
                       
-        $FileName="{$_SERVER['DOCUMENT_ROOT']}/AltTech/payments/{$this->ID}.xlsx";
+        $FileName="{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/payments/{$this->ID}.xlsx";
         (new logger('_pay'))->logToFile($_SESSION['EmName']." printed RKO ".$FileName);
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($FileTemplate);
         $objWriter->save($FileName);
