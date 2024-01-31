@@ -31,6 +31,22 @@
     
     <form>
         <?php
+            (new MyForm('AmoCtrl','GetCustomFields',0,0))->AddForm2();
+        ?>
+        <input type="text" name="leadid">    
+        <button class='btn btn-success btn-sm'>Получить custom fields лида</button><br>
+    </form>
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','GetTags',0,0))->AddForm2();
+        ?>
+        <input type="text" name="leadid">    
+        <button class='btn btn-success btn-sm'>Получить тэги лида</button><br>
+    </form>
+    
+    <form>
+        <?php
             (new MyForm('AmoCtrl','GetContact',0,0))->AddForm2();
         ?>
         <input type="text" name="contactid">    

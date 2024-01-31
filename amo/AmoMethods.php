@@ -16,8 +16,12 @@ class AmoMethods {
         $Amo=new AmoRequests();
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadId}");
         $Amo->setVar('AmoHeader',false);
-        $Amo->setVar('AmoMethod','GET');
-        return $Amo->request()['_embedded']['items'][0];        
+        $Amo->setVar('AmoMethod','GET');        
+        if (isset($Amo->request()['_embedded']['items'][0])){
+        return $Amo->request()['_embedded']['items'][0];
+        }else{
+            return [];
+        }
     }
     
     public function getPipelineList(){
@@ -43,7 +47,11 @@ class AmoMethods {
         $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/contacts/?id={$ContId}");
         $Amo->setVar('AmoHeader',false);
         $Amo->setVar('AmoMethod','GET');
-        return $Amo->request()['_embedded']['items'][0];
+        if (isset($Amo->request()['_embedded']['items'][0])){
+            return $Amo->request()['_embedded']['items'][0];
+        }else{
+            return [];
+        }
     }
     
     public function getContactList($ContId){
