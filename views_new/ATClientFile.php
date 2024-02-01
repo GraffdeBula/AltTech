@@ -21,8 +21,18 @@
         ?>        
                 
         <?php                
-            echo("ФИО Клиента:   {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</p><br>");
-            echo("<a target='_blank' href='index_admin.php?controller=ATClientAnketaCtrl&ClCode={$Client->CLCODE}'><button id='btn1' class='btn btn-success'>АНКЕТА КЛИЕНТА</button></a><br>");                                                               
+            echo("ФИО Клиента:   <b>{$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</b></p>");
+            echo("<p>Филиал обслужвания: <b>");
+            if(isset($ContP1List[0])){
+                echo($ContP1List[0]->FROFFICE);
+            }
+            if(isset($ContP1List[0])){
+                echo("</b>|       Персональный менеджер: <b>{$ContP1List[0]->FRPERSMANAGER}</b>");
+            }
+            echo("</p>");
+                        
+            echo("<a target='_blank' href='index_admin.php?controller=ATClientAnketaCtrl&ClCode={$Client->CLCODE}'><button id='btn1' class='btn btn-success'>АНКЕТА КЛИЕНТА</button></a><br>");
+            
         ?>
     </div>    
     <ul class="nav nav-tabs">
