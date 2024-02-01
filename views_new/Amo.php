@@ -17,7 +17,7 @@
         ?>
     <input type="date" name="datef">
     <input type="date" name="datel">
-    <button class='btn btn-primary btn-sm'>Получить список лидов</button><br>
+    <button class='btn btn-primary btn-sm' id='BtnGetList'>Получить список лидов</button><br>
     
     </form>    
     <a target="_blank" href='downloads/Leads.xlsx'><button class='btn btn-success btn-sm'>Загрузить список лидов</button></a><br>
@@ -27,6 +27,22 @@
         ?>
         <input type="text" name="leadid">    
         <button class='btn btn-success btn-sm'>Получить лид</button><br>
+    </form>
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','GetCustomFields',0,0))->AddForm2();
+        ?>
+        <input type="text" name="leadid">    
+        <button class='btn btn-success btn-sm'>Получить custom fields лида</button><br>
+    </form>
+    
+    <form>
+        <?php
+            (new MyForm('AmoCtrl','GetTags',0,0))->AddForm2();
+        ?>
+        <input type="text" name="leadid">    
+        <button class='btn btn-success btn-sm'>Получить тэги лида</button><br>
     </form>
     
     <form>
@@ -61,4 +77,13 @@
         }
     ?>
 </body>   
+<script>
+    var BtnGetList==document.getElementById('BtnGetList');
+    BtnGetList.addEventListener('click',function(){
+        event.preventDefault();
+        var req1= new XMLHttpRequest();
+            req1.open('GET','index_admin.php?controller=AmoCtrl&action=GetLeadList',true);
+            req1.send();
+    });
+</script>
 </html>

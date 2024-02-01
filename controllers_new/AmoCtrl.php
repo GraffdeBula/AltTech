@@ -6,6 +6,7 @@
  */
 class AmoCtrl extends ControllerMain{
     public $LeadList=[];
+    public $Pipelines=[];
     public $AmoResult=[];
     
     public function actionIndex(){
@@ -34,6 +35,20 @@ class AmoCtrl extends ControllerMain{
         $this->actionIndex();
     }
     
+    public function actionGetCustomFields(){
+        $Model=new AmoMethods();
+        $LeadId=$_GET['leadid'];
+        $this->AmoResult=$Model->getLeadById($LeadId)['custom_fields'];
+        $this->actionIndex();
+    }
+    
+    public function actionGetTags(){
+        $Model=new AmoMethods();
+        $LeadId=$_GET['leadid'];
+        $this->AmoResult=$Model->getLeadById($LeadId)['tags'];
+        $this->actionIndex();
+    }
+    
     public function actionGetContact(){
         $Model=new AmoMethods();
         $this->AmoResult=$Model->getContact($_GET['contactid']);
@@ -54,6 +69,8 @@ class AmoCtrl extends ControllerMain{
     }
         
     public function actionGetLeadList(){
+        $this->getPipelines(); //формируем массив воронок
+        
         $repdf=substr($_GET['datef'],8,2); //день начала периода
         $repmf=substr($_GET['datef'],5,2); //месяц начала периода
         $repyf=substr($_GET['datef'],0,4); //год начала периода
@@ -65,11 +82,23 @@ class AmoCtrl extends ControllerMain{
         $dtf=mktime(0,0,0,$repmf,$repdf,$repyf);
 	$dtl=mktime(23,59,59,$repml,$repdl,$repyl);
         $strParam0='https://fpcalternative.amocrm.ru/api/v2/leads/';
-        $strParam=$strParam0.'?limit_rows=500&&limit_offset=1&filter[date_create][from]='.$dtf.'&filter[date_create][to]='.$dtl; 
         
-        $this->AmoResult=(new AmoMethods())->getLeadList($strParam);  
+        $i=0;
+        $leadnum=500;
+        $this->LeadList=[];
+        while($leadnum==500){
+            $skip=$i*500;
+            $strParam=$strParam0.'?limit_rows=500&&limit_offset='.$skip.'&filter[date_create][from]='.$dtf.'&filter[date_create][to]='.$dtl;
+            $LeadPart=(new AmoMethods())->getLeadList($strParam);
+            $this->LeadList= array_merge($this->LeadList,$LeadPart);
+            $i++;
+            $leadnum=count($LeadPart);
+        }
+                         
+        $this->createLeadArr();
+        
         $this->ResToExcel($this->AmoResult, 'Leads');
-        $this->actionIndex();
+        #$this->actionIndex();
         
     } 
     
@@ -79,17 +108,25 @@ class AmoCtrl extends ControllerMain{
         $sheet = $xls->getActiveSheet();
         $sheet->setTitle('Сделки из амо');
         $sheet->setCellValue("A1", "Сделки из амо");
-        $sheet->setCellValue("A2", "ID");
-        $sheet->setCellValue("B2", "дата создания");
-        $sheet->setCellValue("C2", "статус");
-        $sheet->setCellValue("D2", "воронка");
+        $sheet->setCellValue("A2", "Дата");
+        $sheet->setCellValue("B2", "ID");
+        $sheet->setCellValue("C2", "Сделка");
+        $sheet->setCellValue("D2", "Клиент");
+        $sheet->setCellValue("E2", "Воронка");
+        $sheet->setCellValue("F2", "Источник");
+        $sheet->setCellValue("G2", "Филиал");
+        $sheet->setCellValue("H2", "Тип");
      
         $i=3;
         foreach ($Leads as $reprow){
-            $sheet->setCellValueByColumnAndRow(1,$i,$reprow['id']);
-            $sheet->setCellValueByColumnAndRow(2,$i,date('d.m.Y',$reprow['created_at']));
-            $sheet->setCellValueByColumnAndRow(3,$i,$reprow['status_id']);
-            $sheet->setCellValueByColumnAndRow(4,$i,$reprow['pipeline_id']);           
+            $sheet->setCellValueByColumnAndRow(1,$i,$reprow[0]);
+            $sheet->setCellValueByColumnAndRow(2,$i,$reprow[1]);
+            $sheet->setCellValueByColumnAndRow(3,$i,$reprow[2]);
+            $sheet->setCellValueByColumnAndRow(4,$i,$reprow[3]);           
+            $sheet->setCellValueByColumnAndRow(5,$i,$reprow[4]);
+            $sheet->setCellValueByColumnAndRow(6,$i,$reprow[5]);
+            $sheet->setCellValueByColumnAndRow(7,$i,$reprow[6]);
+            $sheet->setCellValueByColumnAndRow(8,$i,$reprow[7]);
             $i++;
         }
         //create file name  
@@ -98,4 +135,65 @@ class AmoCtrl extends ControllerMain{
         $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xls);
         $objWriter->save($FileName);
     }
+    
+    public function createLeadArr(){
+        $this->AmoResult=[];
+        foreach ($this->LeadList as $Ord=>$Lead){
+            if(in_array($Lead['pipeline_id'],[532060,4998399])){
+                continue;
+            }
+            $Model=new AmoMethods();
+            if(isset($Lead['main_contact']['id'])){
+                $Contact=$Model->getContact($Lead['main_contact']['id']);
+            }else{
+                $Contact=['id'=>0,'name'=>''];
+            }
+            $CustField=$this->getCustomFields($Lead);
+            $Type=$this->getTag($Lead);
+            $this->AmoResult[]=[
+                date('d.m.Y',$Lead['created_at']),
+                $Lead['id'],
+                $Lead['name'],
+                $Contact['name'],
+                $this->Pipelines[$Lead['pipeline_id']],
+                $CustField[0],
+                $CustField[1],
+                $Type,
+            ];                
+        }
+    }
+    
+    protected function getCustomFields($Lead){
+        $CustField=['',''];
+        $CustomFields=$Lead['custom_fields'];
+        foreach ($CustomFields as $Ord=>$Field){
+            if($Field['id']==1680596){
+                $CustField[0]=$Field['values'][0]['value'];
+            }
+            if($Field['id']==1672870){
+                $CustField[1]=$Field['values'][0]['value'];
+            }
+        }
+        
+        return $CustField;
+    }
+    
+    protected function getTag($Lead){
+        $Type='Заявка';
+        foreach($Lead['tags'] as $Ord=>$Tag){
+            if(in_array($Tag['name'], ['tg','wa','#VK','входящий звонок','пропущенный звонок'])){
+                $Type=$Tag['name'];
+            }
+        }
+        return $Type;
+    }
+    
+    protected function getPipelines(){
+        $this->Pipelines=[];
+        $Model=new AmoMethods();        
+        $Result=$Model->getPipelineList();
+        foreach ($Result as $key=>$Pipeline){
+            $this->Pipelines[$Pipeline['id']]=$Pipeline['name'];
+        }
+    } 
 }

@@ -98,8 +98,8 @@ class PaymentMod extends Model{
     
     public function getIncomeCompTotal($DateF,$DateL){
         $Sql="SELECT SUM(tbl5payments.paysum) as PaySum
-            FROM tbl5payments WHERE paydate BETWEEN ? AND ? AND PayType<?";
-        return db2::getInstance()->FetchOne($Sql,[$DateF,$DateL,5]); 
+            FROM tbl5payments WHERE paydate BETWEEN ? AND ? AND PayType in (1,2,3,4,5,7,8,9)";
+        return db2::getInstance()->FetchOne($Sql,[$DateF,$DateL]); 
     }
 
 

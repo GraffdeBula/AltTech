@@ -8,9 +8,11 @@
     <body>
         <div>
             <h5>Договоры Экспертизы</h5>                                              
+            <a href='downloads/NewExpRep.xlsx'><button class='btn btn-success'>В EXCEL</button></a>
             <table class='table table-hover'>
                 <thead>
                     <tr>                       
+                        <th scope='col'>Переход</th>
                         <th scope='col'>ClCode</th>
                         <th scope='col'>ContCode</th>
                         <th scope='col'>ФИО</th>
@@ -27,9 +29,10 @@
                     foreach ($Report as $Cont){
                         $ContDate=(new PrintFunctions())->DateToStr($Cont->FREXPDATE);
                         echo("<tr class='table-secondary'>");
-                        echo("<td>{$Cont->CLCODE}</td>");                              
+                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'><button class='btn btn-success'>В ДОСЬЕ</button></a></td>");
+                        echo("<td>{$Cont->CLCODE}</td>");
                         echo("<td>{$Cont->CONTCODE}</td>");
-                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'><button class='btn btn-secondary'>{$Cont->CLFIO}</button></a></td>");
+                        echo("<td>{$Cont->CLFIO}</td>");
                         echo("<td>{$Cont->FROFFICE}</td>");
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");
                         echo("<td>{$Cont->FREXPDATE}</td>");

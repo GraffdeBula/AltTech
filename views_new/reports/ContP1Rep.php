@@ -31,7 +31,7 @@
                         echo("<tr class='table-secondary'>");
                         echo("<td>{$Cont->CLCODE}</td>");                              
                         echo("<td>{$Cont->CONTCODE}</td>");
-                        echo("<td>{$Cont->CLFIO}</td>");
+                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'><button class='btn btn-secondary'>{$Cont->CLFIO}</button></a></td>");
                         echo("<td>{$Cont->FROFFICE}</td>");
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");
                         echo("<td>{$Cont->EXTOTDEBTSUM}</td>");
