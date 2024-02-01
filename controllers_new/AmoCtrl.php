@@ -82,13 +82,23 @@ class AmoCtrl extends ControllerMain{
         $dtf=mktime(0,0,0,$repmf,$repdf,$repyf);
 	$dtl=mktime(23,59,59,$repml,$repdl,$repyl);
         $strParam0='https://fpcalternative.amocrm.ru/api/v2/leads/';
-        $strParam=$strParam0.'?limit_rows=500&&limit_offset=1&filter[date_create][from]='.$dtf.'&filter[date_create][to]='.$dtl; 
         
-        $this->LeadList=(new AmoMethods())->getLeadList($strParam);
+        $i=0;
+        $leadnum=500;
+        $this->LeadList=[];
+        while($leadnum==500){
+            $skip=$i*500;
+            $strParam=$strParam0.'?limit_rows=500&&limit_offset='.$skip.'&filter[date_create][from]='.$dtf.'&filter[date_create][to]='.$dtl;
+            $LeadPart=(new AmoMethods())->getLeadList($strParam);
+            $this->LeadList= array_merge($this->LeadList,$LeadPart);
+            $i++;
+            $leadnum=count($LeadPart);
+        }
+                         
         $this->createLeadArr();
         
         $this->ResToExcel($this->AmoResult, 'Leads');
-        $this->actionIndex();
+        #$this->actionIndex();
         
     } 
     
@@ -98,10 +108,14 @@ class AmoCtrl extends ControllerMain{
         $sheet = $xls->getActiveSheet();
         $sheet->setTitle('Сделки из амо');
         $sheet->setCellValue("A1", "Сделки из амо");
-        $sheet->setCellValue("A2", "ID");
-        $sheet->setCellValue("B2", "дата создания");
-        $sheet->setCellValue("C2", "статус");
-        $sheet->setCellValue("D2", "воронка");
+        $sheet->setCellValue("A2", "Дата");
+        $sheet->setCellValue("B2", "ID");
+        $sheet->setCellValue("C2", "Сделка");
+        $sheet->setCellValue("D2", "Клиент");
+        $sheet->setCellValue("E2", "Воронка");
+        $sheet->setCellValue("F2", "Источник");
+        $sheet->setCellValue("G2", "Филиал");
+        $sheet->setCellValue("H2", "Тип");
      
         $i=3;
         foreach ($Leads as $reprow){
@@ -125,6 +139,9 @@ class AmoCtrl extends ControllerMain{
     public function createLeadArr(){
         $this->AmoResult=[];
         foreach ($this->LeadList as $Ord=>$Lead){
+            if(in_array($Lead['pipeline_id'],[532060,4998399])){
+                continue;
+            }
             $Model=new AmoMethods();
             if(isset($Lead['main_contact']['id'])){
                 $Contact=$Model->getContact($Lead['main_contact']['id']);
@@ -164,7 +181,7 @@ class AmoCtrl extends ControllerMain{
     protected function getTag($Lead){
         $Type='Заявка';
         foreach($Lead['tags'] as $Ord=>$Tag){
-            if(in_array($Tag['name'], ['tg','wa','#VK'])){
+            if(in_array($Tag['name'], ['tg','wa','#VK','входящий звонок','пропущенный звонок'])){
                 $Type=$Tag['name'];
             }
         }

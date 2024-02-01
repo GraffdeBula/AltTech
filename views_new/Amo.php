@@ -17,7 +17,7 @@
         ?>
     <input type="date" name="datef">
     <input type="date" name="datel">
-    <button class='btn btn-primary btn-sm'>Получить список лидов</button><br>
+    <button class='btn btn-primary btn-sm' id='BtnGetList'>Получить список лидов</button><br>
     
     </form>    
     <a target="_blank" href='downloads/Leads.xlsx'><button class='btn btn-success btn-sm'>Загрузить список лидов</button></a><br>
@@ -77,4 +77,13 @@
         }
     ?>
 </body>   
+<script>
+    var BtnGetList==document.getElementById('BtnGetList');
+    BtnGetList.addEventListener('click',function(){
+        event.preventDefault();
+        var req1= new XMLHttpRequest();
+            req1.open('GET','index_admin.php?controller=AmoCtrl&action=GetLeadList',true);
+            req1.send();
+    });
+</script>
 </html>
