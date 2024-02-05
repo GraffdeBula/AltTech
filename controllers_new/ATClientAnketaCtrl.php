@@ -175,6 +175,13 @@ class ATClientAnketaCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");   
     }
     
+    public function actionUpdIncome(){
+        $Model=new ATClientMod();
+        $Model->UpdIncome($_GET['ClCode'],$_GET['ClIncID'],$_GET['ClIncName'],$_GET['ClIncSum'],$_GET['ClIncSumOf'],$_GET['ClIncCardYN'],$_GET['ClIncBank'],$_GET['ClIncDeduct'],
+            $_GET['ClIncSumReal'],$_GET['ClIncComment'],$_GET['ClIncPensDate']);                
+        header("Location: index_admin.php?controller=ATClientAnketaCtrl&ClCode={$_GET['ClCode']}");   
+    }
+    
     public function actionDelIncome(){        
         $Model=new ATClientMod();
         $Model->DelIncome($_GET['ClCode'],$_GET['ClIncID']);        
