@@ -182,6 +182,12 @@ class ATClientMod extends Model{
         db2::getInstance()->Query($Sql,$Params);
     }
     
+    public function UpdIncome($ClCode=0,$ID=0,$ClIncName,$ClIncSum,$ClIncSumOf,$ClIncCardYN,$ClIncBank,$ClIncDeduct,$ClIncSumReal,$ClIncComment,$ClIncPensDate){        
+        $Sql="UPDATE tblClIncomes SET ClIncName=?,ClIncSum=?,ClIncSumOf=?,ClIncCardYN=?,ClIncBank=?,ClIncDeduct=?,ClIncSumReal=?,ClIncComment=?,ClIncPensDate=? WHERE ID=? AND ClCode=?";
+        $Params=[$ClIncName,$ClIncSum,$ClIncSumOf,$ClIncCardYN,$ClIncBank,$ClIncDeduct,$ClIncSumReal,$ClIncComment,$ClIncPensDate,$ID,$ClCode];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
     public function DelIncome($ClCode,$ID){
         $Sql="DELETE FROM tblClIncomes WHERE ClCode=? AND ID=?";
         $Params=[$ClCode,$ID];

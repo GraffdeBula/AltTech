@@ -466,8 +466,8 @@
                                     <th>Банк</th>
                                     <th>Дата назначения пенсии</th>
                                     <th>Комментарий</th>
-                                    <th>---</th>
-                                    <th>---</th>
+                                    <th>Изменить</th>
+                                    <th>Удалить</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -475,18 +475,21 @@
                                 foreach($ClIncomesList as $Income){                
                                     $IncomePensDate=(new PrintFunctions())->DateToStr($Income->CLINCPENSDATE);
                                     echo("<tr class='table-secondary'><form method='get'>");
+                                    (new MyForm('ATClientAnketaCtrl','UpdIncome',$_GET['ClCode'],0))->AddForm();      
+                                    echo("<input type='hidden' name='ClIncID' value='{$Income->ID}'>");
+                                    echo("<td><input type=text name='ClIncName' value='{$Income->CLINCNAME}'></td>");
+                                    echo("<td><input type=text name='ClIncSum' value='{$Income->CLINCSUM}'></td>");
+                                    echo("<td><input type=text name='ClIncSumOf' value='{$Income->CLINCSUMOF}'></td>");
+                                    echo("<td><input type=text name='ClIncDeduct' value='{$Income->CLINCDEDUCT}'></td>");
+                                    echo("<td><input type=text name='ClIncSumReal' value='{$Income->CLINCSUMREAL}'></td>");
+                                    echo("<td><input type=text name='ClIncCardYN' value='{$Income->CLINCCARDYN}'></td>");
+                                    echo("<td><input type=text name='ClIncBank' value='{$Income->CLINCBANK}'></td>");
+                                    echo("<td><input type=date name='ClIncPensDate' value='{$IncomePensDate}'></td>");
+                                    echo("<td><input type=text name='ClIncComment' value='{$Income->CLINCCOMMENT}'></td>");
+                                    echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td></form>");
+                                    echo("<form method='get'>");
                                     (new MyForm('ATClientAnketaCtrl','DelIncome',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClIncID' value='{$Income->ID}'>");
-                                    echo("<td>$Income->CLINCNAME</td>");
-                                    echo("<td>$Income->CLINCSUM</td>");
-                                    echo("<td>$Income->CLINCSUMOF</td>");
-                                    echo("<td>$Income->CLINCDEDUCT</td>");
-                                    echo("<td>$Income->CLINCSUMREAL</td>");
-                                    echo("<td>$Income->CLINCCARDYN</td>");
-                                    echo("<td>$Income->CLINCBANK</td>");
-                                    echo("<td>$IncomePensDate</td>");
-                                    echo("<td>$Income->CLINCCOMMENT</td>");
-                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
