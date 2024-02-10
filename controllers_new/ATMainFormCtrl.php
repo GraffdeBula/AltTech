@@ -14,9 +14,9 @@ class ATMainFormCtrl extends ControllerMain {
     
     
     public function actionIndex(){
-        $this->Params=[];
-        $this->LoadList();                
         $this->GetEmpWorkData();
+        $this->Params=[];
+        $this->LoadList();                        
         $this->getDiscList();       
         $this->getExpList();
         $this->ShowList();
@@ -31,13 +31,13 @@ class ATMainFormCtrl extends ControllerMain {
     }
     /* поиск клиента
      */
-    public function actionClSearch(){        
+    public function actionClSearch(){   
+        $this->GetEmpWorkData();
         $FName=mb_convert_case($_GET['ClFName'],MB_CASE_TITLE, "UTF-8");        
         $FirstName=mb_convert_case($_GET['Cl1Name'],MB_CASE_TITLE, "UTF-8");
         $SecName=mb_convert_case($_GET['Cl2Name'],MB_CASE_TITLE, "UTF-8");
         $this->Params=[$FName,$FirstName,$SecName,$_GET['ClPasSer'],$_GET['ClPasNum']];
-        $this->LoadList();
-        $this->GetEmpWorkData();
+        $this->LoadList();        
         $this->getDiscList();       
         $this->getExpList();
         $this->ShowList();
@@ -85,12 +85,23 @@ class ATMainFormCtrl extends ControllerMain {
      * получение списка клиентов
      */
     protected function LoadList(){
-        if ($this->Params==[]){
-            $Model=new ATClientMod();
-            $this->ClList=$Model->GetClientList();
-        } else {
-            $Model=new ATClientMod();
-            $this->ClList=$Model->SearchClient($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4]);
+        if (in_array($_SESSION['EmRole'],['admin','top','expert','director','jurist'])){
+            if ($this->Params==[]){
+                $Model=new ATClientMod();
+                $this->ClList=$Model->GetClientListAll();
+            } else {
+                $Model=new ATClientMod();
+                $this->ClList=$Model->SearchClientAll($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4]);
+            }
+        }
+        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front'])){
+            if ($this->Params==[]){
+                $Model=new ATClientMod();
+                $this->ClList=$Model->GetClientList($_SESSION['EmBranch']);
+            } else {
+                $Model=new ATClientMod();
+                $this->ClList=$Model->SearchClient($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4],$_SESSION['EmBranch']);
+            }
         }
     }
     
