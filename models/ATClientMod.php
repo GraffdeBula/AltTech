@@ -29,17 +29,52 @@ class ATClientMod extends Model{
         db2::getInstance()->Query($Sql,$Params);        
     }        
     
-    public function GetClientList(){
+    public function GetClientListAll(){
         $Sql="SELECT FIRST 50 tblClients.clCode AS CLCODE,clFName,cl1Name,cl2Name,clDocSer,clDocNum FROM tblClients INNER JOIN tblClDocuments ON tblClients.clCode=tblClDocuments.clCode "
                 . "WHERE clDocName=? ORDER BY tblClients.clCode DESC";
         $Params=['паспорт'];
         return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);
     }
     
-    public function SearchClient($ClFName,$Cl1Name,$Cl2Name,$ClPasS,$ClPasN){
+    public function GetClientList($ClBranch){
+        $Sql="SELECT FIRST 50 tblClients.clCode AS CLCODE,clFName,cl1Name,cl2Name,clDocSer,clDocNum FROM tblClients INNER JOIN tblClDocuments ON tblClients.clCode=tblClDocuments.clCode "
+                . "WHERE clDocName=? AND ClBranch=? ORDER BY tblClients.clCode DESC";
+        $Params=['паспорт',$ClBranch];
+        return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);
+    }
+    
+    public function SearchClientAll($ClFName,$Cl1Name,$Cl2Name,$ClPasS,$ClPasN){
         $Sql="SELECT FIRST 50 tblClients.clCode AS CLCODE,clFName,cl1Name,cl2Name,clDocSer,clDocNum FROM tblClients INNER JOIN tblClDocuments ON tblClients.clCode=tblClDocuments.clCode "
                 . "WHERE clDocName=?";
         $Params=['паспорт'];
+        if ($ClFName!=''){
+            $Sql=$Sql." AND clFName=?";
+            array_push($Params,$ClFName);
+        }
+        if ($Cl1Name!=''){
+            $Sql=$Sql." AND cl1Name=?";
+            array_push($Params,$Cl1Name);
+        }
+        if ($Cl2Name!=''){
+            $Sql=$Sql." AND cl2Name=?";
+            array_push($Params,$Cl2Name);
+        }
+        if ($ClPasS!=''){
+            $Sql=$Sql." AND clDocSer=?";
+            array_push($Params,$ClPasS);
+        }
+        if ($ClPasN!=''){
+            $Sql=$Sql." AND clDocNum=?";
+            array_push($Params,$ClPasN);
+        }
+        $Sql=$Sql." ORDER BY tblClients.clCode DESC";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);
+    }
+    
+    public function SearchClient($ClFName,$Cl1Name,$Cl2Name,$ClPasS,$ClPasN,$ClBranch){
+        $Sql="SELECT FIRST 50 tblClients.clCode AS CLCODE,clFName,cl1Name,cl2Name,clDocSer,clDocNum FROM tblClients INNER JOIN tblClDocuments ON tblClients.clCode=tblClDocuments.clCode "
+                . "WHERE clDocName=? AND ClBranch=?";
+        $Params=['паспорт',$ClBranch];
         if ($ClFName!=''){
             $Sql=$Sql." AND clFName=?";
             array_push($Params,$ClFName);

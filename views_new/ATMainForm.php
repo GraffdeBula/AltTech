@@ -7,26 +7,27 @@
 </head>
 <body>    
     <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" data-bs-toggle="tab" href="#home">Список клиентов</a>
-        </li>
-        <?php        
+        <?php 
+        echo("
+            <li class='nav-item'>
+              <a class='nav-link active' data-bs-toggle='tab' href='#home'>Список клиентов</a>
+            </li>");               
         echo("
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#refer'>Реферальная программа</a>
-            </li>");        
-        ?>
-        <?php        
+            </li>");   
+        if (in_array($_SESSION['EmRole'],['admin','top','director','expert',])){
         echo("
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>На экспертизе</a>
-            </li>");        
-        ?>
-        
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#reports">Отчёты</a>
-        </li>        
-        <?php
+            </li>");     
+        }
+        if (in_array($_SESSION['EmRole'],['admin','top','director','expert',])){
+        echo("
+            <li class='nav-item'>
+              <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
+            </li>"); 
+        }        
         if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
             echo("
             <li class='nav-item'>
