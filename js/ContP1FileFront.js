@@ -31,8 +31,9 @@ function getPayList(){
                 "<td>"+PaymentList[i].PAYDATE+"</td>"+
                 "<td>"+PaymentList[i].PAYSUM+"</td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+
+                "<td>"+PaymentList[i].PAYMETHOD+"</td>"+
                 "<td><a href='payments/"+PaymentList[i].ID+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
-                "<td><a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить_"+PaymentList[i].ID+"</button></a></td>"+
+                "<td><a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить "+PaymentList[i].ID+"</button></a></td>"+
                 "</tr>";
 
         }

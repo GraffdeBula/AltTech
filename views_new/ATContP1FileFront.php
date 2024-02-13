@@ -2,8 +2,7 @@
 /*
  * досье клиента
  *  */
-#var_dump($Tarif->getTarifList());
-#exit();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -325,6 +324,7 @@
             <div>
                 <p>Внесено по договору: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>
+                <p>Выдано из ОХ: <strong><?=$Payment->getTotalSum()['TotalDep2']->PAYSUM ?> руб.</strong><p>
             </div>
             <form method='get'>
                 <button class='btn btn-primary' id='AddPayBtn'>Принять платёж</button>
@@ -333,7 +333,7 @@
                 <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
                 <div class='col-10'>
                     <label>Сумма</label><input type='text' value='0' name='PAYSUM' required>
-                    <label>Дата</label><input type='date' name='PAYDATE' required>
+                    <label>Дата</label><input type='date' name='PAYDATE' value='<?=date('d.m.Y')?>' required>
                     <label>Тип</label><select name='PAYCONTTYPE'>
                         <?php
                         if ($Front->FRCONTTYPE==1){
@@ -374,6 +374,7 @@
                       <th scope="col">Дата</th>
                       <th scope="col">Сумма</th>
                       <th scope="col">Назначение платежа</th>
+                      <th scope="col">Способ платежа</th>
                       <th scope="col">Скачать</th>
                     </tr>
                 </thead>
