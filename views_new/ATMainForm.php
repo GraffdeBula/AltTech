@@ -22,7 +22,7 @@
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>На экспертизе</a>
             </li>");     
         }
-        if (in_array($_SESSION['EmRole'],['admin','top','director','expert',])){
+        if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front'])){
         echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
