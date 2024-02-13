@@ -162,7 +162,7 @@
                             <?php (new MyForm('ATContP1FileExpertCtrl','AddToJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
                             <div class="form-group">
                                 <label for="exampleTextarea" class="form-label mt-4">Причина согласования юристом</label>
-                                <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 160px;" name='EXCOMMENT' maxlength=250 ><?=$Expert->EXCOMMENT?></textarea>
+                                <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 160px;" name='EXCOMMENT' maxlength=500 ><?=$Expert->EXCOMMENT?></textarea>
                             </div>
                             <?php
                             if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
