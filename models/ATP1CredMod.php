@@ -52,8 +52,8 @@ class ATP1CredMod extends Model{
             CrCourtDesType,CrCourtDesDate,CrPledgeYN,CrPledge,CrCollAgYN,CrCollAgName) 
             SELECT ContCode,LgEmp,
             CrBankContName,CrBankContInn,CrBankContType,CrBankCurName,CrBankCurInn,CrBankCurType,
-            CrProg,CrContNum,CrOpenDat,CrPeriod,CrSum,CrSumRest,CrSumRestMain,CrPayDay,CrPaySum,CrRate,
-            CrPayLastDat,CrPayLastSum,CrCardLimitSum,CrCardUsedSum,CrCardMinPay,CrDelayYN,
+            CrProg,CrContNum,CrOpenDat,'',0,0,0,'',0,0,
+            null,0,CrCardLimitSum,CrCardUsedSum,CrCardMinPay,CrDelayYN,
             CrSumOverdue,CrSumFine,CrPaysNum,
             CrReason,CrReasonComment,CrContDocsYN,CrWarrantYN,CrWarrantName,
             CrCodeWord,CrWorkOrg,CrContWorkRealYN,CrIncomeDoc,CrIncomeOfSum,CrIncomeRealSum,
