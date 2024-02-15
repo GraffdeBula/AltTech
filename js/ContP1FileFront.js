@@ -25,7 +25,14 @@ function getPayList(){
         console.log(PaymentList);
         output='';
         for (var i in PaymentList ){
-
+            var MyDate=PaymentList[i].PAYDATE;
+            MyDate.toLocaleDateString('ru-RU', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+            console.log(MyDate);
+            
             output+="<tr class='table-active'>"+
                 "<td>"+PaymentList[i].PAYCODE+"</td>"+
                 "<td>"+PaymentList[i].PAYDATE+"</td>"+

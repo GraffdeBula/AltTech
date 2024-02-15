@@ -333,7 +333,7 @@
                 <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
                 <div class='col-10'>
                     <label>Сумма</label><input type='text' value='0' name='PAYSUM' required>
-                    <label>Дата</label><input type='date' name='PAYDATE' value='<?=date('d.m.Y')?>' required>
+                    <label>Дата</label><input type='date' name='PAYDATE' value='<?=date("Y-m-d")?>' required>
                     <label>Тип</label><select name='PAYCONTTYPE'>
                         <?php
                         if ($Front->FRCONTTYPE==1){
