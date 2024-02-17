@@ -145,6 +145,7 @@
                                 echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
                                 echo("<option value='Банкротство физлиц'>Банкротство физлиц</option>");
                                 echo("<option value='Внесудебное банкротство'>Внесудебное банкротство</option>");
+                                echo("<option value='Судебное банкротство (внесудебное не подходит)'>Судебное банкротство (внесудебное не подходит)</option>");
                                 echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
                                 echo("</select></p>");
                                 echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");

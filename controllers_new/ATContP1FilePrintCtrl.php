@@ -131,8 +131,20 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $Emp=new Employee($Cont->getFront()->FRPERSMANAGER);        
         }
         
-        //БЛОК 2
-        $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ.docx");
+        //БЛОК 2 выбор шаблона
+        $ExpRec=$Cont->getExpert()->EXPRODREC;
+        switch($ExpRec){
+            case "Банкротство физлиц":
+                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ.docx");
+                break;
+            case "Внесудебное банкротство":
+                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
+                break;
+            case "Судебное банкротство (внесудебное не подходит)":
+                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
+                break;
+        }
+        
         
         //БЛОК 3
         //заполнение шапки отчёта и первого абзаца
@@ -251,6 +263,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Act->setValue('CHILDNUM',$Client->getClRec()->CLCHILDNUM);
         $Act->setValue('CRIMINALRESP',$Client->getClRec()->CLCRIMINALRESPYN);
         $Act->setValue('ADMRESP',$Client->getClRec()->CLADMRESPYN);
+        $Act->setValue('INDENTRIN',$Client->getClRec()->CLINDENTRIN);
         //заполнение таблицы по прожиточному минимуму
         $Act->setValue('MININCAVG',$Cont->getMinIncList()['Avg']);
         $Act->setValue('MININCWORK',$Cont->getMinIncList()['Work']);
