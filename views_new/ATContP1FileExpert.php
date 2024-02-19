@@ -117,10 +117,7 @@
                                 <form method='get'>
                                     <?php
                                         (new MyForm('ATContP1FileExpertCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                        if (($_SESSION['EmRole']=='admin') 
-                                                or ($_SESSION['EmRole']=='director')
-                                                or ($_SESSION['EmName']=='Евгения Эрдман')
-                                                or ($_SESSION['EmRole']=='top')){                                    
+                                        if (in_array($_SESSION['EmRole'],['admin','director','franshdir','top'])){                                    
                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                         }
                                     ?>    
