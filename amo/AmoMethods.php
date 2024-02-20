@@ -62,4 +62,13 @@ class AmoMethods {
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request()['_embedded']['items'][0];
     }
+    
+    public function getUsers(){
+        (new logger('log_amo'))->logToFile('AmoMethods: getUsers');
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/users");
+        $Amo->setVar('AmoHeader',false);
+        $Amo->setVar('AmoMethod','GET');
+        return $Amo->request()['_embedded']['users'];
+    }
 }

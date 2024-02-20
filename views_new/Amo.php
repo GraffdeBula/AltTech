@@ -63,10 +63,10 @@
     
     <form>
         <?php
-            (new MyForm('AmoCtrl','StrToLower',0,0))->AddForm2();
+            (new MyForm('AmoCtrl','GetUser',0,0))->AddForm2();
         ?>
-        <input type="text" name="mystring">    
-        <button class='btn btn-warning btn-sm'>StrToLower</button><br>
+        <input type="text" name="userid">    
+        <button class='btn btn-success btn-sm'>Получить список пользователей</button><br>
     </form>
        
     <?php

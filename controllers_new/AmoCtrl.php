@@ -7,7 +7,9 @@
 class AmoCtrl extends ControllerMain{
     public $LeadList=[];
     public $Pipelines=[];
+    public $Users=[];
     public $AmoResult=[];
+    
     
     public function actionIndex(){
         $this->ViewName='Amo View';
@@ -61,15 +63,15 @@ class AmoCtrl extends ControllerMain{
         $this->actionIndex();
     }
     
-    public function actionStrToLower(){
-        #$word=mb_convert_case($_GET['mystring'],MB_CASE_LOWER, "UTF-8");
-        $word=mb_convert_case($_GET['mystring'],MB_CASE_TITLE, "UTF-8");
-        $this->AmoResult=[0=>$word];
+    public function actionGetUser(){
+        $Model=new AmoMethods();
+        $this->AmoResult=$Model->getUser();
         $this->actionIndex();
     }
-        
+            
     public function actionGetLeadList(){
         $this->getPipelines(); //формируем массив воронок
+        $this->getUsers();
         
         $repdf=substr($_GET['datef'],8,2); //день начала периода
         $repmf=substr($_GET['datef'],5,2); //месяц начала периода
@@ -98,7 +100,7 @@ class AmoCtrl extends ControllerMain{
         $this->createLeadArr();
         
         $this->ResToExcel($this->AmoResult, 'Leads');
-        #$this->actionIndex();
+        $this->actionIndex();
         
     } 
     
@@ -112,21 +114,19 @@ class AmoCtrl extends ControllerMain{
         $sheet->setCellValue("B2", "ID");
         $sheet->setCellValue("C2", "Сделка");
         $sheet->setCellValue("D2", "Клиент");
-        $sheet->setCellValue("E2", "Воронка");
-        $sheet->setCellValue("F2", "Источник");
-        $sheet->setCellValue("G2", "Филиал");
-        $sheet->setCellValue("H2", "Тип");
+        $sheet->setCellValue("E2", "Телефон");
+        $sheet->setCellValue("F2", "Воронка");
+        $sheet->setCellValue("G2", "Ответственный");
+        $sheet->setCellValue("H2", "Источник");
+        $sheet->setCellValue("I2", "Город");
+        $sheet->setCellValue("J2", "Тип");
      
         $i=3;
         foreach ($Leads as $reprow){
-            $sheet->setCellValueByColumnAndRow(1,$i,$reprow[0]);
-            $sheet->setCellValueByColumnAndRow(2,$i,$reprow[1]);
-            $sheet->setCellValueByColumnAndRow(3,$i,$reprow[2]);
-            $sheet->setCellValueByColumnAndRow(4,$i,$reprow[3]);           
-            $sheet->setCellValueByColumnAndRow(5,$i,$reprow[4]);
-            $sheet->setCellValueByColumnAndRow(6,$i,$reprow[5]);
-            $sheet->setCellValueByColumnAndRow(7,$i,$reprow[6]);
-            $sheet->setCellValueByColumnAndRow(8,$i,$reprow[7]);
+            $j=1;
+            foreach($reprow as $key=>$repfield){
+                $sheet->setCellValueByColumnAndRow($key+1,$i,$reprow[$key]);
+            }            
             $i++;
         }
         //create file name  
@@ -148,14 +148,17 @@ class AmoCtrl extends ControllerMain{
             }else{
                 $Contact=['id'=>0,'name'=>''];
             }
-            $CustField=$this->getCustomFields($Lead);
+            
+            $CustField=$this->getCustomFields($Lead,$Contact);
             $Type=$this->getTag($Lead);
             $this->AmoResult[]=[
                 date('d.m.Y',$Lead['created_at']),
                 $Lead['id'],
                 $Lead['name'],
                 $Contact['name'],
+                $CustField[2],
                 $this->Pipelines[$Lead['pipeline_id']],
+                $this->Users[$Lead['responsible_user_id']],
                 $CustField[0],
                 $CustField[1],
                 $Type,
@@ -163,15 +166,23 @@ class AmoCtrl extends ControllerMain{
         }
     }
     
-    protected function getCustomFields($Lead){
-        $CustField=['',''];
-        $CustomFields=$Lead['custom_fields'];
-        foreach ($CustomFields as $Ord=>$Field){
-            if($Field['id']==1680596){
-                $CustField[0]=$Field['values'][0]['value'];
+    protected function getCustomFields($Lead,$Contact){
+        $CustField=['','',''];
+        if(isset($Lead['custom_fields'])){
+            foreach ($Lead['custom_fields'] as $Ord=>$Field){
+                if($Field['id']==1680596){
+                    $CustField[0]=$Field['values'][0]['value'];
+                }
+                if($Field['id']==1672870){
+                    $CustField[1]=$Field['values'][0]['value'];
+                }
             }
-            if($Field['id']==1672870){
-                $CustField[1]=$Field['values'][0]['value'];
+        }
+        if(isset($Contact['custom_fields'])){
+            foreach ($Contact['custom_fields'] as $Ord=>$Field){
+                if($Field['id']==646794){
+                    $CustField[2]=$Field['values'][0]['value'];
+                }            
             }
         }
         
@@ -196,4 +207,13 @@ class AmoCtrl extends ControllerMain{
             $this->Pipelines[$Pipeline['id']]=$Pipeline['name'];
         }
     } 
+    
+    protected function getUsers(){
+        $this->Users=[];
+        $Model=new AmoMethods();        
+        $Result=$Model->getUsers();
+        foreach ($Result as $key=>$User){
+            $this->Users[$User['id']]=$User['name'];
+        }
+    }
 }
