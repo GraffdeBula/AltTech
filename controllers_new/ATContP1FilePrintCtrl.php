@@ -207,19 +207,33 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }
         $Act->cloneRowAndSetValues('PROPTYPE', $PropList);
         //заполнение таблицы Риски1
-        $Risk1List=[];
-        $Risk1=0;
-        foreach($Cont->getRiskList() as $Risk){
-            if ($Risk->DRVALUETYPE==1){
-                $Risk1List[]=['RISK1NAME'=>$Risk->EXLISTVALUE];
-                $Risk1++;
-            }
+        switch($ExpRec){
+            case "Банкротство физлиц":
+                $Risk1List=[];
+                $Risk1=0;
+                foreach($Cont->getRiskList() as $Risk){
+                    if ($Risk->DRVALUETYPE==1){
+                        $Risk1List[]=['RISK1NAME'=>$Risk->EXLISTVALUE];
+                        $Risk1++;
+                    }
+                }
+                if ($Risk1>0){
+                    $Act->cloneBlock('RISK1', 0, true, false, $Risk1List);
+                } else {
+                    $Act->cloneBlock('RISK1', 1, true, false,[['RISK1NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
+                }
+                break;
+            case "Внесудебное банкротство":
+                //заполнение таблицы Риски1-ВБФЛ
+                $Risk2_1='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                $Act->setValue('RISK2_1',$Risk2_1);
+                break;
+            case "Судебное банкротство (внесудебное не подходит)":
+                $Risk2_1='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                $Act->setValue('RISK2_1',$Risk2_1);
+                break;
         }
-        if ($Risk1>0){
-            $Act->cloneBlock('RISK1', 0, true, false, $Risk1List);
-        } else {
-            $Act->cloneBlock('RISK1', 1, true, false,[['RISK1NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
-        }
+                                        
         //заполнение таблицы Сделок
         $DealList=[];
         foreach($Client->getDealList() as $DealRow){
@@ -244,26 +258,41 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }
         
         $Act->cloneRowAndSetValues('DLOBJ', $DealList);
-        //заполнение таблицы Риски2
-        $Risk2List=[];
-        $Risk2=0;
-        foreach($Cont->getRiskList() as $Risk){
-            if ($Risk->DRVALUETYPE==2){
-                $Risk2List[]=['RISK2NAME'=>$Risk->EXLISTVALUE];
-                $Risk2++;
-            }
+        
+        //заполнение таблицы Риски2        
+        switch($ExpRec){
+            case "Банкротство физлиц":
+                $Risk2List=[];
+                $Risk2=0;
+                foreach($Cont->getRiskList() as $Risk){
+                    if ($Risk->DRVALUETYPE==2){
+                        $Risk2List[]=['RISK2NAME'=>$Risk->EXLISTVALUE];
+                        $Risk2++;
+                    }
+                }
+                if ($Risk2>0){
+                    $Act->cloneBlock('RISK2', 0, true, false, $Risk2List);
+                } else {
+                    $Act->cloneBlock('RISK2', 1, true, false,[['RISK2NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
+                }
+                break;
+            case "Внесудебное банкротство":                
+                //заполнение таблицы Риски2_2
+                $Risk2_2='Рисков при анализе предоставленных данных не обнаружено';
+                $Act->setValue('RISK2_2',$Risk2_2);
+                break;
+            case "Судебное банкротство (внесудебное не подходит)":
+                $Risk2_2='Рисков при анализе предоставленных данных не обнаружено';
+                $Act->setValue('RISK2_2',$Risk2_2);
+                break;
         }
-        if ($Risk2>0){
-            $Act->cloneBlock('RISK2', 0, true, false, $Risk2List);
-        } else {
-            $Act->cloneBlock('RISK2', 1, true, false,[['RISK2NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
-        }
+                
         //заполнение раздела 1.5 Общие сведения
         $Act->setValue('FAMSTATUS',$Client->getClRec()->CLFAMSTATUS);
         $Act->setValue('CHILDNUM',$Client->getClRec()->CLCHILDNUM);
         $Act->setValue('CRIMINALRESP',$Client->getClRec()->CLCRIMINALRESPYN);
         $Act->setValue('ADMRESP',$Client->getClRec()->CLADMRESPYN);
-        $Act->setValue('INDENTRIN',$Client->getClRec()->CLINDENTRIN);
+        $Act->setValue('INDENTRYN',$Client->getClRec()->CLINDENTRYN);
         //заполнение таблицы по прожиточному минимуму
         $Act->setValue('MININCAVG',$Cont->getMinIncList()['Avg']);
         $Act->setValue('MININCWORK',$Cont->getMinIncList()['Work']);
@@ -272,47 +301,68 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Act->setValue('MININCRESULT',$Cont->getMinIncList()['Result']);
         
         //заполнение таблицы Риски3
-        $Risk3List=[];
-        $Risk3=0;
-        foreach($Cont->getRiskList() as $Risk){
-            if ($Risk->DRVALUETYPE==3){
-                $Risk3List[]=['RISK3NAME'=>$Risk->EXLISTVALUE];
-                $Risk3++;
-            }
-        }
-        if ($Risk3>0){
-            $Act->cloneBlock('RISK3', 0, true, false, $Risk3List);
-        } else {
-            $Act->cloneBlock('RISK3', 1, true, false,[['RISK3NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
-        }
+        switch($ExpRec){
+            case "Банкротство физлиц":                
+                $Risk3List=[];
+                $Risk3=0;
+                foreach($Cont->getRiskList() as $Risk){
+                    if ($Risk->DRVALUETYPE==3){
+                        $Risk3List[]=['RISK3NAME'=>$Risk->EXLISTVALUE];
+                        $Risk3++;
+                    }
+                }
+                if ($Risk3>0){
+                    $Act->cloneBlock('RISK3', 0, true, false, $Risk3List);
+                } else {
+                    $Act->cloneBlock('RISK3', 1, true, false,[['RISK3NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
+                }
+                break;
+            case "Внесудебное банкротство":                
+                //заполнение таблицы Риски2_3
+                $Risk2_3='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                $Act->setValue('RISK2_3',$Risk2_3);
+                break;
+            case "Судебное банкротство (внесудебное не подходит)":
+                $Risk2_3='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                $Act->setValue('RISK2_3',$Risk2_3);
+                break;
+        }               
+        
         //заполнение таблицы Риски4
-        $Risk4List=[];
-        $Risk4=0;
-        foreach($Cont->getRiskList() as $Risk){
-            if ($Risk->DRVALUETYPE==4){
-                $Risk4List[]=['RISK4NAME'=>$Risk->EXLISTVALUE];
-                $Risk4++;
+        switch($ExpRec){
+            case "Банкротство физлиц":  
+            $Risk4List=[];
+            $Risk4=0;
+            foreach($Cont->getRiskList() as $Risk){
+                if ($Risk->DRVALUETYPE==4){
+                    $Risk4List[]=['RISK4NAME'=>$Risk->EXLISTVALUE];
+                    $Risk4++;
+                }
             }
-        }
-        if ($Risk4>0){
-            $Act->cloneBlock('RISK4', 0, true, false, $Risk4List);
-        } else {
-            $Act->cloneBlock('RISK4', 1, true, false,[['RISK4NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
+            if ($Risk4>0){
+                $Act->cloneBlock('RISK4', 0, true, false, $Risk4List);
+            } else {
+                $Act->cloneBlock('RISK4', 1, true, false,[['RISK4NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
+            }
+            breake;        
         }
         //заполнение итоговой таблицы Риски
-        $RiskFList=[];
-        $RiskF=0;
-        foreach($Cont->getRiskList() as $Risk){            
-            $RiskFList[]=[
-                'RISKFIN'=>$Risk->EXLISTVALUE,
-                'RISKJURWORK'=>$Risk->EXLISTVALUE2,
-                'RISKPROPERTY'=>$Risk->EXLISTVALUE3
-            ];
-            $RiskF++;            
-        }
-        if ($RiskF>0){
-            $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
-        }         
+        switch($ExpRec){
+            case "Банкротство физлиц":  
+            $RiskFList=[];
+            $RiskF=0;
+            foreach($Cont->getRiskList() as $Risk){            
+                $RiskFList[]=[
+                    'RISKFIN'=>$Risk->EXLISTVALUE,
+                    'RISKJURWORK'=>$Risk->EXLISTVALUE2,
+                    'RISKPROPERTY'=>$Risk->EXLISTVALUE3
+                ];
+                $RiskF++;            
+            }
+            if ($RiskF>0){
+                $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
+            }      
+        }    
         //заполнение резюме
         if ($Cont->getExpert()->EXJURCOMMENT==''){            
             $Act->setValue('WHATTODO',"Рекомендовано заключение договора по программе ".$Cont->getExpert()->EXPRODREC);

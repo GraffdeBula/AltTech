@@ -271,7 +271,7 @@
                     <thead>
                         <tr>
                             
-                            <th>РИСК</th>
+                            <th>РИСК ДЛЯ КЛАССИЧЕСКОГО БФЛ</th>
                             <th>УДАЛИТЬ<th>
                         </tr>
                     </thead>
@@ -311,6 +311,48 @@
                             echo("<button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>");
                         }
                     ?>
+                </form>
+                
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            
+                            <th>РИСК ДЛЯ ВНЕСУДЕБНОГО БФЛ</th>
+                            <th>УДАЛИТЬ<th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                <?php
+                    
+                    foreach($RiskList2 as $Risk){
+                        echo("<tr>");
+                        echo("<form method='get'>");
+                        (new MyForm('ATContP1FileExpertCtrl','DelRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
+                        echo("<input type='hidden' name='RiskID' value='{$Risk->ID}'>");
+                        echo("<th>{$Risk->EXLISTVALUE}</th>");
+                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','DelRisk')){
+                            echo("<th><button type='submit' class='btn btn-danger'>УДАЛИТЬ</button></th>");
+                        }
+                        echo("</form>");
+                        echo("<tr>");
+                    }                    
+                ?>
+                    </tbody>
+                </table>
+                
+                <h6>Добавить риск для внесудебного БФЛ</h6>
+                <select name='AddRisk2' value='' id='Risk2Select'>
+                    <option value=''></option>
+                    <?php
+                            foreach($RiskListDr2 as $RiskDr){
+                                echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
+                            }
+                        ?>
+                </select>
+                <form method='get'>
+                    <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk2',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
+                    <textarea class="form-control" id="AddRisk2" rows="7" style="height: 80px;" name='AddRisk2' maxlength=750></textarea>
+                    <button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>
                 </form>
             </div>
             <div class="tab-pane fade" id="mininc">                            
