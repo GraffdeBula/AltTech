@@ -17,6 +17,11 @@ class ExpertMod extends Model{
             FROM tblP1ExpList INNER JOIN tbl1DrExpList ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
             WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
     }    
+    public function GetExpRiskList2($ContCode){
+        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3,DrValueType 
+            FROM tblP1ExpList INNER JOIN tbl1DrExpList ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
+            WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk2']);
+    }
     //добавление нового риска
     public function InsExpRisk($param){
         db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue) VALUES (?,?,?)',$param); //должен получить массив из одного строкового элемента
