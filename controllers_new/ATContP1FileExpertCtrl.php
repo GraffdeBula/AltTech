@@ -16,6 +16,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     protected $CredList=[];
     protected $Expert=[];
     protected $RiskList=[];
+    protected $RiskList2=[];
     protected $MinIncList=[];
     protected $WorkHist=[];
     protected $IncHist=[];
@@ -26,6 +27,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     //Данные для заполнения
     protected $RiskListDr=[];
+    protected $RiskListDr2=[];
     //для вывода во вью
     
     
@@ -90,7 +92,15 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             $NewRisk=$_GET['AddRisk'];
             (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk',$NewRisk]);
         }
-        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
+    }
+    
+    public function actionAddRisk2(){//добавить риск заключения БФЛ
+        if ((isset($_GET['AddRisk2'])) && ($_GET['AddRisk2']!='')){
+            $NewRisk=$_GET['AddRisk2'];
+            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk2',$NewRisk]);
+        }
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
     }
     
     public function actionUpdRisk(){//добавить инф о согласии юриста работать с этим риском
@@ -143,11 +153,13 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->CredList=(new ATP1CredMod)->GetP1CredList($_GET['ContCode']);
         $this->Expert=(new ExpertMod)->GetExp($_GET['ContCode']);
         $this->RiskList=(new ExpertMod)->GetExpRiskList($_GET['ContCode']);
+        $this->RiskList2=(new ExpertMod)->GetExpRiskList2($_GET['ContCode']);
         $this->MinIncList=(new ExpertMod)->getExpMinInc($_GET['ContCode']);
         #$this->WorkHist=(new ATClientMod)->GetExp($_GET['ContCode']);
         #$this->IncHist=(new ATClientMod)->GetExp($_GET['ContCode']);
         $this->Comments=(new ATCommentMod())->GetContComments($_GET['ClCode'],$_GET['ContCode'],1);
         $this->RiskListDr=(new ExpertMod)->GetRiskDr(['Risk']);
+        $this->RiskListDr2=(new ExpertMod)->GetRiskDr(['Risk2']); //риски по ВБФЛ
                
         if (isset($_GET['CrCode'])){
             $this->Credit=(new ATP1CredMod)->GetP1Credit($_GET['CrCode']);
@@ -170,8 +182,10 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'CredList'=>$this->CredList,
             'Expert'=>$this->Expert,            
             'Comments'=>$this->Comments,
-            'RiskList'=>$this->RiskList,            
+            'RiskList'=>$this->RiskList,
+            'RiskList2'=>$this->RiskList2,
             'RiskListDr'=>$this->RiskListDr,
+            'RiskListDr2'=>$this->RiskListDr2,
             'MinIncList'=>$NewMinInc,
             'Credit'=>$this->Credit,
             'WorkHist'=>$this->WorkHist,
