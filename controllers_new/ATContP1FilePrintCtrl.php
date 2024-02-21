@@ -344,7 +344,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             } else {
                 $Act->cloneBlock('RISK4', 1, true, false,[['RISK4NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
             }
-            breake;        
+            break;        
         }
         //заполнение итоговой таблицы Риски
         switch($ExpRec){
