@@ -140,6 +140,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             case "Внесудебное банкротство":
                 $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
                 break;
+            case "Не подходит внесудебное банкротство":
+                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
+                break;
             case "Судебное банкротство (внесудебное не подходит)":
                 $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
                 break;
@@ -364,6 +367,18 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             }      
         }    
         //заполнение резюме
+        switch($Cont->getExpert()->EXPRODREC){            
+            case "Внесудебное банкротство":
+                $Act->setValue('EXPRES','Процедура банкротства гражданина во внесудебном порядке рекомендована.');
+                break;
+            case "Судебное банкротство (внесудебное не подходит)":
+                $Act->setValue('EXPRES','Рекомендована процедура банкротства в судебном порядке.');
+                break;
+            case "Не подходит внесудебное банкротство (внесудебное не подходит)":
+                $Act->setValue('EXPRES','Процедура банкротства гражданина во внесудебном порядке не рекомендована.');
+                break;
+        }
+        
         if ($Cont->getExpert()->EXJURCOMMENT==''){            
             $Act->setValue('WHATTODO',"Рекомендовано заключение договора по программе ".$Cont->getExpert()->EXPRODREC);
         } else {

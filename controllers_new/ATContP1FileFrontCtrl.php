@@ -109,12 +109,13 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionAddIndPayCalend(){//Сформировать индивидуальный график
         $Num=$_GET['PayCount'];
+        $PayNum=$_GET['PayNum'];
         $PaySum=$_GET['PaySum'];
         $FDate=new DateTime($_GET['PayDate']);  
         $ContCode=$_GET['ContCode'];
         $Model=new PayCalend();
         for ($i=1; $i<=$Num; $i++){
-            $Model->addPlanPay($ContCode,$i,$PaySum,$FDate->format('d.m.Y'));
+            $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$FDate->format('d.m.Y'));
             $FDate->modify("+1 month")->format('d.m.Y');
         }
         

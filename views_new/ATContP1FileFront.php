@@ -193,7 +193,8 @@
                         <h6>Расчитать индивидуальный график</h6>
                         <label>Сумма платежа</label><input type='text' name='PaySum' value='0' size='10'>
                         <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'><br>
-                        <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'><br>
+                        <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
+                        <label>начиная с</label><input type='number' name='PayNum' value='' size='4'><br>
                         <button class='btn btn-success'>Сделать</button>
                     </form>
                     <table class="table table-hover">

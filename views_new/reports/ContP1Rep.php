@@ -34,12 +34,12 @@
                         echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'><button class='btn btn-secondary'>{$Cont->CLFIO}</button></a></td>");
                         echo("<td>{$Cont->FROFFICE}</td>");
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");
-                        echo("<td>{$Cont->EXTOTDEBTSUM}</td>");
+                        echo str_replace('.',',',"<td>{$Cont->EXTOTDEBTSUM}</td>");
                         echo("<td>{$ContDate}</td>");
                         echo("<td>{$Cont->FRCONTPROG}</td>");
                         echo("<td>{$Cont->FRCONTTARIF}</td>");
-                        echo("<td>{$Cont->FRCONTSUM}</td>");
-                        echo("<td>{$Cont->DISCOUNTSUM}</td>");
+                        echo str_replace('.',',',"<td>{$Cont->FRCONTSUM}</td>");
+                        echo str_replace('.',',',"<td>{$Cont->DISCOUNTSUM}</td>");
                         echo("<tr>");
                     }                    
                 ?>

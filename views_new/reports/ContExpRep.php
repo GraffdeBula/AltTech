@@ -37,8 +37,8 @@
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");
                         echo("<td>{$Cont->FREXPDATE}</td>");
                         echo("<td>{$Cont->PAYDATE}</td>");
-                        echo("<td>{$Cont->FREXPSUM}</td>");
-                        echo("<td>{$Cont->PAYSUM}</td>");
+                        echo str_replace('.',',',"<td>{$Cont->FREXPSUM}</td>");
+                        echo str_replace('.',',',"<td>{$Cont->PAYSUM}</td>");
                         echo("<tr>");
                     }                    
                 ?>

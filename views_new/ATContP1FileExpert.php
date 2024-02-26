@@ -144,6 +144,7 @@
                                 echo("<option value='Внесудебное банкротство'>Внесудебное банкротство</option>");
                                 echo("<option value='Судебное банкротство (внесудебное не подходит)'>Судебное банкротство (внесудебное не подходит)</option>");
                                 echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
+                                echo("<option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>");
                                 echo("</select></p>");
                                 echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
                                 echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
