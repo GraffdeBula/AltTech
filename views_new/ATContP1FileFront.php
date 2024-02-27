@@ -180,10 +180,22 @@
                         <?php
                             (new MyForm('ATContP1FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
                         ?>
+                        <h6>Добавить платёж</h6>
                         <input type='number' name='PayNum' value='' size='8'>
                         <input type='date' name='PayDate' value='' size='11'>
                         <input type='text' name='PaySum' value='0' size='11'>
                         <button class='btn btn-success'>Добавить</button>
+                    </form>
+                    <form>
+                        <?php
+                            (new MyForm('ATContP1FileFrontCtrl','AddIndPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
+                        ?>
+                        <h6>Расчитать индивидуальный график</h6>
+                        <label>Сумма платежа</label><input type='text' name='PaySum' value='0' size='10'>
+                        <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'><br>
+                        <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
+                        <label>начиная с</label><input type='number' name='PayNum' value='' size='4'><br>
+                        <button class='btn btn-success'>Сделать</button>
                     </form>
                     <table class="table table-hover">
                         <thead>

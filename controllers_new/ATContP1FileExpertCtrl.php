@@ -90,7 +90,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     public function actionAddRisk(){//добавить риск заключения БФЛ
         if ((isset($_GET['AddRisk'])) && ($_GET['AddRisk']!='')){
             $NewRisk=$_GET['AddRisk'];
-            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk',$NewRisk]);
+            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk',$NewRisk,'']);
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
     }
@@ -98,7 +98,8 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     public function actionAddRisk2(){//добавить риск заключения БФЛ
         if ((isset($_GET['AddRisk2'])) && ($_GET['AddRisk2']!='')){
             $NewRisk=$_GET['AddRisk2'];
-            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk2',$NewRisk]);
+            $RiskVal2=$_GET['Risk2Value2'];
+            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk2',$NewRisk,$RiskVal2]);
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
     }

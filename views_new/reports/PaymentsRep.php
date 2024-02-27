@@ -86,7 +86,7 @@
                                     
                                     echo("<td>{$Pay->PAYNAME}</td>");                              
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
-                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+                                    echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");                                    
                                     echo("<tr>");
                                 }                    
                             ?>
@@ -111,7 +111,7 @@
                                 foreach ($Report3 as $Pay){
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->PAYNAME}</td>");                                                                  
-                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+                                    echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");                                    
                                     echo("<tr>");
                                 }                    
                             ?>
@@ -143,7 +143,7 @@
                                     echo("<td>{$Pay->PAYCODE}</td>");
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
                                     echo("<td>{$PayDate}</td>");
-                                    echo("<td>{$Pay->PAYSUM}</td>");
+                                    echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");
                                     echo("<td>{$Pay->PAYPR}</td>");
                                     echo("<td>{$Pay->CONTCODE}</td>");
                                     echo("<td>{$Pay->CONTCLIENT}</td>");
@@ -171,7 +171,7 @@
                                     echo("<tr class='table-secondary'>");                                                                                               
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
                                     echo("<td>{$Pay->PAYMETHOD}</td>");
-                                    echo("<td>{$Pay->PAYSUM}</td>");                                    
+                                    echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");                                    
                                     echo("<tr>");
                                 }                    
                             ?>

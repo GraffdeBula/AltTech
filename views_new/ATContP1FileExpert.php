@@ -144,6 +144,7 @@
                                 echo("<option value='Внесудебное банкротство'>Внесудебное банкротство</option>");
                                 echo("<option value='Судебное банкротство (внесудебное не подходит)'>Судебное банкротство (внесудебное не подходит)</option>");
                                 echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
+                                echo("<option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>");
                                 echo("</select></p>");
                                 echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
                                 echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
@@ -352,6 +353,7 @@
                 <form method='get'>
                     <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk2',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
                     <textarea class="form-control" id="AddRisk2" rows="7" style="height: 80px;" name='AddRisk2' maxlength=750></textarea>
+                    <input type="hidden" id="Risk2Value2" name="Risk2Value2" value="">
                     <button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>
                 </form>
             </div>

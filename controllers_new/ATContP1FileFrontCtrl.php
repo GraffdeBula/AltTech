@@ -107,6 +107,21 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionAddIndPayCalend(){//Сформировать индивидуальный график
+        $Num=$_GET['PayCount'];
+        $PayNum=$_GET['PayNum'];
+        $PaySum=$_GET['PaySum'];
+        $FDate=new DateTime($_GET['PayDate']);  
+        $ContCode=$_GET['ContCode'];
+        $Model=new PayCalend();
+        for ($i=1; $i<=$Num; $i++){
+            $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$FDate->format('d.m.Y'));
+            $FDate->modify("+1 month")->format('d.m.Y');
+        }
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionAddPayCalend(){//добавить платёж в график
         $Model=new PayCalend();
         $Model->addPlanPay($_GET['ContCode'],$_GET['PayNum'],$_GET['PaySum'],$_GET['PayDate']);
