@@ -147,8 +147,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
                 $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
                 break;
         }
-        
-        
+                
         //БЛОК 3
         //заполнение шапки отчёта и первого абзаца
         $Act->setValue('ID',$_GET['ContCode']);
@@ -226,13 +225,32 @@ class ATContP1FilePrintCtrl extends ControllerMain {
                     $Act->cloneBlock('RISK1', 1, true, false,[['RISK1NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
                 }
                 break;
-            case "Внесудебное банкротство":
-                //заполнение таблицы Риски1-ВБФЛ
+            //заполнение таблицы Риски1-ВБФЛ
+            case "Внесудебное банкротство":                
                 $Risk2_1='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==1){
+                        $Risk2_1=$Risk->EXLISTVALUE;
+                    }
+                }
+                $Act->setValue('RISK2_1',$Risk2_1);
+                break;
+            case "Не подходит внесудебное банкротство":                
+                $Risk2_1='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==1){
+                        $Risk2_1=$Risk->EXLISTVALUE;
+                    }
+                }
                 $Act->setValue('RISK2_1',$Risk2_1);
                 break;
             case "Судебное банкротство (внесудебное не подходит)":
                 $Risk2_1='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==1){
+                        $Risk2_1=$Risk->EXLISTVALUE;
+                    }
+                }
                 $Act->setValue('RISK2_1',$Risk2_1);
                 break;
         }
@@ -282,10 +300,29 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             case "Внесудебное банкротство":                
                 //заполнение таблицы Риски2_2
                 $Risk2_2='Рисков при анализе предоставленных данных не обнаружено';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==2){
+                        $Risk2_2=$Risk->EXLISTVALUE;
+                    }
+                }
+                $Act->setValue('RISK2_2',$Risk2_2);
+                break;
+            case "Не подходит внесудебное банкротство": 
+                $Risk2_2='Рисков при анализе предоставленных данных не обнаружено';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==2){
+                        $Risk2_2=$Risk->EXLISTVALUE;
+                    }
+                }
                 $Act->setValue('RISK2_2',$Risk2_2);
                 break;
             case "Судебное банкротство (внесудебное не подходит)":
                 $Risk2_2='Рисков при анализе предоставленных данных не обнаружено';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==2){
+                        $Risk2_2=$Risk->EXLISTVALUE;
+                    }
+                }
                 $Act->setValue('RISK2_2',$Risk2_2);
                 break;
         }
@@ -323,10 +360,29 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             case "Внесудебное банкротство":                
                 //заполнение таблицы Риски2_3
                 $Risk2_3='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==3){
+                        $Risk2_3=$Risk->EXLISTVALUE;
+                    }
+                }
+                $Act->setValue('RISK2_3',$Risk2_3);
+                break;
+            case "Не подходит внесудебное банкротство": 
+                $Risk2_3='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==3){
+                        $Risk2_3=$Risk->EXLISTVALUE;
+                    }
+                }
                 $Act->setValue('RISK2_3',$Risk2_3);
                 break;
             case "Судебное банкротство (внесудебное не подходит)":
                 $Risk2_3='Заказчик соответствует условиям для подачи заявления о признании гражданина банкротом во внесудебном порядке';
+                foreach($Cont->getRiskList2() as $Risk){
+                    if ($Risk->EXLISTVALUE2==3){
+                        $Risk2_3=$Risk->EXLISTVALUE;
+                    }
+                }
                 $Act->setValue('RISK2_3',$Risk2_3);
                 break;
         }               
@@ -374,7 +430,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             case "Судебное банкротство (внесудебное не подходит)":
                 $Act->setValue('EXPRES','Рекомендована процедура банкротства в судебном порядке.');
                 break;
-            case "Не подходит внесудебное банкротство (внесудебное не подходит)":
+            case "Не подходит внесудебное банкротство":
                 $Act->setValue('EXPRES','Процедура банкротства гражданина во внесудебном порядке не рекомендована.');
                 break;
         }

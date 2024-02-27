@@ -353,6 +353,7 @@
                 <form method='get'>
                     <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk2',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
                     <textarea class="form-control" id="AddRisk2" rows="7" style="height: 80px;" name='AddRisk2' maxlength=750></textarea>
+                    <input type="hidden" id="Risk2Value2" name="Risk2Value2" value="">
                     <button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>
                 </form>
             </div>
