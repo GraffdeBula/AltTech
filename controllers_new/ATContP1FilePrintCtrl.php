@@ -406,22 +406,35 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             break;        
         }
         //заполнение итоговой таблицы Риски
-        switch($ExpRec){
-            case "Банкротство физлиц":  
-            $RiskFList=[];
-            $RiskF=0;
-            foreach($Cont->getRiskList() as $Risk){            
-                $RiskFList[]=[
-                    'RISKFIN'=>$Risk->EXLISTVALUE,
-                    'RISKJURWORK'=>$Risk->EXLISTVALUE2,
-                    'RISKPROPERTY'=>$Risk->EXLISTVALUE3
-                ];
-                $RiskF++;            
-            }
-            if ($RiskF>0){
-                $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
-            }      
+        $RiskFList=[];
+        $RiskF=0;
+        foreach($Cont->getRiskList2() as $Risk){            
+            $RiskFList[]=[
+                'RISKFIN'=>$Risk->EXLISTVALUE,
+                'RISKJURWORK'=>'',
+                'RISKPROPERTY'=>$Risk->EXLISTVALUE3
+            ];
+            $RiskF++;            
+        }
+        foreach($Cont->getRiskList() as $Risk){            
+            $RiskFList[]=[
+                'RISKFIN'=>$Risk->EXLISTVALUE,
+                'RISKJURWORK'=>$Risk->EXLISTVALUE2,
+                'RISKPROPERTY'=>$Risk->EXLISTVALUE3
+            ];
+            $RiskF++;            
+        }
+        if ($RiskF==0){    
+            $RiskFList[]=[
+                'RISKFIN'=>'Риски проведения процедуры банкротства не выявлены',
+                'RISKJURWORK'=>'',
+                'RISKPROPERTY'=>''
+            ];
         }    
+        if ($RiskF>0){
+            $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
+        }      
+        
         //заполнение резюме
         switch($Cont->getExpert()->EXPRODREC){            
             case "Внесудебное банкротство":
