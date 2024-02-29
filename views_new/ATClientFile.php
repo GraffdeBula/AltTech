@@ -64,7 +64,7 @@
                     echo("<a href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ МЕНЕДЖЕРА</button></a>");
                     echo("<a href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-info'>ДОСЬЕ ДЛЯ ЭКСПЕРТИЗЫ</button></a>");
                     echo("<a href='index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>ДОСЬЕ ДЛЯ ЮРИСТА</button></a>");
-                    echo("<a href='index_admin.php?controller=ATClientFileCtrl&action=ContP1Copy&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-success'>Копировать</button></a>");
+                    echo("<a href='index_admin.php?controller=ATClientFileCtrl&action=ContP1Copy&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-warning'>Копировать</button></a>");
                     if ((new CheckRole)->Check($_SESSION['EmRole'],'ATClientFileCtrl','ContP1Del')){
                         echo("<a href='index_admin.php?controller=ATClientFileCtrl&action=ContP1Del&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-danger'>УДАЛИТЬ</button></a>");
                     }

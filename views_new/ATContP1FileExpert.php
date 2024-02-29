@@ -18,7 +18,8 @@
 
     <h3>
         <p>ДОГОВОР БФЛ - ЭКСПЕРТИЗА</p>
-    </h3>   
+    </h3> 
+    <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
            
     <?php
         echo("<h4>ФИО Клиента: {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</h4>");

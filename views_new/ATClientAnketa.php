@@ -7,7 +7,7 @@
 </head>
 <body>    
     <h3>АНКЕТА КЛИЕНТА</h3>   
-    
+    <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
     <div>
         <form>            
             <?php 
