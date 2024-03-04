@@ -251,7 +251,7 @@
                         <?php
                             (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
                             echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
-                            echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
+                            echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
                             echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
                         ?>
                     </form>
