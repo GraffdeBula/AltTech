@@ -103,7 +103,7 @@
                     </select>
                     <label>Номер</label><input type="text" name="ClPhone" maxlength=11>
                     <label>Комментарий</label><input type="text"name="ClPhComment">
-                    <button type="submit" class="btn btn-warning">Сохранить</button>
+                    <button type="submit" class="btn btn-warning">Добавить</button>
                 </form>
             </div><!--форма ввода номера телефона-->
             <hr class='hr-tab'>
@@ -224,7 +224,7 @@
                     echo("<label>дата выдачи</label>");
                     echo("<input type='date' name='ClRelDocDate' value='{$Relative->CLRELDOCDATE}'>");
                     
-                    echo("<button type='submit' class='btn btn-success'>изменить</button></form>");
+                    echo("<button type='submit' class='btn btn-success'>Сохранить</button></form>");
                         
                     echo("<form method='get' autocomplete='off'>");
                     (new MyForm('ATClientAnketaCtrl','DelRelative',$_GET['ClCode'],0))->AddForm();
@@ -249,7 +249,7 @@
                     <label>Свидетельство о рождении серия</label><input type="text"name="ClRelDocSer">
                     <label>номер</label><input type="text"name="ClRelDocNum">
                     <label>дата</label><input type="date"name="ClRelDocDate">
-                    <button type="submit" class="btn btn-warning">Сохранить</button>
+                    <button type="submit" class="btn btn-warning">Добавить</button>
                 </form>
             </div>
         </div> <!--Семья-->
@@ -276,7 +276,7 @@
                         echo("<input type='date' name='ClDocDate' value='{$Document->CLDOCDATE}'></p>");                        
                         echo("<p><label>Код подр.</label>");
                         echo("<input type='text' name='ClDocAttr1' value='{$Document->CLDOCATTR1}'>");
-                        echo("<button type='submit' class='btn btn-success'>изменить</button></form>");
+                        echo("<button type='submit' class='btn btn-success'>Сохранить</button></form>");
                         
                         echo("<form method='get' autocomplete='off'>");
                         (new MyForm('ATClientAnketaCtrl','DelDocument',$_GET['ClCode'],0))->AddForm();
@@ -319,7 +319,7 @@
                         <label>Доп реквизит</label><input type="text" name="ClDocAttr3">
                     <p>
                     </p>    
-                    <button type="submit" class="btn btn-warning">Сохранить</button>
+                    <button type="submit" class="btn btn-warning">Добавить</button>
                 </form>
             </div><!--форма добавления документов-->            
         </div> <!--Документы-->
@@ -447,7 +447,7 @@
                   <a class="nav-link" data-bs-toggle="tab" href="#deals">Сделки</a>
                 </li> 
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#accounts">Счета в банках</a>
+                  <a class="nav-link" data-bs-toggle="tab" href="#accounts">Счета (вклады) в банках</a>
                 </li>
             </ul><!--заголовки вкладок вкладки Доходы и собственность-->    
             <div id="myTabContent" class="tab-content"> 
@@ -486,7 +486,7 @@
                                     echo("<td><input type=text name='ClIncBank' value='{$Income->CLINCBANK}'></td>");
                                     echo("<td><input type=date name='ClIncPensDate' value='{$IncomePensDate}'></td>");
                                     echo("<td><input type=text name='ClIncComment' value='{$Income->CLINCCOMMENT}'></td>");
-                                    echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td></form>");
+                                    echo("<td><button type='submit' class='btn btn-success'>Сохранить</button></td></form>");
                                     echo("<form method='get'>");
                                     (new MyForm('ATClientAnketaCtrl','DelIncome',$_GET['ClCode'],0))->AddForm();
                                     echo("<input type='hidden' name='ClIncID' value='{$Income->ID}'>");
@@ -529,7 +529,7 @@
                                 <label>Комментарий</label><input type='text' name='ClIncComment' autocomplete='off'>
                                 <label>Дата назначения пенсии</label><input type='date' name='ClIncPensDate' autocomplete='off'>
                             </p>                            
-                            <button class='btn btn-warning'>Сохранить</button>
+                            <button class='btn btn-warning'>Добавить</button>
                         </form>                        
                     </div><!--добавить доход-->
                     
@@ -607,7 +607,7 @@
                                     echo("<td><input type='text' value='{$Property->CLPROPCOMMENT}' name='CLPROPCOMMENT'</td>");                                    
                                     echo("<td><input type='text' value='{$Property->CLPROPDOCUMENTSYN}' name='CLPROPDOCUMENTSYN'</td>");     
                                     
-                                    echo("<td><button type='submit' class='btn btn-success'>изменить</button></td></form>");
+                                    echo("<td><button type='submit' class='btn btn-success'>Сохранить</button></td></form>");
                         
                                     echo("<form method='get' autocomplete='off'>");
                                     (new MyForm('ATClientAnketaCtrl','DelProp',$_GET['ClCode'],0))->AddForm();
@@ -653,7 +653,7 @@
                                     <option value="нет">нет</option>
                                 </select>
                             </p>                                                        
-                            <button class='btn btn-warning'>Сохранить</button>
+                            <button class='btn btn-warning'>Добавить</button>
                         </form>                        
                     </div><!--добавить собственность-->
                 </div><!--Собственность-->
@@ -687,7 +687,7 @@
                                     echo("<td><input type='date' value='{$Deal->CLDLDATE}' name='CLDLDATE'</td>");
                                     echo("<td><input type='text' value='{$Deal->CLDLCOMMENT}' name='CLDLCOMMENT'</td>");    
                                     echo("<td><input type='text' value='{$Deal->CLDLDOCUMENTSYN}' name='CLDLDOCUMENTSYN'</td>");
-                                    echo("<td><button type='submit' class='btn btn-success'>изменить</button></td></form>");
+                                    echo("<td><button type='submit' class='btn btn-success'>Сохранить</button></td></form>");
                         
                                     echo("<form method='get' autocomplete='off'>");
                                     (new MyForm('ATClientAnketaCtrl','DelDeal',$_GET['ClCode'],0))->AddForm();
@@ -738,7 +738,7 @@
                                     <option value="нет">нет</option>
                                 </select>
                             </p>
-                            <button class='btn btn-warning'>Сохранить</button>
+                            <button class='btn btn-warning'>Добавить</button>
                         </form>                        
                     </div><!--добавить сделку-->
                 </div><!--Сделки-->
@@ -772,7 +772,7 @@
                                     echo("<td>$OpenDate</td>");
                                     echo("<td>$CloseDate</td>");
                                     echo("<td>$Acc->CLBNCOMMENT</td>");  
-                                    #echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                                    #echo("<td><button type='submit' class='btn btn-success'>Сохранить</button></td>");
                                     echo("<td><button type='submit' class='btn btn-danger'>Удалить</button></td></form>");
                                     echo("</tr>");
                                 }
@@ -795,7 +795,7 @@
                                 <label>Закрыт</label><input type='date' name='ClBnCloseDate'>
                                 <label>Комментарий</label><input type='text' name='ClBnComment'>
                             </p>
-                            <button class='btn btn-warning'>Сохранить</button>
+                            <button class='btn btn-warning'>Добавить</button>
                         </form>                        
                     </div><!--добавить счёт-->
                 </div><!--Счета-->
