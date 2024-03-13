@@ -56,9 +56,7 @@
                                 <li class='nav-item'>
                                     <a class='nav-link' data-bs-toggle='tab' href='#credadd{$Cred->CRCODE}'>Дополнительная информация</a>
                                 </li>
-                                <li class='nav-item'>
-                                    <a class='nav-link' data-bs-toggle='tab' href='#creddocs{$Cred->CRCODE}'>Документы по кредиту</a>
-                                </li>
+                                
                             </ul>
                             <div id='myTabContent' class='tab-content'>
                                 <div class='tab-pane fade  active show' id='credmain{$Cred->CRCODE}'>   
@@ -157,13 +155,19 @@
                                     <button type='submit' class='btn btn-warning' id='btnSaveMain'>Сохранить основную информацию</button>       
                                 </form>    
                                 <div class='row'>
-                                    <div class='col-lg-5'>
+                                    <div class='col-lg-2'>
+                                    </div>
+                                    <div class='col-lg-2'>   
+                                        <a href='index_admin.php?controller=ATContP1AnketaCtrl&action=CopyCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
+                                        <button class='btn btn-warning'>Копировать кред договор</button></a>
+                                    </div>");
+                                    echo("
+                                    <div class='col-lg-2'>
+                                        <a href='index_admin.php?controller=ATContP1AnketaCtrl&action=DelCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
+                                            <button class='btn btn-danger'>Удалить</button></a>
+                                    </div>");             
                                         
-                                    </div>                                
-                                    <div class='col-lg-2'>");                                             
-                                        echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=DelCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
-                                            <button class='btn btn-danger'>Удалить</button></a>");             
-                                echo("</div>                                    
+                                echo("                                    
                                 </div>
                             </div><!--основная инф по кредиту-->
                             <div class='tab-pane fade' id='credadd{$Cred->CRCODE}'>
@@ -202,7 +206,7 @@
                                         <option value='нет'>нет</option>
                                     </select>
                                     <label>ФИО поручителя</label><input type='text' name='CRWARRANTNAME' value='{$Cred->CRWARRANTNAME}'>                                        
-                                    <label>Кодовое слово</label><input type='text' name='CRCODEWORD' value='{$Cred->CRCODEWORD}'>    
+                                    <input type='hidden' name='CRCODEWORD' value='{$Cred->CRCODEWORD}'>    
                                     </p>
                                     <p>    
                                     <label>Место работы на момент получения</label><input type='text' name='CRWORKORG' value='{$Cred->CRWORKORG}'>
@@ -250,18 +254,20 @@
                                     <label>Коллекторское агентство</label><input type='text' name='CRCOLLAGNAME' value='{$Cred->CRCOLLAGNAME}'>
                                     </p>
                                     <button type='submit' class='btn btn-warning'>Сохранить доп информацию</button>
-                                </form>
-                                <div class='row'>
-                                    <div class='col-lg-4'>
+                                </form>");
+                                    
+                            echo("<div class='row'>
+                                <div class='col-lg-4'>
                                         
-                                    </div>                                
-                                    <div class='col-lg-2'>");                                                                                
-                                    echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=CopyCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
-                                        <button class='btn btn-secondary'>Копировать кред договор</button></a>");                                    
-                                echo("</div>                                    
-                                </div>
+                                </div>                                
+                                <div class='col-lg-2'>
+                                    <a href='index_admin.php?controller=ATContP1AnketaCtrl&action=CopyCred&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&CrCode={$Cred->CRCODE}'>
+                                        <button class='btn btn-warning'>Копировать кред договор</button></a>
+                                </div>                                    
+                            </div>");
 
-                            </div><!--дополнительная инф по кредиту-->
+                            echo("</div><!--дополнительная инф по кредиту-->");
+                            echo("
                             <div class='tab-pane fade' id='creddocs{$Cred->CRCODE}'>
                                 <form method='get' autocomplete='off'>");
                                     (new MyForm('ATContP1AnketaCtrl','NewCredDoc',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
