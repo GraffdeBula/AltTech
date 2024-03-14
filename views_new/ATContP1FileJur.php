@@ -14,7 +14,8 @@
     <div>
         <h3>
             <p>ДОГОВОР БФЛ - ДОСЬЕ ЮРБЛОКА</p>
-        </h3>   
+        </h3>
+        <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
     </div>
     <div class='row'>
         <div class='col-3'>

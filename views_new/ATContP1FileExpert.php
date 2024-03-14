@@ -18,7 +18,8 @@
 
     <h3>
         <p>ДОГОВОР БФЛ - ЭКСПЕРТИЗА</p>
-    </h3>   
+    </h3> 
+    <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
            
     <?php
         echo("<h4>ФИО Клиента: {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</h4>");
@@ -141,6 +142,7 @@
                                 echo("<label>Рекомендуемая программа</label><select name='EXPRODREC'>");
                                 echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
                                 echo("<option value='Банкротство физлиц'>Банкротство физлиц</option>");
+                                echo("<option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>");
                                 echo("<option value='Внесудебное банкротство'>Внесудебное банкротство</option>");
                                 echo("<option value='Судебное банкротство (внесудебное не подходит)'>Судебное банкротство (внесудебное не подходит)</option>");
                                 echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
