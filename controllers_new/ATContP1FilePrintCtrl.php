@@ -430,10 +430,8 @@ class ATContP1FilePrintCtrl extends ControllerMain {
                 'RISKJURWORK'=>'',
                 'RISKPROPERTY'=>''
             ];
-        }    
-        if ($RiskF>0){
-            $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);
-        }      
+        }            
+        $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);          
         
         //заполнение резюме
         switch($Cont->getExpert()->EXPRODREC){            

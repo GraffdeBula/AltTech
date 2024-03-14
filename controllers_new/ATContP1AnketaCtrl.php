@@ -138,10 +138,15 @@ class ATContP1AnketaCtrl extends ControllerMain {
         $CredTotal=0;
         $CredMain=0;
         $PayTotal=0;
-        foreach($this->CredList as $Cred){
+        foreach($this->CredList as $Cred){            
             $CredNum=$CredNum+1;
-            $CredTotal=$CredTotal+$Cred->CRSUMREST;
-            $CredMain=$CredMain+$Cred->CRSUMRESTMAIN;
+            if ($Cred->CRPROG=='ипотека с сохранением в процедуре БФЛ'){
+                $CredTotal=$CredTotal;
+                $CredMain=$CredMain;
+            } else {
+                $CredTotal=$CredTotal+$Cred->CRSUMREST;
+                $CredMain=$CredMain+$Cred->CRSUMRESTMAIN;
+            }
             $PayTotal=$PayTotal+$Cred->CRPAYSUM;
         }
         
