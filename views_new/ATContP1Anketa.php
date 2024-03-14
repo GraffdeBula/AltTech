@@ -106,7 +106,8 @@
                                         <option value='кред.карта'>кред.карта</option>
                                         <option value='Карта овердрафтом'>Карта овердрафтом</option>
                                         <option value='товарный'>товарный</option>
-                                        <option value='ипотека'>ипотека</option>                              
+                                        <option value='ипотека'>ипотека</option>
+                                        <option value='ипотека с сохранением в процедуре БФЛ'>ипотека с сохранением в процедуре БФЛ</option>
                                         <option value='займ/микрозайм'>займ/микрозайм</option>                              
                                         <option value='залоговый'>залоговый</option>                        
                                         <option value='автокредит'>автокредит</option>                              

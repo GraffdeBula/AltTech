@@ -12,7 +12,7 @@
 <body>
     <div>
         <h3>
-            <p>ДОГОВОР БФЛ - ДОСЬЕ ДОГОВОРА</p>
+            <p>ДОГОВОР БФЛ - ДОСЬЕ МЕНЕДЖЕРА</p>
         </h3>
         <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
     </div>
@@ -191,7 +191,7 @@
                         <?php
                             (new MyForm('ATContP1FileFrontCtrl','AddIndPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
                         ?>
-                        <h6>Расчитать индивидуальный график</h6>
+                        <h6>Рассчитать индивидуальный график</h6>
                         <label>Сумма платежа</label><input type='text' name='PaySum' value='0' size='10'>
                         <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'><br>
                         <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
@@ -314,6 +314,7 @@
                     <label>Программа</label><select name='FRCONTPROG'>
                         <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
                         <option value='Банкротство физлиц'>Банкротство физлиц</option>
+                        <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
                         <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
                         <option value='Защита от кредиторов'>Защита от кредиторов</option>
                     </select>
