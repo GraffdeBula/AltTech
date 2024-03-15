@@ -74,7 +74,8 @@
         . "<button class='btn btn-info'>ШАБЛОН ДОВЕРЕННОСТИ</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=WorkFinalAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>ОТЧЁТ БФЛ ИТОГОВЫЙ</button></a>");
-        
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PayBill&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-primary'>СПРАВКА О ПЛАТЕЖАХ</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=Test&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-secondary'>TEST</button></a>");
         

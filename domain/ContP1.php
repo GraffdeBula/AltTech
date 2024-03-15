@@ -19,6 +19,8 @@ class ContP1 {
     protected $CreditList;
     protected $Pac;
     protected $PayCalend=[];
+    protected $PayList=[];
+    
     protected $Discounts=[];
     public $Credit=[];
     public $CreditPays=[];
@@ -36,6 +38,7 @@ class ContP1 {
         $this->RiskList2=(new ExpertMod())->GetExpRiskList2($ContCode);
         $this->Pac=(new Pacs())->getPacByName($this->Front->FRCONTPAC);
         $this->PayCalend=(new PayCalend())->getPayCalend($ContCode);
+        $this->PayList=(new PaymentMod())->getPaymentListP1($ContCode);
         $this->Discounts=(new P1DiscountMod())->getDiscount($ContCode);
         $this->Credit=(new CreditDTO($ContCode));        
         
@@ -90,6 +93,11 @@ class ContP1 {
     public function getPayCalend(){
         return $this->PayCalend;
     }
+    
+    public function getPayList(){
+        return $this->PayList;
+    }
+    
     public function getDiscounts(){
         return $this->Discounts;
     }

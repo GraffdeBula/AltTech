@@ -42,6 +42,11 @@ class PaymentMod extends Model{
         return db2::getInstance()->FetchAll($Sql,[$ContCode,$ProdCode]); 
     }
     
+    public function getPaymentListP1($ContCode){
+        $Sql='SELECT * FROM tbl5Payments WHERE ContCode=? AND ProdCode=1 AND PayType in (3,4,5,6,7,8,9) ORDER BY ID DESC';
+        return db2::getInstance()->FetchAll($Sql,[$ContCode]); 
+    }
+    
     public function getPaymentFullListDt($DateF,$DateL,$ContType){        
         #new MyCheck(['111'],3);
         $Sql="SELECT * FROM tbl5Payments WHERE PayDate BETWEEN ? AND ? AND ContType>=? ORDER BY ID DESC";
@@ -94,8 +99,7 @@ class PaymentMod extends Model{
             GROUP BY ContBranch,PayMethod ORDER BY ContBranch,PayMethod";
         return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$ContType]); 
     }
-    
-    
+        
     public function getIncomeCompTotal($DateF,$DateL){
         $Sql="SELECT SUM(tbl5payments.paysum) as PaySum
             FROM tbl5payments WHERE paydate BETWEEN ? AND ? AND PayType in (1,2,3,4,5,7,8,9)";
