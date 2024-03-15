@@ -472,6 +472,7 @@
                             </thead>
                             <tbody>
                             <?php
+                            #new MyCheck($ClIncomesList,0);
                                 foreach($ClIncomesList as $Income){                
                                     $IncomePensDate=(new PrintFunctions())->DateToStr($Income->CLINCPENSDATE);
                                     echo("<tr class='table-secondary'><form method='get'>");
@@ -484,7 +485,7 @@
                                     echo("<td><input type=text name='ClIncSumReal' value='{$Income->CLINCSUMREAL}'></td>");
                                     echo("<td><input type=text name='ClIncCardYN' value='{$Income->CLINCCARDYN}'></td>");
                                     echo("<td><input type=text name='ClIncBank' value='{$Income->CLINCBANK}'></td>");
-                                    echo("<td><input type=date name='ClIncPensDate' value='{$IncomePensDate}'></td>");
+                                    echo("<td><input type=text name='ClIncPensDate' value='{$IncomePensDate}'></td>");
                                     echo("<td><input type=text name='ClIncComment' value='{$Income->CLINCCOMMENT}'></td>");
                                     echo("<td><button type='submit' class='btn btn-success'>Сохранить</button></td></form>");
                                     echo("<form method='get'>");
