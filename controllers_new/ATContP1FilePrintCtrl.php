@@ -590,6 +590,36 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         header("Location: ".$DocName);
     }
     
+    public function actionPayBill(){
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']); 
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }  
+        $PayList=$ContP1->getPayList();
+        $PayedSum=0;
+        foreach($PayList as $Pay){
+            $PayedSum=$PayedSum+$Pay->PAYSUM;
+        }
+        $CurSum=$ContP1->getFront()->FRCONTSUM-$PayedSum;
+                
+        $DocName='Выписка о платежах';
+        
+        $Printer=new PrintDoc('PayBillP1',$DocName,[
+            'Client'=>$Client->getClRec(),            
+            'Front'=>$ContP1->getFront(),            
+            'Branch'=>$Branch->getRec(),
+            'CurDate'=>new ContP1CurSum(date('d.m.Y'),$CurSum,$PayedSum),
+            'PayList'=>$PayList,
+        ]);
+                                
+        $DocName=$Printer->PrintDoc();        
+        header("Location: ".$DocName);
+    }
+    
     public function actionWorkFinalAct(){
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     

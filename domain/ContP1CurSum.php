@@ -8,10 +8,12 @@
 class ContP1CurSum {
     public $Curdate;
     public $Cursum;
+    public $Payedsum;    
     
-    public function __construct($Date,$Sum){
+    public function __construct($Date,$Cursum,$Payedsum){
         $this->Curdate=$Date;
-        $this->Cursum=$Sum;
+        $this->Cursum=$Cursum;
+        $this->Payedsum=$Payedsum;
     }
 
 }

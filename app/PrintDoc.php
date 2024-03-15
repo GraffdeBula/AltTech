@@ -108,6 +108,8 @@ class PrintDoc{
             $this->PasteCredContList();
         } elseif ($BookMark->BMCHANGE==13){ //вставка списка доходов
             $this->PasteClIncome();
+        } elseif ($BookMark->BMCHANGE==14){ //вставка списка платежей
+            $this->PastePayList();
         } 
     }
     
@@ -175,6 +177,18 @@ class PrintDoc{
             ];
         }
         $this->DocObj->cloneRowAndSetValues('PAYID', $PayCalend);
+    }
+    
+    protected function PastePayList(){
+        $PayList=[];
+        foreach($this->DocData['PayList'] as $Pay){
+            $PayList[]=[
+                'PAYNUM'=>$Pay->PAYCODE,
+                'PAYSUM'=>$Pay->PAYSUM." рублей",
+                'PAYDATE'=>$this->StrToDate($Pay->PAYDATE)
+            ];
+        }
+        $this->DocObj->cloneRowAndSetValues('PAYNUM', $PayList);
     }
     
     protected function PasteClProperty(){
