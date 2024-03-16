@@ -137,6 +137,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             case "Банкротство физлиц":
                 $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ.docx");
                 break;
+            case "Банкротство физлиц с ипотекой":
+                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ с ипотекой.docx");
+                break;
             case "Внесудебное банкротство":
                 $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
                 break;
