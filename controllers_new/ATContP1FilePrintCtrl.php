@@ -214,6 +214,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         //заполнение таблицы Риски1
         switch($ExpRec){
             case "Банкротство физлиц":
+            case "Банкротство физлиц с ипотекой":
                 $Risk1List=[];
                 $Risk1=0;
                 foreach($Cont->getRiskList() as $Risk){
@@ -286,6 +287,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         //заполнение таблицы Риски2        
         switch($ExpRec){
             case "Банкротство физлиц":
+            case "Банкротство физлиц с ипотекой":
                 $Risk2List=[];
                 $Risk2=0;
                 foreach($Cont->getRiskList() as $Risk){
@@ -346,6 +348,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         //заполнение таблицы Риски3
         switch($ExpRec){
             case "Банкротство физлиц":                
+            case "Банкротство физлиц с ипотекой":
                 $Risk3List=[];
                 $Risk3=0;
                 foreach($Cont->getRiskList() as $Risk){
@@ -393,20 +396,21 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         //заполнение таблицы Риски4
         switch($ExpRec){
             case "Банкротство физлиц":  
-            $Risk4List=[];
-            $Risk4=0;
-            foreach($Cont->getRiskList() as $Risk){
-                if ($Risk->DRVALUETYPE==4){
-                    $Risk4List[]=['RISK4NAME'=>$Risk->EXLISTVALUE];
-                    $Risk4++;
+            case "Банкротство физлиц с ипотекой":
+                $Risk4List=[];
+                $Risk4=0;
+                foreach($Cont->getRiskList() as $Risk){
+                    if ($Risk->DRVALUETYPE==4){
+                        $Risk4List[]=['RISK4NAME'=>$Risk->EXLISTVALUE];
+                        $Risk4++;
+                    }
                 }
-            }
-            if ($Risk4>0){
-                $Act->cloneBlock('RISK4', 0, true, false, $Risk4List);
-            } else {
-                $Act->cloneBlock('RISK4', 1, true, false,[['RISK4NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
-            }
-            break;        
+                if ($Risk4>0){
+                    $Act->cloneBlock('RISK4', 0, true, false, $Risk4List);
+                } else {
+                    $Act->cloneBlock('RISK4', 1, true, false,[['RISK4NAME'=>'Рисков при анализе предоставленных данных не обнаружено']]);
+                }
+                break;        
         }
         //заполнение итоговой таблицы Риски
         $RiskFList=[];
