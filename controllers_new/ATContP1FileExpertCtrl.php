@@ -56,13 +56,19 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         (new ExpertMod())->AddFromJurist($_GET['EXJURCOMMENT'],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-
+    
+    public function actionExpReturn(){
+        (new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
+        (new Status())->ChangeP1Status(6, $_GET['ContCode']);            
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionExpSogl(){
         if ((new ExpertMod())->getExpMinInc($_GET['ContCode'])){
 
             (new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
             if ($this->CheckStatus()){
-                (new Status())->ChangeP1Status(4, $_GET['ContCode']);            
+                (new Status())->ChangeP1Status(11, $_GET['ContCode']);            
             }
             header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
         } else {

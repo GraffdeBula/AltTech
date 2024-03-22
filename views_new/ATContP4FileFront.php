@@ -184,9 +184,9 @@
                 <div class='col-10'>
                     <label>Способ внесения платежа</label><select required name='PAYMETHOD'>
                         <option></option>
-                        <option>Наличные ДС</option>
-                        <option>Перевод на карту</option>
-                        <option>Оплата картой/QR-код/Перевод по реквизитам в банк</option>
+                        <option>Наличные (Деньги в кассу)</option>
+                        <option>Наличные (Перевод на карту)</option>
+                        <option>Безналичный платёж (Оплата картой/QR-код/Перевод в банк)</option>
                         </select>
                 </div>
             </form>

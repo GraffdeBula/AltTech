@@ -49,7 +49,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionExpAct(){                
         $this->FrontSave();
-        (new Status())->ChangeP1Status(8, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(12, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -60,7 +60,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionTarifChoose(){                
         $this->FrontSave();
-        (new Status())->ChangeP1Status(9, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(14, $_GET['ContCode']);
         $Cont=new ContP1($_GET['ContCode']);
         if ($Cont->getFront()->FROFFICE==''){
             $Branch=$_SESSION['EmBranch'];
@@ -183,13 +183,13 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionContSigned(){                
         $this->FrontSave();
-        (new Status())->ChangeP1Status(11, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(15, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionDovGet(){
         $this->FrontSave();
-        (new Status())->ChangeP1Status(13, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(17, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
