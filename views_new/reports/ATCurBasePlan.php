@@ -7,9 +7,7 @@
     </head>
     <body>        
         <?php
-            foreach($BranchList as $Branch){
-//                echo("<p><a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.05.2023&DateL=31.05.2023'>"
-//                    . "<button class='btn btn-success'>{$Branch->BRNAME} - май 2023</button></a> - ");
+            foreach($BranchList as $Branch){             
 //                echo("<a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.06.2023&DateL=30.06.2023'>"
 //                    . "<button class='btn btn-success'>{$Branch->BRNAME} - июнь 2023</button></a> - ");
 //                echo("<a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName={$Branch->BRNAME}&DateF=01.07.2023&DateL=31.07.2023'>"
