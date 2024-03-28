@@ -120,7 +120,20 @@
                     <p><label>ДАТА ДОГОВОРА ЭПЭ</label><input type='date' name='FREXPDATE' value={$Front->FREXPDATE}></p>
                     <p><label>СТОИМОСТЬ ЭПЭ</label><input type='text' name='FREXPSUM' value={$Front->FREXPSUM}></p>
                     <button type='submit' class='btn btn-warning'>Заключён договор ЭПЭ</button>
-                </form>");    
+                </form>");  
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','ExpGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    echo("                
+                    <p><label>ДАТА ПОЛУЧЕНИЯ ДОКУМЕНТОВ ОТ КЛИЕНТА</label><input type='date' name='FREXPGETDATE' value={$Front->FREXPGETDATE}></p>
+                    <button type='submit' class='btn btn-success'>Клиент предоставил документы на ЭПЭ</button>
+                </form>");
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','ExpSent',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();                    
+                    echo("                
+                    <p><label>ДАТА ОТПРАВКИ НА ЭПЭ</label><input type='date' name='FREXPSENTDATE' value={$Front->FREXPSENTDATE}></p>                    
+                    <button type='submit' class='btn btn-danger'>Документы отправлены на ЭПЭ</button>
+                </form>");
+                    
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','ExpAct',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
