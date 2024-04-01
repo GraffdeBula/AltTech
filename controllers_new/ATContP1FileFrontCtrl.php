@@ -119,6 +119,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionDelCalend(){
+        (new PayCalend())->delAllPlanPays($_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionAddIndPayCalend(){//Сформировать индивидуальный график
         $Num=$_GET['PayCount'];
         $PayNum=$_GET['PayNum'];

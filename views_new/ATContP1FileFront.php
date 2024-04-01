@@ -185,7 +185,7 @@
                         (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
                     ?>
                     <label>Стоимость договора</label><input name="FRCONTSUM" value='<?=$Front->FRCONTSUM?>'>
-                    <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график.</button>
+                    <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график по тарифу.</button>
                 </form>
             </div>
             <div class='row'>-</div>
@@ -210,8 +210,9 @@
                         <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'><br>
                         <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
                         <label>начиная с</label><input type='number' name='PayNum' value='' size='4'><br>
-                        <button class='btn btn-success'>Сделать</button>
+                        <button class='btn btn-success'>Сформировать индивидуальный график</button>
                     </form>
+                    <a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelCalend&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>'><button class='btn btn-danger'>Удалить график</button></a>
                     <table class="table table-hover">
                         <thead>
                             <tr>                            
