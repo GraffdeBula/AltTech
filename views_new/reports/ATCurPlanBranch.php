@@ -35,7 +35,7 @@
                     echo("<tr class='table-info'>");
                     echo("<td>{$Cont->CLCODE}</td>");
                     echo("<td>{$Cont->CONTCODE}</td>");
-                    echo("<td>{$Cont->CLFIO}</td>");
+                    echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
                     echo("<td>{$ContDate}</td>");
                     echo("<td>{$Cont->FRCONTPROG}</td>");
                     echo("<td>{$Cont->FRCONTTARIF}</td>");

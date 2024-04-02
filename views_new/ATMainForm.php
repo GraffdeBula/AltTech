@@ -123,23 +123,37 @@
             <a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Список агентов</button></a>
         </div><!--Реферальная программа-->
         <div  class='tab-pane fade' id='expert'>
+            <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки договоров на ЭПЭ</button></a>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#exp1">Требуется экспертиза</a>
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp1">Подписан дог ЭПЭ</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp2">Предоставил документы на ЭПЭ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp3">Требуется ЭПЭ</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp4">От андеррайтера на доработку</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp5">Согласование юриста</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp6">Согласование руководителя</a>
                   
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp2">Согласование юриста</a>
-                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp7">ЭПЭ отложена</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp3">Согласование руководителя</a>
-                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp8">После ЭПЭ договор не заключен</a>                  
                 </li>
             </ul>
             <div id="ExpertContent" class="tab-content">
                 <div class="tab-pane fade show active" id="exp1" role="tabpanel">
-                    <p>провеcти ЭПЭ<p>
+                    <p>Получить документы у клиента<p>
                     <?php foreach($ExpList[1] as $ExpCont){  
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
@@ -149,7 +163,41 @@
                     }
                     ?>
                 </div>
-                <div class="tab-pane fade" id="exp2" role="tabpanel">
+                <div class="tab-pane fade show active" id="exp2" role="tabpanel">
+                    <p>Направить документы на ЭПЭ<p>
+                    <?php foreach($ExpList[2] as $ExpCont){  
+                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
+                <div class="tab-pane fade show active" id="exp3" role="tabpanel">
+                    <p>Провести ЭПЭ<p>
+                    <?php foreach($ExpList[3] as $ExpCont){  
+                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
+                <div class="tab-pane fade show active" id="exp4" role="tabpanel">
+                    <p>Доработать замечания по ЭПЭ<p>
+                    <?php foreach($ExpList[4] as $ExpCont){  
+                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
+                
+                <div class="tab-pane fade" id="exp5" role="tabpanel">
                     <p>согласовать у юриста<p>
                     <?php foreach($ExpList[2] as $ExpCont){   
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
@@ -160,12 +208,12 @@
                     }
                     ?>
                 </div>
-                <div class="tab-pane fade" id="exp3" role="tabpanel">
+                <div class="tab-pane fade" id="exp6" role="tabpanel">
                     <p>согласовать договор<p>
-                    <?php foreach($ExpList[3] as $ExpCont){                                                
+                    <?php foreach($ExpList[4] as $ExpCont){                                                
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-primary'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>");
+                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>

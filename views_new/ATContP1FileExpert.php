@@ -157,6 +157,7 @@
                                 }
                             ?>
                         </form>
+                        <a href="index_admin.php?controller=ATContP1FileExpertCtrl&action=ExpReturn&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>"><button type='summit' class='btn btn-danger'>Направить на доработку</button></a>
                     </div>
                     <div class='col-lg-3'>
                         <form method='get'>
@@ -371,7 +372,7 @@
                         <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 60px;" name='MinIncResult' maxlength=500 ><?=$MinIncList['Result']?></textarea>
                     </div>
                     <button type='summit' class='btn btn-info'>Сохранить результат</button>
-                </form>
+                </form>                
             </div>
             <div class="tab-pane fade" id="work">            
                 <a target='_blank' href="index_admin.php?controller=ATContP1FileExpertCtrl&action=ShowAddViewInc&ClCode=<?=$Client->CLCODE?>&ContCode=<?=$Cont->CONTCODE?>"><button class='f-bu f-bu-default'>Сведения о работе</button></a>
