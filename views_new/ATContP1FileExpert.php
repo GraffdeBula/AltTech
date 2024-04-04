@@ -168,7 +168,7 @@
                             </div>
                             <?php
                             if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
-                                echo("<button type='summit' class='btn btn-warning'>Сохранить причину</button>");
+                                echo("<button type='summit' class='btn btn-warning'>На согласование юристу</button>");
                             }    
                             ?>
                         </form>                        

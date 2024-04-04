@@ -158,7 +158,7 @@
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>
@@ -169,7 +169,7 @@
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>
@@ -180,7 +180,7 @@
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>
@@ -191,7 +191,7 @@
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>
@@ -199,21 +199,21 @@
                 
                 <div class="tab-pane fade" id="exp5" role="tabpanel">
                     <p>согласовать у юриста<p>
-                    <?php foreach($ExpList[2] as $ExpCont){   
+                    <?php foreach($ExpList[5] as $ExpCont){   
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-info'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>
                 </div>
                 <div class="tab-pane fade" id="exp6" role="tabpanel">
                     <p>согласовать договор<p>
-                    <?php foreach($ExpList[4] as $ExpCont){                                                
+                    <?php foreach($ExpList[6] as $ExpCont){                                                
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
                         echo("<button class='btn btn-primary'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button><a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
                         echo("<br>");
                     }
                     ?>

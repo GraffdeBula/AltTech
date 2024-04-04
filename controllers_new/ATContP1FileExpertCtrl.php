@@ -49,6 +49,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
 
     public function actionAddToJurist(){ 
         (new ExpertMod())->AddToJurist($_GET['EXCOMMENT'],$_GET['ContCode']);
+        (new Status())->ChangeP1Status(7, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
