@@ -158,6 +158,7 @@
                             ?>
                         </form>
                         <a href="index_admin.php?controller=ATContP1FileExpertCtrl&action=ExpReturn&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>"><button type='summit' class='btn btn-danger'>Направить на доработку</button></a>
+                        <input id='ToManDate' type='date' value=<?=$Front->FREXPRETURNDATE?>><label for='ToManDate'>Направлено на доработку менеджеру</label>
                     </div>
                     <div class='col-lg-3'>
                         <form method='get'>
@@ -170,7 +171,9 @@
                             if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
                                 echo("<button type='summit' class='btn btn-warning'>На согласование юристу</button>");
                             }    
+                            echo("<input id='ToJurDate' type='date' value={$Expert->EXPJURSENTDATE}><label for='ToJurDate'>Направлено юристу</label>");
                             ?>
+                            
                         </form>                        
                     </div>
                 </div>
