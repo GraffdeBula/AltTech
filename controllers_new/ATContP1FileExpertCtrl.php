@@ -60,7 +60,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     }
     
     public function actionExpReturn(){
-        (new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
+        #(new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
         (new P1SaveData('TblP1Front','FREXPRETURNDATE',$_GET['ContCode']))->saveData();
         (new Status())->ChangeP1Status(6, $_GET['ContCode']);            
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
