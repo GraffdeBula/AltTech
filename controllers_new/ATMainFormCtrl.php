@@ -113,7 +113,7 @@ class ATMainFormCtrl extends ControllerMain {
         $this->ExpList[2]=$Model->getExpGetList(); //Получены док-ты от клиента
         $this->ExpList[3]=$Model->getExpSentList(); //Отправлены на ЭПЭ
         $this->ExpList[4]=$Model->getExpReturnList(); //Направлены на доработку
-        $this->ExpList[5]=$Model->getExpJurList(); //Направлены юристу
+        $this->ExpList[5]=$Model->getExpJurSoglList(); //Направлены юристу
        
     }
     /*получение списка скидок на согласование*/
