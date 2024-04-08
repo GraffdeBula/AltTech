@@ -109,13 +109,12 @@ class ATMainFormCtrl extends ControllerMain {
      */
     protected function getExpList(){
         $Model=new ExpertMod();
-        $this->ExpList[1]=$Model->getExpContList();
-        $this->ExpList[2]=$Model->getExpGetList();
-        $this->ExpList[3]=$Model->getExpSentList();
-        $this->ExpList[4]=$Model->getExpReturnList();        
-        $this->ExpList[5]=$Model->getExpJurList();
-        $this->ExpList[6]=$Model->getExpJurGetSoglList();
-        $this->ExpList[7]=$Model->getExpDirList();
+        $this->ExpList[1]=$Model->getExpContList(); //заключен договор ЭПЭ
+        $this->ExpList[2]=$Model->getExpGetList(); //Получены док-ты от клиента
+        $this->ExpList[3]=$Model->getExpSentList(); //Отправлены на ЭПЭ
+        $this->ExpList[4]=$Model->getExpReturnList(); //Направлены на доработку
+        $this->ExpList[5]=$Model->getExpJurList(); //Направлены юристу
+       
     }
     /*получение списка скидок на согласование*/
     protected function getDiscList(){
