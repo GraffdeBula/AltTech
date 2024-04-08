@@ -137,6 +137,9 @@
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#exp4">Направлено на доработку менеджеру</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp5">Направлено юристу</a>
+                </li>
               
             </ul>
             <div id="ExpertContent" class="tab-content">
@@ -184,7 +187,17 @@
                     }
                     ?>
                 </div>
-                
+                <div class="tab-pane fade" id="exp5" role="tabpanel">
+                    <p>Доработать замечания андеррайтера<p>
+                    <?php foreach($ExpList[5] as $ExpCont){  
+                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
+                        echo("<button class='btn btn-danger'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
+                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
+                        echo("<br>");
+                    }
+                    ?>
+                </div>
             </div>
         </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
