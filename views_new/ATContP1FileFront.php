@@ -533,9 +533,12 @@
                 (new MyForm('ATContP1FileFrontCtrl','WorkBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     
                 echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
-                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value={$Front->FRARCHCOMMENT} size='60'></p>");
+                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' size='60'></p>");
                 echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (услуга не оказана)</button>");
                 echo("</form>");   
+                
+                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ContDopWorkBrake&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+                . "<button class='btn btn-info'>Допсоглашение о расторжении</button></a>");
             ?>        
                 
         </div>

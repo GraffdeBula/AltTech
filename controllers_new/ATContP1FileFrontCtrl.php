@@ -15,7 +15,7 @@
 class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
-        'FRCONTDATE','FRDOVDATE','FRCONTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM'];
+        'FRCONTDATE','FRDOVDATE','FRCONTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
