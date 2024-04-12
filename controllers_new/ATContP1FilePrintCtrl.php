@@ -656,11 +656,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientAdr'=>$Client->getAdr(),
+            'ClientPhone'=>$Client->getContPhone(),
             'Anketa'=>$ContP1->getAnketa(),
             'Front'=>$ContP1->getFront(),
             'OrgRec'=>$Org->getRec(),
-            'BranchRec'=>$Branch->getRec(),
-            'Employee'=>$Emp->getEmp(),
+            'Branch'=>$Branch->getRec(),
+            'Emp'=>$Emp->getEmp(),
             'EmpDov'=>$Emp->getEmpDov()
             ]
                 
