@@ -152,7 +152,7 @@
                                 echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
                                 echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
                                 echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");                            
-                                if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='expert') or ($_SESSION['EmRole']=='top')){
+                                if (in_array($_SESSION['EmRole'],['admin','expert','top','director'])){
                                     echo("<button type='summit' class='btn btn-info'>Сохранить результат</button>");
                                 }
                             ?>
