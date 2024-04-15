@@ -145,36 +145,81 @@
             <div id="ExpertContent" class="tab-content">
                 <div class="tab-pane fade show active" id="exp1" role="tabpanel">
                     <p>Получить документы у клиента<p>
-                    <?php foreach($ExpList[1] as $ExpCont){  
-                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
-                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
-                        echo("<button class='btn btn-success'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
-                        echo("<br>");
-                    }
-                    ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора ЭПЭ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[1] as $ExpCont){ 
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ExpDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
                 </div>
                 <div class="tab-pane fade" id="exp2" role="tabpanel">
                     <p>Направить документы на ЭПЭ<p>
-                    <?php foreach($ExpList[2] as $ExpCont){  
-                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
-                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
-                        echo("<button class='btn btn-info'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
-                        echo("<br>");
-                    }
-                    ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата получения документов ЭПЭ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[2] as $ExpCont){ 
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPGETDATE);
+                                echo("<tr class='table-primary'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ExpDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="exp3" role="tabpanel">
                     <p>Провести ЭПЭ<p>
-                    <?php foreach($ExpList[3] as $ExpCont){  
-                        $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
-                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
-                        echo("<button class='btn btn-warning'>".$ExpCont->CONTCODE."   ".$ExpCont->CLFIO);
-                        echo("</button></a>   ".$ExpCont->FROFFICE."   ".$ExpDate);
-                        echo("<br>");
-                    }
-                    ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата получения документов ЭПЭ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[3] as $ExpCont){ 
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPSENTDATE);
+                                echo("<tr class='table-warning'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ExpDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="exp4" role="tabpanel">
                     <p>Доработать замечания андеррайтера<p>
