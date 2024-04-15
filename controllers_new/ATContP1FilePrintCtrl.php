@@ -135,6 +135,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $ExpRec=$Cont->getExpert()->EXPRODREC;
         switch($ExpRec){
             case "Банкротство физлиц":
+            case "Защита от кредиторов":
                 $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ.docx");
                 break;
             case "Банкротство физлиц с ипотекой":
@@ -215,6 +216,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         switch($ExpRec){
             case "Банкротство физлиц":
             case "Банкротство физлиц с ипотекой":
+            case "Защита от кредиторов":
                 $Risk1List=[];
                 $Risk1=0;
                 foreach($Cont->getRiskList() as $Risk){
@@ -288,6 +290,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         switch($ExpRec){
             case "Банкротство физлиц":
             case "Банкротство физлиц с ипотекой":
+            case "Защита от кредиторов":
                 $Risk2List=[];
                 $Risk2=0;
                 foreach($Cont->getRiskList() as $Risk){
@@ -349,6 +352,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         switch($ExpRec){
             case "Банкротство физлиц":                
             case "Банкротство физлиц с ипотекой":
+            case "Защита от кредиторов":
                 $Risk3List=[];
                 $Risk3=0;
                 foreach($Cont->getRiskList() as $Risk){
@@ -397,6 +401,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         switch($ExpRec){
             case "Банкротство физлиц":  
             case "Банкротство физлиц с ипотекой":
+            case "Защита от кредиторов":
                 $Risk4List=[];
                 $Risk4=0;
                 foreach($Cont->getRiskList() as $Risk){
