@@ -7,7 +7,8 @@
 class ReportsCtrl extends ControllerMain{
     protected $Report;
     public function actionContP1Rep(){//отчёт по новым договорам
-        $this->Report=(new ReportsMod())->getContP1();                
+        $this->Report=(new ReportsMod())->getContP1();               
+        $this->RepContP1ToExcel($this->Report, 'NewContRep');
         $this->render('reports/ContP1Rep',['Report'=> $this->Report]);
     }
     
@@ -53,22 +54,30 @@ class ReportsCtrl extends ControllerMain{
         $xls = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $xls->setActiveSheetIndex(0);
         $sheet = $xls->getActiveSheet();
-        $sheet->setTitle('Экспертизы');
-        $sheet->setCellValue("A1", "Экспертизы");
+        $sheet->setTitle('Договоры БФЛ');
+        $sheet->setCellValue("A1", "Договоры БФЛ");
         $sheet->setCellValue("A2", "ClCode");
         $sheet->setCellValue("B2", "ContCode");
         $sheet->setCellValue("C2", "ФИО");
         $sheet->setCellValue("D2", "Подразделение");
-        $sheet->setCellValue("E2", "Менеджер");
+        $sheet->setCellValue("E2", "Менеджер");        
         $sheet->setCellValue("F2", "Дата дог.");
         $sheet->setCellValue("G2", "Дата перв. платежа");
-        $sheet->setCellValue("H2", "Стоимость ЭПЭ");
-        $sheet->setCellValue("I2", "Всего внесено за ЭПЭ");
+        $sheet->setCellValue("H2", "Программа");
+        $sheet->setCellValue("I2", "Тариф");
+        $sheet->setCellValue("J2", "Сумма договора");
+        $sheet->setCellValue("K2", "Долг по ЭПЭ");
+        $sheet->setCellValue("L2", "Скидка");
      
         $i=3;
         foreach ($Arr as $reprow){
             $j=1;
-            foreach ($reprow as $repfield){
+            foreach ($reprow as $key=>$repfield){
+                if ($key=='FRCONTDATE'){
+                    $repfield=(new PrintFunctions())->DateToStr($repfield);
+                } elseif ($key=='PAYDATE') {
+                    $repfield=(new PrintFunctions())->DateToStr($repfield);
+                }
                 $sheet->setCellValueByColumnAndRow($j,$i,$repfield);
                 $j++;
             }            

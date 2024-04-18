@@ -38,10 +38,20 @@
                 <tbody>                    
                     <?php
                         foreach ($Report as $Cont){
+                            $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
                             echo("<tr class='table-secondary'>");
-                            foreach($Cont as $ContAtr){
-                                echo("<td>{$ContAtr}</td>");
-                            }                                    
+                                echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>$Cont->CLCODE</a></td>");
+                                echo("<td><a target='_blank' href='index.php?controller=ATContP4FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>$Cont->CONTCODE</a></td>");
+                                echo("<td>$Cont->CLNAME</td>");
+                                echo("<td>$Cont->FROFFICE</td>");
+                                echo("<td>$Cont->FRPERSMANAGER</td>");
+                                echo str_replace('.',',',"<td>$Cont->FRCONTSUM</td>");
+                                echo("<td>$ContDate</td>");
+                                echo("<td>$Cont->FRJURIST</td>");
+                                echo("<td>$Cont->FRJURBRANCH</td>");
+                                echo("<td>$Cont->FRCONTSERVICE</td>");
+                                echo("<td>$Cont->FRCONTRESULT</td>");
+                            echo("</tr>"); 
                         }                    
                     ?>
                 </tbody>
