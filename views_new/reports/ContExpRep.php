@@ -29,8 +29,8 @@
                         $ContDate=(new PrintFunctions())->DateToStr($Cont->FREXPDATE);
                         $PayDate=(new PrintFunctions())->DateToStr($Cont->PAYDATE);
                         echo("<tr class='table-secondary'>");                                    
-                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>{$Cont->CLCODE}</button></a></td>");                        
-                        echo("<td><a target='_blank' href='index.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CONTCODE}</button></a></td>");
+                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>{$Cont->CLCODE}</a></td>");                        
+                        echo("<td><a target='_blank' href='index.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CONTCODE}</a></td>");
                         echo("<td>{$Cont->CLFIO}</td>");
                         echo("<td>{$Cont->FROFFICE}</td>");
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");

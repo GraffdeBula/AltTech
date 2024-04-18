@@ -139,6 +139,12 @@
                             <?php
                                 foreach ($Report1 as $Pay){
                                     $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
+                                    if ($Pay->PRODCODE==1) {
+                                        $Controller='ATContP1FileFrontCtrl';
+                                    }
+                                    if ($Pay->PRODCODE==4) {
+                                        $Controller='ATContP4FileFrontCtrl';
+                                    }
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->ID}</td>");                              
                                     echo("<td>{$Pay->PAYCODE}</td>");
@@ -146,8 +152,8 @@
                                     echo("<td>{$PayDate}</td>");
                                     echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");
                                     echo("<td>{$Pay->PAYPR}</td>");
-                                    echo("<td>{$Pay->PRODCODE}</td>");
-                                    echo("<td>{$Pay->CONTCODE}</td>");
+                                    echo("<td>{$Pay->PRODCODE}</td>");                                    
+                                    echo("<td><a target='_blank' href='index.php?controller=$Controller&ClCode={$Pay->CLCODE}&ContCode={$Pay->CONTCODE}'>{$Pay->CONTCODE}</a></td>");
                                     echo("<td>{$Pay->CONTCLIENT}</td>");
                                     echo("<td>{$Pay->PAYMETHOD}</td>");
                                     echo("<tr>");
