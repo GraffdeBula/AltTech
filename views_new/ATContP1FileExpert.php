@@ -237,6 +237,7 @@
                 <table class='table table-hover'>
                     <thead>
                         <tr>
+                            <th>Проверено</th>
                             <th>CRCODE</th>
                             <th>По договору</th>
                             <th>Текущий кредитор</th>
@@ -256,6 +257,7 @@
                             echo("<tr class='table-secondary'>");
                             //(new MyForm('ATClientFileCtrl','Index',$_GET['ClCode'],0))->AddForm();
                             //echo("<input type='hidden' name='ClAccID' value='{$Comment->ID}'>");
+                            echo("<td><input class='form-check-input' type='checkbox' value='' id='flexCheckDefault'></td>");
                             echo("<td>$Credit->CRCODE</td>");
                             echo("<td>$Credit->CRBANKCONTNAME</td>");
                             echo("<td>$Credit->CRBANKCURNAME</td>");

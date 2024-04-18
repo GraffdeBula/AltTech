@@ -129,6 +129,7 @@
                                 <th scope='col'>Дата</th>
                                 <th scope='col'>Сумма</th>
                                 <th scope='col'>Назначение платежа</th>
+                                <th scope='col'>PROD CODE</th>
                                 <th scope='col'>Номер договора</th>
                                 <th scope='col'>Клиент</th>                                                
                                 <th scope='col'>Способ платежа</th>
@@ -145,6 +146,7 @@
                                     echo("<td>{$PayDate}</td>");
                                     echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");
                                     echo("<td>{$Pay->PAYPR}</td>");
+                                    echo("<td>{$Pay->PRODCODE}</td>");
                                     echo("<td>{$Pay->CONTCODE}</td>");
                                     echo("<td>{$Pay->CONTCLIENT}</td>");
                                     echo("<td>{$Pay->PAYMETHOD}</td>");

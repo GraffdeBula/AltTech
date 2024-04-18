@@ -78,7 +78,7 @@ class Payment {
         }                
         $OrgPref=(new Branch($this->ContBranch))->getRec()->BRORGPREF;        
         (new PaymentMod())->addPayment($_SESSION['EmName'],$this->ProdCode,$this->ContCode,$this->PaySum,$_GET['PAYDATE'],$_GET['PAYPR'],
-                $_SESSION['EmBranch'],$OrgPref,$this->ContBranch,$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType,$this->PayMethod);
+                $_SESSION['EmBranch'],$OrgPref,$this->ContBranch,$_GET['FRPERSMANAGER'],$ClFIO,'',$this->PayType,$this->ContType,$this->PayMethod,$this->ClCode);
         
         if ($this->PayType==3){
             (new ContP1($this->ContCode))->updFirstPayDate();

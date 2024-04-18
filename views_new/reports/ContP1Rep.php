@@ -8,6 +8,9 @@
     <body>
         <div>
             <h5>Договоры БФЛ/ЗОК</h5>                                              
+            <form></form>
+            
+            
             <table class='table table-hover'>
                 <thead>
                     <tr>                       
@@ -18,6 +21,7 @@
                         <th scope='col'>Менеджер</th>
                         <th scope='col'>Долг по ЭПЭ</th>
                         <th scope='col'>Дата договора</th>
+                        <th scope='col'>Дата первого платежа</th>
                         <th scope='col'>Программа</th>
                         <th scope='col'>Тариф</th>
                         <th scope='col'>Сумма</th>
@@ -28,14 +32,16 @@
                 <?php
                     foreach ($Report as $Cont){
                         $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
+                        $PayDate=(new PrintFunctions())->DateToStr($Cont->PAYDATE);
                         echo("<tr class='table-secondary'>");
-                        echo("<td>{$Cont->CLCODE}</td>");                              
-                        echo("<td>{$Cont->CONTCODE}</td>");
-                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'><button class='btn btn-secondary'>{$Cont->CLFIO}</button></a></td>");
+                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>{$Cont->CLCODE}</button></a></td>");                        
+                        echo("<td><a target='_blank' href='index.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CONTCODE}</button></a></td>");
+                        echo("<td>$Cont->CLFIO</td>");
                         echo("<td>{$Cont->FROFFICE}</td>");
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");
                         echo str_replace('.',',',"<td>{$Cont->EXTOTDEBTSUM}</td>");
                         echo("<td>{$ContDate}</td>");
+                        echo("<td>{$PayDate}</td>");
                         echo("<td>{$Cont->FRCONTPROG}</td>");
                         echo("<td>{$Cont->FRCONTTARIF}</td>");
                         echo str_replace('.',',',"<td>{$Cont->FRCONTSUM}</td>");

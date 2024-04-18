@@ -9,12 +9,11 @@
 
 class PaymentMod extends Model{
     
-    public function addPayment($Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType,$PayMethod){
+    public function addPayment($Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType,$PayMethod,$ClCode=0){
         $Sql="INSERT INTO tbl5Payments (LgEmp,ProdCode,ContCode,PaySum,PayDate,PayPr,PayBranch,PayFirm,
-            ContBranch,ContEmp,ContClient,ContPr,PayType,ContType,PayMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        #$Sql="INSERT INTO tbl5Payments (lgEmp) VALUES ('lg')";
-        $Params=[$Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType,$PayMethod];
-        #new MyCheck($Params,0);
+            ContBranch,ContEmp,ContClient,ContPr,PayType,ContType,PayMethod,ClCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        $Params=[$Emp,$ProdCode,$ContCode,$PaySum,$PayDate,$PayPr,$PayBranch,$PayFirm,$ContBranch,$ContEmp,$ContClient,$ContPr,$PayType,$ContType,$PayMethod,$ClCode];        
         db2::getInstance()->Query($Sql,$Params);
     }
     
