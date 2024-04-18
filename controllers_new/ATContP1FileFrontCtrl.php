@@ -212,7 +212,6 @@ class ATContP1FileFrontCtrl extends ControllerMain {
 
     public function actionAddPayment(){        
         (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1,$_GET['PAYCONTTYPE'],$_GET['PAYSUM'],'','',$_GET['PAYMETHOD']))->addPayment();
-        #new MyCheck($_GET,0);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -268,9 +267,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         
         //расчитать массив платежей в погашение кредита
         $i=0;
-        $PayDate[0]=date_create($Credit->CredDate);
-        #new MyCheck($PayDate[0],0);
-        //$PayDate[0]=date_create('2023-04-15');
+        $PayDate[0]=date_create($Credit->CredDate);        
         $DebtAfterSum[0]=$Credit->CredSum;
         $Rate=$Credit->CredRate;
         foreach($List1 as $Pay){
