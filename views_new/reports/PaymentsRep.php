@@ -120,6 +120,7 @@
                 </div>
                 
                 <div class="tab-pane fade" id="repfull">
+                    <a href='downloads/PaymentRep.xlsx'><button class='btn btn-success'>В EXCEL</button></a>
                     <table class='table table-hover'>
                         <thead>
                             <tr>                       
@@ -128,9 +129,9 @@
                                 <th scope='col'>Филиал</th>
                                 <th scope='col'>Дата</th>
                                 <th scope='col'>Сумма</th>
-                                <th scope='col'>Назначение платежа</th>
-                                <th scope='col'>PROD CODE</th>
+                                <th scope='col'>Назначение платежа</th>                                
                                 <th scope='col'>Номер договора</th>
+                                <th scope='col'>Продукт</th>
                                 <th scope='col'>Клиент</th>                                                
                                 <th scope='col'>Способ платежа</th>
                             </tr>
@@ -141,9 +142,11 @@
                                     $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
                                     if ($Pay->PRODCODE==1) {
                                         $Controller='ATContP1FileFrontCtrl';
+                                        $Product='БФЛ';
                                     }
                                     if ($Pay->PRODCODE==4) {
                                         $Controller='ATContP4FileFrontCtrl';
+                                        $Product='РУ';
                                     }
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->ID}</td>");                              
@@ -151,9 +154,9 @@
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
                                     echo("<td>{$PayDate}</td>");
                                     echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");
-                                    echo("<td>{$Pay->PAYPR}</td>");
-                                    echo("<td>{$Pay->PRODCODE}</td>");                                    
+                                    echo("<td>{$Pay->PAYPR}</td>");                                                                 
                                     echo("<td><a target='_blank' href='index.php?controller=$Controller&ClCode={$Pay->CLCODE}&ContCode={$Pay->CONTCODE}'>{$Pay->CONTCODE}</a></td>");
+                                    echo("<td>$Product</td>");       
                                     echo("<td>{$Pay->CONTCLIENT}</td>");
                                     echo("<td>{$Pay->PAYMETHOD}</td>");
                                     echo("<tr>");
