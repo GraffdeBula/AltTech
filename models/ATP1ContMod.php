@@ -141,6 +141,7 @@ class ATP1ContMod extends Model{
             }            
             $i++;
         }        
+        #(new MyCheck([$Sql,$Params],0))->ShowCheck0();
         db2::getInstance()->Query($Sql,$Params);  
         
     }
