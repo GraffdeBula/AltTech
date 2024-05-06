@@ -157,7 +157,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Act->setValue('ID',$_GET['ContCode']);
         $Act->setValue('EXPCONTDATE',$Cont->getFront()->FREXPDATE);
         $Act->setValue('CITY',$Branch->getRec()->BRCITY);
-        $Act->setValue('REPDATE',$Cont->getExpert()->EXRESDAT);
+        $Act->setValue('REPDATE',(new PrintFunctions())->DateToStr($Cont->getExpert()->EXRESDAT));
         $Act->setValue('CLNAME',$Client->getClRec()->CLFIO);
         $Act->setValue('COMPNAME',$Org->getRec()->ORGNAME);
         $Act->setValue('TOTALDEBTSUM',$Cont->getExpert()->EXTOTDEBTSUM);
@@ -167,15 +167,17 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $CredList=[];
         $i=1;
         foreach($Cont->getCredList() as $CredRow){
+            
             $CredList[]=[
                 'CREDID'=>$i,
                 'CREDNAME'=>$CredRow->CRBANKCONTNAME,
                 'CREDNUM'=>$CredRow->CRCONTNUM,
-                'CREDDATE'=>$CredRow->CROPENDAT,
+                'CREDDATE'=>(new PrintFunctions())->DateToStr($CredRow->CROPENDAT),
                 'CREDCURNAME'=>$CredRow->CRBANKCURNAME,
                 'DEBTSUM'=>$CredRow->CRSUMREST,
                 'PAYSUM'=>$CredRow->CRPAYSUM,
-                'DELAY'=>$CredRow->CRDELAYYN
+                'DELAY'=>$CredRow->CRDELAYYN,
+                'PAYNUM'=>$CredRow->CRPAYSNUM
             ];
             $i++;
         }       
