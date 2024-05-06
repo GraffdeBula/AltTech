@@ -273,8 +273,8 @@
                     <hr>
                     <form method='get' autocomplete="off">
                         <?php
-                            (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                        
-                            echo("<label>Комментарий директора</label><input type='text' style='width:400' name='FRDISCAPPROVECOMMENT' value='{$Front->FRDISCAPPROVECOMMENT}'><br>");                            
+                            (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                            echo("<label>Комментарий директора</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
                             if (in_array($_SESSION['EmRole'],['top','admin'])){
                                 echo("<button class='btn btn-danger'>Согласовать</button>");
                             }
@@ -529,16 +529,25 @@
                 echo("<button type='submit' class='btn btn-success'>Завершить работу (услуга оказана)</button>");
                 echo("</form>");   
                 
-                echo("<form method='get' autoload='off'>");
+                echo("<form method='get' autoload='off' autocomplete='off'>");
                 (new MyForm('ATContP1FileFrontCtrl','WorkBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     
                 echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
-                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' size='60'></p>");
+                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60'></p>");
                 echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (услуга не оказана)</button>");
                 echo("</form>");   
                 
                 echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ContDopWorkBrake&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
                 . "<button class='btn btn-info'>Допсоглашение о расторжении</button></a>");
+                
+                echo("<form method='get' autoload='off' autocomplete='off'>");
+                (new MyForm('ATContP1FileFrontCtrl','ExpBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                #$CurDate=(new PrintFunctions())->DateToStr(date("Y-m-d"));
+                $CurDate=date("Y-m-d");
+                echo("<input type='hidden' name='FRARCHDATE' value='{$CurDate}'>");
+                echo("<p><label>Почему не проведена ЭПЭ</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60' ></p>");
+                echo("<button type='submit' class='btn btn-danger'>Отправить в архив (ЭПЭ не проведена)</button>");
+                echo("</form>");
             ?>        
                 
         </div>

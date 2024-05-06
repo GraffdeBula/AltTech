@@ -253,6 +253,12 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionExpBrake(){
+        $this->FrontSave();
+        (new Status())->ChangeP1Status(97, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionCredCount(){      
         //очистить расчётную таблицу
         (new P1ContCredMod())->delPayCredList();
