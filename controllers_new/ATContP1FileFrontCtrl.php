@@ -133,6 +133,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Model=new PayCalend();
         for ($i=1; $i<=$Num; $i++){
             $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$FDate->format('d.m.Y'));
+            (new logger('Date'))->logToFile($FDate->format('d.m.Y'));
             $FDate->modify("+1 month")->format('d.m.Y');
         }
         
