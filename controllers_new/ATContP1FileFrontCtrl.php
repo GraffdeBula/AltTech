@@ -134,6 +134,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         for ($i=1; $i<=$Num; $i++){
             $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$FDate->format('d.m.Y'));
             (new logger('Date'))->logToFile($FDate->format('d.m.Y'));
+            (new logger('Date'))->logToFile('день'.substr($FDate->format('d.m.Y'),0,2));
+            (new logger('Date'))->logToFile('месяц'.substr($FDate->format('d.m.Y'),3,2));
+            
             $FDate->modify("+1 month")->format('d.m.Y');
         }
         
