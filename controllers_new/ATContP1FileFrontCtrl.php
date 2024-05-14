@@ -114,7 +114,25 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         for ($i=1; $i<=$Period; $i++){
             $j=$i-1;
             $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
-            $PayDate->modify("+1 month")->format('d.m.Y');
+            $PayMonth=substr($PayDate->format('d.m.Y'),3,2);
+            if(substr($PayMonth,0,1)==0){
+                $PayMonth=substr($PayMonth,1,1);
+            } 
+            
+            $PayDate->modify("+1 month");
+            
+            $PayMonthNew=substr($PayDate->format('d.m.Y'),3,2);
+            if(substr($PayMonthNew,0,1)==0){
+                $PayMonthNew=substr($PayMonthNew,1,1);
+            }
+                      
+            while ($PayMonthNew-1>$PayMonth){
+                $PayDate->modify("-1 day");
+                $PayMonthNew=substr($PayDate->format('d.m.Y'),3,2);
+                if(substr($PayMonthNew,0,1)==0){
+                    $PayMonthNew=substr($PayMonthNew,1,1);
+                }
+            }
         }
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
@@ -125,24 +143,46 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionAddIndPayCalend(){//Сформировать индивидуальный график
+        #new MyCheck($_GET,0);
         $Num=$_GET['PayCount'];
         $PayNum=$_GET['PayNum'];
-        $PaySum=$_GET['PaySum'];
-        $FDate=new DateTime($_GET['PayDate']);  
+        
+        if ((isset($_GET['CalendType']))&&($_GET['CalendType']=='AnnSum')){
+            $PaySum=$_GET['PaySum'];
+        } elseif ((isset($_GET['CalendType']))&&($_GET['CalendType']=='TotSum')){
+            $PaySum=$_GET['PaySum']/$Num;
+        }
+                
+        $PayDate=new DateTime($_GET['PayDate']);  
         $ContCode=$_GET['ContCode'];
         $Model=new PayCalend();
-        for ($i=1; $i<=$Num; $i++){
-            $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$FDate->format('d.m.Y'));
-            (new logger('Date'))->logToFile($FDate->format('d.m.Y'));
-            (new logger('Date'))->logToFile('день'.substr($FDate->format('d.m.Y'),0,2));
-            (new logger('Date'))->logToFile('месяц'.substr($FDate->format('d.m.Y'),3,2));
+        for ($i=1; $i<=$Num; $i++){                        
+            $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$PayDate->format('d.m.Y'));
             
-            $FDate->modify("+1 month")->format('d.m.Y');
+            $PayMonth=substr($PayDate->format('d.m.Y'),3,2);
+            if(substr($PayMonth,0,1)==0){
+                $PayMonth=substr($PayMonth,1,1);
+            } 
+            
+            $PayDate->modify("+1 month");
+            
+            $PayMonthNew=substr($PayDate->format('d.m.Y'),3,2);
+            if(substr($PayMonthNew,0,1)==0){
+                $PayMonthNew=substr($PayMonthNew,1,1);
+            }
+                      
+            while ($PayMonthNew-1>$PayMonth){
+                $PayDate->modify("-1 day");
+                $PayMonthNew=substr($PayDate->format('d.m.Y'),3,2);
+                if(substr($PayMonthNew,0,1)==0){
+                    $PayMonthNew=substr($PayMonthNew,1,1);
+                }
+            }            
         }
         
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    
+        
     public function actionAddPayCalend(){//добавить платёж в график
         $Model=new PayCalend();
         $Model->addPlanPay($_GET['ContCode'],$_GET['PayNum'],$_GET['PaySum'],$_GET['PayDate']);
