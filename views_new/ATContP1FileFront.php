@@ -190,7 +190,9 @@
             </div>
             <div class='row'>-</div>
             <div class='row'>
-                <div class='col-lg-4'><h5>График плановых платежей</h5>
+                <div class='col-lg-4'>
+                    <h5>График плановых платежей</h5>
+                    <hr>
                     <form method='get'>
                         <?php
                             (new MyForm('ATContP1FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
@@ -201,15 +203,34 @@
                         <input type='text' name='PaySum' value='0' size='11'>
                         <button class='btn btn-success'>Добавить</button>
                     </form>
+                    <hr>
                     <form>
                         <?php
                             (new MyForm('ATContP1FileFrontCtrl','AddIndPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
                         ?>
-                        <h6>Рассчитать индивидуальный график</h6>
-                        <label>Сумма платежа</label><input type='text' name='PaySum' value='0' size='10'>
-                        <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'><br>
-                        <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
-                        <label>начиная с</label><input type='number' name='PayNum' value='' size='4'><br>
+                        <fieldset>
+                            <h6>Рассчитать индивидуальный график</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios1" value="AnnSum" checked="">
+                                <label class="form-check-label" for="optionsRadios1">
+                                    По сумме ежемесячного платежа
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios2" value="TotSum">
+                                <label class="form-check-label" for="optionsRadios2">
+                                    По общей сумме платежей
+                                </label>
+                                </div>      
+                        </fieldset>                        
+                        <p>
+                            <label>Сумма</label><input type='text' name='PaySum' value='0' size='10'>
+                            <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'>
+                        </p>
+                        <p>
+                            <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
+                            <label>начиная с</label><input type='number' name='PayNum' value='' size='4'>
+                        </p>
                         <button class='btn btn-success'>Сформировать индивидуальный график</button>
                     </form>
                     <a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelCalend&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>'><button class='btn btn-danger'>Удалить график</button></a>
