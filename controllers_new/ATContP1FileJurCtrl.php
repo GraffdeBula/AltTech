@@ -33,8 +33,37 @@ class ATContP1FileJurCtrl extends ControllerMain {
     }
     
     public function actionJurSave(){
+        $this->updBackOf();        
+        header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionIsk(){
         $this->updBackOf();
-        
+        (new Status())->ChangeP1Status(23, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionIskSent(){
+        $this->updBackOf();
+        (new Status())->ChangeP1Status(25, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionProcRest(){
+        $this->updBackOf();
+        (new Status())->ChangeP1Status(31, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionProcReal(){
+        $this->updBackOf();
+        (new Status())->ChangeP1Status(32, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionProcSuccess(){
+        $this->updBackOf();
+        (new Status())->ChangeP1Status(39, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileJurCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     

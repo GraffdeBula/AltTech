@@ -88,57 +88,57 @@
             </form>
             <form method='get' autocomplete="off">
                 <?php
-                    (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата составления иска: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                    (new MyForm('ATContP1FileJurCtrl','Isk',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    echo("Дата подготовки иска: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                ?>
+                <button class='btn btn-warning'>Сохранить</button>
+            </form>
+            <form method='get' autocomplete="off">
+                <?php
+                    (new MyForm('ATContP1FileJurCtrl','IskSent',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    echo("Дата подачи иска: <input type='date' name='BOISKSENTDATE' value={$BackOf->BOISKSENTDATE}>");
+                ?>
+                <button class='btn btn-warning'>Сохранить</button>
+            </form>
+            <form method='get' autocomplete="off">
+                <?php
+                    (new MyForm('ATContP1FileJurCtrl','ProcRest',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    echo("Дата введения процедуры реструктуризации: <input type='date' name='BOPROCRESTDATE' value={$BackOf->BOPROCRESTDATE}>");
                 ?>
                 <button class='btn btn-warning'>Сохранить</button>
             </form>
             <form method='get' autocomplete="off">
                 <?php
                     (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата подачи иска: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                    echo("Дата завершения процедуры реструктуризации: <input type='date' name='BOPROCRESTFINDATE' value={$BackOf->BOPROCRESTFINDATE}>");
+                ?>
+                <button class='btn btn-warning'>Сохранить</button>
+            </form>
+            <form method='get' autocomplete="off">
+                <?php
+                    (new MyForm('ATContP1FileJurCtrl','ProcReal',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    echo("Дата введения процедуры реализации имущества: <input type='date' name='BOPROCREALDATE' value={$BackOf->BOPROCREALDATE}>");
                 ?>
                 <button class='btn btn-warning'>Сохранить</button>
             </form>
             <form method='get' autocomplete="off">
                 <?php
                     (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата введения процедуры реструктуризации: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                    echo("Дата завершения процедуры реализации имущества: <input type='date' name='BOPROCREALFINDATE' value={$BackOf->BOPROCREALFINDATE}>");
                 ?>
                 <button class='btn btn-warning'>Сохранить</button>
             </form>
             <form method='get' autocomplete="off">
                 <?php
                     (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата завершения процедуры реструктуризации: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                    echo("Дата заключения мирового соглашения: <input type='date' name='BOBANKRMIRDATE' value={$BackOf->BOBANKRMIRDATE}>");
                 ?>
                 <button class='btn btn-warning'>Сохранить</button>
             </form>
             <form method='get' autocomplete="off">
                 <?php
                     (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата введения процедуры реализации имущества: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
-                ?>
-                <button class='btn btn-warning'>Сохранить</button>
-            </form>
-            <form method='get' autocomplete="off">
-                <?php
-                    (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата завершения процедуры реализации имущества: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
-                ?>
-                <button class='btn btn-warning'>Сохранить</button>
-            </form>
-            <form method='get' autocomplete="off">
-                <?php
-                    (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата заключения мирового соглашения: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
-                ?>
-                <button class='btn btn-warning'>Сохранить</button>
-            </form>
-            <form method='get' autocomplete="off">
-                <?php
-                    (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                    echo("Дата списания задолженности: <input type='date' name='BOISKDATE' value={$BackOf->BOISKDATE}>");
+                    echo("Дата списания задолженности: <input type='date' name='BOBANKRFINDATE' value={$BackOf->BOBANKRFINDATE}>");
                 ?>
                 <button class='btn btn-warning'>Сохранить</button>
             </form>
