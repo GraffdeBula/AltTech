@@ -137,7 +137,7 @@
             </form>
             <form method='get' autocomplete="off">
                 <?php
-                    (new MyForm('ATContP1FileJurCtrl','JurSave',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    (new MyForm('ATContP1FileJurCtrl','ProcSuccess',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                     echo("Дата списания задолженности: <input type='date' name='BOBANKRFINDATE' value={$BackOf->BOBANKRFINDATE}>");
                 ?>
                 <button class='btn btn-warning'>Сохранить</button>
