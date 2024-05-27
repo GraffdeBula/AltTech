@@ -211,7 +211,7 @@
                         echo("<td>{$Pay->PAYPR}</td>");
                         if ($i==0) {echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");}
                         if ($_SESSION['EmRole']=='admin'){
-                            echo("<td><a href=index_admin.php?controller=ATContP4FileFrontCtrl&action=FormPayBill&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button>FORM</button></a></td>");
+                            echo("<td><a href=index_admin.php?controller=ATContP4FileFrontCtrl&action=FormPayBill&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&Id={$Pay->ID}><button>FORM</button></a></td>");
                         }
                         if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP4FileFrontCtrl','DelPayment')){
                             echo("<td><a href=index_admin.php?controller=ATContP4FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
