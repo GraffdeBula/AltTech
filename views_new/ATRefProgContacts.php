@@ -15,7 +15,7 @@
 <body>           
     <div>
         <div class='row'>
-           <h1>Форма ввода контактов для обзвона</h1>
+           <h1>Программа активных рекомендаций</h1>
         </div>       
         
         <div class='row'>
@@ -34,17 +34,18 @@
                     </select>
                     <label>Промо код</label><input type='text' name='AgCode' value='<?=$Agent->CODE?>'>
                     <button class='btn btn-warning'>СОХРАНИТЬ</button>
+                    <?=$_SESSION['EmName']?>
                 </form>
             </div>
         </div>
         <h2>Список контактов</h2>
         <table>
             <thead>
-                <tr>                                               
-                    <th scope='col'>ID</th>
+                <tr>        
+                    <th></th>
                     <th scope='col'>ИМЯ</th>
                     <th scope='col'>Телефон</th>                    
-                    <th scope='col'>Добавить</th>                    
+                    <th scope='col'>Добавить</th>                                                           
                 </tr>
             </thead>
             <tbody>
@@ -57,8 +58,7 @@
                             <input type='hidden' name='AgCode' value='<?=$Agent->CODE?>'>
                             <input type='hidden' name='AgPhone' value='<?=$Agent->PHONE?>'>
                         </td>
-                        <td>
-                            
+                        <td>                            
                             <input type='text' name='ContName'>
                         </td>
                         <td>
@@ -66,16 +66,15 @@
                         </td>
                         <td>
                             <button class='btn btn-warning'>Добавить</button>
-                        </td>                        
+                        </td>                          
                     </form>
                 </tr>
                 <?php
                     foreach($Contacts as $Contact){
                         echo("<tr>
-                            <td>$Contact->ID<td>
-                            <td>$Contact->NAME<td>
-                            <td>$Contact->PHONE<td>
-                                <td></td>
+                            <td></td>
+                            <td>$Contact->NAME</td>
+                            <td>$Contact->PHONE</td>                            
                         </tr>");
                     }
                 ?>
