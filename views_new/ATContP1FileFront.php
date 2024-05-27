@@ -24,15 +24,8 @@
             <form method='get'>
             <?php
                 (new MyForm('ATContP1FileFrontCtrl','ChangeBranch',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                echo("Филиал обслуживания:   <select name='FROFFICE'>");
-                echo("<option value='{$Front->FROFFICE}'>{$Front->FROFFICE}</option>");
-                /* ГОВНОКОДИЩЕ!!!
-                 */
-                $BranchList=(new Branch(''))->getBranchList();
-                foreach($BranchList as $Branch){
-                    echo("<option value='{$Branch->BRNAME}'>{$Branch->BRNAME}</option>");
-                }                
-                echo("</select>");
+                echo("Филиал обслуживания:");
+                (new EchoBranchList())->echoList($Front->FROFFICE,'FROFFICE');                
                 if (in_array($_SESSION['EmRole'],['top','admin','director']))
                 {
                     echo("<button class='btn btn-warning'>Сменить</button>");

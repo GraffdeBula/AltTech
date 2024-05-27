@@ -10,7 +10,9 @@
             <h5>Договоры Экспертизы</h5>                                              
             <div>
                 <a href='downloads/NewExpRep.xlsx'><button class='btn btn-success'>В EXCEL</button></a>
-                <select></select>
+                <?php
+                    (new EchoBranchList())->echoList('','BranchName');
+                ?>
             </div>
             <table class='table table-hover'>
                 <thead>

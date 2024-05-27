@@ -15,9 +15,10 @@ class autoloader {
         UPPER_ROOT.'/infrastructure',
         UPPER_ROOT.'/integrations',
         UPPER_ROOT.'/domain',
+        UPPER_ROOT.'/view_traits',
         
         UPPER_ROOT.'/functions',        
-        UPPER_ROOT.'/traits',        
+        UPPER_ROOT.'/traits',                
         UPPER_ROOT.'/amo',        
         
         UPPER_ROOT.'/controllers_new',        

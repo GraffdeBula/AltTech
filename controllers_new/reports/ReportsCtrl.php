@@ -5,6 +5,7 @@
  * @author Andrey
  */
 class ReportsCtrl extends ControllerMain{
+        
     protected $Report;
     public function actionContP1Rep(){//отчёт по новым договорам
         $this->Report=(new ReportsMod())->getContP1();               
@@ -15,7 +16,7 @@ class ReportsCtrl extends ControllerMain{
     public function actionContExpRep(){//отчёт по новым экспертизам
         $this->Report=(new ReportsMod())->getContExp();     
         $this->RepExpToExcel($this->Report, 'NewExpRep');
-        $this->render('reports/ContExpRep',['Report'=> $this->Report]);
+        $this->render('reports/ContExpRep',['Report'=>$this->Report,'BranchList'=>[]]);
     }
     
     protected function RepExpToExcel($Arr,$File){

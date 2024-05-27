@@ -45,9 +45,8 @@ abstract class ControllerMain {
     
     protected function render($name,$args=[]){//метод загрузки общего щаблона () и отображения в нём конкретной view
         if ($this->useLayout){
-            echo $this->renderTemplate($this->userLayout,[
-                #'title'=> get_class($this), //заголовок открываемой страницы - название текущего класса (контроллера)
-                'title'=> $this->ViewName,
+            echo $this->renderTemplate($this->userLayout,[                
+                'title'=> $this->ViewName, //заголовок открываемой страницы
                 'content'=>$this->renderTemplate($name, $args) //контент открываемой страницы - название нужной вью и массив аргументов для неё
             ]);
         }else{
@@ -56,6 +55,12 @@ abstract class ControllerMain {
     }
 
     protected function renderTemplate($name, $args=[]){ //метод получает имя шаблона и аргументы для отображения       
+        foreach($args as $key=>$arg){
+            if($arg==[]){
+                $arg==(new GetDataForView())->getData($key);
+            }
+        }
+        
         extract($args); //переменная client1 не видна внутри этого метода (т.к. определена в другом методе)
             //поэтому при передаче client1 в функцию создаём массив с известным названием ключа, а функция extract
             //переменную с этим названием и передаст в неё значение переменной client
