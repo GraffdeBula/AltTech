@@ -120,7 +120,8 @@
         </div><!--список клиентов-->
         
         <div class="tab-pane fade" id="refer">
-            <a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Список агентов</button></a>
+            <p><a target='_blank' href='index_admin.php?controller=RefProgContactsCtrl'><button class="btn btn-primary">Форма для внесения контактов</button></a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Список агентов по основной программе</button></a></p>
         </div><!--Реферальная программа-->
         <div  class='tab-pane fade' id='expert'>
             <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки договоров на ЭПЭ</button></a>

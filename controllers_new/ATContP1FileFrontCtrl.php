@@ -261,8 +261,10 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionDelPayment(){
-        (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
-        (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
+        if (in_array($_SESSION['EmRole'],['top','admin'])){
+            (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
+            (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
+        }
         #header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     

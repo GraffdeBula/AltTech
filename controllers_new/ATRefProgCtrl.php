@@ -15,11 +15,11 @@ class ATRefProgCtrl extends ControllerMain {
         $this->GetRefers();    
         $this->ExportToExcel((new AT7ReferProg())->GetAgentFullList(), 'RefFullRefers');
         $this->ShowList();
-    }
+    }   
             
     public function actionSaveAgent(){//реферальная программа
         $Model=new AT7ReferProg();
-        $Model->InsAgent($_GET['AgName'],$_GET['AgPhone'],$_SESSION['EmName']);
+        $Model->InsAgent($_GET['AgName'],$_GET['AgPhone'],$_SESSION['EmName'],1);
         
         $NewAg=$Model->GetAgent($_GET['AgName']);
         $ID=2731+$NewAg->ID;
@@ -40,7 +40,7 @@ class ATRefProgCtrl extends ControllerMain {
             #new MyCheck($_GET['AgCode'],0);
         }
         if ((isset($_GET['AgPhone']))&&($_GET['AgPhone']!='')){
-            $this->Refers=(new AT7ReferProg())->GetAgentByPhone($_GET['AgPhone']);
+            $this->Refers=(new AT7ReferProg())->GetAgentsByPhone($_GET['AgPhone']);
         }             
         $this->ShowList();
     }

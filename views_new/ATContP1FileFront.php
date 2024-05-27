@@ -383,7 +383,14 @@
                 <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
                 <div class='col-10'>
                     <label>Сумма</label><input type='text' value='0' name='PAYSUM' required>
-                    <label>Дата</label><input type='date' name='PAYDATE' value='<?=date("Y-m-d")?>' required>
+                    <?php
+                        $CurDate=date("Y-m-d");
+                        if (in_array($_SESSION['EmRole'],['top','admin'])){
+                            echo("<label>Дата</label><input type='date' name='PAYDATE' value='{$CurDate}' required>");
+                        } else {
+                            echo("<input type='hidden' name='PAYDATE' value='{$CurDate}' required>");
+                        }
+                    ?>
                     <label>Тип</label><select name='PAYCONTTYPE'>
                         <?php
                         if ($Front->FRCONTTYPE==1){
