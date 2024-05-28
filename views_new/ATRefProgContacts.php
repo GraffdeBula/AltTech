@@ -26,7 +26,7 @@
                         (new MyForm('RefProgContactsCtrl','SaveAgent'))->AddForm2();
                     ?>
                     <label>ФИО агента</label><input type='text' name='AgName' value='<?=$Agent->NAME?>'>
-                    <label>телефон</label><input type='text' name='AgPhone' value='<?=$Agent->PHONE?>'>
+                    <label>телефон</label><input class='tel' type='text' name='AgPhone' value='<?=$Agent->PHONE?>'>
                     <label>тип</label><select name='Status'>
                         <option value='<?=$Agent->STATUS?>'><?=$Status?></option>
                         <option value='3'>открытый</option>
@@ -62,7 +62,7 @@
                             <input type='text' name='ContName'>
                         </td>
                         <td>
-                            <input type='text' name='ContPhone'>
+                            <input type='text' class='tel' name='ContPhone'>
                         </td>
                         <td>
                             <button class='btn btn-warning'>Добавить</button>

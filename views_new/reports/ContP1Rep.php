@@ -9,7 +9,16 @@
         <div>
             <h5>Договоры БФЛ/ЗОК</h5>    
             <a href='downloads/NewContRep.xlsx'><button class='btn btn-success'>В EXCEL</button></a>
-            <form></form>
+            <form>
+                    <label>Филиал</label>
+                    <?php                    
+                        (new EchoBranchList())->echoList('','BranchName');
+                        (new MyForm('ReportsCtrl','ContP1Rep'))->AddForm2();
+                    ?>
+                    <label>Показать договоры от </label><input type='date' name='DateF'>
+                    <label> до </label><input type='date' name='DateL'> 
+                    <button class='btn btn-info'>Сформировать отчёт</button>
+                </form>
                         
             <table class='table table-hover'>
                 <thead>

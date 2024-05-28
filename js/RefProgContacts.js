@@ -8,60 +8,45 @@
  */
 
 
-/*платежи*/
 
-var url=new URL(window.location.href);
-var ContCode=url.searchParams.get('ContCode');
-var DivPaymentList=document.getElementById('PaymentList');
-var AddPayBtn=document.getElementById('AddPayBtn');
 
-getPayList();
-
-function getPayList(){
-    var PaymentListReq=new XMLHttpRequest();
-    PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
-    PaymentListReq.onload = function(){
-        var PaymentList=JSON.parse(this.responseText);
-        console.log(PaymentList);
-        output='';
-        for (var i in PaymentList ){
-            var MyDate=PaymentList[i].PAYDATE;
-            
-//            MyDate.toLocaleDateString('ru-RU', {
-//                year: 'numeric',
-//                month: '2-digit',
-//                day: '2-digit'
-//            });
-//            console.log(MyDate);
-            
-            output+="<tr class='table-active'>"+
-                "<td>"+PaymentList[i].PAYCODE+"</td>"+
-                "<td>"+PaymentList[i].PAYDATE+"</td>"+
-                "<td>"+PaymentList[i].PAYSUM+"</td>"+
-                "<td>"+PaymentList[i].PAYPR+"</td>"+
-                "<td>"+PaymentList[i].PAYMETHOD+"</td>"+
-                "<td><a href='payments/"+PaymentList[i].ID+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
-                "<td><a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить "+PaymentList[i].ID+"</button></a></td>"+
-                
-                "</tr>";
-
-        }
-        DivPaymentList.innerHTML=output;
+window.addEventListener("DOMContentLoaded", function() {
+  [].forEach.call( document.querySelectorAll('.tel'), function(input) {
+    var keyCode;
+    function mask(event) {
+      event.keyCode && (keyCode = event.keyCode);
+      var pos = this.selectionStart;
+      if (pos < 3) event.preventDefault();
+      var matrix = "+7 (___) ___ ____",
+          i = 0,
+          def = matrix.replace(/\D/g, ""),
+          val = this.value.replace(/\D/g, ""),
+          new_value = matrix.replace(/[_\d]/g, function(a) {
+              return i < val.length ? val.charAt(i++) : a
+          });
+      i = new_value.indexOf("_");
+      if (i != -1) {
+          i < 5 && (i = 3);
+          new_value = new_value.slice(0, i)
+      }
+      var reg = matrix.substr(0, this.value.length).replace(/_+/g,
+          function(a) {
+              return "\\d{1," + a.length + "}"
+          }).replace(/[+()]/g, "\\$&");
+      reg = new RegExp("^" + reg + "$");
+      if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) {
+        this.value = new_value;
+      }
+      if (event.type == "blur" && this.value.length < 5) {
+        this.value = "";
+      }
     }
-    PaymentListReq.send();
 
-}
+    input.addEventListener("input", mask, false);
+    input.addEventListener("focus", mask, false);
+    input.addEventListener("blur", mask, false);
+    input.addEventListener("keydown", mask, false);
 
-function addPayment(){
-    
-}
+  });
 
-function delPayment(DelId){
-    
-    var PaymentDelReq=new XMLHttpRequest();
-    PaymentDelReq.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ContCode='+ContCode+'&PayId='+DelId,true);
-    PaymentDelReq.send();
-    alert('Платёж удалён');
-    setTimeout(getPayList(),1000);
-    
-}
+});
