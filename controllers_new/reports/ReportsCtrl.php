@@ -7,14 +7,52 @@
 class ReportsCtrl extends ControllerMain{
         
     protected $Report;
+    
+    public function actionShowContP1RepForm(){//отчёт по новым договорам
+        $this->render('reports/ContP1Rep',['Report'=>[]]);    
+    }
+    
     public function actionContP1Rep(){//отчёт по новым договорам
-        $this->Report=(new ReportsMod())->getContP1();               
+        $DateF=date('d.m.Y');
+        if ($_GET['DateF']!=''){
+            $DateF=$_GET['DateF'];
+        }
+        $DateL=date('d.m.Y');
+        if ($_GET['DateL']!=''){
+            $DateL=$_GET['DateL'];
+        }
+        $Branch=$_GET['BranchName'];
+        
+        if ($Branch!=''){
+            $this->Report=(new ReportsMod())->getContP1Branch($DateF,$DateL,$Branch);
+        } else {
+            $this->Report=(new ReportsMod())->getContP1($DateF,$DateL);     
+        }
+                   
         $this->RepContP1ToExcel($this->Report, 'NewContRep');
         $this->render('reports/ContP1Rep',['Report'=> $this->Report]);
     }
     
+    public function actionShowContExpForm(){
+        $this->render('reports/ContExpRep',['Report'=>[],'BranchList'=>[]]);
+    }
+    
     public function actionContExpRep(){//отчёт по новым экспертизам
-        $this->Report=(new ReportsMod())->getContExp();     
+        $DateF=date('d.m.Y');
+        if ($_GET['DateF']!=''){
+            $DateF=$_GET['DateF'];
+        }
+        $DateL=date('d.m.Y');
+        if ($_GET['DateL']!=''){
+            $DateL=$_GET['DateL'];
+        }
+        $Branch=$_GET['BranchName'];
+        
+        if ($Branch!=''){
+            $this->Report=(new ReportsMod())->getContExpBranch($DateF,$DateL,$Branch);
+        } else {
+            $this->Report=(new ReportsMod())->getContExp($DateF,$DateL);     
+        }
         $this->RepExpToExcel($this->Report, 'NewExpRep');
         $this->render('reports/ContExpRep',['Report'=>$this->Report,'BranchList'=>[]]);
     }

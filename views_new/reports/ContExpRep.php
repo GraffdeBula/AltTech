@@ -10,9 +10,16 @@
             <h5>Договоры Экспертизы</h5>                                              
             <div>
                 <a href='downloads/NewExpRep.xlsx'><button class='btn btn-success'>В EXCEL</button></a>
-                <?php
-                    (new EchoBranchList())->echoList('','BranchName');
-                ?>
+                <form>
+                    <label>Филиал</label>
+                    <?php                    
+                        (new EchoBranchList())->echoList('','BranchName');
+                        (new MyForm('ReportsCtrl','ContExpRep'))->AddForm2();
+                    ?>
+                    <label>Показать договоры от </label><input type='date' name='DateF'>
+                    <label> до </label><input type='date' name='DateL'> 
+                    <button class='btn btn-info'>Сформировать отчёт</button>
+                </form>    
             </div>
             <table class='table table-hover'>
                 <thead>
