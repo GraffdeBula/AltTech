@@ -27,6 +27,7 @@
                     <p>Информационная система АЛЬТ-ТЕХ (КЛИЕНТ 2.0)   ООО ФПК АЛЬТЕРНАТИВА      
                         <a href="index_admin.php?controller=ATMainFormCtrl&action=Exit"><button class='btn btn-secondary'>ВЫХОД</button></a>
                     </p>
+                    <p>Привет, <?=$_SESSION['EmName']?></p>
                 </h4>                
             </div>
             <?=$content?>

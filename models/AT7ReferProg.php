@@ -67,9 +67,9 @@ class AT7ReferProg extends Model{
         db2::getInstance()->FetchOne($Sql,[9,$Comment,$ID]);
     }
     
-    public function addContact($Name,$Phone,$Code,$Comment) {
-        $Sql='INSERT INTO tbl7Contacts (Name,Phone,Agent,Comment) VALUES (?,?,?,?)';
-        db2::getInstance()->FetchOne($Sql,[$Name,$Phone,$Code,$Comment]);
+    public function addContact($Name,$Phone,$Code,$Comment,$EmName) {
+        $Sql='INSERT INTO tbl7Contacts (Name,Phone,Agent,Comment,lgEmp) VALUES (?,?,?,?,?)';
+        db2::getInstance()->FetchOne($Sql,[$Name,$Phone,$Code,$Comment,$EmName]);
     }
     
     public function getContactList($Code) {

@@ -20,7 +20,7 @@ class RefProgContactsCtrl extends ControllerMain {
         
         $NewAg=$Model->GetAgent($_GET['AgName']);
         $ID=2731+$NewAg->ID;
-        $Code='AgentLight'.$ID;
+        $Code='AgentActive'.$ID;
         $ReferLink="https://fpk-alternativa.ru/bankrotstvo?utm_term=promo&kod={$Code}";
         $Model->UpdAgent($NewAg->ID, $NewAg->NAME, $Code, $ReferLink, $_GET['AgPhone']);
         $this->Agent=$this->getAgent();        
@@ -29,7 +29,7 @@ class RefProgContactsCtrl extends ControllerMain {
     
     public function actionSaveContact(){        
         $Model=new AT7ReferProg();
-        $Model->addContact($_GET['ContName'], $_GET['ContPhone'], $_GET['AgCode'], 'comment');
+        $Model->addContact($_GET['ContName'], $_GET['ContPhone'], $_GET['AgCode'], 'comment',$_SESSION['EmName']);
         
         $this->Agent=$this->getAgent();        
         $this->getContList();
@@ -39,12 +39,11 @@ class RefProgContactsCtrl extends ControllerMain {
     }
     
     protected function getContList(){
-        $this->ContList=(new AT7ReferProg())->getContactList($_GET['AgCode']);
-        #new MyCheck($this->ContList,0);
+        $this->ContList=(new AT7ReferProg())->getContactList($_GET['AgCode']);        
     }
             
     protected function showList(){       
-        $this->ViewName='Реферальная программа';
+        $this->ViewName='Программа акивных рекомендаций';
         $args=['Agent'=>$this->Agent,'Contacts'=>$this->ContList];        
         $this->render('ATRefProgContacts',$args);
     }
