@@ -65,7 +65,7 @@ class AmoCtrl extends ControllerMain{
     
     public function actionGetUser(){
         $Model=new AmoMethods();
-        $this->AmoResult=$Model->getUser();
+        $this->AmoResult=$Model->getUsers();
         $this->actionIndex();
     }
             

@@ -23,15 +23,7 @@ class AmoMethods {
             return [];
         }
     }
-    
-    public function getPipelineList(){
-        (new logger('log_amo'))->logToFile('AmoMethods: getPipelineList');
-        $Amo=new AmoRequests();
-        $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads/pipelines');
-        $Amo->setVar('AmoMethod','GET');
-        return $Amo->request()['_embedded']['pipelines'];
-    }
-    
+            
     public function getLeadList($strParam){
         (new logger('log_amo'))->logToFile('AmoMethods: getLeadList');
         $Amo=new AmoRequests();
@@ -40,6 +32,39 @@ class AmoMethods {
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request()['_embedded']['items'];
     } 
+    
+    public function addLead($LeadName,$ContId,$City){
+        $Data=json_encode(
+            array (array(
+                "name" => $LeadName,
+                "price" => 0,
+                "_embedded" => array(                
+                    "contacts" => array(
+                        array(
+                            "id" => $ContId
+                        )
+                    )
+                ),
+                "custom_fields_values" => array(
+                    array(
+                        "field_id" => 1672870,
+                        "values" => array (
+                            array(
+                                "value"=>$City
+                            )
+                        )
+                    )
+                )
+                                    
+        )));
+                
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads');
+        $Amo->setVar('AmoHeader','application/json');
+        $Amo->setVar('AmoMethod','POST');
+        $Amo->setVar('AmoData',$Data);
+        return $Amo->request();
+    }
     
     public function getContact($ContId){
         (new logger('log_amo'))->logToFile('AmoMethods: getContactById');
@@ -63,6 +88,31 @@ class AmoMethods {
         return $Amo->request()['_embedded']['items'][0];
     }
     
+    public function addContact($Name,$Phone){
+        $Data=json_encode(
+            array (array(
+                "name" => $Name,  
+                "custom_fields_values" => array(
+                    array(
+                        "field_id" => 646794,
+                        "field_name" => "Телефон",
+                        "values" => array (
+                            array(
+                                "value"=>$Phone
+                            )
+                        )
+                    )
+                )
+        )));
+                
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/contacts');
+        $Amo->setVar('AmoHeader','application/json');
+        $Amo->setVar('AmoMethod','POST');
+        $Amo->setVar('AmoData',$Data);
+        return $Amo->request();
+    }
+    
     public function getUsers(){
         (new logger('log_amo'))->logToFile('AmoMethods: getUsers');
         $Amo=new AmoRequests();
@@ -70,5 +120,13 @@ class AmoMethods {
         $Amo->setVar('AmoHeader',false);
         $Amo->setVar('AmoMethod','GET');
         return $Amo->request()['_embedded']['users'];
+    }
+    
+    public function getPipelineList(){
+        (new logger('log_amo'))->logToFile('AmoMethods: getPipelineList');
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads/pipelines');
+        $Amo->setVar('AmoMethod','GET');
+        return $Amo->request()['_embedded']['pipelines'];
     }
 }
