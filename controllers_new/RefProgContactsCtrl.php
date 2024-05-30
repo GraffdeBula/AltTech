@@ -33,8 +33,14 @@ class RefProgContactsCtrl extends ControllerMain {
         
         $this->Agent=$this->getAgent();        
         $this->getContList();
-        
-        
+        //постановка задачи в АМО
+        $Amo=new AmoMethods();
+        $Answer=$Amo->addContact($_GET['ContName'],$_GET['ContPhone']);
+        $ContId=$Answer['_embedded']['contacts']['0']['id'];
+        $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
+                
+        $this->AmoResult=$Amo->addLead('Контакт по рекомендации', $ContId,$Branch);        
+        //возврат на форму
         $this->ShowList();
     }
     

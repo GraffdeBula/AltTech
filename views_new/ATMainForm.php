@@ -34,7 +34,7 @@
               <a class='nav-link' data-bs-toggle='tab' href='#discounts'>Согласование скидок</a>
             </li>");
         }
-        if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
+        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='top') or ($_SESSION['EmRole']=='director') ){
             echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#amo'>AmoCRM</a>
