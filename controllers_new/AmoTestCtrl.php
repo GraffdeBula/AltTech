@@ -24,7 +24,7 @@ class AmoTestCtrl extends ControllerMain{
             $this->AmoResult=(new AmoMethods())->getContact($Answer['_embedded']['contacts']['0']['id']);
             $this->actionIndex();
         }else{
-            new MyCheck($Answer,1);
+            new MyCheck($Answer,0);
         }
         
     }
@@ -34,10 +34,12 @@ class AmoTestCtrl extends ControllerMain{
         $Answer=$Amo->addContact($_GET['ContName'],$_GET['ContPhone']);
         $ContId=$Answer['_embedded']['contacts']['0']['id'];
         $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
+                
+        $Answer=$Amo->addLead($_GET['LeadName'], $ContId,$Branch);
         
+        $Answer=$Amo->addTagToLead("Active", $Answer['_embedded']['leads']['0']['id']);
         
-        $this->AmoResult=$Amo->addLead($_GET['LeadName'], $ContId,$Branch);
-        
+        var_dump($Answer);
         $this->actionIndex();                
     }
             

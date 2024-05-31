@@ -39,7 +39,8 @@ class RefProgContactsCtrl extends ControllerMain {
         $ContId=$Answer['_embedded']['contacts']['0']['id'];
         $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
                 
-        $this->AmoResult=$Amo->addLead('Контакт по рекомендации', $ContId,$Branch);        
+        $Answer=$Amo->addLead('Новый лид по рекомендации Active', $ContId,$Branch);    
+        $Amo->addTagToLead("Active", $Answer['_embedded']['leads']['0']['id']);
         //возврат на форму
         $this->ShowList();
     }
