@@ -66,6 +66,23 @@ class AmoMethods {
         return $Amo->request();
     }
     
+    public function addTagToLead($TagName,$LeadId){
+        $Amo=new AmoRequests();
+        $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v4/leads/{$LeadId}");                
+        $Amo->setVar('AmoHeader',array('Content-Type: application/json'));
+        $Amo->setVar('AmoMethod','PATCH');
+
+        $Amo->setVar('AmoData',json_encode(
+            array(
+                "_embedded" => array(
+                    "tags" => array(
+                        array(
+                            "name" => $TagName,
+        ))))));
+                                
+        return $Amo->request();
+    }
+    
     public function getContact($ContId){
         (new logger('log_amo'))->logToFile('AmoMethods: getContactById');
         $Amo=new AmoRequests();
