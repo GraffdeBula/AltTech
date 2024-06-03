@@ -160,6 +160,16 @@ class ATDRCtrl extends ControllerMain {
         $Model->delTarif($_GET['Id']);
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRTarif");
     }
+    
+    //справочник единого тарифа
+    public function actionShowDRTarif2(){
+        $this->ViewName='Справочник единого тарифа';
+        $Model=new TarifMod();
+        $Args=['TarifList'=>$Model->getTarifElList()];
+        $this->render('dr/ATDrTarifEl',$Args);
+    }
+    
+    
     //справочник типов пакетов по филиалам
     public function actionShowDRPacBranch(){
         $this->ViewName='Справочник пакетов по филалам';
@@ -293,7 +303,7 @@ class ATDRCtrl extends ControllerMain {
         
         header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks");
     }
-    
+
     //###########справочник рисков по экспертизе
     public function actionShowDRExpRisks(){
         $this->ViewName='Справочник рисков по ЭПЭ';

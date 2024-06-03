@@ -92,5 +92,10 @@ class TarifMod extends Model{
                 . "WHERE TrComment=? AND TrSumMin<=? AND TrSumMax>=? AND PCPERIOD=? AND TrBranch=? AND TrStatus=1",
                 [$TrComment,$CredSum,$CredSum,$Period,$Branch]);
     }
+    
+    public function getTarifElList(){
+        $Sql="SELECT * FROM tblP1TarifElement";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
+    }
            
 }
