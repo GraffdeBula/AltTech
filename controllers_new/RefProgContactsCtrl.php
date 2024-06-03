@@ -34,12 +34,18 @@ class RefProgContactsCtrl extends ControllerMain {
         $this->Agent=$this->getAgent();        
         $this->getContList();
         //постановка задачи в АМО
+        if ($_GET['AgStatus']=='4'){
+            $Status='Анонимный агент';
+        }else{
+            $Status='Открытый агент';
+        }
+        
         $Amo=new AmoMethods();
         $Answer=$Amo->addContact($_GET['ContName'],$_GET['ContPhone']);
         $ContId=$Answer['_embedded']['contacts']['0']['id'];
         $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
                 
-        $Answer=$Amo->addLead('Новый лид по рекомендации Active', $ContId,$Branch);    
+        $Answer=$Amo->addLead('Рекомендация Active. '.$Status, $ContId,$Branch,$_GET['AgCode']);    
         $Amo->addTagToLead("Active", $Answer['_embedded']['leads']['0']['id']);
         //возврат на форму
         $this->ShowList();

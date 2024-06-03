@@ -56,6 +56,7 @@
                                 (new MyForm('RefProgContactsCtrl','SaveContact'))->AddForm2();
                             ?>
                             <input type='hidden' name='AgCode' value='<?=$Agent->CODE?>'>
+                            <input type='hidden' name='AgStatus' value='<?=$Agent->STATUS?>'>
                             <input type='hidden' name='AgPhone' value='<?=$Agent->PHONE?>'>
                         </td>
                         <td>                            

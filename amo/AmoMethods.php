@@ -33,7 +33,7 @@ class AmoMethods {
         return $Amo->request()['_embedded']['items'];
     } 
     
-    public function addLead($LeadName,$ContId,$City){
+    public function addLead($LeadName,$ContId,$City,$Agent){
         $Data=json_encode(
             array (array(
                 "name" => $LeadName,
@@ -51,6 +51,14 @@ class AmoMethods {
                         "values" => array (
                             array(
                                 "value"=>$City
+                            )
+                        )
+                    ),
+                    array(
+                        "field_id" => 1680040,
+                        "values" => array (
+                            array(
+                                "value"=>$Agent
                             )
                         )
                     )
