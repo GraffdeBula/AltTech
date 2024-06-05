@@ -28,19 +28,20 @@
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
             </li>"); 
         }        
-        if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
+        
+        if (in_array($_SESSION['EmRole'],['admin','top'])){
             echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#discounts'>Согласование скидок</a>
             </li>");
         }
-        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmRole']=='top') or ($_SESSION['EmRole']=='director') ){
+        if (in_array($_SESSION['EmRole'],['admin','top','director'])){
             echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#amo'>AmoCRM</a>
             </li>");
         }
-        if (($_SESSION['EmRole']=='admin')or ($_SESSION['EmRole']=='top')){
+        if (in_array($_SESSION['EmRole'],['admin','top'])){
             echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#lists'>Справочники</a>
@@ -121,7 +122,7 @@
         
         <div class="tab-pane fade" id="refer">
             <p><a target='_blank' href='index_admin.php?controller=RefProgContactsCtrl'><button class="btn btn-primary">Агенты и контакты по программе активных рекомендаций </button></a></p>
-            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Агенты по программе классичекских рекомендций</button></a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Агенты по программе классических рекомендций</button></a></p>
         </div><!--Реферальная программа-->
         <div  class='tab-pane fade' id='expert'>
             <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки договоров на ЭПЭ</button></a>
@@ -261,6 +262,9 @@
                     <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></a></p>
                 </div>  
             </div>
+            <div class='row'>
+                <p><a target="_blank" href="index_admin.php?controller=TarifCalcCtrl&action=Index"><button class="btn btn-danger">Калькулятор единого тарифа</button></a></p>
+            </div>
         </div><!--отчёты-->   
         <div class="tab-pane fade" id="discounts"> 
             <?php
@@ -287,6 +291,7 @@
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPac"><button class="btn btn-warning">Пакеты тарифов</button></a></p>                                    
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif"><button class="btn btn-primary">Тарифы</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPacBranch"><button class="btn btn-warning">Типы пакетов по филиалам</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif2"><button class="btn btn-danger">Единый тариф</button></a></p>
                 </div>
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks"><button class="btn btn-warning">Закладки для документов</button></a></p>                                    

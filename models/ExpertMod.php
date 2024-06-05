@@ -113,7 +113,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[6]);
+                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[6,7]);
     }
     public function getExpJurSoglList(){
         return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
