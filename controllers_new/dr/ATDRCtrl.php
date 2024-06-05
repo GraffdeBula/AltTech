@@ -168,7 +168,11 @@ class ATDRCtrl extends ControllerMain {
         $Args=['TarifList'=>$Model->getTarifElList()];
         $this->render('dr/ATDrTarifEl',$Args);
     }
-    
+    public function actionAddTarifEl(){
+        $Model=new TarifMod();
+        $Model->addTarifEl($_GET['ELTYPE'],$_GET['ELNAME'],$_GET['ELSUM']);
+        header("Location: index_admin.php?controller=ATDRCtrl&action=ShowDRTarif2");
+    }
     
     //справочник типов пакетов по филиалам
     public function actionShowDRPacBranch(){

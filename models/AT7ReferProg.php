@@ -22,9 +22,9 @@ class AT7ReferProg extends Model{
         return $this->Data=db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
     }
     
-    public function InsAgent($Name,$Phone,$EmName,$Status=1){
-        $Sql="INSERT INTO tbl7ReferProg (Name,Phone,lgEmp,Status) VALUES (?,?,?,?)";        
-        return $this->Data=db2::getInstance()->Query($Sql,[$Name,$Phone,$EmName,$Status]);
+    public function InsAgent($Name,$Phone,$EmName,$Status=1,$PayType=''){
+        $Sql="INSERT INTO tbl7ReferProg (Name,Phone,lgEmp,Status,PayType) VALUES (?,?,?,?,?)";        
+        return $this->Data=db2::getInstance()->Query($Sql,[$Name,$Phone,$EmName,$Status,$PayType]);
     }
     
     public function GetAgent($Name){

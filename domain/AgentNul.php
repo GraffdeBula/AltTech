@@ -12,6 +12,7 @@ class AgentNul {
     public $CODE='';
     public $REFER='';
     public $STATUS=0;
+    public $PAYTYPE='';
             
 }
 

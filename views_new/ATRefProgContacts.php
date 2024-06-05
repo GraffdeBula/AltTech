@@ -32,6 +32,11 @@
                         <option value='3'>открытый</option>
                         <option value='4'>аноним</option>
                     </select>
+                    <label>способ вознаграждения</label><select name='PayType'>
+                        <option value='<?=$Agent->PAYTYPE?>'><?=$Agent->PAYTYPE?></option>
+                        <option value='скидка'>скидка</option>
+                        <option value='оплата'>оплата</option>
+                    </select>
                     <label>Промо код</label><input type='text' name='AgCode' value='<?=$Agent->CODE?>'>
                     <button class='btn btn-warning'>СОХРАНИТЬ</button>
                     <?=$_SESSION['EmName']?>
@@ -43,7 +48,7 @@
             <thead>
                 <tr>        
                     <th></th>
-                    <th scope='col'>ИМЯ</th>
+                    <th scope='col'>Контакт</th>
                     <th scope='col'>Телефон</th>                    
                     <th scope='col'>Добавить</th>                                                           
                 </tr>

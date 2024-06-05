@@ -263,7 +263,7 @@
                 </div>  
             </div>
             <div class='row'>
-                <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif2"><button class="btn btn-danger">Калькулятор единого тарифа</button></a></p>
+                <p><a target="_blank" href="index_admin.php?controller=TarifCalcCtrl&action=Index"><button class="btn btn-danger">Калькулятор единого тарифа</button></a></p>
             </div>
         </div><!--отчёты-->   
         <div class="tab-pane fade" id="discounts"> 
@@ -291,7 +291,7 @@
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPac"><button class="btn btn-warning">Пакеты тарифов</button></a></p>                                    
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif"><button class="btn btn-primary">Тарифы</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRPacBranch"><button class="btn btn-warning">Типы пакетов по филиалам</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif2"><button class="btn btn-danger">Элементы единого тарифа</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRTarif2"><button class="btn btn-danger">Единый тариф</button></a></p>
                 </div>
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=ATDRCtrl&action=ShowDRBookmarks"><button class="btn btn-warning">Закладки для документов</button></a></p>                                    

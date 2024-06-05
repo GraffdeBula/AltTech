@@ -50,6 +50,8 @@
                   <th scope="col">Телефон</th>
                   <th scope="col">ПромоКод</th>
                   <th scope="col">Реферальная ссылка</th>
+                  <th scope="col">Статус</th>
+                  <th scope="col">Вознаграждение</th>
                   <th scope="col">Кто внёс</th>
                   <th scope="col">Изменить</th>
                   <th scope="col">Удалить</th>
@@ -60,6 +62,15 @@
 
                 <?php               
                     foreach($Refers as $Refer){//таблица
+                        switch ($Refer->STATUS){
+                            case 1:
+                                $Status='Классика';
+                            case 3:
+                                $Status='АктивОткрытый';
+                            case 4:
+                                $Status='АктивАноним';
+                        }
+                            
                         echo("<tr class='table-info'>");
                         echo("<form method='get'>");
                         (new MyForm('ATRefProgCtrl','UpdAgent',0,0))->AddForm2();
@@ -68,6 +79,8 @@
                         echo("<td><input type='text' name='Phone' value='$Refer->PHONE' maxlength='12'></td>");
                         echo("<td><input type='text' name='Code' value='$Refer->CODE'></td>");
                         echo("<td><input type='text' name='Refer' value='$Refer->REFER'></td>");
+                        echo("<td>$Status</td>");
+                        echo("<td>$Refer->PAYTYPE</td>");
                         echo("<td>$Refer->LGEMP</td>");
                         if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmName']=='Алёна Пышняк')){
                             echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");

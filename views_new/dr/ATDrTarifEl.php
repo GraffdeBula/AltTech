@@ -9,7 +9,14 @@
         <div>
             <form method='get' autocomplete='off'>
                 <?php (new MyForm('ATDRCtrl','AddTarifEl',0,0))->AddForm(); ?>                                
-                <label>Вид</label><input type="text" size='20' name="ELTYPE">
+                <label>Вид</label><select name="ELTYPE">
+                    <option></option>
+                    <option>Доплата</option>
+                    <option>Вычет</option>
+                    <option>Скидка</option>
+                    <option>Базовый тариф рассрочка</option>
+                    <option>Базовый тариф</option>
+                </select>
                 <label>Название</label><input type="text" size='20' name="ELNAME">
                 <label>Сумма</label><input type="text" size='20' name="ELSUM" value="0">
                 <button class='btn btn-warning'>Добавить</button>
@@ -31,10 +38,10 @@
                 foreach($TarifList as $Row){
                     echo("<tr>");
                         echo("<form>");                        
-                        echo("<td><input type='text' name='ID' size='3' value='{$Row->ID}'></td>");
-                        echo("<td><input type='text' name='ELTYPE' size='3' value='{$Row->ELTYPE}'></td>");
-                        echo("<td><input type='date' name='ELNAME' value='{$Row->ELNAME}'></td>");
-                        echo("<td><input type='text' name='ELSUM' value='{$Row->ELSUM}'></td>");                        
+                        echo("<td><input type='text' name='ID' size='5' value='{$Row->ID}'></td>");
+                        echo("<td><input type='text' name='ELTYPE' value='{$Row->TRELTYPE}'></td>");
+                        echo("<td><input type='text' name='ELNAME' value='{$Row->TRELNAME}'></td>");
+                        echo("<td><input type='text' name='ELSUM' value='{$Row->TRELSUM}'></td>");                        
                         echo("</form>");
                         echo("<td><a href='index_admin.php?controller=ATDRCtrl&action=DelTarif&Id={$Row->ID}'>
                             <button class='btn btn-danger'>Удалить</button></a></td>");
