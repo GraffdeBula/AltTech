@@ -9,29 +9,22 @@
 
 <body>
     <h1>Калькулятор</h1>
-        <div id="TarifList">    
-            
-            
-        </div>                  
+    
+    <div>        
+        <lable>Общая сумма по договору</lable><input id="TarifSum" value="1">
+    </div>
+    
+    <div id="TarifList1">
+        <h4>Доплаты</h4>
+    </div>                  
+    <div id="TarifList2">
+        <h4>Вычеты</h4>
+    </div>
+    <div id="TarifList3">
+        <h4>Скидки</h4>
+    </div>
     
 </body>
-    <script>
-        var MyCB=document.querySelector('.form-check-input');        
-        
-        MyCB.addEventListener('change',function(){             
-            console.log('DelId');
-            
-        })
-               
-        
-    </script>
+    <script src="./js/TarifCalc.js"></script>
 </html>
-
-<?php
-                foreach($TarifList as $Element){
-                    echo("<div class='form-check'>");
-                    echo("<input class='form-check-input' type='checkbox' value='$Element->TRELSUM' id='$Element->ID' >");
-                    echo("<label class='form-check-label' for='$Element->ID'>$Element->TRELNAME  --  $Element->TRELSUM  рублей</label>");
-                    echo("</div>");
-                }
-            ?>                
+             
