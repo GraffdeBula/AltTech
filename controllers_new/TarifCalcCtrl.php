@@ -14,15 +14,15 @@ class TarifCalcCtrl extends ControllerMain{
     }
     
     public function actionGetTarifList1(){
-        $TarifList=(new TarifMod())->getTarifElList('Доплата');
+        $TarifList=(new TarifMod())->getTarifElListByType('Доплата');
         echo json_encode($TarifList);
     }
     public function actionGetTarifList2(){
-        $TarifList=(new TarifMod())->getTarifElList('Вычет');
+        $TarifList=(new TarifMod())->getTarifElListByType('Вычет');
         echo json_encode($TarifList);
     }
     public function actionGetTarifList3(){
-        $TarifList=(new TarifMod())->getTarifElList('Скидка');
+        $TarifList=(new TarifMod())->getTarifElListByType('Скидка');
         echo json_encode($TarifList);
     }
     
