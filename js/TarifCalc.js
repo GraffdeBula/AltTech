@@ -6,18 +6,12 @@
  */
 var NewDataGlob=0;
 
-var ListObj={
-    Mylist: array(),
-}
 
-var List1Data=getData('GetTarifList1');
-showData(List1Data,'TarifList1');
+var List1Data=getData('GetTarifList1','TarifList1');
 
-var List2Data=getData('GetTarifList2');
-showData(List2Data,'TarifList2');
+var List2Data=getData('GetTarifList2','TarifList2');
 
-var List3Data=getData('GetTarifList3');
-showData(List3Data,'TarifList3');
+var List3Data=getData('GetTarifList3','TarifList3');
 
 var TarSum=0;      
 
@@ -33,23 +27,20 @@ function getSum(CheckedSum,CheckId){
     
 }
 //функция для получения данных из БД через AJAX
-function getData(DataAction){    
+function getData(DataAction,ShowDiv){    
     var ShowRequest=new XMLHttpRequest();
     ShowRequest.open('GET','index_admin.php?controller=TarifCalcCtrl&action='+DataAction,true);
     ShowRequest.onload = function(){
-        ListObj.Mylist=JSON.parse(this.responseText);        
-        console.log(NewDataGlob);
+        var ListArr=JSON.parse(this.responseText);        
+        formShowData(ListArr,ShowDiv);
     }
     
-    ShowRequest.send();
-    console.log(ListObj);
-    return ;
+    ShowRequest.send();        
 }
 //функция для вывода во вью полученных данных
-function showData(ShowData,ShowDiv){    
+function formShowData(ShowData,ShowDiv){
     var ShowDiv=document.getElementById(ShowDiv);
     ShowDiv.innerHTML=ShowData;
-    
 }
 
 function getTarifList(){
@@ -58,7 +49,7 @@ function getTarifList(){
     TarListReq.onload = function(){
         var TarList1=JSON.parse(this.responseText);
         
-        output='';
+        var output='';
         for (var i in TarList ){
 
             output+="<div class='form-check'>"+
@@ -66,7 +57,7 @@ function getTarifList(){
                 "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"===="+ TarList[i].TRELSUM +"рублей</label>"+
                 "</div>";
         }
-        
+        console.log(output);
         DivTarList.innerHTML=output;
     }
     TarListReq.send();    

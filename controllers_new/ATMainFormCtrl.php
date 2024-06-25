@@ -94,7 +94,7 @@ class ATMainFormCtrl extends ControllerMain {
                 $this->ClList=$Model->SearchClientAll($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4]);
             }
         }
-        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front'])){
+        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front','frontextra'])){
             if ($this->Params==[]){
                 $Model=new ATClientMod();
                 $this->ClList=$Model->GetClientList($_SESSION['EmBranch']);
