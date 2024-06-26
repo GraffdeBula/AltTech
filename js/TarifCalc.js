@@ -4,43 +4,86 @@
  * вывод списка элементов тарифа на страницу
  * подсчёт тарифа по чеклисту
  */
-var NewDataGlob=0;
 
+var TarSum=0; 
 
-var List1Data=getData('GetTarifList1','TarifList1');
+var List1=document.getElementById('TarifList1');
+var List2=document.getElementById('TarifList2');
+var List3=document.getElementById('TarifList3');
 
-var List2Data=getData('GetTarifList2','TarifList2');
+formList1();
+formList2();
+formList3();
 
-var List3Data=getData('GetTarifList3','TarifList3');
-
-var TarSum=0;      
-
-function getSum(CheckedSum,CheckId){
+function getSum(CheckedSum,CheckId,SumType){
     var TarSum=document.getElementById('TarifSum');
     var CB=document.getElementById(CheckId);
     
     if (CB.checked==true){
-        TarSum.value=Number(TarSum.value)+CheckedSum;
+        TarSum.value=Number(TarSum.value)+CheckedSum*SumType;
     } else {
-        TarSum.value=Number(TarSum.value)-CheckedSum;
-    }
-    
+        TarSum.value=Number(TarSum.value)-CheckedSum*SumType;
+    }    
 }
-//функция для получения данных из БД через AJAX
-function getData(DataAction,ShowDiv){    
-    var ShowRequest=new XMLHttpRequest();
-    ShowRequest.open('GET','index_admin.php?controller=TarifCalcCtrl&action='+DataAction,true);
-    ShowRequest.onload = function(){
-        var ListArr=JSON.parse(this.responseText);        
-        formShowData(ListArr,ShowDiv);
+
+function formList1(){
+    var TarListReq=new XMLHttpRequest();
+    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList1',true);
+    TarListReq.onload = function(){
+        var TarList=JSON.parse(this.responseText);
+        
+        var output='';
+        for (var i in TarList ){
+
+            output+="<div class='form-check'>"+
+                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum("+TarList[i].TRELSUM+","+TarList[i].ID+",1)'>"+
+                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"===="+ TarList[i].TRELSUM +"рублей</label>"+
+                "</div>";
+        }
+        console.log(output);
+        List1.innerHTML=output;
     }
-    
-    ShowRequest.send();        
+    TarListReq.send();    
 }
-//функция для вывода во вью полученных данных
-function formShowData(ShowData,ShowDiv){
-    var ShowDiv=document.getElementById(ShowDiv);
-    ShowDiv.innerHTML=ShowData;
+
+function formList2(){
+    var TarListReq=new XMLHttpRequest();
+    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList2',true);
+    TarListReq.onload = function(){
+        var TarList=JSON.parse(this.responseText);
+        
+        var output='';
+        for (var i in TarList ){
+
+            output+="<div class='form-check'>"+
+                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum("+TarList[i].TRELSUM+","+TarList[i].ID+",-1)'>"+
+                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"===="+ TarList[i].TRELSUM +"рублей</label>"+
+                "</div>";
+        }
+        console.log(output);
+        List2.innerHTML=output;
+    }
+    TarListReq.send();    
+}
+
+function formList3(){
+    var TarListReq=new XMLHttpRequest();
+    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList3',true);
+    TarListReq.onload = function(){
+        var TarList=JSON.parse(this.responseText);
+        
+        var output='';
+        for (var i in TarList ){
+
+            output+="<div class='form-check'>"+
+                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum("+TarList[i].TRELSUM+","+TarList[i].ID+",-1)'>"+
+                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"===="+ TarList[i].TRELSUM +"рублей</label>"+
+                "</div>";
+        }
+        console.log(output);
+        List3.innerHTML=output;
+    }
+    TarListReq.send();    
 }
 
 function getTarifList(){

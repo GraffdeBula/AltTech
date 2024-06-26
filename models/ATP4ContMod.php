@@ -85,23 +85,23 @@ class ATP4ContMod extends Model{
     }
     
     //Формирование отчёта по новой БД
-    public function getP4RepNew($DateF,$DateL) {
+    public function getP4Rep($DateF,$DateL) {
         $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frOffice,frPersManager,frContSum,frContDate,frJurist,frJurBranch,frContService,frContResult "
                 . "FROM tblClients INNER JOIN tblP4Anketa ON tblClients.ClCode=tblP4Anketa.ClCode "
                 . "INNER JOIN tblP4Front ON tblP4Anketa.ContCode=tblP4Front.ContCode WHERE frContDate BETWEEN ? and ? ORDER BY tblP4Anketa.ContCode";
         $Params=[$DateF,$DateL];  
         return db2::getInstance()->FetchAll($Sql,$Params); 
     }
-
-    //Работа со старой БД 
-    //Формирование отчёта
-    public function GetP4Rep($DateF,$DateL) {
-        $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frContOffice,frContEmp,frContPay1Sum,frContDat,frJurist,frJurBranch,frContUsluga,frContResult "
+    
+    public function getP4RepBranch($DateF,$DateL,$Branch) {
+        $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frOffice,frPersManager,frContSum,frContDate,frJurist,frJurBranch,frContService,frContResult "
                 . "FROM tblClients INNER JOIN tblP4Anketa ON tblClients.ClCode=tblP4Anketa.ClCode "
-                . "INNER JOIN tblP4Front ON tblP4Anketa.ContCode=tblP4Front.ContCode WHERE akDat BETWEEN ? and ? ORDER BY tblP4Anketa.ContCode";
-        $Params=[$DateF,$DateL];        
-        
-        return db::getInstance()->fetch_all2($Sql,$Params); 
+                . "INNER JOIN tblP4Front ON tblP4Anketa.ContCode=tblP4Front.ContCode "
+                . "WHERE (frContDate BETWEEN ? AND ?) AND FrOffice=? ORDER BY tblP4Anketa.ContCode";
+        $Params=[$DateF,$DateL,$Branch];  
+        return db2::getInstance()->FetchAll($Sql,$Params); 
     }
+
+    
 
 }

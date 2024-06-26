@@ -11,7 +11,7 @@
     <h1>Калькулятор</h1>
     
     <div>        
-        <lable>Общая сумма по договору</lable><input id="TarifSum" value="1">
+        <lable>Общая сумма по договору</lable><input id="TarifSum" value="0">
     </div>
     <h4>Доплаты</h4>
     <div id="TarifList1">

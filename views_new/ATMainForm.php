@@ -16,13 +16,13 @@
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#refer'>Реферальная программа</a>
             </li>");   
-        if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front'])){
+        if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
         echo("
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>На экспертизе</a>
             </li>");     
         }
-        if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front'])){
+        if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
         echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
