@@ -85,23 +85,3 @@ function formList3(){
     }
     TarListReq.send();    
 }
-
-function getTarifList(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList',true);
-    TarListReq.onload = function(){
-        var TarList1=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum("+TarList[i].TRELSUM+","+TarList[i].ID+")'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"===="+ TarList[i].TRELSUM +"рублей</label>"+
-                "</div>";
-        }
-        console.log(output);
-        DivTarList.innerHTML=output;
-    }
-    TarListReq.send();    
-}
