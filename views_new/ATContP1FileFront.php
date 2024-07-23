@@ -53,22 +53,28 @@
         echo("<div>");            
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>");
         echo("<button class='btn btn-success'>ОТКРЫТЬ АНКЕТУ ДОГОВОРА</button></a>");
+        
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-danger'>Согласие на обработку ПД</button></a>");
+        . "<button class='btn btn-primary'>График платежей</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>ДОГОВОР ЭПЭ</button></a>");
+        . "<button class='btn btn-info'>Соглашение о гарантиях</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>АКТ ЭПЭ</button></a>");
-        if ($Anketa->STATUS>3){
-            echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-            . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
-        }        
+        . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
+                        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovTemplate&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>ШАБЛОН ДОВЕРЕННОСТИ</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=WorkFinalAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>ОТЧЁТ БФЛ ИТОГОВЫЙ</button></a>");
+        . "<button class='btn btn-primary'>ОТЧЁТ БФЛ ИТОГОВЫЙ</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PayBill&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-primary'>СПРАВКА О ПЛАТЕЖАХ</button></a>");
+        . "<button class='btn btn-info'>СПРАВКА О ПЛАТЕЖАХ</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=Test&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-secondary'>TEST</button></a>");
         
@@ -167,20 +173,47 @@
 
         </div>
         <div class="tab-pane fade" id="Tarif">
-            <h5>Выбор тарифа</h5>
-            <div>
-                <label>Выбранная программа</label><input name="FRCONTPROG" value='<?=$Front->FRCONTPROG?>'>
-                <label>Выбранный тариф</label><input name="FRCONTTARIF" value='<?=$Front->FRCONTTARIF?>' size='35'>   <input name="FRCONTPAC" value='<?=$Front->FRCONTPAC?>' size='5'>
-            </div>
+            <h5>Расчёт тарифа</h5>
+            
             <div>
                 <form method='get'>
                     <?php
                         (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
                     ?>
-                    <label>Стоимость договора</label><input name="FRCONTSUM" value='<?=$Front->FRCONTSUM?>'>
+                    <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
+                    <input id="TarifPeriod" name='TarifPeriod' value="1" type='hidden'>
                     <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график по тарифу.</button>
                 </form>
             </div>
+            <div>        
+                <lable>Платёж при заключении договора</lable><input value="9000">
+            </div>
+            <div>
+                <lable>Срок расрочки (месяцев)</lable><select id="AnnNum" onchange='GetPeriod()'>
+                    <option>1</option>
+                    <option>6</option>
+                    <option>12</option>
+                    <option>18</option>
+                </select>
+                <lable>Ежемесячный платёж</lable><input id="AnnPay" value="0">
+            </div>
+            <h4>Тариф</h4>
+            <div id="TarifList0">
+
+            </div>                  
+            <h4>Доплаты</h4>
+            <div id="TarifList1">
+
+            </div>                  
+            <h4>Вычеты</h4>
+            <div id="TarifList2">
+
+            </div>
+            <h4>Скидки</h4>
+            <div id="TarifList3">
+
+            </div>
+            
             <div class='row'>-</div>
             <div class='row'>
                 <div class='col-lg-4'>
