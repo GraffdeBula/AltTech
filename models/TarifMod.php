@@ -98,6 +98,11 @@ class TarifMod extends Model{
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
+    public function getTarifElListByType($ElType=''){
+        $Sql="SELECT * FROM tblP1TarifElement WHERE TrElType=?";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[$ElType]);
+    }
+    
     public function addTarifEl($Type,$Name,$Sum){
         $Sql="INSERT INTO tblP1TarifElement (trElType,trElName,trElSum) VALUES (?,?,?)";
         db2::getInstance()->Query($Sql,[$Type,$Name,$Sum]);

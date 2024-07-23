@@ -42,6 +42,7 @@ class RefProgContactsCtrl extends ControllerMain {
         
         $Amo=new AmoMethods();
         $Answer=$Amo->addContact($_GET['ContName'],$_GET['ContPhone']);
+        new MyCheck($Answer,0);
         $ContId=$Answer['_embedded']['contacts']['0']['id'];
         $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
                 

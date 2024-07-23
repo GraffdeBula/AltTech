@@ -86,9 +86,9 @@ class PaymentMod extends Model{
     public function getPaymentMethCompListDt($DateF,$DateL,$ContType){        
         $Sql="SELECT '' as ContBranch,PayMethod,SUM(tbl5payments.paysum) as PaySum
             FROM tbl5payments
-            WHERE paydate BETWEEN ? AND ? AND ContType>=? 
+            WHERE (paydate BETWEEN ? AND ?) AND (ContType BETWEEN ? AND ?) AND (PayType BETWEEN ? AND ?)
             GROUP BY PayMethod ORDER BY PayMethod";
-        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$ContType]); 
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$ContType,9,1,9]); 
     }
     
     public function getPaymentMethBrListDt($DateF,$DateL,$ContType){        

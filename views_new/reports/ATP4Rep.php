@@ -11,7 +11,12 @@
             
             
             <form method='get' autocomplete='off'>
-                <?php (new MyForm('P4ReportCtrl','ShowRep'))->AddForm2();?>
+                <label>Филиал</label>
+                <?php                    
+                    (new EchoBranchList())->echoList('','BranchName');
+                    (new MyForm('ReportsCtrl','ContP1Rep'))->AddForm2();
+                    (new MyForm('P4ReportCtrl','ShowRep'))->AddForm2();
+                ?>
                 <label>Показать договоры от </label><input type='date' name='DateF'>
                 <label> до </label><input type='date' name='DateL'> 
                 <button class='btn btn-info'>СПИСОК</button>                

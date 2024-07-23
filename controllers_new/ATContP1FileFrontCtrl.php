@@ -251,7 +251,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionDovGet(){
         $this->FrontSave();
-        (new Status())->ChangeP1Status(17, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(19, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
