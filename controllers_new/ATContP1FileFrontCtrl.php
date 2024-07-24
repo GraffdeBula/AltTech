@@ -15,7 +15,7 @@
 class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
-        'FRCONTDATE','FRDOVDATE','FRCONTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT'];
+        'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
@@ -48,7 +48,19 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionExpGet(){                        
         $this->FrontSave();
-        (new Status())->ChangeP1Status(4, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(16, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionExpReady(){                        
+        $this->FrontSave();
+        (new Status())->ChangeP1Status(17, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionExpSigned(){                        
+        $this->FrontSave();
+        (new Status())->ChangeP1Status(18, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     

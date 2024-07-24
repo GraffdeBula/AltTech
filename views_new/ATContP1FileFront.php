@@ -57,23 +57,26 @@
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
         
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
+        
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-info'>Допсоглашение к договору</button></a>");
+        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-primary'>График платежей</button></a>");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Соглашение о гарантиях</button></a>");
-        
-        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
-                        
+                                        
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovTemplate&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>ШАБЛОН ДОВЕРЕННОСТИ</button></a>");
+        . "<button class='btn btn-primary'>ШАБЛОН ДОВЕРЕННОСТИ</button></a>");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=WorkFinalAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-primary'>ОТЧЁТ БФЛ ИТОГОВЫЙ</button></a>");
+        . "<button class='btn btn-info'>ОТЧЁТ БФЛ ИТОГОВЫЙ</button></a>");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PayBill&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>СПРАВКА О ПЛАТЕЖАХ</button></a>");
+        . "<button class='btn btn-primary'>СПРАВКА О ПЛАТЕЖАХ</button></a>");
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=Test&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-secondary'>TEST</button></a>");
@@ -88,9 +91,9 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Tarif">Тариф, график платежей</a>
         </li>
-        <li class="nav-item">
+        <!--li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#ExpRes">Результаты ЭПЭ</a>
-        </li>    
+        </li> -->   
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Pays">Платежи</a>
         </li> 
@@ -109,55 +112,37 @@
                                                                            
             <?php
                 echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','ExpCont',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    echo("                
-                    <p><label>ДАТА ДОГОВОРА ЭПЭ</label><input type='date' name='FREXPDATE' value={$Front->FREXPDATE}></p>
-                    <p><label>СТОИМОСТЬ ЭПЭ</label><input type='text' name='FREXPSUM' value={$Front->FREXPSUM}></p>
-                    <button type='submit' class='btn btn-warning'>Заключён договор ЭПЭ</button>
-                </form>");  
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','ExpGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    echo("                
-                    <p><label>ДАТА ПОЛУЧЕНИЯ ДОКУМЕНТОВ ОТ КЛИЕНТА</label><input type='date' name='FREXPGETDATE' value={$Front->FREXPGETDATE}></p>
-                    <button type='submit' class='btn btn-success'>Клиент предоставил документы на ЭПЭ</button>
-                </form>");
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','ExpSent',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();                    
-                    echo("                
-                    <p><label>ДАТА ОТПРАВКИ НА ЭПЭ</label><input type='date' name='FREXPSENTDATE' value={$Front->FREXPSENTDATE}></p>                    
-                    <button type='submit' class='btn btn-danger'>Документы отправлены на ЭПЭ</button>
-                </form>");
-                    
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','ExpAct',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    if ($Anketa->STATUS>10){
-                        echo("                
-                            <p><label>ДАТА ПОДПИСАНИЯ АКТА ЭПЭ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}></p>
-                            <button type='submit' class='btn btn-warning'>Подписан акт ЭПЭ</button>");
-                    }
-                echo("   </form>");     
-                echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','ContSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
                         echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
                     } else {
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
-                    if ($Anketa->STATUS>10){
-                        echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}></p>
-                            <button type='submit' class='btn btn-warning'>Заключён договор услуг</button>");     
-                    }
-                echo("</form>");     
+                    
+                    echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}>
+                        <button type='submit' class='btn btn-warning'>Заключён договор услуг</button></p>");                         
+                echo("</form>");
+            
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','ExpGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    echo("                
+                    <p><label>ДАТА ПОЛУЧЕНИЯ ДОКУМЕНТОВ ОТ КЛИЕНТА</label><input type='date' name='FREXPGETDATE' value={$Front->FREXPGETDATE}>
+                    <button type='submit' class='btn btn-warning'>Клиент предоставил документы для анализа</button></p>
+                </form>");
+                
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','ExpAct',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    if ($Front->FROFFICE==''){
+                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
+                    } else {
+                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
+                    }                    
+                    echo("                
+                        <p><label>ДАТА ПОДПИСАНИЯ АКТА ЭПЭ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
+                        <button type='submit' class='btn btn-warning'>Подписан акт ЭПЭ</button></p>");
+                    
+                echo("   </form>");
+                
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
@@ -165,14 +150,77 @@
                     } else {
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
-                    echo("<p><label>ДАТА ДОВЕРЕННОСТИ</label><input type='date' name='FRDOVDATE' value={$Front->FRDOVDATE}></p>
-                    <button type='submit' class='btn btn-warning'>Получена доверенность</button>
-                </form>");                
+                    echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value={$Front->FRDOPDATE}><br>
+                        <label>УВЕЛИЧЕНИЕ СТОИМОСТИ ЗА СЛОЖНОСТЬ</label><input type='number' name='FRDOPSUM' value={$Front->FRDOPSUM}>
+                    <button type='submit' class='btn btn-warning'>Допсолгашение подписано</button></p>
+                </form>");  
+                
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    if ($Front->FROFFICE==''){
+                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
+                    } else {
+                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
+                    }
+                    echo("<p><label>ДАТА ДОВЕРЕННОСТИ</label><input type='date' name='FRDOVDATE' value={$Front->FRDOVDATE}>
+                    <button type='submit' class='btn btn-warning'>Получена доверенность</button></p>
+                </form>");  
+                    
+                /*    
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','ExpSent',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();                    
+                    echo("                
+                    <p><label>ДАТА ОТПРАВКИ НА ЭПЭ</label><input type='date' name='FREXPSENTDATE' value={$Front->FREXPSENTDATE}></p>                    
+                    <button type='submit' class='btn btn-danger'>Документы отправлены на ЭПЭ</button>
+                </form>");
+                    
+                     
+                     
+                 
+                 * 
+                 */             
             ?>
             
 
         </div>
         <div class="tab-pane fade" id="Tarif">
+            <h5>Результаты ЭПЭ</h5>
+            <?php
+            echo("<div >
+                <label>Рекомендуемый продукт</label><input disabled type='text' name='EXPRODREC' value='{$Expert->EXPRODREC}'>
+            </div>");
+            echo("<div >
+                <label>Сумма долга</label><input type='text' disabled name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}>
+                <label>Сумма основного долга</label><input disabled type='text' name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}> 
+                <label>Число кредитов</label><input disabled type='text' name='AKCREDNUM' value={$Anketa->AKCREDNUM}>    
+            </div>");                
+                        
+            echo("<form method='get'>");
+
+                (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                echo("
+                    <label>Программа</label><select name='FRCONTPROG'>
+                        <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
+                        <option value='Банкротство физлиц'>Банкротство физлиц</option>
+                        <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
+                        <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
+                        <option value='Защита от кредиторов'>Защита от кредиторов</option>
+                    </select>
+                    <label>Тариф</label><select name='FRCONTTARIF'>
+                        <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
+                        
+                foreach($Tarif->getTarifList() as $TarifName ){
+                    echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
+                }
+                echo("</select>");        
+                    
+                if ($Anketa->STATUS>3){
+                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ</button>");
+                }
+                
+            echo("</form>");
+            ?>
+            
             <h5>Расчёт тарифа</h5>
             
             <div>
@@ -358,42 +406,7 @@
             
         </div>
         <div class="tab-pane fade" id="ExpRes">
-            <h5>Результаты ЭПЭ</h5>
-            <?php
-            echo("<div >
-                <label>Рекомендуемый продукт</label><input disabled type='text' name='EXPRODREC' value='{$Expert->EXPRODREC}'>
-            </div>");
-            echo("<div >
-                <label>Сумма долга</label><input type='text' disabled name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}>
-                <label>Сумма основного долга</label><input disabled type='text' name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}> 
-                <label>Число кредитов</label><input disabled type='text' name='AKCREDNUM' value={$Anketa->AKCREDNUM}>    
-            </div>");                
-                        
-            echo("<form method='get'>");
-
-                (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                echo("
-                    <label>Программа</label><select name='FRCONTPROG'>
-                        <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
-                        <option value='Банкротство физлиц'>Банкротство физлиц</option>
-                        <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
-                        <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
-                        <option value='Защита от кредиторов'>Защита от кредиторов</option>
-                    </select>
-                    <label>Тариф</label><select name='FRCONTTARIF'>
-                        <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
-                        
-                foreach($Tarif->getTarifList() as $TarifName ){
-                    echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
-                }
-                echo("</select>");        
-                    
-                if ($Anketa->STATUS>3){
-                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ</button>");
-                }
-                
-            echo("</form>");
-            ?>
+            
          
         </div>
         <div class="tab-pane fade" id="Pays">
