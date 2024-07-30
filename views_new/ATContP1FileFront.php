@@ -60,13 +60,13 @@
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
         
-        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Допсоглашение к договору</button></a>");
         
-        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-primary'>График платежей</button></a>");
+//        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+//        . "<button class='btn btn-primary'>График платежей</button></a>");
         
-        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopGaranty&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Соглашение о гарантиях</button></a>");
                                         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DovTemplate&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
@@ -144,12 +144,13 @@
                 echo("   </form>");
                 
                 echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    (new MyForm('ATContP1FileFrontCtrl','DopSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
                         echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
                     } else {
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
+                    echo("<>");
                     echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value={$Front->FRDOPDATE}><br>
                         <label>УВЕЛИЧЕНИЕ СТОИМОСТИ ЗА СЛОЖНОСТЬ</label><input type='number' name='FRDOPSUM' value={$Front->FRDOPSUM}>
                     <button type='submit' class='btn btn-warning'>Допсолгашение подписано</button></p>
@@ -173,10 +174,7 @@
                     <p><label>ДАТА ОТПРАВКИ НА ЭПЭ</label><input type='date' name='FREXPSENTDATE' value={$Front->FREXPSENTDATE}></p>                    
                     <button type='submit' class='btn btn-danger'>Документы отправлены на ЭПЭ</button>
                 </form>");
-                    
-                     
-                     
-                 
+                                                                               
                  * 
                  */             
             ?>
@@ -213,11 +211,9 @@
                     echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
                 }
                 echo("</select>");        
-                    
-                if ($Anketa->STATUS>3){
-                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ</button>");
-                }
-                
+                                    
+                echo("<button class='btn btn-warning' onclick='TarifChoose'>ВЫБРАТЬ ТАРИФ</button>");
+                                
             echo("</form>");
             ?>
             
@@ -230,6 +226,10 @@
                     ?>
                     <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
                     <input id="TarifPeriod" name='TarifPeriod' value="1" type='hidden'>
+                    <input id="FrTarif" name='FRCONTTARIF' type='text' value='<?=$Front->FRCONTTARIF?>'>
+                    <input id="FrProg" name='FRCONTPROG' type='text' value='<?=$Front->FRCONTPROG?>'>
+                    <input id="FrPac" name='FRCONTPAC' type='text' value='<?=$Front->FRCONTPAC?>'>
+                    
                     <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график по тарифу.</button>
                 </form>
             </div>
@@ -245,8 +245,8 @@
                 </select>
                 <lable>Ежемесячный платёж</lable><input id="AnnPay" value="0">
             </div>
-            <h4>Тариф</h4>
-            <div id="TarifList0">
+<!--            <h4>Тариф</h4>
+            <div id="TarifList0">-->
 
             </div>                  
             <h4>Доплаты</h4>

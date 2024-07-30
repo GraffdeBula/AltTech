@@ -14,7 +14,7 @@ var List1=document.getElementById('TarifList1');
 var List2=document.getElementById('TarifList2');
 var List3=document.getElementById('TarifList3');
 
-formList0();
+//formList0();
 formList1();
 formList2();
 formList3();
@@ -130,7 +130,7 @@ function formList3(){
     }
     TarListReq.send();    
 }
-
+/*получение суммы договора и пакета тарифа*/
 
 /*платежи*/
 

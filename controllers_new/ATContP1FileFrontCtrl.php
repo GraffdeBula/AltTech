@@ -12,6 +12,7 @@
  * ** экшн должен вызвать объект класса PrintDoc и передать ему всю необходимую информацию для печати договора
  * 
  */
+
 class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
@@ -70,6 +71,12 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionDopSigned(){                
+        $this->FrontSave(['ContCode'=>$_GET['ContCode'],'FRCONTSUM'=>]);
+        #(new Status())->ChangeP1Status(12, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionExpAct(){                
         $this->FrontSave();
         (new Status())->ChangeP1Status(12, $_GET['ContCode']);
@@ -91,8 +98,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         } else {
             $Branch=$Cont->getFront()->FROFFICE;
         }
-        
-        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch);        
+                        
+        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch); 
+        #new MyCheck($Tarif,0);
         $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$Branch);        
         
         #увеличение стоимости потарифу классический для 11 и более кредиторов
@@ -145,7 +153,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $Model=new PayCalend();
             $Model->delAllPlanPays($_GET['ContCode']);
             //сохранение первого платежа
-            $Model->addPlanPay($_GET['ContCode'],0,9002,$PayDate->format('d.m.Y'));
+            $Model->addPlanPay($_GET['ContCode'],0,9000,$PayDate->format('d.m.Y'));
             $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
 
             //сохранение последующих платежей
@@ -157,56 +165,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         }
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    public function actionSaveCalendOld(){
-        $this->FrontSave();
-        $Cont=new ContP1($_GET['ContCode']);
-        $Period=(new TarifP1())->getPac($Cont->getFront()->FRCONTPAC)->PCPERIOD;
-        $PaySum=$Cont->getFront()->FRCONTSUM/$Period;
-        if ($Cont->getFront()->FRCONTDATE!=null){
-            $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
-        }else{
-            $PayDate=new DateTime(date("d.m.Y"));
-        }
-        $Model=new PayCalend();
-        $Model->delAllPlanPays($_GET['ContCode']);
-        for ($i=1; $i<=$Period; $i++){
-            $j=$i-1;
-            $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
-            $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
-        }
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
-    public function actionSaveCalendNew(){
-        $this->FrontSave();
-        $Cont=new ContP1($_GET['ContCode']);
-        if (isset($_GET['TarifPeriod'])){
-            $Period=$_GET['TarifPeriod'];
-        } else {
-            $Period=1;
-        }
-        $PaySum=($Cont->getFront()->FRCONTSUM-9000)/$Period;
-        if ($Cont->getFront()->FRCONTDATE!=null){
-            $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
-        }else{
-            $PayDate=new DateTime(date("d.m.Y"));
-        }
-        $Model=new PayCalend();
-        $Model->delAllPlanPays($_GET['ContCode']);
-        //сохранение первого платежа
-        $Model->addPlanPay($_GET['ContCode'],0,9002,$PayDate->format('d.m.Y'));
-        $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
         
-        //сохранение последующих платежей
-        for ($i=1; $i<=$Period; $i++){
-            $j=$i-1;
-            $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
-            $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
-        }
-        
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
     public function actionDelCalend(){
         (new PayCalend())->delAllPlanPays($_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
