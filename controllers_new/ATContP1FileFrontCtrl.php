@@ -16,7 +16,7 @@
 class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
-        'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT'];
+        'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
@@ -73,12 +73,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionDopSigned(){                
         $Cont=new ContP1($_GET['ContCode']);
+        
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],
+            'FRDOPDATE'=>$_GET['FRDOPDATE'],
             'FRDOPSUM'=>$_GET['FRDOPSUM'],
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
-    ]);
-        #(new Status())->ChangeP1Status(12, $_GET['ContCode']);
+        ]);
+        $this->SaveTypeCalend();
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -126,6 +128,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionSaveCalend(){
         $this->FrontSave();
+        $this->SaveTypeCalend();
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }    
+    
+    public function SaveTypeCalend(){
         $Cont=new ContP1($_GET['ContCode']);
         
         if (isset($Cont->getFront()->FREXPDATE)){
@@ -167,8 +174,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
                 $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
                 $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
             }
-        }
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+        }        
     }
         
     public function actionDelCalend(){
@@ -278,9 +284,10 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionContSigned(){       
         $Cont=new ContP1($_GET['ContCode']);
+                
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],
-            'FRCONTDATE'=>$_GET['ContCode'],
+            'FRCONTDATE'=>$_GET['FRCONTDATE'],
             'FRCONTFIRSTSUM'=>$Cont->getFront()->FRCONTSUM,            
         ]);
         (new Status())->ChangeP1Status(15, $_GET['ContCode']);
