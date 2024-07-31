@@ -72,7 +72,12 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionDopSigned(){                
-        $this->FrontSave(['ContCode'=>$_GET['ContCode'],'FRCONTSUM'=>]);
+        $Cont=new ContP1($_GET['ContCode']);
+        $this->FrontSave([
+            'CONTCODE'=>$_GET['ContCode'],
+            'FRDOPSUM'=>$_GET['FRDOPSUM'],
+            'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
+    ]);
         #(new Status())->ChangeP1Status(12, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
@@ -271,8 +276,13 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionContSigned(){                
-        $this->FrontSave();
+    public function actionContSigned(){       
+        $Cont=new ContP1($_GET['ContCode']);
+        $this->FrontSave([
+            'CONTCODE'=>$_GET['ContCode'],
+            'FRCONTDATE'=>$_GET['ContCode'],
+            'FRCONTFIRSTSUM'=>$Cont->getFront()->FRCONTSUM,            
+        ]);
         (new Status())->ChangeP1Status(15, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
