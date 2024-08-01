@@ -170,8 +170,13 @@ class PrintDoc{
     protected function PastePayCalend(){
         $PayCalend=[];
         foreach($this->DocData['PayCalend'] as $Pay){
+            if ($Pay->PAYNUM==0){
+                $PayNum='Платёж при заключении договора';
+            } else {
+                $PayNum=$Pay->PAYNUM." платёж";
+            }
             $PayCalend[]=[
-                'PAYID'=>$Pay->PAYNUM." платёж" ,
+                'PAYID'=>$PayNum,
                 'PAYSUM'=>$Pay->PAYSUM." рублей",
                 'PAYDATE'=>$this->StrToDate($Pay->PAYDATE)
             ];

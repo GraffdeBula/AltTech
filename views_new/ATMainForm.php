@@ -11,7 +11,11 @@
         echo("
             <li class='nav-item'>
               <a class='nav-link active' data-bs-toggle='tab' href='#home'>Список клиентов</a>
-            </li>");               
+            </li>");
+        echo("
+            <li class='nav-item'>
+                <a class='nav-link' data-bs-toggle='tab' href='#calc'>Калькулятор тарифа</a>
+            </li>");
         echo("
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#refer'>Реферальная программа</a>
@@ -19,7 +23,7 @@
         if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
         echo("
             <li class='nav-item'>
-                <a class='nav-link' data-bs-toggle='tab' href='#expert'>На экспертизе</a>
+                <a class='nav-link' data-bs-toggle='tab' href='#expert'>Списки на ЭПЭ/правовой анализ</a>
             </li>");     
         }
         if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
@@ -120,15 +124,24 @@
             ?>
         </div><!--список клиентов-->
         
+        <div class="tab-pane fade" id="calc">
+            <p><a target='_blank' href='index_admin.php?controller=TarifCalcCtrl&action=Index'><button class="btn btn-success">Калькулятор единого тарифа</button></a></p>
+            
+        </div><!--калькулятор ед тарифа-->
+        
         <div class="tab-pane fade" id="refer">
-            <p><a target='_blank' href='index_admin.php?controller=RefProgContactsCtrl'><button class="btn btn-primary">Агенты и контакты по программе активных рекомендаций </button></a></p>
-            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-info">Агенты по программе классических рекомендций</button></a></p>
+            <p><a target='_blank' href='index_admin.php?controller=RefProgContactsCtrl'><button class="btn btn-warning">Активные рекомендации</button></a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-secondary">Классические рекомендции</button></a></p>
         </div><!--Реферальная программа-->
         <div  class='tab-pane fade' id='expert'>
-            <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки договоров на ЭПЭ</button></a>
+<!--            <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки на ЭПЭ/правовой анализ</button></a>-->
             <ul class="nav nav-tabs">
+                
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#exp1">Подписан дог ЭПЭ</a>                  
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp0">Договоры для правового анализа</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp1">Подписан дог ЭПЭ</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#exp2">Клиент предоставил документы</a>
@@ -145,8 +158,34 @@
               
             </ul>
             <div id="ExpertContent" class="tab-content">
-                <div class="tab-pane fade show active" id="exp1" role="tabpanel">
-                    <p>Получить документы у клиента<p>
+                <div class="tab-pane fade show active" id="exp0" role="tabpanel">
+                    <p>Договоры на правовой анализ</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[0] as $Cont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$Cont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$Cont->CLCODE&ContCode=$Cont->CONTCODE'>$Cont->CONTCODE</a></td>"
+                                    ."<td>$Cont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
+                </div>                
+                <div class="tab-pane fade" id="exp1" role="tabpanel">
+                    <p>Получить документы у клиента</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -172,7 +211,7 @@
                     </table>                            
                 </div>
                 <div class="tab-pane fade" id="exp2" role="tabpanel">
-                    <p>Направить документы на ЭПЭ<p>
+                    <p>Направить документы на ЭПЭ</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -198,7 +237,7 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="exp3" role="tabpanel">
-                    <p>Провести ЭПЭ<p>
+                    <p>Провести ЭПЭ</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -224,7 +263,7 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="exp4" role="tabpanel">
-                    <p>Доработать замечания андеррайтера<p>
+                    <p>Доработать замечания андеррайтера</p>
                     <?php foreach($ExpList[4] as $ExpCont){  
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
@@ -235,7 +274,7 @@
                     ?>
                 </div>
                 <div class="tab-pane fade" id="exp5" role="tabpanel">
-                    <p>Доработать замечания андеррайтера<p>
+                    <p>Доработать замечания андеррайтера</p>
                     <?php foreach($ExpList[5] as $ExpCont){  
                         $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->FREXPDATE);
                         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$ExpCont->CLCODE}&ContCode={$ExpCont->CONTCODE}'>");
