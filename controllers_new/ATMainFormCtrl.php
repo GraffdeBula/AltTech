@@ -11,8 +11,7 @@ class ATMainFormCtrl extends ControllerMain {
     protected $Refers=[];
     protected $ExpList=[];
     protected $DiscList=[];
-    
-    
+        
     public function actionIndex(){
         $this->GetEmpWorkData();
         $this->Params=[];
@@ -109,6 +108,7 @@ class ATMainFormCtrl extends ControllerMain {
      */
     protected function getExpList(){
         $Model=new ExpertMod();
+        $this->ExpList[0]=$Model->getContJurList(); //заключен договор ЭПЭ
         $this->ExpList[1]=$Model->getExpContList(); //заключен договор ЭПЭ
         $this->ExpList[2]=$Model->getExpGetList(); //Получены док-ты от клиента
         $this->ExpList[3]=$Model->getExpSentList(); //Отправлены на ЭПЭ

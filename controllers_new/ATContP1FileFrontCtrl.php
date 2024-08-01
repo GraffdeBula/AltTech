@@ -98,7 +98,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionTarifChoose(){                
         $this->FrontSave();
-        (new Status())->ChangeP1Status(14, $_GET['ContCode']);
+        #(new Status())->ChangeP1Status(14, $_GET['ContCode']);
         $Cont=new ContP1($_GET['ContCode']);
         if ($Cont->getFront()->FROFFICE==''){
             $Branch=$_SESSION['EmBranch'];

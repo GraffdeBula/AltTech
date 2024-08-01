@@ -129,11 +129,9 @@
                         echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
                     } else {
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    if ($Anketa->STATUS>10){
-                        echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}>
-                            <button type='submit' class='btn btn-warning'>Заключён договор услуг</button></p>");     
-                    }
+                    }                    
+                    echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}>
+                        <button type='submit' class='btn btn-warning'>Заключён договор услуг</button></p>");                         
                 echo("</form>");
             
                 echo("<form method='get' autoload='off'>");
@@ -156,11 +154,9 @@
                     } else {
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
-                    if ($Anketa->STATUS>10){
-                        echo("                
-                            <p><label>ДАТА ПОДПИСАНИЯ АКТА ЭПЭ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
-                            <button type='submit' class='btn btn-warning'>Подписан акт ЭПЭ</button></p>");
-                    }
+                    echo("                
+                        <p><label>ДАТА ПОДПИСАНИЯ АКТА ЭПЭ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
+                        <button type='submit' class='btn btn-warning'>Подписан акт ЭПЭ</button></p>");
                 echo("</form>");     
                 
                 echo("<form method='get' autoload='off'>");
