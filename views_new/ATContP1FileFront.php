@@ -47,7 +47,7 @@
         <div class='col-3'>
             <?="Код договора:   {$Anketa->CONTCODE}"?>
         </div>
-            
+    </div>        
     <?php
     //кнопки для анкеты и печати документов
         echo("<div>");            
@@ -213,179 +213,217 @@
 
                 echo("</form>");
             ?>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Калькулятор тарифа
+                        </button>
+                    </h3>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <h4>Доплаты</h4>
+                            <div id="TarifList1"></div>                  
+                            <h4>Вычеты</h4>
+                            <div id="TarifList2"></div>
+                            <h4>Скидки (возможна только одна)</h4>
+                            <div id="TarifList3"></div> 
+                            <form method='get'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
+                                ?>
+                                <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
+                                <input id="TarifPeriod" name='TarifPeriod' value="1" type='hidden'>
+                                <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график по тарифу.</button>
+                            </form>
+                            <div>        
+                                <lable>Платёж при заключении договора</lable><input value="9000">
+                            </div>
+                            <div>
+                                <lable>Срок расрочки (месяцев)</lable><select id="AnnNum" onchange='GetPeriod()'>
+                                    <option>1</option>
+                                    <option>6</option>
+                                    <option>12</option>
+                                    <option>18</option>
+                                </select>
+                                <lable>Ежемесячный платёж</lable><input type='hidden' id="AnnPay" value="0">
+                            </div>
+                                                        
+                        </div>
                         
-            <div class='row'>
-                <h4>Доплаты</h4>
-                <div id="TarifList1"></div>                  
-                <h4>Вычеты</h4>
-                <div id="TarifList2"></div>
-                <h4>Скидки</h4>
-                <div id="TarifList3"></div>                
+                    </div>        
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            График платежей
+                        </button>
+                    </h3>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            
+                            <form method='get'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
+                                ?>
+                                <h6>Добавить платёж</h6>
+                                <input type='number' name='PayNum' value='' size='8'>
+                                <input type='date' name='PayDate' value='' size='11'>
+                                <input type='text' name='PaySum' value='0' size='11'>
+                                <button class='btn btn-success'>Добавить</button>
+                            </form>
+                            <hr>
+                            <form>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','AddIndPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
+                                ?>
+                                <fieldset>
+                                    <h6>Рассчитать индивидуальный график</h6>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios1" value="AnnSum" checked="">
+                                        <label class="form-check-label" for="optionsRadios1">
+                                            По сумме ежемесячного платежа
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios2" value="TotSum">
+                                        <label class="form-check-label" for="optionsRadios2">
+                                            По общей сумме платежей
+                                        </label>
+                                        </div>      
+                                </fieldset>                        
+                                <p>
+                                    <label>Сумма</label><input type='text' name='PaySum' value='0' size='10'>
+                                    <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'>
+                                </p>
+                                <p>
+                                    <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
+                                    <label>начиная с</label><input type='number' name='PayNum' value='' size='4'>
+                                </p>
+                                <button class='btn btn-success'>Сформировать индивидуальный график</button>
+                            </form>
+                            <a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelCalend&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>'><button class='btn btn-danger'>Удалить график</button></a>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>                            
+                                    <th scope="col">Платёж</th>    
+                                    <th scope="col">Дата</th>
+                                    <th scope="col">Сумма</th>                            
+                                    </tr>
+                                </thead>
+                                <tbody>  
+                                    <?php
+                                        foreach($ContP1->getPayCalend() as $PlanPay){
+                                            $PayDate=(new PrintFunctions)->DateToStr($PlanPay->PAYDATE);
+                                            echo("<tr>");
+                                            echo("<form method='get'>");
+                                                (new MyForm('ATContP1FileFrontCtrl','UpdPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                                echo("<input type='hidden' name='ID' value={$PlanPay->ID}>");
+                                                echo("<th>Платёж <input type=text name='PayNum' value={$PlanPay->PAYNUM} size=1></th>");                                    
+                                                echo("<th><input type=date name='PayDate' value={$PlanPay->PAYDATE} size=7></th>");
+                                                echo("<th><input type=text name='PaySum' value={$PlanPay->PAYSUM} size=7></th>");
+                                                echo("<th><button class='btn btn-success'>V</button></th>");
+                                            echo("</form>");
+                                            echo("<th><form method='get'>");
+                                            (new MyForm('ATContP1FileFrontCtrl','DelPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                            echo("<input type=hidden name='ID' value='{$PlanPay->ID}'>");
+                                            echo("<button class='btn btn-danger'>X</button></form></th></tr>");
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
+                            
+                            
+                        </div>
+                    </div>        
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Скидки
+                        </button>
+                    </h3>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <div class='col-lg-4'>
+                                <hr>                    
+                                <form method='get' autocomplete="off">
+                                    <?php
+                                        (new MyForm('ATContP1FileFrontCtrl','AddDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    ?>
+                                    <p><label>Вид скидки</label>
+                                        <select type='text' required name='DiscountType'>
+                                            <option value='НД'>Новый договор</option>
+                                            <option value='ДД'>Действующий договор</option>
+                                        </select>
+                                    </p>
+                                    <p><label>Сумма скидки</label><input type='text' required name='DiscountSum'>рублей</p>
+                                    <p><label>Описание</label><input type='text' style='width:400' required name='DiscountComment'></p>
+                                    <button class='btn btn-warning'>Применить</button>
+                                </form>
+                                <hr>
+                                <h6>Согласование скидки с директором</h6>                    
+                                <form method='get' autocomplete="off">
+                                    <?php
+                                        (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
+                                        echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
+                                        echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
+                                        echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
+                                    ?>
+                                </form>
+                                <hr>
+                                <form method='get' autocomplete="off">
+                                    <?php
+                                        (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                        echo("<label>Комментарий директора</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
+                                        if (in_array($_SESSION['EmRole'],['top','admin'])){
+                                            echo("<button class='btn btn-danger'>Согласовать</button>");
+                                        }
+                                    ?>
+                                </form>
+                                <hr>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Сумма</th>
+                                            <th>Описание скидки</th>
+                                            <th>Тип скидки</th>
+                                            <th>Удалить</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        #var_dump($ContP1);
+                                            foreach($ContP1->getDiscounts() as $Discount){
+                                                echo("<tr><td>{$Discount->DISCOUNTSUM}</td>");
+                                                echo("<td>{$Discount->DISCOUNTCOMMENT}</td>");
+                                                echo("<td>{$Discount->DISCOUNTTYPE}</td>");
+                                                if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelDiscount')){
+                                                    echo("<td><a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelDiscount&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&DiscId={$Discount->ID}'>"
+                                                        . "<button class='btn btn-danger'>Удалить</button></a></td>");
+                                                }
+                                                echo("</tr>");
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
             </div>
             
-            <div>
-                <form method='get'>
-                    <?php
-                        (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
-                    ?>
-                    <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
-                    <input id="TarifPeriod" name='TarifPeriod' value="1" type='hidden'>
-                    <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график по тарифу.</button>
-                </form>
-            </div>
+                       
             
-            <div>        
-                <lable>Платёж при заключении договора</lable><input value="9000">
-            </div>
-            <div>
-                <lable>Срок расрочки (месяцев)</lable><select id="AnnNum" onchange='GetPeriod()'>
-                    <option>1</option>
-                    <option>6</option>
-                    <option>12</option>
-                    <option>18</option>
-                </select>
-                <lable>Ежемесячный платёж</lable><input id="AnnPay" value="0">
-            </div>
             
             <div class='row'>
                 <div class='col-lg-4'>
                     <h5>График плановых платежей</h5>
                     <hr>
-                    <form method='get'>
-                        <?php
-                            (new MyForm('ATContP1FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
-                        ?>
-                        <h6>Добавить платёж</h6>
-                        <input type='number' name='PayNum' value='' size='8'>
-                        <input type='date' name='PayDate' value='' size='11'>
-                        <input type='text' name='PaySum' value='0' size='11'>
-                        <button class='btn btn-success'>Добавить</button>
-                    </form>
-                    <hr>
-                    <form>
-                        <?php
-                            (new MyForm('ATContP1FileFrontCtrl','AddIndPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
-                        ?>
-                        <fieldset>
-                            <h6>Рассчитать индивидуальный график</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios1" value="AnnSum" checked="">
-                                <label class="form-check-label" for="optionsRadios1">
-                                    По сумме ежемесячного платежа
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios2" value="TotSum">
-                                <label class="form-check-label" for="optionsRadios2">
-                                    По общей сумме платежей
-                                </label>
-                                </div>      
-                        </fieldset>                        
-                        <p>
-                            <label>Сумма</label><input type='text' name='PaySum' value='0' size='10'>
-                            <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'>
-                        </p>
-                        <p>
-                            <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>
-                            <label>начиная с</label><input type='number' name='PayNum' value='' size='4'>
-                        </p>
-                        <button class='btn btn-success'>Сформировать индивидуальный график</button>
-                    </form>
-                    <a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelCalend&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>'><button class='btn btn-danger'>Удалить график</button></a>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>                            
-                            <th scope="col">Платёж</th>    
-                            <th scope="col">Дата</th>
-                            <th scope="col">Сумма</th>                            
-                            </tr>
-                        </thead>
-                        <tbody>  
-                            <?php
-                                foreach($ContP1->getPayCalend() as $PlanPay){
-                                    $PayDate=(new PrintFunctions)->DateToStr($PlanPay->PAYDATE);
-                                    echo("<tr>");
-                                    echo("<form method='get'>");
-                                        (new MyForm('ATContP1FileFrontCtrl','UpdPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                        echo("<input type='hidden' name='ID' value={$PlanPay->ID}>");
-                                        echo("<th>Платёж <input type=text name='PayNum' value={$PlanPay->PAYNUM} size=1></th>");                                    
-                                        echo("<th><input type=date name='PayDate' value={$PlanPay->PAYDATE} size=7></th>");
-                                        echo("<th><input type=text name='PaySum' value={$PlanPay->PAYSUM} size=7></th>");
-                                        echo("<th><button class='btn btn-success'>V</button></th>");
-                                    echo("</form>");
-                                    echo("<th><form method='get'>");
-                                    (new MyForm('ATContP1FileFrontCtrl','DelPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                    echo("<input type=hidden name='ID' value='{$PlanPay->ID}'>");
-                                    echo("<button class='btn btn-danger'>X</button></form></th></tr>");
-                                }
-                            ?>
-                        </tbody>
-                    </table>
+                    
 
                 </div>
-                <div class='col-lg-4'><h5>Скидки</h5>
-                    <hr>                    
-                    <form method='get' autocomplete="off">
-                        <?php
-                            (new MyForm('ATContP1FileFrontCtrl','AddDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                        ?>
-                        <p><label>Вид скидки</label>
-                            <select type='text' required name='DiscountType'>
-                                <option value='НД'>Новый договор</option>
-                                <option value='ДД'>Действующий договор</option>
-                            </select>
-                        </p>
-                        <p><label>Сумма скидки</label><input type='text' required name='DiscountSum'>рублей</p>
-                        <p><label>Описание</label><input type='text' style='width:400' required name='DiscountComment'></p>
-                        <button class='btn btn-warning'>Применить</button>
-                    </form>
-                    <hr>
-                    <h6>Согласование скидки с директором</h6>                    
-                    <form method='get' autocomplete="off">
-                        <?php
-                            (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
-                            echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
-                            echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
-                            echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
-                        ?>
-                    </form>
-                    <hr>
-                    <form method='get' autocomplete="off">
-                        <?php
-                            (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                            echo("<label>Комментарий директора</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
-                            if (in_array($_SESSION['EmRole'],['top','admin'])){
-                                echo("<button class='btn btn-danger'>Согласовать</button>");
-                            }
-                        ?>
-                    </form>
-                    <hr>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Сумма</th>
-                                <th>Описание скидки</th>
-                                <th>Тип скидки</th>
-                                <th>Удалить</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            #var_dump($ContP1);
-                                foreach($ContP1->getDiscounts() as $Discount){
-                                    echo("<tr><td>{$Discount->DISCOUNTSUM}</td>");
-                                    echo("<td>{$Discount->DISCOUNTCOMMENT}</td>");
-                                    echo("<td>{$Discount->DISCOUNTTYPE}</td>");
-                                    if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelDiscount')){
-                                        echo("<td><a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelDiscount&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&DiscId={$Discount->ID}'>"
-                                            . "<button class='btn btn-danger'>Удалить</button></a></td>");
-                                    }
-                                    echo("</tr>");
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                
             </div>
             
         </div>
