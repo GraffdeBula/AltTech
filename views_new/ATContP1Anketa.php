@@ -117,7 +117,7 @@
                                         <option value='другое'>другое</option>
                                     </select>
                                     <label>Сумма</label><input type='text' name='CRSUM' value='{$Cred->CRSUM}' autocomplete='off'>");
-                                    if (in_array($_SESSION['EmRole'],['admin','top','director','expert','franshdir','frontextra'])){
+                                    if (in_array($_SESSION['EmRole'],['admin','top','director','expert','franshdir','frontextra','front','jurist'])){
                                         $AnketaShowField="text";                                            
                                         $AnketaEnableField="";
                                     }else{
