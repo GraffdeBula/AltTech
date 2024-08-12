@@ -2,7 +2,7 @@
 /*
  * досье клиента
  *  */
-
+ 
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,10 +62,7 @@
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Допсоглашение к договору</button></a>");
-        
-//        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-//        . "<button class='btn btn-primary'>График платежей</button></a>");
-        
+ 
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopGaranty&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Соглашение о гарантиях</button></a>");
                                         
@@ -187,72 +184,147 @@
 
         </div>
         <div class="tab-pane fade" id="Tarif">
-            <h5>Выбор тарифа</h5><input name="FRCONTPAC" value='<?=$Front->FRCONTPAC?>' size='5'>
+            <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
             <?php
-                echo("<form method='get'>");
-
-                    (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    echo("
-                        <label>Программа</label><select name='FRCONTPROG'>
-                            <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
-                            <option value='Банкротство физлиц'>Банкротство физлиц</option>
-                            <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
-                            <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
-                            <option value='Защита от кредиторов'>Защита от кредиторов</option>
-                        </select>
-                        <label>Тариф</label><select name='FRCONTTARIF'>
-                            <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
-
-                    foreach($Tarif->getTarifList() as $TarifName ){
-                        echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
-                    }
-                    echo("</select>");        
-                    
-                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ</button>");
-                    
-
-                echo("</form>");
+                if ($Front->FRCONTPERIOD>1){
+                    echo("в рассрочку на $Front->FRCONTPERIOD месяцев");
+                }
             ?>
             <div class="accordion" id="accordionExample">
+                                
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                             Калькулятор тарифа
                         </button>
                     </h3>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
-                            <h4>Доплаты</h4>
-                            <div id="TarifList1"></div>                  
-                            <h4>Вычеты</h4>
-                            <div id="TarifList2"></div>
-                            <h4>Скидки (возможна только одна)</h4>
-                            <div id="TarifList3"></div> 
-                            <form method='get'>
-                                <?php
-                                    (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
-                                ?>
-                                <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
-                                <input id="TarifPeriod" name='TarifPeriod' value="1" type='hidden'>
-                                <button type='submit' class='btn btn-warning'>Сохранить сумму.Сформировать график по тарифу.</button>
-                            </form>
-                            <div>        
-                                <lable>Платёж при заключении договора</lable><input value="9000">
-                            </div>
-                            <div>
-                                <lable>Срок расрочки (месяцев)</lable><select id="AnnNum" onchange='GetPeriod()'>
-                                    <option>1</option>
-                                    <option>6</option>
-                                    <option>12</option>
-                                    <option>18</option>
-                                </select>
-                                <lable>Ежемесячный платёж</lable><input type='hidden' id="AnnPay" value="0">
-                            </div>
-                                                        
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
+                            <?php
+                                echo("<form method='get'>");
+
+                                    (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                                    echo("
+                                        <label>Программа</label><select name='FRCONTPROG'>
+                                            <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
+                                            <option value='Банкротство физлиц'>Банкротство физлиц</option>
+                                            <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
+                                            <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
+                                            <option value='Защита от кредиторов'>Защита от кредиторов</option>
+                                        </select>
+                                        <label>Тариф</label><select name='FRCONTTARIF'>
+                                            <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
+
+                                    foreach($Tarif->getTarifList() as $TarifName ){
+                                        echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
+                                    }
+                                    echo("</select><br>");        
+                                    $CB1='';
+                                    $CB2='';
+                                    if ($Front->FRSMALLCRED==1){$CB1='checked';}
+                                    if ($Front->FREASYCASE==1){$CB2='checked';}
+                                    
+                                    echo("
+                                        <label>Число кредитов</label><input type='number' name='FRCRNUM' value='$Front->FRCRNUM'><br>
+                                        <label>Число сложных кредиторов</label><input type='number' name='FRCOMPLEXCRNUM' value='$Front->FRCOMPLEXCRNUM'><br>
+                                        <input class='form-check-input' type='checkbox' $CB1 id='FRSMALLCRED' name='FRSMALLCRED'>
+                                        <label class='form-check-label' for='FRSMALLCRED'>Сумма долга до 400 тыс.</label><br>
+                                        <input class='form-check-input' type='checkbox' $CB2 id='FREASYCASE' name='FREASYCASE'>
+                                        <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 кредитора</label><br>
+                                        <lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD'>
+                                            <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
+                                            <option value=1>1</option>
+                                            <option value=6>6</option>
+                                            <option value=12>12</option>
+                                            <option value=18>18</option>
+                                        </select>месяцев<br>
+                                    ");
+                                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
+
+                                echo("</form>");
+                                echo("<lable>$Front->FRCONTPAC</label>");
+                            ?>
+                                                                                                                                     
                         </div>
                         
                     </div>        
                 </div>
+                
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Скидки
+                        </button>
+                    </h3>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <div class='col-lg-4'>
+                                <hr>                    
+                                <form method='get' autocomplete="off">
+                                    <?php
+                                        (new MyForm('ATContP1FileFrontCtrl','AddDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    ?>
+                                    <p><label>Вид скидки</label>
+                                        <select type='text' required name='DiscountType'>
+                                            <option value='НД'>Новый договор</option>
+                                            <option value='ДД'>Действующий договор</option>
+                                        </select>
+                                    </p>
+                                    <p><label>Сумма скидки</label><input type='text' required name='DiscountSum'>рублей</p>
+                                    <p><label>Описание</label><input type='text' style='width:400' required name='DiscountComment'></p>
+                                    <button class='btn btn-warning'>Применить</button>
+                                </form>
+                                <hr>
+                                <h6>Согласование скидки с директором</h6>                    
+                                <form method='get' autocomplete="off">
+                                    <?php
+                                        (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
+                                        echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
+                                        echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
+                                        echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
+                                    ?>
+                                </form>
+                                <hr>
+                                <form method='get' autocomplete="off">
+                                    <?php
+                                        (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                        echo("<label>Комментарий директора</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
+                                        if (in_array($_SESSION['EmRole'],['top','admin'])){
+                                            echo("<button class='btn btn-danger'>Согласовать</button>");
+                                        }
+                                    ?>
+                                </form>
+                                <hr>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Сумма</th>
+                                            <th>Описание скидки</th>
+                                            <th>Тип скидки</th>
+                                            <th>Удалить</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        #var_dump($ContP1);
+                                            foreach($ContP1->getDiscounts() as $Discount){
+                                                echo("<tr><td>{$Discount->DISCOUNTSUM}</td>");
+                                                echo("<td>{$Discount->DISCOUNTCOMMENT}</td>");
+                                                echo("<td>{$Discount->DISCOUNTTYPE}</td>");
+                                                if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelDiscount')){
+                                                    echo("<td><a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelDiscount&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&DiscId={$Discount->ID}'>"
+                                                        . "<button class='btn btn-danger'>Удалить</button></a></td>");
+                                                }
+                                                echo("</tr>");
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+                
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -261,7 +333,14 @@
                     </h3>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                         <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
-                            
+                            <form method='get'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
+                                ?>
+                                <label>Сумма первого платежа</label><input type='number' name='FIRSTPAYSUM' value='' size='8'>
+                                <button class='btn btn-success'>Сформировать график платежей</button>
+                            </form>
+                            <hr>
                             <form method='get'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
@@ -337,95 +416,9 @@
                         </div>
                     </div>        
                 </div>
-                <div class="accordion-item">
-                    <h3 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Скидки
-                        </button>
-                    </h3>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
-                            <div class='col-lg-4'>
-                                <hr>                    
-                                <form method='get' autocomplete="off">
-                                    <?php
-                                        (new MyForm('ATContP1FileFrontCtrl','AddDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                    ?>
-                                    <p><label>Вид скидки</label>
-                                        <select type='text' required name='DiscountType'>
-                                            <option value='НД'>Новый договор</option>
-                                            <option value='ДД'>Действующий договор</option>
-                                        </select>
-                                    </p>
-                                    <p><label>Сумма скидки</label><input type='text' required name='DiscountSum'>рублей</p>
-                                    <p><label>Описание</label><input type='text' style='width:400' required name='DiscountComment'></p>
-                                    <button class='btn btn-warning'>Применить</button>
-                                </form>
-                                <hr>
-                                <h6>Согласование скидки с директором</h6>                    
-                                <form method='get' autocomplete="off">
-                                    <?php
-                                        (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
-                                        echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
-                                        echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
-                                        echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
-                                    ?>
-                                </form>
-                                <hr>
-                                <form method='get' autocomplete="off">
-                                    <?php
-                                        (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                        echo("<label>Комментарий директора</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
-                                        if (in_array($_SESSION['EmRole'],['top','admin'])){
-                                            echo("<button class='btn btn-danger'>Согласовать</button>");
-                                        }
-                                    ?>
-                                </form>
-                                <hr>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Сумма</th>
-                                            <th>Описание скидки</th>
-                                            <th>Тип скидки</th>
-                                            <th>Удалить</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        #var_dump($ContP1);
-                                            foreach($ContP1->getDiscounts() as $Discount){
-                                                echo("<tr><td>{$Discount->DISCOUNTSUM}</td>");
-                                                echo("<td>{$Discount->DISCOUNTCOMMENT}</td>");
-                                                echo("<td>{$Discount->DISCOUNTTYPE}</td>");
-                                                if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelDiscount')){
-                                                    echo("<td><a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelDiscount&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&DiscId={$Discount->ID}'>"
-                                                        . "<button class='btn btn-danger'>Удалить</button></a></td>");
-                                                }
-                                                echo("</tr>");
-                                            }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>        
-                </div>
-            </div>
-            
-                       
-            
-            
-            <div class='row'>
-                <div class='col-lg-4'>
-                    <h5>График плановых платежей</h5>
-                    <hr>
-                    
-
-                </div>
                 
             </div>
-            
+                        
         </div>
         <div class="tab-pane fade" id="ExpRes">
             <h5>Результаты ЭПЭ</h5>

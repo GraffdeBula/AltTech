@@ -75,6 +75,7 @@
                                                 or ($_SESSION['EmRole']=='expert') 
                                                 or ($_SESSION['EmRole']=='top')
                                                 or ($_SESSION['EmRole']=='director')
+                                                or ($_SESSION['EmRole']=='jurist')
                                             ){
                                             echo("<button type='submit' class='btn btn-dark'>Согласовать заключение договора</button>");
                                         }                                        
@@ -152,7 +153,7 @@
                                 echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
                                 echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
                                 echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");                            
-                                if (in_array($_SESSION['EmRole'],['admin','expert','top','director'])){
+                                if (in_array($_SESSION['EmRole'],['admin','expert','top','director','jurist'])){
                                     echo("<button type='summit' class='btn btn-info'>Сохранить результат</button>");
                                 }
                             ?>
@@ -374,7 +375,7 @@
                     <label>для детей</label><input name='MinIncChild' value='<?=$MinIncList['Child']?>'><br>                
                     <div class="form-group">
                         <label for="exampleTextarea" class="form-label mt-4">Расчёт</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 60px;" name='MinIncResult' maxlength=500 ><?=$MinIncList['Result']?></textarea>
+                        <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 60px;" name='MinIncResult' maxlength=5000 ><?=$MinIncList['Result']?></textarea>
                     </div>
                     <button type='summit' class='btn btn-info'>Сохранить результат</button>
                 </form>                

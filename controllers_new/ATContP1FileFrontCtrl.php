@@ -16,7 +16,8 @@
 class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
-        'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF','FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT'];
+        'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF',
+        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
@@ -33,7 +34,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionTest(){   
-                
+        
     }
     
     public function actionFrontSave(){                
@@ -97,33 +98,74 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionTarifChoose(){                
-        $this->FrontSave();
-        #(new Status())->ChangeP1Status(14, $_GET['ContCode']);
+        $Params=[            
+            'FRCONTPROG'=>$_GET['FRCONTPROG'],
+            'FRCONTTARIF'=>$_GET['FRCONTTARIF']            
+        ];        
+        (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
+        
         $Cont=new ContP1($_GET['ContCode']);
         if ($Cont->getFront()->FROFFICE==''){
             $Branch=$_SESSION['EmBranch'];
         } else {
             $Branch=$Cont->getFront()->FROFFICE;
-        }
-                        
-        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch); 
-        #new MyCheck($Tarif,0);
+        }                        
+        $Tarif=(new TarifMod())->getTarif($Cont->getFront()->FRCONTTARIF,$Cont->getExpert()->EXTOTDEBTSUM,$Branch);         
         $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$Branch);        
-        
+        $ContSum=$Tarif->TRSUMFIX;
         #увеличение стоимости потарифу классический для 11 и более кредиторов
         $MailExp=0;
         if (($Cont->getAnketa()->AKCREDNUM>10)&&(in_array($Tarif->TRPAC,['pac85','pac86','pac87','pac88','pac89']))){
-            $MailExp=10000;
+            $ContSum=$ContSum+10000;
         }
         
-        $Params=[
-            'FRCONTSUM'=>$Tarif->TRSUMFIX+$MailExp,
+        if (isset($_GET['FRCRNUM'])){
+            $ContSum=$ContSum+9000*intdiv($_GET['FRCRNUM'],10);
+        }
+        
+        if (isset($_GET['FRCOMPLEXCRNUM'])){
+            $ContSum=$ContSum+9000*$_GET['FRCOMPLEXCRNUM'];
+        }
+        
+        if (isset($_GET['FRSMALLCRED'])){
+            $ContSum=$ContSum-36000;
+        }
+        
+        if (isset($_GET['FREASYCASE'])){
+            $ContSum=$ContSum-18000;
+        }
+        
+        $Params=[            
+            'FRCONTSUM'=>$ContSum,
             'FRCONTPAC'=>$Tarif->TRPAC,
             'FRCONTTYPE'=>$Pac->PACCONTTYPE
         ];        
         (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
-        
+        $this->TarifCount();
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function TarifCount(){
+        $Params=[
+            'FRCRNUM'=>$_GET['FRCRNUM'],
+            'FRCOMPLEXCRNUM'=>$_GET['FRCOMPLEXCRNUM'],
+            'FRCONTPERIOD'=>$_GET['FRCONTPERIOD']
+        ];
+        
+        if (isset($_GET['FRSMALLCRED'])){
+            $Params['FRSMALLCRED']=1;
+        } else {
+            $Params['FRSMALLCRED']=0;
+        }
+        
+        if (isset($_GET['FREASYCASE'])){
+            $Params['FREASYCASE']=1;
+        } else {
+            $Params['FREASYCASE']=0;
+        }
+                           
+        (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
+        
     }
     
     public function actionSaveCalend(){
@@ -151,12 +193,16 @@ class ATContP1FileFrontCtrl extends ControllerMain {
                 $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
             }
         } else {
-            if (isset($_GET['TarifPeriod'])){
-            $Period=$_GET['TarifPeriod'];
-            } else {
-                $Period=1;
+            
+            $Period=$Cont->getFront()->FRCONTPERIOD;
+            
+            if (isset($_GET['FIRSTPAYSUM'])){
+                $FirstPaySum=$_GET['FIRSTPAYSUM'];                
+            }else{
+                $FirstPaySum=9000;
             }
-            $PaySum=($Cont->getFront()->FRCONTSUM-9000)/$Period;
+            
+            $PaySum=($Cont->getFront()->FRCONTSUM-$FirstPaySum)/$Period;
             if ($Cont->getFront()->FRCONTDATE!=null){
                 $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
             }else{
@@ -165,7 +211,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $Model=new PayCalend();
             $Model->delAllPlanPays($_GET['ContCode']);
             //сохранение первого платежа
-            $Model->addPlanPay($_GET['ContCode'],0,9000,$PayDate->format('d.m.Y'));
+            $Model->addPlanPay($_GET['ContCode'],0,$FirstPaySum,$PayDate->format('d.m.Y'));
             $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
 
             //сохранение последующих платежей
