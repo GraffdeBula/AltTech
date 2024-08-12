@@ -35,7 +35,11 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->GetData();
         $this->ViewName='Экспертиза договора '.$this->Client->CLFNAME;
         $this->getUrl();
-        $this->render('ATContP1FileExpert',$this->Args);
+        if (isset($this->args['Front']->FREXPDATE)){
+            $this->render('ATContP1FileExpert',$this->Args);
+        }else{
+            $this->render('ATContP1FileExpertNew',$this->Args);
+        }
     }
         
     public function actionExpRes(){        
