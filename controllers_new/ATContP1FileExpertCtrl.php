@@ -75,7 +75,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
 
             (new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
             if ($this->CheckStatus()){
-                (new Status())->ChangeP1Status(11, $_GET['ContCode']);            
+                (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
             }
             header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
         } else {
@@ -86,7 +86,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     public function actionJurSogl(){
         (new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
         if ($this->CheckStatus()){
-            (new Status())->ChangeP1Status(11, $_GET['ContCode']);            
+            (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
@@ -95,7 +95,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         (new ExpertMod())->UpdSoglDir($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
         $this->CheckStatus();
         if ($this->CheckStatus()){
-            (new Status())->ChangeP1Status(11, $_GET['ContCode']);            
+            (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
@@ -226,7 +226,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     protected function CheckStatus(){
         $this->Expert=(new ExpertMod)->GetExp($_GET['ContCode']);
-        if (($this->Expert->EXRESDAT!=null)&&($this->Expert->EXJURSOGLDATE!=null)&&($this->Expert->EXDIRSOGLDATE!=null)){
+        if (($this->Expert->EXJURSOGLDATE!=null)&&($this->Expert->EXDIRSOGLDATE!=null)){
             return true;
         } else {
             return false;

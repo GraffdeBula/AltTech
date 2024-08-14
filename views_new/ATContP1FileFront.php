@@ -218,7 +218,7 @@
                                     foreach($Tarif->getTarifList() as $TarifName ){
                                         echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
                                     }
-                                    echo("</select><br>");        
+                                    echo("</select><lable>$Front->FRCONTPAC</label><br>");        
                                     $CB1='';
                                     $CB2='';
                                     if ($Front->FRSMALLCRED==1){$CB1='checked';}
@@ -242,8 +242,15 @@
                                     echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
 
                                 echo("</form>");
-                                echo("<lable>$Front->FRCONTPAC</label>");
+                                
                             ?>
+                            <div>
+                                <form>
+                                    <?php (new MyForm('ATContP1FileFrontCtrl','ChangeSum',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
+                                    <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
+                                    <button class='btn btn-warning' type='submit'>Изменить стоимость договора</button>
+                                </form>
+                            </div>
                                                                                                                                      
                         </div>
                         

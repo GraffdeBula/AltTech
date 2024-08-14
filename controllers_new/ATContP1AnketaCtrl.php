@@ -62,8 +62,7 @@ class ATContP1AnketaCtrl extends ControllerMain {
             'CRPROG'=>$_GET['CRPROG'],'CRSUM'=>$_GET['CRSUM'],'CRRATE'=>$_GET['CRRATE'],'CRPERIOD'=>$_GET['CRPERIOD'],
             'CRSUMREST'=>$_GET['CRSUMREST'],'CRSUMRESTMAIN'=>$_GET['CRSUMRESTMAIN'],'CRPAYSUM'=>$_GET['CRPAYSUM'],'CRPAYDAY'=>$_GET['CRPAYDAY'],
             'CRPAYLASTSUM'=>$_GET['CRPAYLASTSUM'],'CRPAYLASTDAT'=>$_GET['CRPAYLASTDAT'],'CRDELAYYN'=>$_GET['CRDELAYYN'],'CRPAYSNUM'=>$_GET['CRPAYSNUM'],
-            
-            'CRCARDLIMITSUM'=>$_GET['CRCARDLIMITSUM'],'CRCARDUSEDSUM'=>$_GET['CRCARDUSEDSUM'],'CRCARDMINPAY'=>$_GET['CRCARDMINPAY']
+                        
                 ],$_GET['CRCODE']);
         
         $this->UpdCredInfo();

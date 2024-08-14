@@ -91,9 +91,27 @@ class ExpertMod extends Model{
                 //. "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
                 . "WHERE tblP1Anketa.Status=? ORDER BY tblP1Anketa.ContCode DESC",[16]);
     }
+    //*проведён правовой анализ (договоры для постконтроля)
+    public function getContJurSogl(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE tblP1Anketa.Status=? ORDER BY tblP1Anketa.ContCode DESC",[17]);
+    }
+    
+    //*проведён постконтроль
+    public function getContAfterUnder(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE expunderdate>=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024']);
+    }
+    
     //*заключили договор ЭПЭ
     public function getExpContList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate,exRes "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "

@@ -466,8 +466,8 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $Act->setValue('WHATTODO',$Cont->getExpert()->EXJURCOMMENT);
         }
         //заполнение стоимости услуг
-        $Act->setValue('CONTSUM',$Cont->getFront()->FREXPSUM);
-        $Act->setValue('CONTSUMSTR',(new PrintFunctions())->SumToStr($Cont->getFront()->FREXPSUM));
+        $Act->setValue('CONTSUM',9000);
+        $Act->setValue('CONTSUMSTR',(new PrintFunctions())->SumToStr(9000));
         //БЛОК 4
         $FileName="Отчёт ЭПЭ {$Client->getClRec()->CLFIO}";
         $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/documents/{$FileName}.docx");

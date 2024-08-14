@@ -167,10 +167,10 @@
                     <label>Дата</label><input type='date' required name='PAYDATE' value=''>
                     <label>Тип</label><select name='PAYCONTTYPE'>
                         <?php
-                        if ($Front->FRCONTTYPE==1){
+                        if ($Front->FRCONTPAYTYPE==1){
                             echo("<option value='1'>по ПКО</option>");
                         }
-                        if ($Front->FRCONTTYPE==2){
+                        if ($Front->FRCONTPAYTYPE==2){
                             echo("<option value='2'>по чеку</option>");
                         }
                         ?>
