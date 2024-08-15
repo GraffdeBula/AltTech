@@ -97,13 +97,20 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionTarifChoose(){        
+    public function actionTarifChoose(){                        
         $Discount=0;
+        $DiscountName='';
+        if (isset($_GET['DISCACTION'])){
+            $Disc=explode(":_",$_GET['DISCACTION']);
+            $DiscountName=$Disc[0];
+            $Discount=$Disc[1];
+        }
         if (isset($_GET['DISCDIR'])&&($_GET['DISCDIR']>0)){
-            
+            $DiscountName='Скидка руководителя';
+            $Discount=$_GET['DISCDIR'];
         }
         
-        new MyCheck($_GET,0);
+        new MyCheck([$Discount,$DiscountName],0);
         
         $Params=[            
             'FRCONTPROG'=>$_GET['FRCONTPROG'],
