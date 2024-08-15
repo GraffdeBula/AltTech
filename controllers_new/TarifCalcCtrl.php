@@ -19,7 +19,7 @@ class TarifCalcCtrl extends ControllerMain{
     public function actionGetTarifList1(){
         $TarifList=(new TarifMod())->getTarifElListByType('Доплата');
         echo json_encode($TarifList);
-    }
+    }       
     public function actionGetTarifList2(){
         $TarifList=(new TarifMod())->getTarifElListByType('Вычет');
         echo json_encode($TarifList);

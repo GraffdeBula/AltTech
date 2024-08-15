@@ -139,13 +139,13 @@
             <ul class="nav nav-tabs">
                 
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#exp01" style='background-color: #b1d17d'>Договоры для правового анализа</a>                  
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp01" style='color:#000000; background-color: #b1d17d'>Договоры для правового анализа</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp02" style='background-color: #d1b97d'>Проведён правовой анализ</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp02" style='color:#000000; background-color: #d1b97d'>Проведён правовой анализ</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='background-color: #d17d7d'>Проведён андеррайтинг</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #d17d7d'>Проведён андеррайтинг</a>                  
                 </li>
                 
                 <li class="nav-item">
@@ -208,7 +208,7 @@
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
-                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ExpDate</td>"
                                 ."</tr>");
@@ -234,7 +234,7 @@
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
-                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ExpDate</td>"
                                 ."</tr>");

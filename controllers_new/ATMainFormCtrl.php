@@ -84,7 +84,7 @@ class ATMainFormCtrl extends ControllerMain {
      * получение списка клиентов
      */
     protected function LoadList(){
-        if (in_array($_SESSION['EmRole'],['admin','top','expert','director','jurist'])){
+        if (in_array($_SESSION['EmRole'],['admin','top','expert','director','jurist','frontextra'])){
             if ($this->Params==[]){
                 $Model=new ATClientMod();
                 $this->ClList=$Model->GetClientListAll();
@@ -93,7 +93,7 @@ class ATMainFormCtrl extends ControllerMain {
                 $this->ClList=$Model->SearchClientAll($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4]);
             }
         }
-        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front','frontextra'])){
+        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front'])){
             if ($this->Params==[]){
                 $Model=new ATClientMod();
                 $this->ClList=$Model->GetClientList($_SESSION['EmBranch']);

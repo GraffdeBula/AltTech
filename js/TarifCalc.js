@@ -13,7 +13,7 @@ var List2=document.getElementById('TarifList2');
 var List3=document.getElementById('TarifList3');
 
 formList0();
-formList1();
+//formList1();
 formList2();
 formList3();
 
@@ -31,10 +31,16 @@ function getSum(ListNum,CheckedSum,CheckId,SumType){
     
     var SumCount=1;
     
-    if (ListNum==1){           
+    if ((ListNum==1)&&(CheckId!=='01')){           
         SumCount=document.getElementById('count'+CheckId).value; 
         console.log(SumCount);
     }
+    
+    if ((ListNum==1)&&(CheckId=='01')){           
+        SumCount=Math.trunc(document.getElementById('count'+CheckId).value/10); 
+        console.log(SumCount);
+    }
+    
     if (CB.checked==true){
         TarSum.value=Number(TarSum.value)+CheckedSum*SumType*SumCount;
     } else {

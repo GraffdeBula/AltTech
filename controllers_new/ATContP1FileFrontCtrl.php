@@ -97,7 +97,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionTarifChoose(){                
+    public function actionTarifChoose(){        
+        $Discount=0;
+        if (isset($_GET['DISCDIR'])&&($_GET['DISCDIR']>0)){
+            
+        }
+        
+        new MyCheck($_GET,0);
+        
         $Params=[            
             'FRCONTPROG'=>$_GET['FRCONTPROG'],
             'FRCONTTARIF'=>$_GET['FRCONTTARIF']            
@@ -141,11 +148,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRCONTTYPE'=>$Pac->PACCONTTYPE
         ];        
         (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
-        $this->TarifCount();
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-            
-    public function TarifCount(){
+        
         $Params=[
             'FRCRNUM'=>$_GET['FRCRNUM'],
             'FRCOMPLEXCRNUM'=>$_GET['FRCOMPLEXCRNUM'],
@@ -166,8 +169,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
                            
         (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
         
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    
+        
     public function actionChangeSum(){
         $Params=[
             'FRCONTSUM'=>$_GET['FRCONTSUM']            
