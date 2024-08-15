@@ -105,9 +105,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $DiscountName=$Disc[0];
             $Discount=$Disc[1];
         }
-        if (isset($_GET['DISCDIR'])&&($_GET['DISCDIR']>0)){
+        if (isset($_GET['DISCDIRECTOR'])&&($_GET['DISCDIRECTOR']>0)){
             $DiscountName='Скидка руководителя';
-            $Discount=$_GET['DISCDIR'];
+            $Discount=$_GET['DISCDIRECTOR'];
         }
         
         new MyCheck([$Discount,$DiscountName],0);
