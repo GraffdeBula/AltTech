@@ -19,6 +19,16 @@ class P1DiscountMod extends Model{
         $Sql="DELETE FROM tblP1Discounts WHERE ID=?";                        
         db2::getInstance()->Query($Sql,[$Id]);
     }
+    
+    public function delDiscountList($ContCode){
+        $Sql="DELETE FROM tblP1Discounts WHERE ContCode=? AND DiscountSum>?";                        
+        db2::getInstance()->Query($Sql,[$ContCode,0]);
+    }
+    
+    public function delDiscountListFull($ContCode){
+        $Sql="DELETE FROM tblP1Discounts WHERE ContCode=? ";                        
+        db2::getInstance()->Query($Sql,[$ContCode]);
+    }
 
 
 }

@@ -110,8 +110,10 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $Discount=$_GET['DISCDIRECTOR'];
         }
         
-        new MyCheck([$Discount,$DiscountName],0);
-        
+        $Model=new P1DiscountMod();
+        $Model->delDiscountList($_GET['ContCode']);
+        $Model->addDiscount($_GET['ContCode'], $Discount, $DiscountName, 'НД', $_SESSION['EmName']);
+                
         $Params=[            
             'FRCONTPROG'=>$_GET['FRCONTPROG'],
             'FRCONTTARIF'=>$_GET['FRCONTTARIF']            
@@ -148,6 +150,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         if (isset($_GET['FREASYCASE'])){
             $ContSum=$ContSum-18000;
         }
+        $ContSum=$ContSum-$Discount; //применена скидка
         
         $Params=[            
             'FRCONTSUM'=>$ContSum,
