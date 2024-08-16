@@ -100,7 +100,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     public function actionTarifChoose(){                        
         $Discount=0;
         $DiscountName='';
-        if (isset($_GET['DISCACTION'])){
+        if (isset($_GET['DISCACTION'])&&($_GET['DISCACTION']!='')){
             $Disc=explode(":_",$_GET['DISCACTION']);
             $DiscountName=$Disc[0];
             $Discount=$Disc[1];
