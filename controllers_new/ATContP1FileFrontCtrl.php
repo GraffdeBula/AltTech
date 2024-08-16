@@ -97,7 +97,23 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionTarifChoose(){                
+    public function actionTarifChoose(){                        
+        $Discount=0;
+        $DiscountName='';
+        if (isset($_GET['DISCACTION'])&&($_GET['DISCACTION']!='')){
+            $Disc=explode(":_",$_GET['DISCACTION']);
+            $DiscountName=$Disc[0];
+            $Discount=$Disc[1];
+        }
+        if (isset($_GET['DISCDIRECTOR'])&&($_GET['DISCDIRECTOR']>0)){
+            $DiscountName='Скидка руководителя';
+            $Discount=$_GET['DISCDIRECTOR'];
+        }
+        
+        $Model=new P1DiscountMod();
+        $Model->delDiscountList($_GET['ContCode']);
+        $Model->addDiscount($_GET['ContCode'], $Discount, $DiscountName, 'НД', $_SESSION['EmName']);
+                
         $Params=[            
             'FRCONTPROG'=>$_GET['FRCONTPROG'],
             'FRCONTTARIF'=>$_GET['FRCONTTARIF']            
@@ -134,6 +150,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         if (isset($_GET['FREASYCASE'])){
             $ContSum=$ContSum-18000;
         }
+        $ContSum=$ContSum-$Discount; //применена скидка
         
         $Params=[            
             'FRCONTSUM'=>$ContSum,
@@ -141,11 +158,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRCONTTYPE'=>$Pac->PACCONTTYPE
         ];        
         (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
-        $this->TarifCount();
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
-    public function TarifCount(){
+        
         $Params=[
             'FRCRNUM'=>$_GET['FRCRNUM'],
             'FRCOMPLEXCRNUM'=>$_GET['FRCOMPLEXCRNUM'],
@@ -166,6 +179,15 @@ class ATContP1FileFrontCtrl extends ControllerMain {
                            
         (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
         
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+        
+    public function actionChangeSum(){
+        $Params=[
+            'FRCONTSUM'=>$_GET['FRCONTSUM']            
+        ];
+        (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionSaveCalend(){
@@ -177,26 +199,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     public function SaveTypeCalend(){
         $Cont=new ContP1($_GET['ContCode']);
         
-        if (isset($Cont->getFront()->FREXPDATE)){
-            $Period=(new TarifP1())->getPac($Cont->getFront()->FRCONTPAC)->PCPERIOD;
-            $PaySum=$Cont->getFront()->FRCONTSUM/$Period;
-            if ($Cont->getFront()->FRCONTDATE!=null){
-                $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
-            }else{
-                $PayDate=new DateTime(date("d.m.Y"));
-            }
-            $Model=new PayCalend();
-            $Model->delAllPlanPays($_GET['ContCode']);
-            for ($i=1; $i<=$Period; $i++){
-                $j=$i-1;
-                $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
-                $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
-            }
-        } else {
-            
+        
+        if  (in_array($Cont->getFront()->FRCONTPAC,['pac105','pac106','pac107','pac108'])){
             $Period=$Cont->getFront()->FRCONTPERIOD;
             
-            if (isset($_GET['FIRSTPAYSUM'])){
+            if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')){
                 $FirstPaySum=$_GET['FIRSTPAYSUM'];                
             }else{
                 $FirstPaySum=9000;
@@ -219,8 +226,27 @@ class ATContP1FileFrontCtrl extends ControllerMain {
                 $j=$i-1;
                 $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
                 $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
+            }    
+        } else {    
+            if ($Cont->getFront()->FRCONTPERIOD>1){
+                $Period=$Cont->getFront()->FRCONTPERIOD;
+            }else{
+                $Period=(new TarifP1())->getPac($Cont->getFront()->FRCONTPAC)->PCPERIOD;
+            }                       
+            $PaySum=$Cont->getFront()->FRCONTSUM/$Period;
+            if ($Cont->getFront()->FRCONTDATE!=null){
+                $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
+            }else{
+                $PayDate=new DateTime(date("d.m.Y"));
             }
-        }        
+            $Model=new PayCalend();
+            $Model->delAllPlanPays($_GET['ContCode']);
+            for ($i=1; $i<=$Period; $i++){
+                $j=$i-1;
+                $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
+                $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
+            }
+        }       
     }
         
     public function actionDelCalend(){

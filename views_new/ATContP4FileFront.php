@@ -166,7 +166,14 @@
                     <label>Сумма</label><input type='text' required value='0' name='PAYSUM'>
                     <label>Дата</label><input type='date' required name='PAYDATE' value=''>
                     <label>Тип</label><select name='PAYCONTTYPE'>
-                        
+                        <?php
+                        if ($Front->FRCONTPAYTYPE==1){
+                            echo("<option value='1'>по ПКО</option>");
+                        }
+                        if ($Front->FRCONTPAYTYPE==2){
+                            echo("<option value='2'>по чеку</option>");
+                        }
+                        ?>
                         <option value='1'>по ПКО</option>
                         <option value='2'>по чеку</option>
                     </select>
@@ -186,7 +193,9 @@
                         <option></option>
                         <option>Наличные (Деньги в кассу)</option>
                         <option>Наличные (Перевод на карту)</option>
-                        <option>Безналичный платёж (Оплата картой/QR-код/Перевод в банк)</option>
+                        <option>Безналичный платёж (QR-код)</option>
+                        <option>Безналичный платёж (Оплата картой через терминал)</option>                        
+                        <option>Безналичный платёж (Перевод в банк)</option>
                         </select>
                 </div>
             </form>

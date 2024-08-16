@@ -84,7 +84,7 @@ class ATMainFormCtrl extends ControllerMain {
      * получение списка клиентов
      */
     protected function LoadList(){
-        if (in_array($_SESSION['EmRole'],['admin','top','expert','director','jurist'])){
+        if (in_array($_SESSION['EmRole'],['admin','top','expert','director','jurist','frontextra'])){
             if ($this->Params==[]){
                 $Model=new ATClientMod();
                 $this->ClList=$Model->GetClientListAll();
@@ -93,7 +93,7 @@ class ATMainFormCtrl extends ControllerMain {
                 $this->ClList=$Model->SearchClientAll($this->Params[0],$this->Params[1],$this->Params[2],$this->Params[3],$this->Params[4]);
             }
         }
-        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front','frontextra'])){
+        if (in_array($_SESSION['EmRole'],['franshdir','franshman','front'])){
             if ($this->Params==[]){
                 $Model=new ATClientMod();
                 $this->ClList=$Model->GetClientList($_SESSION['EmBranch']);
@@ -107,22 +107,22 @@ class ATMainFormCtrl extends ControllerMain {
     /* получение списков для проведения ЭПЭ
      */
     protected function getExpList(){
-        $Model=new ExpertMod();
-        $this->ExpList[0]=$Model->getContJurList(); //заключен договор ЭПЭ
+        $Model=new ExpertMod();        
         $this->ExpList[1]=$Model->getExpContList(); //заключен договор ЭПЭ
         $this->ExpList[2]=$Model->getExpGetList(); //Получены док-ты от клиента
         $this->ExpList[3]=$Model->getExpSentList(); //Отправлены на ЭПЭ
         $this->ExpList[4]=$Model->getExpReturnList(); //Направлены на доработку
         $this->ExpList[5]=$Model->getExpJurSoglList(); //Направлены юристу
-       
+        $this->ExpList[11]=$Model->getContJurList(); //заключен договор услуг
+        $this->ExpList[12]=$Model->getContJurSogl(); //заключен договор услуг
+        $this->ExpList[13]=$Model->getContAfterUnder(); //заключен договор услуг
     }
     /*получение списка скидок на согласование*/
     protected function getDiscList(){
         $this->DiscList=(new ATP1ContMod())->getContApproveList();
     }
     /*получение списка реферальных ссылок
-     */
-    
+     */    
     
     protected function GetRefers(){
         if ((isset($_GET['DateF']))&&($_GET['DateF']!='')&&(isset($_GET['DateL']))&&($_GET['DateL']!='')){            

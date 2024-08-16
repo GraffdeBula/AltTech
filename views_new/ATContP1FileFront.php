@@ -205,7 +205,7 @@
 
                                     (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                                     echo("
-                                        <label>Программа</label><select name='FRCONTPROG'>
+                                        <p><label>Программа</label><select name='FRCONTPROG'>
                                             <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
                                             <option value='Банкротство физлиц'>Банкротство физлиц</option>
                                             <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
@@ -218,32 +218,52 @@
                                     foreach($Tarif->getTarifList() as $TarifName ){
                                         echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
                                     }
-                                    echo("</select><br>");        
+                                    echo("</select><lable>$Front->FRCONTPAC</label><br></p>");        
+                                    echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD'>
+                                            <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
+                                            <option value=1></option>
+                                            <option value=6>6</option>
+                                            <option value=12>12</option>
+                                            <option value=18>18</option>
+                                        </select>месяцев</p>");
+                                    
                                     $CB1='';
                                     $CB2='';
                                     if ($Front->FRSMALLCRED==1){$CB1='checked';}
                                     if ($Front->FREASYCASE==1){$CB2='checked';}
                                     
                                     echo("
-                                        <label>Число кредитов</label><input type='number' name='FRCRNUM' value='$Front->FRCRNUM'><br>
-                                        <label>Число сложных кредиторов</label><input type='number' name='FRCOMPLEXCRNUM' value='$Front->FRCOMPLEXCRNUM'><br>
-                                        <input class='form-check-input' type='checkbox' $CB1 id='FRSMALLCRED' name='FRSMALLCRED'>
-                                        <label class='form-check-label' for='FRSMALLCRED'>Сумма долга до 400 тыс.</label><br>
-                                        <input class='form-check-input' type='checkbox' $CB2 id='FREASYCASE' name='FREASYCASE'>
-                                        <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 кредитора</label><br>
-                                        <lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD'>
-                                            <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
-                                            <option value=1>1</option>
-                                            <option value=6>6</option>
-                                            <option value=12>12</option>
-                                            <option value=18>18</option>
-                                        </select>месяцев<br>
+                                        <p>
+                                            <label>Число кредитов</label><input type='number' name='FRCRNUM' value='$Front->FRCRNUM'><br>
+                                            <label>Число сложных кредиторов</label><input type='number' name='FRCOMPLEXCRNUM' value='$Front->FRCOMPLEXCRNUM'><br>
+                                            <input class='form-check-input' type='checkbox' $CB1 id='FRSMALLCRED' name='FRSMALLCRED'>
+                                            <label class='form-check-label' for='FRSMALLCRED'>Сумма долга до 400 тыс.</label><br>
+                                            <input class='form-check-input' type='checkbox' $CB2 id='FREASYCASE' name='FREASYCASE'>
+                                            <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 кредитора</label>
+                                        </p>
                                     ");
+                                    echo("<p><label>Скидка по акции</label><select name='DISCACTION'>
+                                        <option value=''></option>
+                                        <option value='Рекомендация:_5000'>Рекомендация: 5000</option>
+                                        <option value='Клиент пенсионер:_12000'>Клиент пенсионер: 12000</option>
+                                        <option value='Клиент инвалид:_12000'>Клиент инвалид: 12000</option>
+                                        <option value='Совместное банкротство (супруги):_9000'>Совместное банкротство (супруги): 9000</option>
+                                        </select>
+                                    ");    
+                                    echo("<label>Скидка руководителя</label>");
+                                    echo("<input name='DISCDIRECTOR' type='number' value='0'></p>");
                                     echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
 
                                 echo("</form>");
-                                echo("<lable>$Front->FRCONTPAC</label>");
+                                
                             ?>
+                            <div>
+                                <form>
+                                    <?php (new MyForm('ATContP1FileFrontCtrl','ChangeSum',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
+                                    <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
+                                    <button class='btn btn-warning' type='submit'>Изменить стоимость договора</button>
+                                </form>
+                            </div>
                                                                                                                                      
                         </div>
                         
@@ -253,7 +273,7 @@
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Скидки
+                            Согласование условий с директором
                         </button>
                     </h3>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
@@ -509,7 +529,9 @@
                         <option></option>
                         <option>Наличные (Деньги в кассу)</option>
                         <option>Наличные (Перевод на карту)</option>
-                        <option>Безналичный платёж (Оплата картой/QR-код/Перевод в банк)</option>
+                        <option>Безналичный платёж (QR-код)</option>
+                        <option>Безналичный платёж (Оплата картой через терминал)</option>                        
+                        <option>Безналичный платёж (Перевод в банк)</option>
                         </select>
                 </div>
             </form>
