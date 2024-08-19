@@ -682,6 +682,50 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         header("Location: ".$DocName);
     }
     
+    public function actionContDopWorkBrakeAfterExp(){
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }                
+        $Org=new Organization($Branch->getRec()->BRORGPREF);        
+        $Emp=new Employee($Branch->getRec()->BRDIR);        
+        
+        if ($Client->getFamcont()==null){
+            $FamCont=new ClientRec();
+        }else{
+            $FamCont=$Client->getFamcont();
+        }
+        
+        $ContProg=$ContP1->getFront()->FRCONTPROG;
+        if ($ContProg=='Внесудебное банкротство') {
+            $DocName='Доп соглашение Расторжение договора услуг 2';
+        } else {
+            $DocName='Доп соглашение Расторжение договора услуг 1';
+        }
+                
+        $Printer=new PrintDoc('ContDopWorkBrake',$DocName,[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),             
+            'ClientAdr'=>$Client->getAdr(),
+            'ClientPhone'=>$Client->getContPhone(),
+            'Anketa'=>$ContP1->getAnketa(),
+            'Front'=>$ContP1->getFront(),
+            'OrgRec'=>$Org->getRec(),
+            'Branch'=>$Branch->getRec(),
+            'Emp'=>$Emp->getEmp(),
+            'EmpDov'=>$Emp->getEmpDov()
+            ]
+                
+        );
+        
+        $DocName=$Printer->PrintDoc();      
+        header("Location: ".$DocName);
+    }
+    
     public function actionContDopWorkBrake(){
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     

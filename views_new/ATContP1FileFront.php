@@ -357,7 +357,7 @@
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
                                 ?>
-                                <label>Сумма первого платежа</label><input type='number' name='FIRSTPAYSUM' value='' size='8'>
+                                <label>Сумма платежа при заключении договора</label><input type='number' name='FIRSTPAYSUM' value='' size='8'>
                                 <button class='btn btn-success'>Сформировать график платежей</button>
                             </form>
                             <hr>
@@ -668,27 +668,76 @@
                 echo("<p><label>Итоговая стоимость работ</label><input type='text' name='FRTOTALWORKSUM' value={$Front->FRTOTALWORKSUM}>  руб.</p>");
                 echo("<button type='submit' class='btn btn-success'>Завершить работу (услуга оказана)</button>");
                 echo("</form>");   
-                
-                echo("<form method='get' autoload='off' autocomplete='off'>");
-                (new MyForm('ATContP1FileFrontCtrl','WorkBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    
-                echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
-                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60'></p>");
-                echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (услуга не оказана)</button>");
-                echo("</form>");   
-                
-                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ContDopWorkBrake&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-                . "<button class='btn btn-info'>Допсоглашение о расторжении</button></a>");
-                
-                echo("<form method='get' autoload='off' autocomplete='off'>");
-                (new MyForm('ATContP1FileFrontCtrl','ExpBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                #$CurDate=(new PrintFunctions())->DateToStr(date("Y-m-d"));
-                $CurDate=date("Y-m-d");
-                echo("<input type='hidden' name='FRARCHDATE' value='{$CurDate}'>");
-                echo("<p><label>Почему не проведена ЭПЭ</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60' ></p>");
-                echo("<button type='submit' class='btn btn-danger'>Отправить в архив (ЭПЭ не проведена)</button>");
-                echo("</form>");
-            ?>        
+            ?>    
+            <div class="accordion" id="accordionContDrop">    
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingCDOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCDOne" aria-expanded="false" aria-controls="collapseCDOne">
+                            Расторжение договора по итогам правового заключения
+                        </button>
+                    </h3>
+                    <div id="collapseCDOne" class="accordion-collapse collapse" aria-labelledby="headingCDOne" data-bs-parent="#accordionContDrop" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <?php
+                                echo("<form method='get' autoload='off' autocomplete='off'>");
+                                (new MyForm('ATContP1FileFrontCtrl','WorkBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+
+                                echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
+                                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60'></p>");
+                                echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (отказ от дальнейшей работы)</button>");
+                                echo("</form>");   
+
+                                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ContDopWorkBrakeAfterExp&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+                                . "<button class='btn btn-info'>Допсоглашение о расторжении</button></a>");
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingCDTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCDTwo" aria-expanded="false" aria-controls="collapseCDTwo">
+                            Расторжение действующего договора
+                        </button>
+                    </h3>
+                    <div id="collapseCDTwo" class="accordion-collapse collapse" aria-labelledby="headingCDTwo" data-bs-parent="#accordionContDrop" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <?php
+                                echo("<form method='get' autoload='off' autocomplete='off'>");
+                                (new MyForm('ATContP1FileFrontCtrl','WorkBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+
+                                echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
+                                echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60'></p>");
+                                echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (услуга не оказана)</button>");
+                                echo("</form>");   
+
+                                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ContDopWorkBrake&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+                                . "<button class='btn btn-info'>Допсоглашение о расторжении</button></a>");
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingCDThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCDThree" aria-expanded="false" aria-controls="collapseCDThree">
+                            Архив договора экспертизы
+                        </button>
+                    </h3>
+                    <div id="collapseCDThree" class="accordion-collapse collapse" aria-labelledby="headingCDThree" data-bs-parent="#accordionContDrop" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <?php    
+                                echo("<form method='get' autoload='off' autocomplete='off'>");
+                                (new MyForm('ATContP1FileFrontCtrl','ExpBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                                #$CurDate=(new PrintFunctions())->DateToStr(date("Y-m-d"));
+                                $CurDate=date("Y-m-d");
+                                echo("<input type='hidden' name='FRARCHDATE' value='{$CurDate}'>");
+                                echo("<p><label>Почему не проведена ЭПЭ</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60' ></p>");
+                                echo("<button type='submit' class='btn btn-danger'>Отправить в архив (ЭПЭ не проведена)</button>");
+                                echo("</form>");
+                            ?>
+                        </div>
+                    </div>
+                </div>                              
+            </div>    
                 
         </div>
     </div>
