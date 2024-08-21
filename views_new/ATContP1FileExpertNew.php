@@ -41,6 +41,9 @@
                 <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#creditors">Кредиторы</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#under">Проверка андеррайтера</a>
             </li>
         </ul>
@@ -325,15 +328,55 @@
                     <button type='summit' class='btn btn-info'>Сохранить результат</button>
                 </form>                
             </div>
-            
+            <div class="tab-pane fade" id="creditors">
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>Проверено</th>
+                            <th>CRCODE</th>
+                            <th>По договору</th>
+                            <th>Текущий кредитор</th>
+                            <th>Номер договора</th>
+                            <th>Дата договора</th>
+                            <th>Сумма кредита</th>
+                            <th>Общий долг</th>
+                            <th>Основной долг</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        foreach($CredList as $Credit){
+                            $CrDate=(new PrintFunctions())->DateToStr($Credit->CROPENDAT);
+                            
+                            echo("<tr class='table-secondary'>");
+                            //(new MyForm('ATClientFileCtrl','Index',$_GET['ClCode'],0))->AddForm();
+                            //echo("<input type='hidden' name='ClAccID' value='{$Comment->ID}'>");
+                            echo("<td><input class='form-check-input' type='checkbox' value='' id='flexCheckDefault'></td>");
+                            echo("<td>$Credit->CRCODE</td>");
+                            echo("<td>$Credit->CRBANKCONTNAME</td>");
+                            echo("<td>$Credit->CRBANKCURNAME</td>");
+                            echo("<td>$Credit->CRCONTNUM</td>");
+                            echo("<td>$CrDate</td>");
+                            echo("<td>$Credit->CRSUM</td>");
+                            echo("<td>$Credit->CRSUMREST</td>");
+                            echo("<td>$Credit->CRSUMRESTMAIN</td>");
+                            echo("</tr>");
+                            //echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
+                        }
+                    ?>
+                    </tbody>    
+                </table>
+                
+            </div>
             <div class="tab-pane fade" id="under">
                 <form>
                     <?php (new MyForm('ATContP1FileExpertCtrl','SaveUnder',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
                     <select name='EXPUNDERRES'>
                         <option value="<?=$Expert->EXPUNDERRES?>"><?=$Expert->EXPUNDERRES?></option>
                         <option value="Без замечаний">Без замечаний</option>
-                        <option value="Несущественные замечания">Несущественные замечания</option>
-                        <option value="Существенные замечания">Существенные замечания</option>
+                        <option value="Выявлены ошибки">Выявлены ошибки</option>
+                        
                     </select>
                     <div class="form-group">
                         <label for="UnderTextarea" class="form-label mt-4">Комментарий андеррайтера</label>
