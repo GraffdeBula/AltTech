@@ -497,7 +497,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $FamCont=$Client->getFamcont();
         }
         
-        $Printer=new PrintDoc('ContNewType2',$ContP1->getPac()->PCTEMPLATEROOT,[
+        $Printer=new PrintDoc('ContNewType3',$ContP1->getPac()->PCTEMPLATEROOT,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),
             'ClientINN'=>$Client->getINN(),

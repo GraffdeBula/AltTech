@@ -29,7 +29,7 @@
         
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#result">Результат ЭПЭ</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#result">Правовой анализ</a>
             </li>            
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#risks">Риски</a>
@@ -39,6 +39,12 @@
             </li>            
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#creditors">Кредиторы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#under">Проверка андеррайтера</a>
             </li>
         </ul>
         
@@ -80,10 +86,8 @@
                                         (new MyForm('ATContP1FileExpertCtrl','ExpRes',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
 
                                         echo("<p><label>Результат ЭПЭ</label><select name='EXRES'>");
-                                        echo("<option value='{$Expert->EXRES}'>{$Expert->EXRES}</option>");
-                                        echo("<option value='ЭПЭ не проведена. Доработка'>Экспертиза не проведена. Доработка</option>");
-                                        echo("<option value='ЭПЭ проведена'>ЭПЭ проведена</option>");
-                                        echo("<option value='Требуется согласование юриста'>Требуется согласование юриста</option>");
+                                        echo("<option value='{$Expert->EXRES}'>{$Expert->EXRES}</option>");                                        
+                                        echo("<option value='ЭПЭ проведена'>ЭПЭ проведена</option>");                                        
                                         echo("</select>");
                                         echo("<label>Рекомендуемая программа</label><select name='EXPRODREC'>");
                                         echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
@@ -324,35 +328,66 @@
                     <button type='summit' class='btn btn-info'>Сохранить результат</button>
                 </form>                
             </div>
-            
-            <div class="tab-pane fade" id="jurist">
+            <div class="tab-pane fade" id="creditors">
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>Проверено</th>
+                            <th>CRCODE</th>
+                            <th>По договору</th>
+                            <th>Текущий кредитор</th>
+                            <th>Номер договора</th>
+                            <th>Дата договора</th>
+                            <th>Сумма кредита</th>
+                            <th>Общий долг</th>
+                            <th>Основной долг</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        foreach($CredList as $Credit){
+                            $CrDate=(new PrintFunctions())->DateToStr($Credit->CROPENDAT);
+                            
+                            echo("<tr class='table-secondary'>");
+                            //(new MyForm('ATClientFileCtrl','Index',$_GET['ClCode'],0))->AddForm();
+                            //echo("<input type='hidden' name='ClAccID' value='{$Comment->ID}'>");
+                            echo("<td><input class='form-check-input' type='checkbox' value='' id='flexCheckDefault'></td>");
+                            echo("<td>$Credit->CRCODE</td>");
+                            echo("<td>$Credit->CRBANKCONTNAME</td>");
+                            echo("<td>$Credit->CRBANKCURNAME</td>");
+                            echo("<td>$Credit->CRCONTNUM</td>");
+                            echo("<td>$CrDate</td>");
+                            echo("<td>$Credit->CRSUM</td>");
+                            echo("<td>$Credit->CRSUMREST</td>");
+                            echo("<td>$Credit->CRSUMRESTMAIN</td>");
+                            echo("</tr>");
+                            //echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
+                        }
+                    ?>
+                    </tbody>    
+                </table>
+                
+            </div>
+            <div class="tab-pane fade" id="under">
+                <form>
+                    <?php (new MyForm('ATContP1FileExpertCtrl','SaveUnder',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
+                    <select name='EXPUNDERRES'>
+                        <option value="<?=$Expert->EXPUNDERRES?>"><?=$Expert->EXPUNDERRES?></option>
+                        <option value="Без замечаний">Без замечаний</option>
+                        <option value="Выявлены ошибки">Выявлены ошибки</option>
+                        
+                    </select>
+                    <div class="form-group">
+                        <label for="UnderTextarea" class="form-label mt-4">Комментарий андеррайтера</label>
+                        <textarea class="form-control" id="UnderTextarea" rows="10" style="height: 200px;" name='EXPUNDERCOMMENT' maxlength=3000 ><?=$Expert->EXPUNDERCOMMENT?></textarea>
+                    </div>
+                    <button type='summit' class='btn btn-success'>Сохранить результат проверки</button>
+                </form>
+                
                 
                 <?php
-                foreach($RiskList as $Risk){
-                    echo("<form>
-                    <div class='row'>
-                        ");
-                            (new MyForm('ATContP1FileExpertCtrl','UpdRisk',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                            echo("<div class='col-lg-3'>
-                                <p>{$Risk->EXLISTVALUE}</p>
-                            </div>
-                            <div class='col-lg-2'>
-                                <label>Готовность работы с риском</label><select name='RiskValue2'>
-                                <option value='{$Risk->EXLISTVALUE2}'>{$Risk->EXLISTVALUE2}</option>
-                                <option value='да'>да</option>
-                                <option value='нет'>нет</option>
-                                </select>
-                                <input type='hidden' name='RiskID' value='{$Risk->ID}'>
-                                <button class='btn btn-warning'>СОХРАНИТЬ</button>
-                            </div>
-                            <div class='col-lg-3'>
-                                <label>Имущество, попадающее под данный риск</label>
-                                <textarea class='form-control' id='exampleTextarea' rows='3' style='height: 40px;' name='RiskValue3' maxlength=500 >{$Risk->EXLISTVALUE3}</textarea>
-                            </div>
-                        
-                    </div></form>
-                    ");
-                }
+                
                 ?>  
                 
             </div>

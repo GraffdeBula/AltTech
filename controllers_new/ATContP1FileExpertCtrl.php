@@ -47,7 +47,15 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             #(new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
         }
         #(new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);        
-        (new ATP1ContMod())->UpdP1Expert([$_GET['EXTOTDEBTSUM'],$_GET['EXMAINDEBTSUM'],$_GET['EXANNTOTPAY'],$_GET['EXANNTOTINC'],$_GET['EXPRODREC'],$_GET['EXRES'],$_GET['ContCode']]);
+        $Params=[
+            'EXTOTDEBTSUM'=>$_GET['EXTOTDEBTSUM'],
+            'EXMAINDEBTSUM'=>$_GET['EXMAINDEBTSUM'],
+            'EXANNTOTPAY'=>$_GET['EXANNTOTPAY'],
+            'EXANNTOTINC'=>$_GET['EXANNTOTINC'],
+            'EXPRODREC'=>$_GET['EXPRODREC'],
+            'EXRES'=>$_GET['EXRES']
+        ];
+        (new ATP1ContMod())->UpdP1Expert2($Params,$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
@@ -60,6 +68,17 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     public function actionAddFromJurist(){ 
         (new ExpertMod())->AddFromJurist($_GET['EXJURCOMMENT'],$_GET['ContCode']);
+        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$_GET['FRDOPSUM']],$_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionSaveUnder(){ 
+        $Params=[
+            'EXPUNDERDATE'=>date('d.m.Y'),
+            'EXPUNDERRES'=>$_GET['EXPUNDERRES'],
+            'EXPUNDERCOMMENT'=>$_GET['EXPUNDERCOMMENT']
+        ];
+        (new ATP1ContMod())->UpdP1Expert2($Params,$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
