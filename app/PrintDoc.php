@@ -36,7 +36,8 @@ class PrintDoc{
         #exit;
         //получение данных
         $this->GetTemplate();
-        $this->GetBookmarkTable();        
+        $this->GetBookmarkTable();      
+        
         //обход массива закладок              
         foreach($this->BookMarks as $BookMark){
                          

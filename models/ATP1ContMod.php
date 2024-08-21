@@ -76,14 +76,18 @@ class ATP1ContMod extends Model{
         $Sql="UPDATE tblP1Anketa SET Status=? WHERE ContCode=?";
         db2::getInstance()->Query($Sql,[$StatNum,$ContCode]);
     }
-    
-    public function UpdP1Expert($Params=[]){
-        $Sql="UPDATE tblP1Expert SET EXTOTDEBTSUM=?, EXMAINDEBTSUM=?, EXANNTOTPAY=?,EXANNTOTINC=?, EXPRODREC=?, EXRES=?  WHERE ContCode=?";
-        db2::getInstance()->Query($Sql,$Params); 
-    }
-    public function UpdP1Expert1($Params=[]){
-        $Sql="UPDATE tblP1Expert SET EXTOTDEBTSUM=?, EXMAINDEBTSUM=?,EXANNTOTPAY=? WHERE ContCode=?";
-        db2::getInstance()->Query($Sql,$Params); 
+        
+    public function UpdP1Expert2($Param=[],$ContCode){
+        $Sql="UPDATE tblP1Expert SET lgdat=current_timestamp";
+        $Params=[];
+        foreach($Param as $Key=>$Value){
+            $Sql=$Sql.", {$Key}=?";
+            $Params[]=$Value;
+            
+        }
+        $Sql=$Sql." WHERE ContCode=?";
+        $Params[]=$ContCode;
+        db2::getInstance()->Query($Sql,$Params);
     }
     
     public function UpdP1Front($Param=[],$ContCode){                        
