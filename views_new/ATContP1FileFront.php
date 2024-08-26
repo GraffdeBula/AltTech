@@ -392,8 +392,12 @@
                                         </div>      
                                 </fieldset>                        
                                 <p>
+                                    <label>Сумма платежа при заключении договора</label><input type='number' name='FIRSTPAYSUM' value='' size='8'>
+                                    <label>Дата платежа при заключении договора</label><input type='date' name='ContDate' value='' size='10'>
+                                </p>
+                                <p>
                                     <label>Сумма</label><input type='text' name='PaySum' value='0' size='10'>
-                                    <label>Дата первого платежа</label><input type='date' name='PayDate' value='' size='10'>
+                                    <label>Дата первого платежа по графику</label><input type='date' name='PayDate' value='' size='10'>
                                 </p>
                                 <p>
                                     <label>Число платежей</label><input type='number' name='PayCount' value='' size='4'>

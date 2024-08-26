@@ -31,9 +31,9 @@
             <li class="nav-item">
                 <a class="nav-link active" data-bs-toggle="tab" href="#result">Правовой анализ</a>
             </li>            
-            <li class="nav-item">
+<!--            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#risks">Риски</a>
-            </li>
+            </li>-->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#mininc">Расчёт прожиточного минимума</a>
             </li>            
@@ -50,7 +50,118 @@
         
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade active show" id="result">
-                <div class="accordion" id="accordionExp">                                
+                <div class="accordion" id="accordionExp">                                                    
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                Риски БФЛ
+                            </button>
+                        </h3>
+                        <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                            <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+
+                                            <th>РИСК ДЛЯ КЛАССИЧЕСКОГО БФЛ</th>
+                                            <th>УДАЛИТЬ<th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+
+                                        foreach($RiskList as $Risk){
+                                            echo("<tr>");
+                                            echo("<form method='get'>");
+                                            (new MyForm('ATContP1FileExpertCtrl','DelRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
+                                            echo("<input type='hidden' name='RiskID' value='{$Risk->ID}'>");
+                                            echo("<th>{$Risk->EXLISTVALUE}</th>");
+                                            if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','DelRisk')){
+                                                echo("<th><button type='submit' class='btn btn-danger'>УДАЛИТЬ</button></th>");
+                                            }
+                                            echo("</form>");
+                                            echo("<tr>");
+                                        }                    
+                                    ?>
+                                    </tbody>
+                                </table>
+
+                                <h6>Добавить риск заключения БФЛ</h6>
+                                <form method='get'>                    
+                                    <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
+                                    <label>РИСК</label>                    
+                                    <select name='AddRisk' value='' id='RiskSelect'>                            
+                                        <option value=''></option>
+                                        <?php
+                                            foreach($RiskListDr as $RiskDr){
+                                                echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
+                                            }
+                                        ?>
+                                    </select>
+                                    <?php
+                                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','AddRisk')){
+                                            echo("<button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>");
+                                        }
+                                    ?>
+                                </form>
+                                
+                            </div>    
+                        </div>
+                    </div><!<!-- collapse4 -->   
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                Риски по внесудебному БФЛ
+                            </button>
+                        </h3>
+                        <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                            <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                                              
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+
+                                            <th>РИСК ДЛЯ ВНЕСУДЕБНОГО БФЛ</th>
+                                            <th>УДАЛИТЬ<th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+
+                                        foreach($RiskList2 as $Risk){
+                                            echo("<tr>");
+                                            echo("<form method='get'>");
+                                            (new MyForm('ATContP1FileExpertCtrl','DelRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
+                                            echo("<input type='hidden' name='RiskID' value='{$Risk->ID}'>");
+                                            echo("<th>{$Risk->EXLISTVALUE}</th>");
+                                            if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','DelRisk')){
+                                                echo("<th><button type='submit' class='btn btn-danger'>УДАЛИТЬ</button></th>");
+                                            }
+                                            echo("</form>");
+                                            echo("<tr>");
+                                        }                    
+                                    ?>
+                                    </tbody>
+                                </table>
+
+                                <h6>Добавить риск для внесудебного БФЛ</h6>
+                                <select name='AddRisk2' value='' id='Risk2Select'>
+                                    <option value=''></option>
+                                    <?php
+                                            foreach($RiskListDr2 as $RiskDr){
+                                                echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
+                                            }
+                                        ?>
+                                </select>
+                                <form method='get'>
+                                    <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk2',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
+                                    <textarea class="form-control" id="AddRisk2" rows="7" style="height: 80px;" name='AddRisk2' maxlength=750></textarea>
+                                    <input type="hidden" id="Risk2Value2" name="Risk2Value2" value="">
+                                    <button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>
+                                </form>    
+                                                                
+                            </div>    
+                        </div>
+                    </div><!<!-- collapse5 -->    
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
