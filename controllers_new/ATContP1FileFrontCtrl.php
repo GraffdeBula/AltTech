@@ -256,18 +256,24 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionAddIndPayCalend(){//Сформировать индивидуальный график
         #new MyCheck($_GET,0);
+        $ContCode=$_GET['ContCode'];
+        $Model=new PayCalend();
+        $FirstPay=0;
+        if (isset($_GET['FIRSTPAYSUM'])){
+            $FirstPay=$_GET['FIRSTPAYSUM'];
+            $PayDate=new DateTime($_GET['ContDate']);
+            $Model->addPlanPay($ContCode,0,$FirstPay,$PayDate->format('d.m.Y'));
+        }
         $Num=$_GET['PayCount'];
         $PayNum=$_GET['PayNum'];
         
         if ((isset($_GET['CalendType']))&&($_GET['CalendType']=='AnnSum')){
             $PaySum=$_GET['PaySum'];
         } elseif ((isset($_GET['CalendType']))&&($_GET['CalendType']=='TotSum')){
-            $PaySum=$_GET['PaySum']/$Num;
+            $PaySum=($_GET['PaySum']-$FirstPay)/$Num;
         }
                 
-        $PayDate=new DateTime($_GET['PayDate']);  
-        $ContCode=$_GET['ContCode'];
-        $Model=new PayCalend();
+        $PayDate=new DateTime($_GET['PayDate']);          
         for ($i=1; $i<=$Num; $i++){                        
             $Model->addPlanPay($ContCode,$PayNum+$i-1,$PaySum,$PayDate->format('d.m.Y'));
             

@@ -124,19 +124,19 @@
                                         $AnketaShowField="hidden";
                                         $AnketaEnableField="disabled";
                                     }                                    
-                                    echo("<label>Ставка</label><input type='{$AnketaShowField}' name='CRRATE' value='{$Cred->CRRATE}' autocomplete='off'>
-                                        <label>Срок</label><input type='hidden' name='CRPERIOD' value='{$Cred->CRPERIOD}' autocomplete='off'>                                    
+                                    echo("<input type='hidden' name='CRRATE' value='{$Cred->CRRATE}' autocomplete='off'>
+                                        <input type='hidden' name='CRPERIOD' value='{$Cred->CRPERIOD}' autocomplete='off'>                                    
                                         </p>
                                         <p>    
                                         <label>Остаток долга</label><input type='{$AnketaShowField}' name='CRSUMREST' value='{$Cred->CRSUMREST}' autocomplete='off'>
-                                        <label>Остаток основного долга</label><input type='hidden' name='CRSUMRESTMAIN' value='{$Cred->CRSUMRESTMAIN}' autocomplete='off'>
+                                        <input type='hidden' name='CRSUMRESTMAIN' value='{$Cred->CRSUMRESTMAIN}' autocomplete='off'>
                                         </p>
                                         <p> 
                                         <label>Сумма платежа</label><input type='{$AnketaShowField}' name='CRPAYSUM' value='{$Cred->CRPAYSUM}' autocomplete='off'>
-                                        <label>День платежа</label><input type='hidden' name='CRPAYDAY' value='{$Cred->CRPAYDAY}' autocomplete='off'>");
+                                        <input type='hidden' name='CRPAYDAY' value='{$Cred->CRPAYDAY}' autocomplete='off'>");
                                     
                                     echo("
-                                    <label>Сумма последнего платежа</label><input type='hidden' name='CRPAYLASTSUM' value='{$Cred->CRPAYLASTSUM}' autocomplete='off'>
+                                    <input type='hidden' name='CRPAYLASTSUM' value='{$Cred->CRPAYLASTSUM}' autocomplete='off'>
                                     </p>
                                     <p>    
                                         <label>Дата последнего платежа</label><input type='date' name='CRPAYLASTDAT' value='{$Cred->CRPAYLASTDAT}' autocomplete='off'>
