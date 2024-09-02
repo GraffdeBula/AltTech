@@ -190,6 +190,7 @@
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора</th>
                                 <th scope="col">Дата правового анализа</th>
+                                <th scope="col">ФИО юриста</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -202,6 +203,7 @@
                                     ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ContDate</td>"
                                     ."<td>$ExpDate</td>"
+                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                 ."</tr>");
                                 
                             }
@@ -218,11 +220,47 @@
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора ЭПЭ</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">Дата проверки</th>
+                                <th scope="col">ФИО юриста</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                             foreach($ExpList[13] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
+                                $UnderDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                    ."<td>$ExpDate</td>"
+                                    ."<td>$UnderDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
+                </div>
+                <div class="tab-pane fade" id="exp04" role="tabpanel">
+                    <p>Критические ошибки в анализе</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора ЭПЭ</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">ФИО юриста</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            foreach($ExpList[14] as $ExpCont){ 
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"

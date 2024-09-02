@@ -92,7 +92,7 @@ class ExpertMod extends Model{
     }
     //*проведён правовой анализ (договоры для постконтроля)
     public function getContJurSogl(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
@@ -101,7 +101,7 @@ class ExpertMod extends Model{
     
     //*проведён постконтроль
     public function getContAfterUnder(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
@@ -110,11 +110,11 @@ class ExpertMod extends Model{
     
     //*проведён постконтроль, выявлены ошибки
     public function getContAfterUnderErr(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE expunderdate>=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024']);
+                . "WHERE expunderdate>=? AND exUnderRes=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
     }
     
 }

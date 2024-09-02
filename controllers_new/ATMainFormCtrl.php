@@ -116,6 +116,7 @@ class ATMainFormCtrl extends ControllerMain {
         $this->ExpList[11]=$Model->getContJurList(); //заключен договор услуг
         $this->ExpList[12]=$Model->getContJurSogl(); //заключен договор услуг
         $this->ExpList[13]=$Model->getContAfterUnder(); //заключен договор услуг
+        $this->ExpList[14]=$Model->getContAfterUnderErr(); //заключен договор услуг
     }
     /*получение списка скидок на согласование*/
     protected function getDiscList(){

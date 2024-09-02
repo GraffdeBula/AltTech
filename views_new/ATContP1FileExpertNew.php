@@ -99,9 +99,9 @@
                                         ?>
                                     </select>
                                     <?php
-                                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','AddRisk')){
+                                        
                                             echo("<button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>");
-                                        }
+                                        
                                     ?>
                                 </form>
                                 
@@ -210,7 +210,7 @@
                                         echo("<option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>");
                                         echo("</select></p>");
                                         echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
-                                        echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
+                                        //echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
                                         echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
                                         echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");                            
                                         if (in_array($_SESSION['EmRole'],['admin','expert','top','director','jurist'])){
