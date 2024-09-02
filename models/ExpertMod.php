@@ -68,7 +68,7 @@ class ExpertMod extends Model{
     }
     //согласование юриста
     public function UpdSoglJur($ExJurName,$ExJurDate,$ContCode){
-        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExJurSoglName=?,ExJurSoglDate=? WHERE ContCode=?',[$ExJurName,$ExJurDate,$ContCode]);
+        return db2::getInstance()->Query('UPDATE tblP1Expert SET ExJurSoglName=?,ExJurSoglDate=?,ExResDat=? WHERE ContCode=?',[$ExJurName,$ExJurDate,$ExJurDate,$ContCode]);
     }
     //согласование руководителя
     public function UpdSoglDir($ExDirName,$ExDirDate,$ContCode){
@@ -87,8 +87,7 @@ class ExpertMod extends Model{
     public function getContJurList(){
         return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                //. "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "WHERE tblP1Anketa.Status=? ORDER BY tblP1Anketa.ContCode DESC",[16]);
     }
     //*проведён правовой анализ (договоры для постконтроля)
@@ -97,7 +96,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? ORDER BY tblP1Anketa.ContCode DESC",[17]);
+                . "WHERE tblP1Anketa.Status=? AND expunderdate is null ORDER BY exresdat,tblP1Anketa.ContCode",[17]);
     }
     
     //*проведён постконтроль
@@ -109,76 +108,13 @@ class ExpertMod extends Model{
                 . "WHERE expunderdate>=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024']);
     }
     
-    //*заключили договор ЭПЭ
-    public function getExpContList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate,exRes "
+    //*проведён постконтроль, выявлены ошибки
+    public function getContAfterUnderErr(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
-    }
-    //*принесли документы
-    public function getExpGetList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate,frexpgetdate,exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[4]);
-    }
-    //*направили документы
-    public function getExpSentList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate,frexpgetdate,frExpSentDate,exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Front.FREXPSENTDATE",[5]);
-    }
-    //*
-    public function getExpReturnList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[6,7]);
-    }
-    public function getExpJurSoglList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[7]);
-    }
-    public function getExpJurGetSoglList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[8]);
-    }
-    //***списки договоров на ЭПЭ
-    //список для андеррайтера
-    public function getExpList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate, exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExResDat IS NULL ORDER BY tblP1Anketa.ContCode DESC",[2]);
-    }
-    //список для юриста
-    public function getExpJurList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frexpdate,exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExRes=? AND tblP1Expert.ExJurSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[5,'Требуется согласование юриста']);
-    }
-    //список для руководителя
-    public function getExpDirList(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,exRes "
-                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
-                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
-                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND tblP1Expert.ExJurSoglDate IS NOT NULL AND tblP1Expert.ExDirSoglDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",[5]);
+                . "WHERE expunderdate>=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024']);
     }
     
 }

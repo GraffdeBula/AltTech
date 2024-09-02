@@ -46,6 +46,34 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         exit();
     }
     
+    public function actionAnketa(){        
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }                
+        $Org=new Organization($Branch->getRec()->BRORGPREF);
+        $Emp=new Employee($Branch->getRec()->BRDIR);        
+        
+        #new MyCheck($Client,0);
+        
+        $Printer=new PrintDoc('Anketa','Приложение №2 Анкета клиента',[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),        
+            'ClientAdr'=>$Client->getAdr(),   
+            'Cont'=>$ContP1->getFront(),
+            'BranchRec'=>$Branch->getRec(),
+            'Org'=>$Org->getRec(),            
+        ]
+                
+        );
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);
+    }
+    
     public function actionPersDataPermit(){        
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
@@ -564,9 +592,8 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'ClProperty'=>$Client->getPropertyList(),
             'ClDeals'=>$Client->getDealList(),
             'ClIncome'=>$Client->getIncomeList(),
-        ]
-                
-        );
+        ]);
+        
         $DocName=$Printer->PrintDoc();
         header("Location: ".$DocName);        
     }

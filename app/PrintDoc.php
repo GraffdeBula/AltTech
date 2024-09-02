@@ -29,11 +29,11 @@ class PrintDoc{
     }
 
     public function PrintDoc(){//метод печатает документ, параметры для которого переданы при создании объекта        
-        #foreach($this->DocData as $key=>$value){
-        #    echo($key."<br>");
-        #}
-        #var_dump($this->DocData['Emp']);
-        #exit;
+//        foreach($this->DocData as $key=>$value){
+//            echo($key."<br>");
+//        }
+//        var_dump($this->DocData['Front']);
+//        exit;
         //получение данных
         $this->GetTemplate();
         $this->GetBookmarkTable();      

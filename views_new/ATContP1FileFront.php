@@ -62,6 +62,9 @@
         
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Допсоглашение к договору</button></a>");
+        
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=Anketa&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-primary'>Анкета клиента</button></a>");
  
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopGaranty&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Соглашение о гарантиях</button></a>");
