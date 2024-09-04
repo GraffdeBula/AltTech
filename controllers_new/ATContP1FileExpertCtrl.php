@@ -48,10 +48,8 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         }
         #(new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);        
         $Params=[
-            'EXTOTDEBTSUM'=>$_GET['EXTOTDEBTSUM'],
-            'EXMAINDEBTSUM'=>$_GET['EXMAINDEBTSUM'],
-            'EXANNTOTPAY'=>$_GET['EXANNTOTPAY'],
-            'EXANNTOTINC'=>$_GET['EXANNTOTINC'],
+            'EXTOTDEBTSUM'=>$_GET['EXTOTDEBTSUM'],            
+            'EXANNTOTPAY'=>$_GET['EXANNTOTPAY'],            
             'EXPRODREC'=>$_GET['EXPRODREC'],
             'EXRES'=>$_GET['EXRES']
         ];
