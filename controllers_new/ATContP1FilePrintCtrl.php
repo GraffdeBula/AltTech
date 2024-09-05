@@ -58,6 +58,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Org=new Organization($Branch->getRec()->BRORGPREF);
         $Emp=new Employee($Branch->getRec()->BRDIR);        
         
+        $TemplateName='Приложение Соглашение о гарантии';
+        if (in_array($ContP1->getFront()->FRCONTPAC,['pac107','pac108'.'pac111','pac112'])){
+            $TemplateName='Приложение Соглашение о гарантии ипотека';
+        }
+              
+        
         $Printer=new PrintDoc('DopGarant','Приложение Соглашение о гарантии',[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),        
