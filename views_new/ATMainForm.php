@@ -66,6 +66,11 @@
               <a class='nav-link' data-bs-toggle='tab' href='#adminka'>АДМИНКА</a>
             </li>");
         }
+        
+        echo("
+            <li class='nav-item'>
+              <a class='nav-link' data-bs-toggle='tab' href='#radio'>Радио</a>
+            </li>");
                       
         ?>
         
@@ -351,6 +356,14 @@
             <br>
             
         </div>
+        
+        <div class="tab-pane fade" id="radio">
+                     
+            <div class="RP-SCRIPT"><a class="RP-LINK" href="https://radiopotok.ru/radio/1494">Beautiful Instrumentals Channel</a></div><script defer src="https://radiopotok.ru/f/script6.1/1494.js" charset="UTF-8"></script>
+            
+        </div>
+        
+        
               
                 
     </div>

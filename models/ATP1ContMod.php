@@ -172,7 +172,7 @@ class ATP1ContMod extends Model{
                 ." INNER JOIN tblP1PayCalend on tblp1Anketa.ContCode=tblP1PayCalend.ContCode"
                 ." INNER JOIN VWCONTP1TOTALPAY on tblp1Anketa.ContCode=VWCONTP1TOTALPAY.ContCode"
                 ." INNER JOIN vwDiscountTotal on tblp1Anketa.ContCode=vwDiscountTotal.ContCode"
-                ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND (PayTotSum+DiscSum)<FrContSum AND FrContDate<?"
+                ." WHERE FrOffice=? AND (PayDate BETWEEN ? AND ?) AND Status<90 AND (PayTotSum+DiscSum)<FrContSum AND FrContDate<? AND PayNum>1"
                 ." AND frContPac NOT IN ('pac24','pac33','pac38','pac39','pac40','pac57') AND FrContTarif NOT LIKE ? ORDER BY PayDate";                
         #new MyCheck($Sql,0);    
         return db2::getInstance()->FetchAll($Sql,[$Branch,$DateF,$DateL,$DateF,"%сразу%"]);
