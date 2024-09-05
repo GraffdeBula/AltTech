@@ -46,7 +46,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         exit();
     }
     
-    public function actionAnketa(){        
+    public function actionDopGaranty(){ 
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
         if ($ContP1->getFront()->FROFFICE==""){
@@ -58,7 +58,32 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Org=new Organization($Branch->getRec()->BRORGPREF);
         $Emp=new Employee($Branch->getRec()->BRDIR);        
         
-        #new MyCheck($Client,0);
+        $Printer=new PrintDoc('DopGarant','Приложение Соглашение о гарантии',[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),        
+            'ClientAdr'=>$Client->getAdr(),   
+            'Front'=>$ContP1->getFront(),
+            'BranchRec'=>$Branch->getRec(),
+            'OrgRec'=>$Org->getRec(),   
+            'Emp'=>$Emp->getEmp(),
+        ]
+                
+        );
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);
+    }
+    
+    public function actionAnketa(){        
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }                
+        $Org=new Organization($Branch->getRec()->BRORGPREF);
+        $Emp=new Employee($Branch->getRec()->BRDIR);        
         
         $Printer=new PrintDoc('Anketa','Приложение №2 Анкета клиента',[
             'Client'=>$Client->getClRec(),
