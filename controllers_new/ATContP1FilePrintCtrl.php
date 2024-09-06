@@ -91,13 +91,30 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Org=new Organization($Branch->getRec()->BRORGPREF);
         $Emp=new Employee($Branch->getRec()->BRDIR);        
         
-        $Printer=new PrintDoc('Anketa','Приложение №2 Анкета клиента',[
+        if ($Client->getFamcont()==null){
+            $FamCont=new ClientRec();
+        }else{
+            $FamCont=$Client->getFamcont();
+        }
+        
+        $Printer=new PrintDoc('DopAnketa','Приложение №2 Анкета клиента',[
             'Client'=>$Client->getClRec(),
-            'ClientPas'=>$Client->getPasport(),        
-            'ClientAdr'=>$Client->getAdr(),   
-            'Cont'=>$ContP1->getFront(),
+            'ClientPas'=>$Client->getPasport(),
+            'ClientINN'=>$Client->getINN(),
+            'ClientPens'=>$Client->getPens(),
+            'ClientFamcont'=>$FamCont,
+            'ClientPhone'=>$Client->getContPhone(),
+            'ClientAdr'=>$Client->getAdr(),
+            'Anketa'=>$ContP1->getAnketa(),
+            'Front'=>$ContP1->getFront(),
+            'OrgRec'=>$Org->getRec(),
             'BranchRec'=>$Branch->getRec(),
-            'Org'=>$Org->getRec(),            
+            'Emp'=>$Emp->getEmp(),
+            'EmpDov'=>$Emp->getEmpDov(),
+            
+            'ClProperty'=>$Client->getPropertyList(),
+            'ClDeals'=>$Client->getDealList(),
+            'ClIncome'=>$Client->getIncomeList(),
         ]
                 
         );
