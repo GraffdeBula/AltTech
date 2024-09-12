@@ -497,6 +497,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }
         //заполнение итоговой таблицы Риски
         $RiskFList=[];
+        $RiskRecList=[];
         $RiskF=0;
         foreach($Cont->getRiskList2() as $Risk){            
             $RiskFList[]=[
@@ -512,6 +513,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
                 'RISKJURWORK'=>$Risk->EXLISTVALUE2,
                 'RISKPROPERTY'=>$Risk->EXLISTVALUE3
             ];
+            $RiskRecList[]=[
+                'RECOMEND'=>$Risk->DRRECOMEND
+            ];
             $RiskF++;            
         }
         if ($RiskF==0){    
@@ -522,6 +526,8 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             ];
         }            
         $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);          
+        //заполнение таблицы рекомендаций
+        $Act->cloneRowAndSetValues('RECOMEND', $RiskRecList);
         
         //заполнение резюме
         switch($Cont->getExpert()->EXPRODREC){            
