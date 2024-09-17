@@ -80,6 +80,16 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionSaveErrWork(){
+        $Params=[
+            'EXJURERRWORKDATE'=>date('d.m.Y'),
+            'EXJURERRWORKNAME'=>$_SESSION['EmName'],
+            'EXJURERRWORKCOMMENT'=>$_GET['EXJURERRWORKCOMMENT']
+        ];
+        (new ATP1ContMod())->UpdP1Expert2($Params,$_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionExpReturn(){
         #(new ExpertMod())->UpdSoglExp($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
         (new P1SaveData('TblP1Front','FREXPRETURNDATE',$_GET['ContCode']))->saveData();

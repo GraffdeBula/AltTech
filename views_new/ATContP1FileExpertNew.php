@@ -497,9 +497,17 @@
                 </form>
                 
                 
-                <?php
-                
-                ?>  
+                <form>
+                    <?php (new MyForm('ATContP1FileExpertCtrl','SaveErrWork',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); 
+                        
+                    ?>
+                    
+                    <div class="form-group">
+                        <label for="UnderTextarea" class="form-label mt-4">Комментарий юриста по исправлению ошибок</label>
+                        <textarea class="form-control" id="UnderTextarea" rows="10" style="height: 200px;" name='EXJURERRWORKCOMMENT' maxlength=3000 ><?=$Expert->EXJURERRWORKCOMMENT?></textarea>
+                    </div>
+                    <button type='summit' class='btn btn-success'>Сохранить комментарий юриста</button>
+                </form>
                 
             </div>
         </div>                                                                                              

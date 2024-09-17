@@ -117,4 +117,12 @@ class ExpertMod extends Model{
                 . "WHERE expunderdate>=? AND expUnderRes=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
     }
     
+    //*выявленные ошибки исправлены
+    public function getContAfterErrWork(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE exJurErrWorkdate>=? AND expUnderRes=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
+    }
 }

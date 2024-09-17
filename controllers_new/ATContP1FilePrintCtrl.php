@@ -527,7 +527,13 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }            
         $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);          
         //заполнение таблицы рекомендаций
-        $Act->cloneRowAndSetValues('RECOMEND', $RiskRecList);
+        switch($ExpRec){
+            case "Банкротство физлиц":  
+            case "Банкротство физлиц с ипотекой":
+            case "Защита от кредиторов":
+                $Act->cloneRowAndSetValues('RECOMEND', $RiskRecList);
+                break;  
+        }
         
         //заполнение резюме
         switch($Cont->getExpert()->EXPRODREC){            

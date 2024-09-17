@@ -40,8 +40,8 @@
             <input type='number' value=1 id='count02'>
         </div>
         <div class='form-check'>
-            <input class='form-check-input' type='checkbox' value='' id='03' onchange='getSum(1,60000,"03",1)'>
-            <label class='form-check-label' for='03'>Сохранение ипотеки 60000 рублей</label>
+            <input class='form-check-input' type='checkbox' value='' id='03' onchange='getSum(1,100000,"03",1)'>
+            <label class='form-check-label' for='03'>Сохранение ипотеки 100000 рублей</label>
             <input type='number' value=1 id='count03'>
         </div>
     </div>                  
