@@ -231,9 +231,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         //БЛОК 3
         //заполнение шапки отчёта и первого абзаца
         $Act->setValue('ID',$_GET['ContCode']);
-        $Act->setValue('EXPCONTDATE',$Cont->getFront()->FREXPDATE);
+        $Act->setValue('EXPCONTDATE',(new PrintFunctions())->DateToStr($Cont->getFront()->FRCONTDATE));
         $Act->setValue('CITY',$Branch->getRec()->BRCITY);
-        $Act->setValue('REPDATE',(new PrintFunctions())->DateToStr($Cont->getExpert()->EXRESDAT));
+        $Act->setValue('REPDATE',(new PrintFunctions())->DateToStr($Cont->getFront()->FREXPACTDATE));
         $Act->setValue('CLNAME',$Client->getClRec()->CLFIO);
         $Act->setValue('COMPNAME',$Org->getRec()->ORGNAME);
         $Act->setValue('TOTALDEBTSUM',$Cont->getExpert()->EXTOTDEBTSUM);
@@ -513,25 +513,43 @@ class ATContP1FilePrintCtrl extends ControllerMain {
                 'RISKJURWORK'=>$Risk->EXLISTVALUE2,
                 'RISKPROPERTY'=>$Risk->EXLISTVALUE3
             ];
-            $RiskRecList[]=[
-                'RECOMEND'=>$Risk->DRRECOMEND
-            ];
+            
+            if ($Risk->DRRECOMEND!=''){
+                $RiskRecList[]=                    
+                    $Risk->DRRECOMEND
+                ;
+            }
             $RiskF++;            
         }
+        
         if ($RiskF==0){    
             $RiskFList[]=[
                 'RISKFIN'=>'Риски проведения процедуры банкротства не выявлены',
                 'RISKJURWORK'=>'',
                 'RISKPROPERTY'=>''
             ];
-        }            
+        }      
+        
+        
+        
+        #$RiskRecListPr=array_map("unserialize", array_unique(array_map("serialize", $RiskRecList)));
+        $RiskRecListPr=array_unique($RiskRecList);
+        $RiskRecListPr2=[];
+        foreach($RiskRecListPr as $Risk){
+            $RiskRecListPr2[]=[
+                'RECOMEND'=>$Risk,
+            ];
+        }
+        
+        #new MyCheck($RiskRecListPr2,0);
+        
         $Act->cloneRowAndSetValues('RISKFIN', $RiskFList);          
         //заполнение таблицы рекомендаций
         switch($ExpRec){
             case "Банкротство физлиц":  
             case "Банкротство физлиц с ипотекой":
             case "Защита от кредиторов":
-                $Act->cloneRowAndSetValues('RECOMEND', $RiskRecList);
+                $Act->cloneRowAndSetValues('RECOMEND', $RiskRecListPr2);
                 break;  
         }
         

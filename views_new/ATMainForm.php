@@ -153,7 +153,7 @@
                   <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #7d83d1'>Проведён андеррайтинг</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp04" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
                 </li>
                 
               

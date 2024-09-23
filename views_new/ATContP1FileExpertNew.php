@@ -490,10 +490,10 @@
                         
                     </select>
                     <div class="form-group">
-                        <label for="UnderTextarea" class="form-label mt-4">Комментарий андеррайтера</label>
+                        <label for="UnderTextarea" class="form-label mt-4">Заключение андеррайтера</label>
                         <textarea class="form-control" id="UnderTextarea" rows="10" style="height: 200px;" name='EXPUNDERCOMMENT' maxlength=3000 ><?=$Expert->EXPUNDERCOMMENT?></textarea>
                     </div>
-                    <button type='summit' class='btn btn-success'>Сохранить результат проверки</button>
+                    <button type='summit' class='btn btn-success'>Сохранить андеррайтера по результатам проверки</button>
                 </form>
                 
                 
@@ -503,10 +503,10 @@
                     ?>
                     
                     <div class="form-group">
-                        <label for="UnderTextarea" class="form-label mt-4">Комментарий юриста по исправлению ошибок</label>
+                        <label for="UnderTextarea" class="form-label mt-4">Ответ юриста на заключение андеррайтера</label>
                         <textarea class="form-control" id="UnderTextarea" rows="10" style="height: 200px;" name='EXJURERRWORKCOMMENT' maxlength=3000 ><?=$Expert->EXJURERRWORKCOMMENT?></textarea>
                     </div>
-                    <button type='summit' class='btn btn-success'>Сохранить комментарий юриста</button>
+                    <button type='summit' class='btn btn-success'>Сохранить ответ юриста</button>
                 </form>
                 
             </div>

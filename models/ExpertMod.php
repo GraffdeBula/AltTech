@@ -114,7 +114,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE expunderdate>=? AND expUnderRes=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
+                . "WHERE expunderdate>=? AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
     }
     
     //*выявленные ошибки исправлены
