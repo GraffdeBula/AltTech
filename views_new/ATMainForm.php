@@ -153,7 +153,7 @@
                   <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #7d83d1'>Проведён андеррайтинг</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp04" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
                 </li>
                 
               
@@ -279,7 +279,7 @@
                         </tbody>
                     </table>                            
                 </div>
-                                
+                                                
             </div>
         </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
@@ -289,6 +289,7 @@
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>
                     <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterErr"><button class="btn btn-success">Исправление замечаний андеррайтера</button></p>
                 </div>
                 <div class="col-lg-3">
                     <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
@@ -296,6 +297,7 @@
                     <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></a></p>
                 </div>  
+                
             </div>
             <div class='row'>
                 <p><a target="_blank" href="index_admin.php?controller=TarifCalcCtrl&action=Index"><button class="btn btn-danger">Калькулятор единого тарифа</button></a></p>
