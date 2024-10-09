@@ -743,6 +743,10 @@
                             ?>
                         </div>
                     </div>
+                    <?php
+                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=ContStopPay&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+                            . "<button class='btn btn-info'>Приостановление платежей</button></a>");
+                    ?>
                 </div>                              
             </div>    
                 
