@@ -209,9 +209,7 @@
                                         echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
                                         echo("<option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>");
                                         echo("</select></p>");
-                                        echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");
-                                        //echo("<p><label>Сумма основного долга</label><input name='EXMAINDEBTSUM' value={$Expert->EXMAINDEBTSUM}></p>");
-                                        echo("<p><label>Общий доход</label><input name='EXANNTOTINC' value={$Expert->EXANNTOTINC}></p>");
+                                        echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");                                        
                                         echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");                            
                                         if (in_array($_SESSION['EmRole'],['admin','expert','top','director','jurist'])){
                                             echo("<button type='summit' class='btn btn-info'>Сохранить результат</button>");
@@ -451,7 +449,7 @@
                             <th>Дата договора</th>
                             <th>Сумма кредита</th>
                             <th>Общий долг</th>
-                            <th>Основной долг</th>
+                            
                             
                         </tr>
                     </thead>
@@ -471,7 +469,7 @@
                             echo("<td>$CrDate</td>");
                             echo("<td>$Credit->CRSUM</td>");
                             echo("<td>$Credit->CRSUMREST</td>");
-                            echo("<td>$Credit->CRSUMRESTMAIN</td>");
+                            
                             echo("</tr>");
                             //echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
                         }
