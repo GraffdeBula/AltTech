@@ -136,7 +136,24 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         }
         
         if (isset($_GET['FRCRNUM'])){
-            $ContSum=$ContSum+9000*intdiv($_GET['FRCRNUM'],10);
+            
+            $DopSum=0;
+            
+            if (($_GET['FRCRNUM']>=11)&&($_GET['FRCRNUM']<=20)){
+                $DopSum=9000;
+            }
+            if (($_GET['FRCRNUM']>=21)&&($_GET['FRCRNUM']<=40)){
+                $DopSum=18000;
+            }
+            if (($_GET['FRCRNUM']>=41)&&($_GET['FRCRNUM']<=460)){
+                $DopSum=27000;
+            }
+            if ($_GET['FRCRNUM']>=61){
+                $DopSum=36000;
+            }
+            
+            
+            $ContSum=$ContSum+$DopSum;                        
         }
         
         if (isset($_GET['FRCOMPLEXCRNUM'])){

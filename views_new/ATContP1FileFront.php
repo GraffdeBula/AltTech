@@ -204,7 +204,7 @@
                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                         <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
                             <?php
-                                echo("<form method='get'>");
+                                echo("<form method='get' enable=>");
 
                                     (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                                     echo("
@@ -255,8 +255,14 @@
                                     ");    
                                     echo("<label>Скидка руководителя</label>");
                                     echo("<input name='DISCDIRECTOR' type='number' value='0'></p>");
-                                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
-
+                                    if ($Anketa->STATUS<=16){
+                                        $btntype='btn btn-warning';
+                                        echo("<button class='$btntype' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
+                                    } else {
+                                        $btntype='btn btn-secondary';
+                                        echo("<button class='$btntype' disabled type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
+                                    }                                    
+                                    
                                 echo("</form>");
                                 
                             ?>
