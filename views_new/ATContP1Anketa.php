@@ -20,7 +20,7 @@
             echo("<p>Клиент: {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</p>");
             echo("</div>");            
             echo("<p>Договор ID: {$Cont->CONTCODE}</p>");
-            echo("<p>Число кредитов/займов: <strong>{$Anketa->AKCREDNUM}</strong> Сумма долга общая: <strong>{$Anketa->AKCREDTOTSUM}</strong> Сумма основного долга: <strong>{$Anketa->AKCREDMAINSUM}</strong></p>");
+            echo("<p>Число кредитов/займов: <strong>{$Anketa->AKCREDNUM}</strong> Сумма долга общая: <strong>{$Anketa->AKCREDTOTSUM}</strong> </p>");
             echo("<a href='index_admin.php?controller=ATContP1AnketaCtrl&action=NewCred&ClCode={$Client->CLCODE}&ContCode={$Cont->CONTCODE}'><button class='btn btn-warning'>ДОБАВИТЬ КРЕДИТНЫЙ ДОГОВОР</button></a>");            
         ?>
         

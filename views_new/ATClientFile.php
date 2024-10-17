@@ -42,9 +42,7 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#contlist4">Договоры разовые</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
-        </li>        
+        
     </ul>
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active show" id="contlist1">
@@ -99,50 +97,7 @@
                     <button class='btn btn-warning'>сохранить комментарий</button>
                 </form>
             </div>
-            <div>
-                <table class='table table-hover'>
-                    <thead>
-                        <tr>
-                            <th>Дата</th>
-                            <th>Кто оставил</th>
-                            <th>Комментарий</th>                                    
-                            <th>Изменить</th>
-                            <th>Удалить</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php                          
-                        foreach($Comments as $Comment){
-                            echo("<tr class='table-secondary'><form method='get'>");
-                            
-                            
-                            echo("<td>$Comment->CMDATE</td>");
-                            echo("<td>$Comment->CMAUTHOR</td>");
-                            echo("<form method='get' autocomplete='off'>");
-                            (new MyForm('ATClientFileCtrl','UpdComment',$_GET['ClCode'],0))->AddForm();
-                            echo("<td><textarea type='text' name='CmText' size=120 rows='5' style='height: 90px; width: 900px;'>$Comment->CMTEXT</textarea></td>");
-                            if ($Comment->CMAUTHOR==$_SESSION['EmName']){
-                                echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
-                                echo("<td><button class='btn btn-success btn-sm'>Изменить</button></td>");
-                            } else {
-                                echo("<td>-----</td>");
-                            }
-                            echo("</form>");
-                            if (($Comment->CMAUTHOR==$_SESSION['EmName'])){
-                                echo("<form method='get'>");
-                                (new MyForm('ATClientFileCtrl','DelComment',$_GET['ClCode'],0))->AddForm();
-                                echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
-                                echo("<td><button class='btn btn-danger btn-sm'>Удалить</button></td>");
-                                echo("</form>");
-                            } else {
-                                echo("<td>-----</td>");
-                            }
-                            echo("</tr>");
-                        }
-                    ?>
-                    </tbody>    
-                </table>   
-            </div>    
+               
         </div>
     </div>
     <script src="./js/ClFile.js"></script>
