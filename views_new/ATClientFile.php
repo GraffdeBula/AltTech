@@ -128,7 +128,7 @@
                                                 
                         if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
                             echo("<form method='get'>");
-                            (new MyForm('ATContP1FileFrontCtrl','DelComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                            (new MyForm('ATContP1FileFrontCtrl','DelComment',$_GET['ClCode'],0))->AddForm();
                             echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
                             echo("<td><button class='btn btn-danger'>УДАЛИТЬ</button></td>");
                             echo("</form>");

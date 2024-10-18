@@ -15,8 +15,8 @@ class ATCommentMod extends Model{
         return db2::getInstance()->FetchAll("SELECT * FROM tblClComments WHERE ClCode=? ORDER BY Id DESC",[$ClCode]);
     }
     
-    public function GetContComments($ClCode,$ContCode,$ProdNum){        
-        return db2::getInstance()->FetchAll("SELECT * FROM tblClComments WHERE ClCode=? AND ContCode=? AND ProdNum=? ORDER BY Id DESC",[$ClCode,$ContCode,$ProdNum]);
+    public function GetContComments($ClCode){        
+        return db2::getInstance()->FetchAll("SELECT * FROM tblClComments WHERE ClCode=? ORDER BY Id DESC",[$ClCode]);
     }
             
     public function AddComment($ClCode=0,$ContCode=0,$ProdNum=1,$Text='',$Author='admin'){
