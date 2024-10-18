@@ -42,6 +42,9 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#contlist4">Договоры разовые</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
+        </li>
         
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -96,7 +99,48 @@
                     <textarea class="form-control" id="exampleTextarea" rows="3" style="width:500; height: 120px;" name='NewComment'></textarea>
                     <button class='btn btn-warning'>сохранить комментарий</button>
                 </form>
-            </div>
+            </div>            
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">Дата</th>
+                      <th scope="col">Автор</th>
+                      <th scope="col">Текст</th>
+                      <th scope="col">Изменить</th>
+                      <th scope="col">Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>                
+                    <?php
+                    foreach($Comments as $Comment){
+                        echo('<tr class="table-active">');
+                        echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td>");
+                        echo("<form method='get' autocomplete='off'>");
+                            (new MyForm('ATContP1FileFrontCtrl','UpdComment',$_GET['ClCode']))->AddForm();
+                            echo("<td><textarea type='text' name='CmText' size=120 rows='5' style='height: 90px; width: 900px;'>$Comment->CMTEXT</textarea></td>");                        
+                        if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
+                            echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                            echo("<td><button class='btn btn-success'>ИЗМЕНИТЬ</button></td>");
+                        } else {
+                            echo("<td>-----</td>");
+                        }
+                        echo("</form>");
+                                                
+                        if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
+                            echo("<form method='get'>");
+                            (new MyForm('ATContP1FileFrontCtrl','DelComment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                            echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
+                            echo("<td><button class='btn btn-danger'>УДАЛИТЬ</button></td>");
+                            echo("</form>");
+                        } else {
+                            echo("<td>-----</td>");
+                        }
+                        echo('</tr>');
+                    }
+                    ?>
+                </tbody>
+            </table>
+            
                
         </div>
     </div>
