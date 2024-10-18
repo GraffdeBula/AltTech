@@ -19,12 +19,12 @@ class RepPaymentsCtrl extends ControllerMain{
         $this->formRep();    
         $this->ExportToExcel($this->Payments,'PaymentRep');
         $this->render('reports/PaymentsRep',
-                ['Report1'=>$this->Payments,
-                    'Report2'=>$this->RepPayments,
-                    'Report3'=>$this->RepCompPayments,
-                    'Report4'=>$this->RepMethodPayments,
-                    'TotalIncome'=>$this->TotalIncome,
-                    'BranchList'=>(new Branch())->getBranchList()]);
+                ['Report1'=>$this->Payments, //развёрнутый список платежей
+                    'Report2'=>$this->RepPayments, //агрегиррованный по видам платежей и филиалам
+                    'Report3'=>$this->RepCompPayments, //агрегированный по компании
+                    'Report4'=>$this->RepMethodPayments, //агрегированный по методам платежей
+                    'TotalIncome'=>$this->TotalIncome, //вся выручка
+                    'BranchList'=>(new Branch())->getBranchList()]); //список филиалов для фильтра
     }
     
     public function formRep() {
