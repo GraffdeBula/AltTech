@@ -12,17 +12,28 @@ class AmoMethods {
     protected $AmoMethod='PATCH';
     
     public function getLeadById($LeadId){
-        (new logger('log_amo'))->logToFile('AmoMethods: getLeadById');
-        $Amo=new AmoRequests();
-        $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadId}");
-        $Amo->setVar('AmoHeader',false);
-        $Amo->setVar('AmoMethod','GET');        
-        if (isset($Amo->request()['_embedded']['items'][0])){
-        return $Amo->request()['_embedded']['items'][0];
+        
+        $Amo=(new AmoRequestsNew())->request("https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadId}",false,[],'GET');
+               
+        if (isset($Amo['_embedded']['items'][0])){
+        return $Amo['_embedded']['items'][0];
         }else{
             return [];
         }
     }
+    
+//    public function getLeadById($LeadId){
+//        (new logger('log_amo'))->logToFile('AmoMethods: getLeadById');
+//        $Amo=new AmoRequests();
+//        $Amo->setVar('AmoLink',"https://fpcalternative.amocrm.ru/api/v2/leads/?id={$LeadId}");
+//        $Amo->setVar('AmoHeader',false);
+//        $Amo->setVar('AmoMethod','GET');        
+//        if (isset($Amo->request()['_embedded']['items'][0])){
+//        return $Amo->request()['_embedded']['items'][0];
+//        }else{
+//            return [];
+//        }
+//    }
             
     public function getLeadList($strParam){
         (new logger('log_amo'))->logToFile('AmoMethods: getLeadList');

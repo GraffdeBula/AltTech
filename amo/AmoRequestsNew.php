@@ -4,26 +4,23 @@
  *  AMO TOOLS для тестирования в интерфейсе AltTech
  * 
  */
-class AmoRequests{
+class AmoRequestsNew{
     protected $AmoLink='';
     protected $AmoHeader=false;
     protected $AmoData=[];
     protected $AmoMethod='PATCH';
     protected $User='';
-    
-    public function __construct() {
-        $this->User=array(
-            'USER_LOGIN'=>'adbulavskiy@gmail.com',
-            'USER_HASH'=>'b37b351af8831e36a345926b8c2bb6fdd1d60ab7'
-        );
-        $this->amoAuth();
-    }
-    
+            
     public function setVar($Name,$Value){
         $this->{$Name}=$Value;
     }
     
     protected function amoAuth(){
+        $this->User=array(
+            'USER_LOGIN'=>'adbulavskiy@gmail.com',
+            'USER_HASH'=>'b37b351af8831e36a345926b8c2bb6fdd1d60ab7'
+        );
+        
         $this->AmoLink='https://fpcalternative.amocrm.ru/private/api/auth.php?type=json';
         //Сохраняем дескриптор сеанса cURL
         $Curl=curl_init();
@@ -50,7 +47,14 @@ class AmoRequests{
         return $Response;
     }
     
-    public function request(){
+    public function request($link='',$header=false,$data=[],$method='PATCH'){
+        $this->AmoLink=$link;
+        $this->AmoHeader=$header;
+        $this->AmoData=$data;
+        $this->AmoMethod=$method;
+        
+        $this->amoAuth();
+        
         $Curl=curl_init(); #Сохраняем дескриптор сеанса cURL
         //Устанавливаем необходимые опции для сеанса cURL
         curl_setopt($Curl,CURLOPT_RETURNTRANSFER,true);

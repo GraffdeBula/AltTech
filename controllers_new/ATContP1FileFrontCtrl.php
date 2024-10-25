@@ -408,6 +408,17 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         #header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionDownloadPayBill(){
+        $DocName=UPPER_ROOT.'/payments/'.$_GET['PayID'];
+        if(file_exists(UPPER_ROOT.'/payments/'.$_GET['PayID'].'.xlsx')){
+            header("Location: ".'payments/'.$_GET['PayID']);
+        } else {
+            (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1,1,0))->formPayBill($_GET['PayID'],$_GET['ContCode'],1);
+            
+            header("Location: ".'payments/'.$_GET['PayID'].'.xlsx');
+        }
+        
+    }
     public function actionFormPayBill(){
         (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1,1,0))->formPayBill($_GET['Id'],$_GET['ContCode'],1);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
