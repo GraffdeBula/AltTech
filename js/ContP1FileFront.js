@@ -164,7 +164,7 @@ function getPayList(){
                 "<td>"+PaymentList[i].PAYSUM+"</td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+
                 "<td>"+PaymentList[i].PAYMETHOD+"</td>"+
-                "<td><a href='payments/"+PaymentList[i].ID+".xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
+                "<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DownloadPayBill&ClCode="+PaymentList[i].CLCODE+"&ContCode="+PaymentList[i].CONTCODE+"&PayID="+PaymentList[i].ID+"'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
                 "<td><a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить "+PaymentList[i].ID+"</button></a></td>"+
                 
                 "</tr>";

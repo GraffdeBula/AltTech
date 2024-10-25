@@ -11,6 +11,7 @@ define('UPPER_ROOT', dirname(CONFIG_ROOT));
 class autoloader {
     protected $paths=[        
         UPPER_ROOT.'/app',
+        UPPER_ROOT.'/amo',
         UPPER_ROOT.'/app/service',
         UPPER_ROOT.'/infrastructure',
         UPPER_ROOT.'/integrations',
@@ -19,7 +20,7 @@ class autoloader {
         
         UPPER_ROOT.'/functions',        
         UPPER_ROOT.'/traits',                
-        UPPER_ROOT.'/amo',        
+                
         
         UPPER_ROOT.'/controllers_new',        
         UPPER_ROOT.'/controllers_new/app',        

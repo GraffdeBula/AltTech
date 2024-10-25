@@ -14,6 +14,7 @@ class TarifMod extends Model{
     
     public function getPacFullList(){
         $Sql="SELECT * FROM tblP1Pacs ORDER BY PcAct,PcProg,PcTemplateRoot,PcPeriod";
+        #$Sql="SELECT FIRST 100 * FROM tblP1Pacs ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
@@ -53,7 +54,8 @@ class TarifMod extends Model{
     }
 
     public function getTarifFullList(){
-        $Sql="SELECT * FROM tblP1Tarif ORDER BY TrName,TrSumMin";
+        #$Sql="SELECT * FROM tblP1Tarif ORDER BY TrName,TrSumMin";
+        $Sql="SELECT FIRST 100 * FROM tblP1Tarif ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
