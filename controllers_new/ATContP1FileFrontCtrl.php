@@ -411,7 +411,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     public function actionDownloadPayBill(){
         $DocName=UPPER_ROOT.'/payments/'.$_GET['PayID'];
         if(file_exists(UPPER_ROOT.'/payments/'.$_GET['PayID'].'.xlsx')){
-            header("Location: ".'payments/'.$_GET['PayID']);
+            header("Location: ".'payments/'.$_GET['PayID'].'.xlsx');
         } else {
             (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1,1,0))->formPayBill($_GET['PayID'],$_GET['ContCode'],1);
             

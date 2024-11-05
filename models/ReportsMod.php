@@ -26,7 +26,29 @@ class ReportsMod extends Model {
                 . " WHERE (FrContDate BETWEEN ? AND ?) AND  FROFFICE=?  ORDER BY FrContDate DESC";
         return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$Branch]);
     }
+    ##отчёт по первым платежам
+    public function getContNewPays($DateF,$DateL){
+        $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
+            . " FrContDate,PayDate,PaySum"
+            . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
+            . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
+            . " INNER JOIN tblp1PayCalend ON tblP1Anketa.ContCode=tblp1PayCalend.ContCode"
+            . " WHERE PayNum=1 AND (PayDate BETWEEN ? AND ?) ORDER BY PayDate DESC";
+        
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
+    }
     
+    public function getContNewPaysBranch($DateF,$DateL,$Branch){
+        $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
+            . " FrContDate,PayDate,PaySum"
+            . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
+            . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
+            . " INNER JOIN tblp1PayCalend ON tblP1Anketa.ContCode=tblp1PayCalend.ContCode"
+            . " WHERE PayNum=1 AND (PayDate BETWEEN ? AND ?) AND  FROFFICE=? ORDER BY PayDate DESC";
+        
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,$Branch]);
+    }
+    ##отчёт по экспертизам
     public function getContExp($DateF,$DateL){
         $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
             . " FrExpDate,PayDate,frExpSum,PaySum"

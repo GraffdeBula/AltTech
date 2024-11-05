@@ -284,22 +284,25 @@
         </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
             <div class="row">
-                <div class="col-lg-3">            
+                <div class="col-lg-2">            
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContExpForm"><button class="btn btn-success">НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>
-                    <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterErr"><button class="btn btn-success">Исправление замечаний андеррайтера</button></p>
+                    <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterErr"><button class="btn btn-success">Исправление замечаний андеррайтера</button></a></p>
                 </div>
-                <div class="col-lg-3">
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
+                <div class="col-lg-2">
+                    <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContNew"><button class="btn btn-success">Плановые платежи по новым договорам</button></a></p>
                 </div>  
+                <div class="col-lg-2">                    
+                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>                    
+                </div>
                 
             </div>
-            <div class='row'>
+            <div class="row">
                 <p><a target="_blank" href="index_admin.php?controller=TarifCalcCtrl&action=Index"><button class="btn btn-danger">Калькулятор единого тарифа</button></a></p>
             </div>
         </div><!--отчёты-->   
