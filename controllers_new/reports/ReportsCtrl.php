@@ -49,12 +49,48 @@ class ReportsCtrl extends ControllerMain{
         $Branch=$_GET['BranchName'];
         
         if ($Branch!=''){
-            $this->Report=(new ReportsMod())->getContExpBranch($DateF,$DateL,$Branch);
+            $this->Report=(new ReportsMod())->getContNewPaysBranch($DateF,$DateL,$Branch);
         } else {
-            $this->Report=(new ReportsMod())->getContExp($DateF,$DateL);     
+            $this->Report=(new ReportsMod())->getContNewPays($DateF,$DateL);     
         }
         $this->RepExpToExcel($this->Report, 'NewExpRep');
         $this->render('reports/ContExpRep',['Report'=>$this->Report,'BranchList'=>[]]);
+    }
+    
+    public function actionContNewRep(){
+        $DateF=date('d.m.Y');
+        if ($_GET['DateF']!=''){
+            $DateF=$_GET['DateF'];
+        }
+        $DateL=date('d.m.Y');
+        if ($_GET['DateL']!=''){
+            $DateL=$_GET['DateL'];
+        }
+        $Branch=$_GET['BranchName'];
+        
+        if ($Branch!=''){
+            $this->Report=(new ReportsMod())->getContNewPaysBranch($DateF,$DateL,$Branch);
+        } else {
+            $this->Report=(new ReportsMod())->getContNewPays($DateF,$DateL);             
+        }
+        $RepCols=[
+            'A2'=>'ClCode',
+            'B2'=>'ContCode',
+            'C2'=>'ФИО',
+            'D2'=>'Подразделение',
+            'E2'=>'Менеджер',
+            'F2'=>'Дата дог.',
+            'G2'=>'Дата платежа',
+            'H2'=>'Сумма платежа',
+            
+        ];
+        (new RepToExcel())->exportReport($this->Report,$RepCols,'план новых платежей','ПланПоНовым');
+                
+        $this->render('reports/ContNewRep',['Report'=>$this->Report,'BranchList'=>[]]);
+    }
+    
+    public function actionShowContNew(){
+        $this->render('reports/ContNewRep',['Report'=>[],'BranchList'=>[]]);
     }
     
     protected function RepExpToExcel($Arr,$File){
