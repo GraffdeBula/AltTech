@@ -573,7 +573,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }
         //заполнение стоимости услуг
         $Act->setValue('CONTSUM',9000);
-        $Act->setValue('CONTSUMSTR',(new PrintFunctions())->SumToStr(9000));
+        $Act->setValue('CONTSUMSTR','девять тысяч');
         //БЛОК 4
         $FileName="Отчёт ЭПЭ {$Client->getClRec()->CLFIO}";
         $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/documents/{$FileName}.docx");

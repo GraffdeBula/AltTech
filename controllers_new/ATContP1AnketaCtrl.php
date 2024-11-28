@@ -96,6 +96,7 @@ class ATContP1AnketaCtrl extends ControllerMain {
     public function actionDelCred(){
         $Model=new ATP1CredMod();
         $Model->DelP1Credit($_GET['CrCode']);
+        $this->UpdCredInfo();
         header("Location: index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
         

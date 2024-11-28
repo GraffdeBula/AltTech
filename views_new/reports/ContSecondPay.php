@@ -38,7 +38,6 @@
                 </thead>
                 <tbody>                    
                 <?php
-                    $RepSum=0;
                     foreach ($Report as $Cont){
                         $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
                         $PayDate=(new PrintFunctions())->DateToStr($Cont->PAYDATE);
@@ -52,19 +51,8 @@
                         echo("<td>{$PayDate}</td>");
                         echo("<td>{$Cont->PAYSUM}</td>");
                         echo("<tr>");
-                        $RepSum=$RepSum+$Cont->PAYSUM;
-                    }                                        
+                    }                    
                 ?>
-                    <tr class='table-active'>
-                        <td></td>
-                        <td></td>
-                        <td>ИТОГО</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                        
-                        <td></td>                        
-                        <td><?=$RepSum?></td>                    
-                    </tr>
                 </tbody>
             </table>                                                                                                                    
         </div>

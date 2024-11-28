@@ -130,9 +130,17 @@
                     } else {
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }                    
-                    echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}>
-                        <button type='submit' class='btn btn-warning'>Заключён договор услуг</button></p>");                         
+                    echo("<p><label>ДАТА ДОГОВОРА УСЛУГ</label><input type='date' name='FRCONTDATE' value={$Front->FRCONTDATE}>");
+                        if ($Front->FRCONTSUM>0){ //подписание договора услуг только после расчёта тарифа
+                            echo("<button type='submit' class='btn btn-warning'>Заключён договор услуг</button>");
+                        }
+                    echo("</p>");                         
                 echo("</form>");
+                
+                echo("<p>Первоначальная стоимость: {$Front->FRCONTFIRSTSUM} руб.</p>"
+                    . "<p>Доплата за сложность: {$Front->FRDOPSUM} руб.</p>"
+                    . "<p>Общая стоимость: {$Front->FRCONTSUM} руб.</p>");
+                        
             
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','ExpGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
