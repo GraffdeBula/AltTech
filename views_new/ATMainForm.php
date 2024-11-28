@@ -243,6 +243,7 @@
                                     ."<td>$ContDate</td>"
                                     ."<td>$ExpDate</td>"
                                     ."<td>$UnderDate</td>"
+                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                 ."</tr>");
                                 
                             }
@@ -266,12 +267,15 @@
                         <tbody>
                             <?php 
                             foreach($ExpList[14] as $ExpCont){ 
-                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
-                                    ."<td>$ExpDate</td>"
+                                    ."<td>$ContDate</td>"
+                                    ."<td>$ExpDate</td>"                                    
+                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                 ."</tr>");
                                 
                             }
@@ -288,12 +292,12 @@
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContExpForm"><button class="btn btn-success">НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterErr"><button class="btn btn-success">Исправление замечаний андеррайтера</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterErr"><button class="btn btn-warning">Замечания андеррайтера</button></a></p>
                 </div>
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBaseListCtrl"><button class="btn btn-dark">Списки действующих клиентов</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=CurBaseBranchCtrl"><button class="btn btn-info">Списки действующих клиентов</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContNew"><button class="btn btn-success">Плановые платежи по новым договорам</button></a></p>
                 </div>  
                 <div class="col-lg-2">                    
@@ -350,7 +354,7 @@
             <div>
                 <a target='_blank' href="index_admin.php?controller=AmoAdminPanelCtrl"><button class="btn btn-info">Админ панель АМО</button></a>
             </div>
-            
+                        
         </div>     
         <div class="tab-pane fade" id="adminka">
                      

@@ -21,6 +21,7 @@
                   <th scope="col">Последний платёж</th>
                   <th scope="col">Сумма платежа</th>
                   <th scope="col">Дата платежа</th>
+                  <th scope="col">дней</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,8 +32,18 @@
                     $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
                     $LastDate=(new PrintFunctions())->DateToStr($Cont->PAYLASTDATE);
                     $PayDate=(new PrintFunctions())->DateToStr($Cont->PAYDATE);
+                    
+                    $CurDate=new DateTime();
+                    $Targ=new DateTime($LastDate);
+                    $Diff=(int)$CurDate->diff($Targ)->format('%a');
+                    if ($Diff>30){
+                        $RowClass='table-danger';
+                    } else {
+                        $RowClass='table-info';
+                    }
+                    
                     $Sum=$Sum+$Cont->PAYSUM;
-                    echo("<tr class='table-info'>");
+                    echo("<tr class='{$RowClass}'>");
                     echo("<td>{$Cont->CLCODE}</td>");
                     echo("<td>{$Cont->CONTCODE}</td>");
                     echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
@@ -43,8 +54,9 @@
                     echo("<td>{$Cont->PAYTOTSUM}</td>");
                     echo("<td>{$LastDate}</td>");
                     echo("<td>{$Cont->PAYSUM}</td>");
-                    echo("<td>{$PayDate}</td>");
-                    echo("</tr>");
+                    echo("<td>{$PayDate}</td>");                   
+                    echo("<td>{$Diff}</td>");
+                    echo("</tr>");                    
                 }
             ?>
                 <tr class='table-active'>

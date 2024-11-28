@@ -136,7 +136,7 @@ class PrintFunctions {
 	// т.к. мы не знаем максимальный порядок числа и будем бежать снизу
 	// единицы, тысячи, миллионы и т.д.
 	$parts = array_reverse(str_split($SumFloat,3));
-
+        #new MyCheck($parts,0);
 	// бежим по каждой части
 	foreach($parts as $i=>$part) {
 		

@@ -1,8 +1,0 @@
-2024-10-22 03:40:41 --> {"response":{"auth":true,"accounts":[{"id":7322618,"name":"fpcalternative","subdomain":"fpcalternative","language":"ru","timezone":"Asia\/Novosibirsk"}],"user":{"id":139752,"language":"ru"},"server_time":1729568441}}
-
-2024-10-22 03:40:41 --> {"response":{"error_code":"110","error":"\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u043b\u043e\u0433\u0438\u043d \u0438\u043b\u0438 \u043f\u0430\u0440\u043e\u043b\u044c","ip":"95.213.201.60","domain":"fpcalternative.amocrm.ru","server_time":1729568441}}
-
-2024-10-22 03:41:04 --> {"response":{"auth":true,"accounts":[{"id":7322618,"name":"fpcalternative","subdomain":"fpcalternative","language":"ru","timezone":"Asia\/Novosibirsk"}],"user":{"id":139752,"language":"ru"},"server_time":1729568464}}
-
-2024-10-22 03:41:05 --> {"title":"Unauthorized","type":"https:\/\/httpstatus.es\/401","status":401,"detail":"\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u043b\u043e\u0433\u0438\u043d \u0438\u043b\u0438 \u043f\u0430\u0440\u043e\u043b\u044c"}
-

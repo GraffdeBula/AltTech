@@ -21,7 +21,7 @@ class CurBasePlanCtrl extends ControllerMain{
     
     public function actionShowBrBase(){        
         $this->ViewName='Плановые платежи - '.$_GET['BrName'];
-        $Model=new ATP1ContMod();
+        $Model=new ReportsMod();
         $this->PayList=array_merge($Model->getPaysByBranch($_GET['BrName'],$_GET['DateF'],$_GET['DateL']),$Model->getPaysByBranchCred($_GET['BrName'],$_GET['DateF'],$_GET['DateL']));
         $this->exportToExcel();
         $this->render('reports/ATCurPlanBranch',['PayList'=>$this->PayList,'DocName'=>$this->DocName]);

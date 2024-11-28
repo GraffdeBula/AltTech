@@ -10,7 +10,7 @@
     </head>
     <body>
         <div>
-            <h5>Плановые платежи новые</h5>    
+            <h5>Расторгнутые договоры</h5>    
             <a href='downloads/ПланПоНовым.xlsx'><button class='btn btn-success'>В EXCEL</button></a>
             <form>
                     <label>Филиал</label>
@@ -32,13 +32,12 @@
                         <th scope='col'>Подразделение</th>
                         <th scope='col'>Менеджер</th>                        
                         <th scope='col'>Дата договора</th>
-                        <th scope='col'>Дата платежа</th>                        
-                        <th scope='col'>Сумма</th>                        
+                        <th scope='col'>Дата расторжения</th>                        
+                        
                     </tr>
                 </thead>
                 <tbody>                    
                 <?php
-                    $RepSum=0;
                     foreach ($Report as $Cont){
                         $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
                         $PayDate=(new PrintFunctions())->DateToStr($Cont->PAYDATE);
@@ -52,19 +51,8 @@
                         echo("<td>{$PayDate}</td>");
                         echo("<td>{$Cont->PAYSUM}</td>");
                         echo("<tr>");
-                        $RepSum=$RepSum+$Cont->PAYSUM;
-                    }                                        
+                    }                    
                 ?>
-                    <tr class='table-active'>
-                        <td></td>
-                        <td></td>
-                        <td>ИТОГО</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                        
-                        <td></td>                        
-                        <td><?=$RepSum?></td>                    
-                    </tr>
                 </tbody>
             </table>                                                                                                                    
         </div>

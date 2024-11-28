@@ -5,6 +5,5 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule ^(.+)$ index_admin.php?url=$1 [QSA,L]  
-  DirectoryIndex index_admin.php
 </IfModule>
 
