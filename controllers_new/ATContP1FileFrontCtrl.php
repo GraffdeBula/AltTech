@@ -17,7 +17,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
         'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF',
-        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD'];
+        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
@@ -447,7 +447,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionWorkBrake(){
         $this->FrontSave();
-        (new Status())->ChangeP1Status(99, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(91, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
