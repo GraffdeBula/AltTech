@@ -85,7 +85,20 @@ class ReportsMod extends Model {
                 ." AND frContPac IN ('pac24','pac33','pac38','pac39','pac40','pac57') ORDER BY ClFIO ";
         return db2::getInstance()->FetchAll($Sql,[$Branch,$DateF,$DateL,$DateF]);
     }
-    
+    ## действующая база юрстадия
+    public function getCurrentBaseJurBranch($Branch){
+        $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
+            . " FrContDate,frContTarif,frContSum,tblp1Status.status as Status,"
+            . " BoJurName,BoCourtFileNum,BoArbUprName,BoIskDate,BoIskSentDate,BoProcRestDate,BoProcRestFinDate,"
+            . " BoProcRealDate,BoProcRealFinDate,BoBankrMirDate,BoBankrFinDate"                
+            . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
+            . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
+            . " INNER JOIN tblP1BackOf ON tblP1Anketa.ContCode=tblP1Front.ContCode"
+            . " INNER JOIN tblp1Status ON tblP1Anketa.Status=tblp1Status.Statnum"
+            . " WHERE (tblP1Anketa.status BETWEEN 15 AND 90) AND  FROFFICE=? ORDER BY frContDate DESC";
+        
+        return db2::getInstance()->FetchAll($Sql,[$Branch]);
+    }
     
     ##отчёт по должникам
     

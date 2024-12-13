@@ -263,13 +263,10 @@
                                     ");    
                                     echo("<label>Скидка руководителя</label>");
                                     echo("<input name='DISCDIRECTOR' type='number' value='0'></p>");
-//                                    if ($Anketa->STATUS<=16){
-//                                        $btntype='btn btn-warning';
-//                                        echo("<button class='$btntype' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
-//                                    } else {
-//                                        $btntype='btn btn-secondary';
-//                                        echo("<button class='$btntype' disabled type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
-//                                    }                                    
+//                                  
+                                    echo("<p><label>Описание доплаты за сложность</label>");
+                                    echo("<input name='FRDIFCOST1' type='text' value='{$Front->FRDIFCOST1}'></p>");
+                                    
                                     echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
                                 echo("</form>");
                                 
