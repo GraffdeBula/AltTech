@@ -2,7 +2,6 @@
 /*
  * досье клиента
  *  */
- 
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,9 +53,10 @@
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1AnketaCtrl&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>");
         echo("<button class='btn btn-success'>ОТКРЫТЬ АНКЕТУ ДОГОВОРА</button></a>");
         
-        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
-        
+        if ($Front->FRCONTDATE!=NULL){
+            echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+            . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
+        }
         echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
         
@@ -263,13 +263,10 @@
                                     ");    
                                     echo("<label>Скидка руководителя</label>");
                                     echo("<input name='DISCDIRECTOR' type='number' value='0'></p>");
-//                                    if ($Anketa->STATUS<=16){
-//                                        $btntype='btn btn-warning';
-//                                        echo("<button class='$btntype' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
-//                                    } else {
-//                                        $btntype='btn btn-secondary';
-//                                        echo("<button class='$btntype' disabled type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
-//                                    }                                    
+//                                  
+                                    echo("<p><label>Описание доплаты за сложность</label>");
+                                    echo("<input name='FRDIFCOST1' type='text' value='{$Front->FRDIFCOST1}'></p>");
+                                    
                                     echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
                                 echo("</form>");
                                 
@@ -508,8 +505,12 @@
                 <p>Выдано из ОХ: <strong><?=$Payment->getTotalSum()['TotalDep2']->PAYSUM ?> руб.</strong><p>
             </div>
             <form method='get'>
-                <button class='btn btn-primary' id='AddPayBtn'>Принять платёж</button>
-                <?php (new MyForm('ATContP1FileFrontCtrl','AddPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
+                <?php
+                if ($Front->FRCONTDATE!=NULL){                
+                    echo("<button class='btn btn-primary' id='AddPayBtn'>Принять платёж</button>");
+                    (new MyForm('ATContP1FileFrontCtrl','AddPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); 
+                }
+                ?>
                 <input type='hidden' name='FRPERSMANAGER' value='<?=$Front->FRPERSMANAGER?>'>
                 <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
                 <div class='col-10'>
@@ -686,7 +687,7 @@
                 (new MyForm('ATContP1FileFrontCtrl','WorkFinal',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     
                 echo("<p><label>ДАТА ЗАВЕРШЕНИЯ РАБОТЫ</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
-                echo("<p><label>Итоговая стоимость работ</label><input type='text' name='FRTOTALWORKSUM' value={$Front->FRTOTALWORKSUM}>  руб.</p>");
+                echo("<p><label>Итоговая стоимость работ</label><input type='text' name='FRTOTALWORKSUM' value={$Front->FRTOTALWORKSUM}>  руб.</p>");               
                 echo("<button type='submit' class='btn btn-success'>Завершить работу (услуга оказана)</button>");
                 echo("</form>");   
             ?>    
@@ -705,7 +706,12 @@
 
                                 echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
                                 echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60'></p>");
-                                echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (отказ от дальнейшей работы)</button>");
+                                echo("<p><label>Инициатор расторжения:</label><select name='FRCONTDROPWHO'>");
+                                echo("<option>{$Front->FRCONTDROPWHO}</option>");
+                                echo("<option>По инициативе компании</option>");
+                                echo("<option>По инициативе клиента</option>");
+                                echo("</select>");                                
+                                echo("<button type='submit' class='btn btn-warning'>Расторгнуть договор (отказ от дальнейшей работы)</button>");                                
                                 echo("</form>");   
 
                                 echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ContDopWorkBrakeAfterExp&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"

@@ -66,7 +66,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     public function actionAddFromJurist(){ 
         (new ExpertMod())->AddFromJurist($_GET['EXJURCOMMENT'],$_GET['ContCode']);
-        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$_GET['FRDOPSUM']],$_GET['ContCode']);
+        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$_GET['FRDOPSUM'],'FRDIFCOST2'=>$_GET['FRDIFCOST2']],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -201,6 +201,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->Comments=(new ATCommentMod())->GetContComments($_GET['ClCode'],$_GET['ContCode'],1);
         $this->RiskListDr=(new ExpertMod)->GetRiskDr(['Risk']);
         $this->RiskListDr2=(new ExpertMod)->GetRiskDr(['Risk2']); //риски по ВБФЛ
+        
                
         if (isset($_GET['CrCode'])){
             $this->Credit=(new ATP1CredMod)->GetP1Credit($_GET['CrCode']);
@@ -231,8 +232,8 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'MinIncList'=>$NewMinInc,
             'Credit'=>$this->Credit,
             'WorkHist'=>$this->WorkHist,
-            'IncHist'=>$this->IncHist
-                        
+            'IncHist'=>$this->IncHist,
+            'DRRegionsList'=>(new ATDrRegionsMod())->GetRegList()            
         ];
         
     }

@@ -53,11 +53,11 @@
                 <div class="accordion" id="accordionExp">                                                    
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
                                 Риски БФЛ
                             </button>
                         </h3>
-                        <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
                                 <table class='table table-hover'>
                                     <thead>
@@ -107,14 +107,14 @@
                                 
                             </div>    
                         </div>
-                    </div><!<!-- collapse4 -->   
+                    </div><!<!-- collapse1 -->   
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                                 Риски по внесудебному БФЛ
                             </button>
                         </h3>
-                        <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                                              
                                 <table class='table table-hover'>
                                     <thead>
@@ -161,14 +161,47 @@
                                                                 
                             </div>    
                         </div>
-                    </div><!<!-- collapse5 -->    
+                    </div><!<!-- collapse2 -->    
+                    
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                Расчёт прожиточного минимума
+                            </button>
+                        </h3>
+                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                            <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
+                                <select name='Region'>
+                                    <option></option>
+                                    <?php
+                                    foreach($DRRegionsList as $Region){
+                                        echo("<option value='{$Region->REGNAME}'>{$Region->REGNAME}</option>");
+                                    }
+                                    ?>
+                                </select>
+                                <form autocomplete='off'>
+                                    <?php (new MyForm('ATContP1FileExpertCtrl','SaveMinInc',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
+                                    <label>в расчете на душу населения</label><input name='MinIncAvg' value='<?=$MinIncList['Avg']?>'><br>
+                                    <label>для трудоспособного населения</label><input name='MinIncWork' value='<?=$MinIncList['Work']?>'><br>
+                                    <label>для пенсионеров</label><input name='MinIncPens' value='<?=$MinIncList['Pens']?>'><br>
+                                    <label>для детей</label><input name='MinIncChild' value='<?=$MinIncList['Child']?>'><br>                
+                                    <div class="form-group">
+                                        <label for="exampleTextarea" class="form-label mt-4">Расчёт</label>
+                                        <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 60px;" name='MinIncResult' maxlength=5000 ><?=$MinIncList['Result']?></textarea>
+                                    </div>
+                                    <button type='summit' class='btn btn-info'>Сохранить результат</button>
+                                </form>
+                            </div>    
+                        </div>
+                    </div><!<!-- collapse3 -->
+                    
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
                                 Заключение юриста
                             </button>
                         </h3>
-                        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                        <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
                                 <form method='get'>
                                     <?php (new MyForm('ATContP1FileExpertCtrl','AddFromJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
@@ -178,19 +211,23 @@
                                     </div>
                                     
                                     <p><label>Сумма доплаты за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>></p>
+                                    
+                                    <p><label>Описание доплаты за сложность</label>
+                                    <input name='FRDIFCOST2' type='text' value='<?=$Front->FRDIFCOST2?>'></p>
+                                    
                                     <button type='summit' class='btn btn-info'>Сохранить заключение</button>           
                                 </form>  
                             </div>    
                         </div>
-                    </div><!<!-- collapse1 -->    
+                    </div><!<!-- collapse4 -->    
                     
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
                                 Общая информация
                             </button>
                         </h3>
-                        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                        <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
                                 <form method='get'>
                                     <?php
@@ -218,14 +255,14 @@
                                 </form>
                             </div>    
                         </div>
-                    </div><!<!-- collapse2 -->
+                    </div><!<!-- collapse5 -->
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
                                 Согласование договора
                             </button>
                         </h3>
-                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
+                        <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
                                 <div class='row'>                    
                                     <div class='col-lg-2'>
@@ -274,7 +311,7 @@
                                 </div>                                
                             </div>    
                         </div>
-                    </div><!<!-- collapse3 -->
+                    </div><!<!-- collapse6 -->
                 </div><!<!-- accordion -->                                           
                 
             </div>
