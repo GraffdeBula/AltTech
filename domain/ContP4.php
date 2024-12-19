@@ -21,6 +21,7 @@ class ContP4 {
     public function __construct($ContCode){
         $this->Anketa=(new ATP4ContMod())->getAnketaByCode($ContCode);
         $this->Front=(new ATP4ContMod())->getFrontByCode($ContCode);
+        $this->PayCalend=(new PayCalend())->getPayCalendP4($ContCode);
                                         
     }
     

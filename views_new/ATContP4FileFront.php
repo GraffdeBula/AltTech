@@ -155,50 +155,77 @@
             </div>
 
         </div>
-                
+        
         <div class="tab-pane fade" id="Pays">
-            <form method='get'>
-                <button class='btn btn-primary'>Принять платёж</button>
-                <?php (new MyForm('ATContP4FileFrontCtrl','AddPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
-                <input type='hidden' name='FRPERSMANAGER' value='<?=$Front->FRPERSMANAGER?>'>
-                <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
-                <div class='col-10'>
-                    <label>Сумма</label><input type='text' required value='0' name='PAYSUM'>
-                    <label>Дата</label><input type='date' required name='PAYDATE' value=''>
-                    <label>Тип</label><select name='PAYCONTTYPE'>
-                        <?php
-                        if ($Front->FRCONTPAYTYPE==1){
-                            echo("<option value='1'>по ПКО</option>");
-                        }
-                        if ($Front->FRCONTPAYTYPE==2){
-                            echo("<option value='2'>по чеку</option>");
-                        }
-                        ?>
-                        <option value='1'>по ПКО</option>
-                        <option value='2'>по чеку</option>
-                    </select>
-                </div>
-                <div class='col-10'>
-                    <label>Назначение платежа</label><select required name='PAYPR'>
-                        <option></option>
-                        <?php
-                            foreach($Payment->getTypeList() as $PayPr){
-                                echo("<option value='{$PayPr->NAME}'>{$PayPr->NAME}</option>");
+            <div class="col-5">
+                <h6>График платежей</h6>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>                            
+                            <th scope="col">Платёж</th>    
+                            <th scope="col">Дата</th>
+                            <th scope="col">Сумма</th>                                                        
+                            <th scope="col">Удалить</th>
+                        </tr>
+                    </thead>
+                    <tbody id="P4PayCalend">
+                        
+                    </tbody>                    
+                </table>
+                <form autocomplete="off">
+                    <?php
+                        (new MyForm('ATContP4FileFrontCtrl','AddPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    ?>
+                    <input type='number' name='PayNum' value='' placeholder='платёж' id='PayCalendNum'>
+                    <input type='date' name='PayDate' value='' placeholder='дата' id='PayCalendDate'>
+                    <input type='number' name='PaySum' value='' placeholder='сумма' id='PayCalendSum'>
+                    <button class="btn btn-info" id="AddPayCalend">ADD</button>
+                </form>
+            </div>
+            <div>
+                <form method='get'>
+                    <button class='btn btn-primary'>Принять платёж</button>
+                    <?php (new MyForm('ATContP4FileFrontCtrl','AddPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
+                    <input type='hidden' name='FRPERSMANAGER' value='<?=$Front->FRPERSMANAGER?>'>
+                    <input type='hidden' name='FROFFICE' value='<?=$Front->FROFFICE?>'>
+                    <div class='col-10'>
+                        <label>Сумма</label><input type='text' required value='0' name='PAYSUM'>
+                        <label>Дата</label><input type='date' required name='PAYDATE' value=''>
+                        <label>Тип</label><select name='PAYCONTTYPE'>
+                            <?php
+                            if ($Front->FRCONTPAYTYPE==1){
+                                echo("<option value='1'>по ПКО</option>");
                             }
-                        ?>
+                            if ($Front->FRCONTPAYTYPE==2){
+                                echo("<option value='2'>по чеку</option>");
+                            }
+                            ?>
+                            <option value='1'>по ПКО</option>
+                            <option value='2'>по чеку</option>
                         </select>
-                </div>
-                <div class='col-10'>
-                    <label>Способ внесения платежа</label><select required name='PAYMETHOD'>
-                        <option></option>
-                        <option>Наличные (Деньги в кассу)</option>
-                        <option>Наличные (Перевод на карту)</option>
-                        <option>Безналичный платёж (QR-код)</option>
-                        <option>Безналичный платёж (Оплата картой через терминал)</option>                        
-                        <option>Безналичный платёж (Перевод в банк)</option>
-                        </select>
-                </div>
-            </form>
+                    </div>
+                    <div class='col-10'>
+                        <label>Назначение платежа</label><select required name='PAYPR'>
+                            <option></option>
+                            <?php
+                                foreach($Payment->getTypeList() as $PayPr){
+                                    echo("<option value='{$PayPr->NAME}'>{$PayPr->NAME}</option>");
+                                }
+                            ?>
+                            </select>
+                    </div>
+                    <div class='col-10'>
+                        <label>Способ внесения платежа</label><select required name='PAYMETHOD'>
+                            <option></option>
+                            <option>Наличные (Деньги в кассу)</option>
+                            <option>Наличные (Перевод на карту)</option>
+                            <option>Безналичный платёж (QR-код)</option>
+                            <option>Безналичный платёж (Оплата картой через терминал)</option>                        
+                            <option>Безналичный платёж (Перевод в банк)</option>
+                            </select>
+                    </div>
+                </form>
+            </div>    
             <div class='col-4'>
             <table class="table table-hover">
                 <thead>
@@ -278,6 +305,7 @@
     <div>
         
     </div>
-        
+    
+    <script src="./js/ContP4FileFront.js"></script>    
 </body>
 </html>

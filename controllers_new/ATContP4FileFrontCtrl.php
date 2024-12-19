@@ -68,7 +68,20 @@ class ATContP4FileFrontCtrl extends ControllerMain {
         (new ATP4ContMod())->updP4FrontService($_GET['ContCode'],$_GET['FrContService'],$_GET['FrJurBranch'],$_GET['FrAttrChannel'],$_GET['FrContResult'],$_GET['FrJurist'],$_GET['FrFinWorkDate']);
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-       
+    
+    public function actionGetPayCalend(){
+        $PayCalend=(new PayCalend)->getPayCalendP4($_GET['ContCode']);
+        echo json_encode($PayCalend);
+    }
+    
+    public function actionAddPayCalend(){
+        (new PayCalend)->addPlanPayP4($_GET['ContCode'],$_GET['PayNum'],$_GET['PayDate'],$_GET['PaySum']);        
+    }
+    
+    public function actionDellPayCalend(){
+        (new PayCalend)->delPlanPayP4($_GET['ContCode'],$_GET['PayId']);        
+    }
+    
     public function actionAddPayment(){
         (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],4,$_GET['PAYCONTTYPE'],$_GET['PAYSUM'],'','',$_GET['PAYMETHOD']))->addPayment();
         
