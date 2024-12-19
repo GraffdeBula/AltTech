@@ -54,7 +54,8 @@ class ATContP4FilePrintCtrl extends ControllerMain {
             'Org'=>$this->Data['Org']->getRec(),
             'Branch'=>$this->Data['Branch']->getRec(),
             'Director'=>$this->Data['Director']->getEmp(),
-            'DirectorDov'=>$this->Data['Director']->getEmpDov()            
+            'DirectorDov'=>$this->Data['Director']->getEmpDov(),
+            'PayCalend'=>$this->Data['ContP4']->getPayCalend(),
         ]);
         $DocName=$Printer->PrintDoc();
         header("Location: ".$DocName);        

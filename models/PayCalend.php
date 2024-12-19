@@ -36,5 +36,21 @@ class PayCalend{
         db2::getInstance()->Query($Sql,$Params);
     }
     
+    public function getPayCalendP4($ContCode){ //метод возвращает график платежей по РУ
+        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tblP4PayCalend WHERE ContCode={$ContCode} ORDER BY PayNum,PayDate");        
+    }
+    
+    public function addPlanPayP4($ContCode,$PayNum,$PayDate,$PaySum){
+        $Sql="INSERT INTO tblP4PayCalend (ContCode,PayNum,PayDate,PaySum) VALUES (?,?,?,?)";
+        $Params=[$ContCode,$PayNum,$PayDate,$PaySum];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
+    public function delPlanPayP4($ContCode,$ID){
+        $Sql="DELETE FROM tblP4PayCalend WHERE ContCode=? AND ID=?";
+        $Params=[$ContCode,$ID];
+        db2::getInstance()->Query($Sql,$Params);
+    }
+    
     
 }
