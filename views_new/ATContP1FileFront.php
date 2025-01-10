@@ -253,7 +253,7 @@
                                             <input class='form-check-input' type='checkbox' $CB1 id='FRSMALLCRED' name='FRSMALLCRED'>
                                             <label class='form-check-label' for='FRSMALLCRED'>Сумма долга до 400 тыс.</label><br>
                                             <input class='form-check-input' type='checkbox' $CB2 id='FREASYCASE' name='FREASYCASE'>
-                                            <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 кредитора</label>
+                                            <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 обязательства)</label>
                                         </p>
                                     ");
                                     echo("<p><label>Скидка по акции</label><select name='DISCACTION'>

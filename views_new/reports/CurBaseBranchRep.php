@@ -140,29 +140,29 @@
                               <th scope="col">ContCode</th>
                               <th scope="col">ФИО</th>
                               <th scope="col">Филиал</th>                              
+                              <th scope="col">Статус</th>
                               <th scope="col">ДатаДоговора</th>
                               <th scope="col">Тариф</th>
                               <th scope="col">Сумма договора</th>                              
-                              <th scope="col">Статус</th>
-                              <th scope="col">Дата иска</th>
-                              <th scope="col">Дата списания долга</th>
+                              <th scope="col">Всего внесено</th>
+                              
                             </tr>
                         </thead>
                         <tbody>
 
                         <?php
                             $Sum=0;
-                            foreach($StopList as $Cont){
-                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);                                
+                            foreach($StopList as $Cont){                             
                                 echo("<tr class='table-info'>");
                                 echo("<td>{$Cont->CLCODE}</td>");
                                 echo("<td>{$Cont->CONTCODE}</td>");
                                 echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
                                 echo("<td>{$Cont->FROFFICE}</td>");                                
-                                echo("<td>{$ContDate}</td>");
+                                echo("<td>{$Cont->STATUS}</td>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRCONTDATE)."</td>");
                                 echo("<td>{$Cont->FRCONTTARIF}</td>");
                                 echo("<td>{$Cont->FRCONTSUM}</td>");                                
-                                echo("<td>{$Cont->STATUS}</td>");     
+                                echo("<td>{$Cont->PAYTOTSUM}</td>");               
                                 echo("</tr>");
                             }
                         ?>                            
@@ -182,27 +182,34 @@
                               <th scope="col">ContCode</th>
                               <th scope="col">ФИО</th>
                               <th scope="col">Филиал</th>                              
-                              <th scope="col">ДатаДоговора</th>
-                              <th scope="col">Тариф</th>
-                              <th scope="col">Сумма договора</th>                              
                               <th scope="col">Статус</th>
+                              <th scope="col">Дата Договора</th>
+                              <th scope="col">Тариф</th>                              
+                              <th scope="col">Сумма договора</th>                              
+                              <th scope="col">Всего внесено</th>
+                              <th scope="col">Дата списания</th>
+                              <th scope="col">Дата завершения работы</th>
+                              <th scope="col">Комментарий</th>
                             </tr>
                         </thead>
                         <tbody>
 
                         <?php
                             $Sum=0;
-                            foreach($ArchList as $Cont){
-                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);                                
+                            foreach($ArchList as $Cont){                                                      
                                 echo("<tr class='table-info'>");
                                 echo("<td>{$Cont->CLCODE}</td>");
                                 echo("<td>{$Cont->CONTCODE}</td>");
                                 echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
                                 echo("<td>{$Cont->FROFFICE}</td>");                                
-                                echo("<td>{$ContDate}</td>");
+                                echo("<td>{$Cont->STATUS}</td>");   
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRCONTDATE)."</td>");
                                 echo("<td>{$Cont->FRCONTTARIF}</td>");
                                 echo("<td>{$Cont->FRCONTSUM}</td>");                                
-                                echo("<td>{$Cont->STATUS}</td>");   
+                                echo("<td>{$Cont->PAYTOTSUM}</td>");                                
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->BOBANKRFINDATE)."</td>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRARCHDATE)."</td>");
+                                echo("<td>{$Cont->FRARCHCOMMENT}</td>");
                                 echo("</tr>");
                             }
                         ?>                            

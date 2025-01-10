@@ -84,9 +84,12 @@ class CurBaseBranchCtrl extends ControllerMain{
             'A2'=>'ClCode',
             'B2'=>'ContCode',
             'C2'=>'ФИО',
-            'D2'=>'Дата договора',
+            'D2'=>'Филиал',
             'E2'=>'Статус',
-            'F2'=>'Дата архива',            
+            'F2'=>'Дата договора',
+            'G2'=>'Тариф',
+            'H2'=>'Сумма договора',
+            'I2'=>'Выплачено',       
         ];
         (new RepToExcel())->exportReport($this->StopList,$RepCols,'ДД приостановлены','ДД приостановлены '.$_GET['Branch']);
         
@@ -94,9 +97,15 @@ class CurBaseBranchCtrl extends ControllerMain{
             'A2'=>'ClCode',
             'B2'=>'ContCode',
             'C2'=>'ФИО',
-            'D2'=>'Дата договора',
+            'D2'=>'Филиал',
             'E2'=>'Статус',
-            'F2'=>'Дата архива',            
+            'F2'=>'Дата договора',
+            'G2'=>'Тариф',
+            'H2'=>'Сумма договора',
+            'I2'=>'Выплачено',
+            'J2'=>'Дата банкротства',
+            'K2'=>'Дата завершения работы',
+            'L2'=>'Комментарий',
         ];
         (new RepToExcel())->exportReport($this->ArchList,$RepCols,'Архивные договоры','Архивные договоры '.$_GET['Branch']);
         
