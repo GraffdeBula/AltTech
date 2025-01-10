@@ -38,12 +38,11 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     
     public function actionTest(){     
         $Client=new Client($_GET['ClCode']);
-        if(!$Client->getContPhone()){
-            echo('111');
-        }else{
-            echo('sssss');
-        }
-        exit();
+        $TemplateName='test';
+        $Printer=new PrintDoc('test_tmp','test',['Client'=>$Client->getClRec(),]);
+        
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);
     }
     
     public function actionDopGaranty(){ 

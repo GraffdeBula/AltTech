@@ -71,6 +71,9 @@ class Payment {
         if (($this->PayType==2) or ($this->PayType==9) or ($this->PayType==12)){
             $this->PaySum=$this->PaySum*(-1);
         }        
+        if (in_array($this->PayType,[11,12])){
+            $this->ContType=1;
+        }
         if ($_GET['FROFFICE']==''){
             $this->ContBranch=$_SESSION['EmBranch'];
         }else{

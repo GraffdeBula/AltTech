@@ -52,16 +52,17 @@ class ReportsMod extends Model {
        
     public function getCurrentBaseBranch($Branch){
         $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
-            . " FrContDate,frContTarif,frContSum,tblp1Status.status as Status "
+            . " frContDate,frContTarif,frContSum,PAYTOTSUM,tblp1Status.status as Status "
             . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
             . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
             . " INNER JOIN tblp1Status ON tblP1Anketa.Status=tblp1Status.Statnum"
+            . " INNER JOIN VWCONTP1TOTALPAY on tblp1Anketa.ContCode=VWCONTP1TOTALPAY.ContCode"    
             . " WHERE (tblP1Anketa.status BETWEEN 15 AND 90) AND  FROFFICE=? ORDER BY frContDate DESC";
         
         return db2::getInstance()->FetchAll($Sql,[$Branch]);
     }
     ##плановые платежи по действующей базе
-     public function getPaysByBranch($Branch,$DateF,$DateL){
+    public function getPaysByBranch($Branch,$DateF,$DateL){
         $Sql="SELECT tblClients.ClCode,tblp1Anketa.ContCode,ClFIO,FrContDate,FrContProg,FrContTarif,FrContSum,PaySum,PayDate,frOffice,PayLastDate,PayTotSum,DiscSum"
                 ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
                 ." INNER JOIN tblP1Front ON tblp1Anketa.ContCode=tblP1Front.ContCode"
@@ -87,15 +88,42 @@ class ReportsMod extends Model {
     }
     ## действующая база юрстадия
     public function getCurrentBaseJurBranch($Branch){
+        $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,"
+            . " FrContDate,frContTarif,frContSum,tblp1Status.status as Status,"
+            . " BoJurName,BoCourtFileNum,BoArbUprName,BoIskDate,BoIskSentDate,BoProcRestDate,BoProcRestFinDate,"
+            . " BoProcRealDate,BoProcRealFinDate,BoBankrMirDate,BoBankrFinDate"                
+            . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
+            . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
+            . " INNER JOIN tblP1BackOf ON tblP1Anketa.ContCode=tblP1BackOf.ContCode"
+            . " INNER JOIN tblp1Status ON tblP1Anketa.Status=tblp1Status.Statnum"
+            . " WHERE (tblP1Anketa.status BETWEEN 15 AND 90) AND  FROFFICE=? ORDER BY frContDate DESC";
+        
+        return db2::getInstance()->FetchAll($Sql,[$Branch]);
+    }
+    
+    ## действующая база приостановленные платежи
+    public function getCurrentBasePayStopBranch($Branch){
+        $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
+            . " FrContDate,frContTarif,frContSum,tblp1Status.status as Status"               
+            . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
+            . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"  
+            . " INNER JOIN tblp1Status ON tblP1Anketa.Status=tblp1Status.Statnum"
+            . " WHERE (tblP1Anketa.status BETWEEN 81 AND 89) AND  FROFFICE=? ORDER BY frContDate DESC";
+        
+        return db2::getInstance()->FetchAll($Sql,[$Branch]);
+    }
+    
+    ## действующая база приостановленные платежи
+    public function getArchBaseArchBranch($Branch){
         $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
             . " FrContDate,frContTarif,frContSum,tblp1Status.status as Status,"
             . " BoJurName,BoCourtFileNum,BoArbUprName,BoIskDate,BoIskSentDate,BoProcRestDate,BoProcRestFinDate,"
             . " BoProcRealDate,BoProcRealFinDate,BoBankrMirDate,BoBankrFinDate"                
             . " FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1anketa.ClCode"
             . " INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode"
-            . " INNER JOIN tblP1BackOf ON tblP1Anketa.ContCode=tblP1Front.ContCode"
+            . " INNER JOIN tblP1BackOf ON tblP1Anketa.ContCode=tblP1BackOf.ContCode"
             . " INNER JOIN tblp1Status ON tblP1Anketa.Status=tblp1Status.Statnum"
-            . " WHERE (tblP1Anketa.status BETWEEN 15 AND 90) AND  FROFFICE=? ORDER BY frContDate DESC";
+            . " WHERE (tblP1Anketa.status BETWEEN 91 AND 99) AND  FROFFICE=? ORDER BY frContDate DESC";
         
         return db2::getInstance()->FetchAll($Sql,[$Branch]);
     }
