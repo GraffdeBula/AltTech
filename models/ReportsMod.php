@@ -118,6 +118,7 @@ class ReportsMod extends Model {
         return db2::getInstance()->FetchAll($Sql,[$Branch,$DateF,$DateL,$DateF,"%сразу%"]);
     }
     
+    ##плановые платежи по действующей базе по кредитным тарифам
     public function getPaysByBranchCred($Branch,$DateF,$DateL){
         $Sql="SELECT tblClients.ClCode,tblp1Anketa.ContCode,ClFIO,FrContDate,FrContProg,FrContTarif,FrContSum,PaySum,PayDate,frOffice,PayLastDate,PayTotSum,DiscSum"
                 ." FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblp1Anketa.ClCode"
@@ -132,7 +133,29 @@ class ReportsMod extends Model {
                 
     ##отчёт по должникам
     
-    ##отчёт по экспертизам
+    ####отчёты по экспертизам
+    
+    ##отчёт по ошибкам на стадии андеррайтинга
+    public function getContAfterUnderErrBranch($DateF,$DateL,$Branch){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,expunderdate,expundercomment "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE (exresdat between ? AND ?) AND frOffice=? AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",
+                [$DateF,$DateL,$Branch,'Выявлены ошибки']);
+    }
+    
+    public function getContAfterUnderErr($DateF,$DateL){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,expunderdate,expundercomment "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE (exresdat between ? AND ?) AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",
+                [$DateF,$DateL,'Выявлены ошибки']);
+    }
+    
+    #старые от чёты по ЭПЭ
+    
     public function getContExp($DateF,$DateL){
         $Sql="SELECT tblClients.ClCode AS ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,FrOffice,FrPersManager,"
             . " FrExpDate,PayDate,frExpSum,PaySum"
