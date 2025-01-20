@@ -28,7 +28,7 @@ class BranchRecMod extends Model{
     }
     
     public function getBranchList() {
-        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tbl9DrBranchRec ORDER BY brName",[]);
+        return $this->Data=db2::getInstance()->FetchAll("SELECT * FROM tbl9DrBranchRec WHERE BrAct=1 ORDER BY brName",[]);
     }
     
     public function updBranch($Params){   

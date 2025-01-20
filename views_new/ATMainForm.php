@@ -224,7 +224,7 @@
                                 <th scope="col">ФИО клиента</th>
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
-                                <th scope="col">Дата договора ЭПЭ</th>
+                                <th scope="col">Дата договора</th>
                                 <th scope="col">Дата правового анализа</th>
                                 <th scope="col">Дата проверки</th>
                                 <th scope="col">ФИО юриста</th>
@@ -259,7 +259,7 @@
                                 <th scope="col">ФИО клиента</th>
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
-                                <th scope="col">Дата договора ЭПЭ</th>
+                                <th scope="col">Дата договора</th>
                                 <th scope="col">Дата правового анализа</th>
                                 <th scope="col">ФИО юриста</th>
                             </tr>
@@ -292,13 +292,13 @@
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContExpForm"><button class="btn btn-success">НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterErr"><button class="btn btn-warning">Замечания андеррайтера</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm"><button class="btn btn-warning">Отчёт Замечания андеррайтера</button></a></p>
                 </div>
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBaseBranchCtrl"><button class="btn btn-info">Списки действующих клиентов</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContNew"><button class="btn btn-success">Плановые платежи по новым договорам</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>                    
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContNew"><button class="btn btn-info">Плановые платежи по новым договорам</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=CurBaseBranchCtrl"><button class="btn btn-success">База действующих договоров</button></a></p>                    
                 </div>  
                 <div class="col-lg-2">                    
                     <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>

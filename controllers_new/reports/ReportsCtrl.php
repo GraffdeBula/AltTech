@@ -33,6 +33,44 @@ class ReportsCtrl extends ControllerMain{
         $this->render('reports/ContP1Rep',['Report'=> $this->Report]);
     }
     
+    
+    public function actionShowContP1AfterUnderForm(){//отчёт по итогам андеррайтинга
+        $this->render('reports/ContP1AfterUnder',['Report'=>[]]);    
+    }
+    
+    public function actionShowContP1AfterUnder(){//отчёт по итогам андеррайтинга форма
+        $DateF=date('d.m.Y');
+        if ($_GET['DateF']!=''){
+            $DateF=$_GET['DateF'];
+        }
+        $DateL=date('d.m.Y');
+        if ($_GET['DateL']!=''){
+            $DateL=$_GET['DateL'];
+        }
+        $Branch=$_GET['BranchName'];
+        
+        if ($Branch!=''){
+            $this->Report=(new ReportsMod())->getContAfterUnderErrBranch($DateF,$DateL,$Branch);
+        } else {
+            $this->Report=(new ReportsMod())->getContAfterUnderErr($DateF,$DateL);     
+        }
+        
+        $RepCols=[
+            'A2'=>'ClCode',
+            'B2'=>'ContCode',
+            'C2'=>'ФИО',
+            'D2'=>'Подразделение',
+            'E2'=>'Дата договора',
+            'F2'=>'Дата правового анализа',
+            'G2'=>'ФИО юриста',
+            'H2'=>'Дата проверки',
+            'I2'=>'Комментарий андеррайтера',
+        ];
+        (new RepToExcel())->exportReport($this->Report,$RepCols,'Замечания','UnderErrRep');
+        
+        $this->render('reports/ContP1AfterUnder',['Report'=>$this->Report]);    
+    }
+        
     public function actionShowContExpForm(){
         $this->render('reports/ContExpRep',['Report'=>[],'BranchList'=>[]]);
     }

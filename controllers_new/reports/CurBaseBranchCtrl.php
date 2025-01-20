@@ -22,9 +22,15 @@ class CurBaseBranchCtrl extends ControllerMain{
             'BranchList'=>$this->BranchList,
             'ContList'=>$this->ContList,
             'JurList'=>$this->JurList,
-            'ArchList'=>$this->ArchList,
-            'StopList'=>$this->StopList
+            'StopList'=>$this->StopList,            
+            'ArchList'=>$this->ArchList,       
         ];
+        $this->render('reports/CurBaseBranchRep',$Args);
+    }
+    
+    public function actionUpdate(){
+        
+        
         $this->render('reports/CurBaseBranchRep',$Args);
     }
     
@@ -34,7 +40,10 @@ class CurBaseBranchCtrl extends ControllerMain{
         }
         $this->ViewName='Действующая база клиентов - '.$_GET['Branch'];
         $this->ContList=(new ReportsMod())->getCurrentBaseBranch($_GET['Branch']);
-        
+        $this->JurList=(new ReportsMod())->getCurrentBaseJurBranch($_GET['Branch']);
+        $this->StopList=(new ReportsMod())->getCurrentBasePayStopBranch($_GET['Branch']);
+        $this->ArchList=(new ReportsMod())->getArchBaseArchBranch($_GET['Branch']);
+                
         $RepCols=[
             'A2'=>'ClCode',
             'B2'=>'ContCode',
@@ -44,10 +53,11 @@ class CurBaseBranchCtrl extends ControllerMain{
             'F2'=>'Дата дог.',
             'G2'=>'Тариф',
             'H2'=>'Сумма договора',
-            'I2'=>'Статус',
+            'I2'=>'Внесено по договору',
+            'J2'=>'Статус',
             
         ];
-        (new RepToExcel())->exportReport($this->ContList,$RepCols,'Действующая база '.$_GET['Branch'],'Действующая база '.$_GET['Branch']);
+        (new RepToExcel())->exportReport($this->ContList,$RepCols,'Действующие','Действующая база '.$_GET['Branch']);
         
         $RepCols=[
             'A2'=>'ClCode',
@@ -68,24 +78,43 @@ class CurBaseBranchCtrl extends ControllerMain{
             'P2'=>'Дата списания долга',
             
         ];
-        (new RepToExcel())->exportReport($this->ContList,$RepCols,'ДК юрстадия '.$_GET['Branch'],'ДК юрстадия '.$_GET['Branch']);
+        (new RepToExcel())->exportReport($this->JurList,$RepCols,'ДД юрстадия ','ДД юрстадия '.$_GET['Branch']);
         
         $RepCols=[
             'A2'=>'ClCode',
             'B2'=>'ContCode',
             'C2'=>'ФИО',
-            'D2'=>'Дата договора',
+            'D2'=>'Филиал',
             'E2'=>'Статус',
-            'F2'=>'Дата архива',            
+            'F2'=>'Дата договора',
+            'G2'=>'Тариф',
+            'H2'=>'Сумма договора',
+            'I2'=>'Выплачено',       
         ];
-        (new RepToExcel())->exportReport($this->ContList,$RepCols,'Архивные договоры '.$_GET['Branch'],'Архивные договоры '.$_GET['Branch']);
+        (new RepToExcel())->exportReport($this->StopList,$RepCols,'ДД приостановлены','ДД приостановлены '.$_GET['Branch']);
+        
+        $RepCols=[
+            'A2'=>'ClCode',
+            'B2'=>'ContCode',
+            'C2'=>'ФИО',
+            'D2'=>'Филиал',
+            'E2'=>'Статус',
+            'F2'=>'Дата договора',
+            'G2'=>'Тариф',
+            'H2'=>'Сумма договора',
+            'I2'=>'Выплачено',
+            'J2'=>'Дата банкротства',
+            'K2'=>'Дата завершения работы',
+            'L2'=>'Комментарий',
+        ];
+        (new RepToExcel())->exportReport($this->ArchList,$RepCols,'Архивные договоры','Архивные договоры '.$_GET['Branch']);
         
         $Args=[
             'BranchList'=>$this->BranchList,
             'ContList'=>$this->ContList,
             'JurList'=>$this->JurList,
-            'ArchList'=>$this->ArchList,
-            'StopList'=>$this->StopList
+            'StopList'=>$this->StopList,            
+            'ArchList'=>$this->ArchList,            
         ];
         
         $this->render('reports/CurBaseBranchRep',$Args);

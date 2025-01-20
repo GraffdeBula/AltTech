@@ -25,24 +25,23 @@
             
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#repbase">Действующая база клиентов</a>
+                  <a class="nav-link active" data-bs-toggle="tab" href="#repbase">Действующие договоры</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#repbase2">Клиенты на стадии БФЛ</a>
+                  <a class="nav-link" data-bs-toggle="tab" href="#jurbase">Договоры на юр.стадии</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#repfrozebase">Работа приостановлена</a>
+                  <a class="nav-link" data-bs-toggle="tab" href="#stopbase">Приостановленные договоры</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#repoldbase">Договоры в архиве</a>
+                  <a class="nav-link" data-bs-toggle="tab" href="#archbase">Архивные договоры</a>
                 </li>                
-
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active show" id="repbase">
                     <?php
                         if ((isset($_GET['Branch']))&&($_GET['Branch']!='')){
-                            echo("<a href='/AltTech/downloads/Действующая база {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
+                            echo("<a href='/".WORK_FOLDER."/downloads/Действующая база {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
                         }
                     ?>
                     <table class="table table-hover">
@@ -55,7 +54,8 @@
                               <th scope="col">Менеджер</th>
                               <th scope="col">ДатаДоговора</th>
                               <th scope="col">Тариф</th>
-                              <th scope="col">Сумма договора</th>                              
+                              <th scope="col">Сумма договора</th>
+                              <th scope="col">Внесено по договору</th>
                               <th scope="col">Статус</th>
                             </tr>
                         </thead>
@@ -74,6 +74,7 @@
                                 echo("<td>{$ContDate}</td>");
                                 echo("<td>{$Cont->FRCONTTARIF}</td>");
                                 echo("<td>{$Cont->FRCONTSUM}</td>");
+                                echo("<td>{$Cont->PAYTOTSUM}</td>");
                                 echo("<td>{$Cont->STATUS}</td>");                                
                                 echo("</tr>");
                             }
@@ -82,15 +83,30 @@
                     </table>
                     
                 </div>
-                
-                <div class="tab-pane fade" id="repbase2">
+                <div class="tab-pane fade" id="jurbase">
                     <?php
                         if ((isset($_GET['Branch']))&&($_GET['Branch']!='')){
-                            echo("<a href='/AltTech/downloads/Действующая база юрстадия {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
+                            echo("<a href='/".WORK_FOLDER."/downloads/ДД юрстадия {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
                         }
                     ?>
-                    
-                    <?php
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>                      
+                              <th scope="col">ClCode</th>
+                              <th scope="col">ContCode</th>
+                              <th scope="col">ФИО</th>
+                              <th scope="col">Филиал</th>                              
+                              <th scope="col">ДатаДоговора</th>
+                              <th scope="col">Тариф</th>
+                              <th scope="col">Сумма договора</th>                              
+                              <th scope="col">Статус</th>
+                              <th scope="col">Дата иска</th>
+                              <th scope="col">Дата списания долга</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
                             $Sum=0;
                             foreach($JurList as $Cont){
                                 $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);                                
@@ -98,71 +114,110 @@
                                 echo("<td>{$Cont->CLCODE}</td>");
                                 echo("<td>{$Cont->CONTCODE}</td>");
                                 echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
-                                echo("<td>{$Cont->FROFFICE}</td>");
-                                echo("<td>{$Cont->FRPERSMANAGER}</td>");
+                                echo("<td>{$Cont->FROFFICE}</td>");                                
                                 echo("<td>{$ContDate}</td>");
                                 echo("<td>{$Cont->FRCONTTARIF}</td>");
-                                echo("<td>{$Cont->FRCONTSUM}</td>");
-                                echo("<td>{$Cont->STATUS}</td>");                                
+                                echo("<td>{$Cont->FRCONTSUM}</td>");                                
+                                echo("<td>{$Cont->STATUS}</td>");   
+                                echo("<td>{$Cont->BOISKDATE}</td>");   
+                                echo("<td>{$Cont->BOBANKRFINDATE}</td>");   
                                 echo("</tr>");
                             }
-                    ?>
-                    
+                        ?>                            
+                        </tbody>
+                    </table>
                 </div>
-                
-                <div class="tab-pane fade" id="repfrozebase">
+                <div class="tab-pane fade" id="stopbase">
                     <?php
                         if ((isset($_GET['Branch']))&&($_GET['Branch']!='')){
-                            echo("<a href='/AltTech/downloads/работа остановлена {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
+                            echo("<a href='/".WORK_FOLDER."/downloads/ДД приостановлены {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
                         }
                     ?>
-                    
-                    <?php
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>                      
+                              <th scope="col">ClCode</th>
+                              <th scope="col">ContCode</th>
+                              <th scope="col">ФИО</th>
+                              <th scope="col">Филиал</th>                              
+                              <th scope="col">Статус</th>
+                              <th scope="col">ДатаДоговора</th>
+                              <th scope="col">Тариф</th>
+                              <th scope="col">Сумма договора</th>                              
+                              <th scope="col">Всего внесено</th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
                             $Sum=0;
-                            foreach($JurList as $Cont){
-                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);                                
+                            foreach($StopList as $Cont){                             
                                 echo("<tr class='table-info'>");
                                 echo("<td>{$Cont->CLCODE}</td>");
                                 echo("<td>{$Cont->CONTCODE}</td>");
                                 echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
-                                echo("<td>{$Cont->FROFFICE}</td>");
-                                echo("<td>{$Cont->FRPERSMANAGER}</td>");
-                                echo("<td>{$ContDate}</td>");
+                                echo("<td>{$Cont->FROFFICE}</td>");                                
+                                echo("<td>{$Cont->STATUS}</td>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRCONTDATE)."</td>");
                                 echo("<td>{$Cont->FRCONTTARIF}</td>");
-                                echo("<td>{$Cont->FRCONTSUM}</td>");
-                                echo("<td>{$Cont->STATUS}</td>");                                
+                                echo("<td>{$Cont->FRCONTSUM}</td>");                                
+                                echo("<td>{$Cont->PAYTOTSUM}</td>");               
                                 echo("</tr>");
                             }
-                    ?>
-                    
+                        ?>                            
+                        </tbody>
+                    </table>
                 </div>
-                
-                <div class="tab-pane fade" id="repoldbase">
+                <div class="tab-pane fade" id="archbase">
                     <?php
                         if ((isset($_GET['Branch']))&&($_GET['Branch']!='')){
-                            echo("<a href='/AltTech/downloads/Архивные клиенты {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
+                            echo("<a href='/".WORK_FOLDER."/downloads/Архивные договоры {$_GET['Branch']}.xlsx'><button class='btn btn-success'>Выгрузить в Excel</button></a>");
                         }
                     ?>
-                    
-                    <?php
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>                      
+                              <th scope="col">ClCode</th>
+                              <th scope="col">ContCode</th>
+                              <th scope="col">ФИО</th>
+                              <th scope="col">Филиал</th>                              
+                              <th scope="col">Статус</th>
+                              <th scope="col">Дата Договора</th>
+                              <th scope="col">Тариф</th>                              
+                              <th scope="col">Сумма договора</th>                              
+                              <th scope="col">Всего внесено</th>
+                              <th scope="col">Дата списания</th>
+                              <th scope="col">Дата завершения работы</th>
+                              <th scope="col">Комментарий</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
                             $Sum=0;
-                            foreach($ArchList as $Cont){
-                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);                                
+                            foreach($ArchList as $Cont){                                                      
                                 echo("<tr class='table-info'>");
                                 echo("<td>{$Cont->CLCODE}</td>");
                                 echo("<td>{$Cont->CONTCODE}</td>");
                                 echo("<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CLFIO}</a></td>");
-                                echo("<td>{$Cont->FROFFICE}</td>");
-                                echo("<td>{$Cont->FRPERSMANAGER}</td>");
-                                echo("<td>{$ContDate}</td>");
+                                echo("<td>{$Cont->FROFFICE}</td>");                                
+                                echo("<td>{$Cont->STATUS}</td>");   
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRCONTDATE)."</td>");
                                 echo("<td>{$Cont->FRCONTTARIF}</td>");
-                                echo("<td>{$Cont->FRCONTSUM}</td>");
-                                echo("<td>{$Cont->STATUS}</td>");                                
+                                echo("<td>{$Cont->FRCONTSUM}</td>");                                
+                                echo("<td>{$Cont->PAYTOTSUM}</td>");                                
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->BOBANKRFINDATE)."</td>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRARCHDATE)."</td>");
+                                echo("<td>{$Cont->FRARCHCOMMENT}</td>");
                                 echo("</tr>");
                             }
-                    ?>
+                        ?>                            
+                        </tbody>
+                    </table>
                 </div>
-                                                                                                                                                         
+            </div>                                                                                                                                   
         </div>
+        
     </body>
 </html>

@@ -6,7 +6,16 @@
         <title></title>       
     </head>
     <body>     
-        <a href="/AltTech/downloads/<?=$DocName?>.xlsx"><button class='btn btn-success'>Выгрузить в Excel</button></a>
+        <a href="/<?=WORK_FOLDER?>/downloads/<?=$DocName?>.xlsx"><button class='btn btn-success'>Выгрузить в Excel</button></a>
+        
+        <a href="/<?=WORK_FOLDER?>/index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName=<?=$_GET['BrName']?>&DateF=<?=$_GET['DateF']?>&DateL=<?=$_GET['DateL']?>&Pays=1">
+            <button class='btn btn-warning'>Показать только просрочников</button>
+        </a>
+        
+        <a href="/<?=WORK_FOLDER?>/index_admin.php?controller=CurBasePlanCtrl&action=ShowBrBase&BrName=<?=$_GET['BrName']?>&DateF=<?=$_GET['DateF']?>&DateL=<?=$_GET['DateL']?>">
+            <button class='btn btn-info'>Показать всех</button>
+        </a>
+        
         <table class="table table-hover">
             <thead>
                 <tr>                      
@@ -40,6 +49,10 @@
                         $RowClass='table-danger';
                     } else {
                         $RowClass='table-info';
+                    }
+                    
+                    if (isset($_GET['Pays'])&&($Diff<=30)){
+                        continue;
                     }
                     
                     $Sum=$Sum+$Cont->PAYSUM;
