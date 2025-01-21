@@ -33,6 +33,56 @@ class ReportsCtrl extends ControllerMain{
         $this->render('reports/ContP1Rep',['Report'=> $this->Report]);
     }
     
+    public function actionShowContP1DropForm(){//отчёт по расторжениям форма
+        $this->render('reports/ContP1RepDrop',['Report'=>[]]);    
+    }
+    
+    public function actionShowContP1DropRep(){//отчёт по расторжениям
+        $DateF=date('d.m.Y');
+        if ($_GET['DateF']!=''){
+            $DateF=$_GET['DateF'];
+        }
+        $DateL=date('d.m.Y');
+        if ($_GET['DateL']!=''){
+            $DateL=$_GET['DateL'];
+        }
+        $DateDF=date('d.m.Y',mktime(0,0,0,1,1,2000));        
+        if ($_GET['DateDF']!=''){
+            $DateDF=$_GET['DateDF'];
+        }
+        $DateDL=date('d.m.Y',mktime(0,0,0,1,1,2099));
+        if ($_GET['DateDL']!=''){
+            $DateDL=$_GET['DateDL'];
+        }
+        
+        $Branch=$_GET['BranchName'];
+        
+        if ($Branch!=''){
+            $this->Report=(new ReportsMod())->getContP1DropBranch($DateF,$DateL,$DateDF,$DateDL,$Branch);
+        } else {
+            $this->Report=(new ReportsMod())->getContP1Drop($DateF,$DateL,$DateDF,$DateDL);     
+        }
+                        
+        $RepCols=[
+            'A2'=>'ClCode',
+            'B2'=>'ContCode',
+            'C2'=>'ФИО',
+            'D2'=>'Подразделение',
+            'E2'=>'Менеджер',
+            'F2'=>'Дата дог.',
+            'G2'=>'Дата перв. платежа',
+            'H2'=>'Дата расторжения',
+            'I2'=>'Программа',
+            'J2'=>'Тариф',
+            'K2'=>'Сумма договора',
+            'L2'=>'Долг по ЭПЭ',
+            'M2'=>'Скидка',
+        ];
+        (new RepToExcel())->exportReport($this->Report,$RepCols,'Расторжения','DropContRep');
+              
+        $this->render('reports/ContP1RepDrop',['Report'=> $this->Report]);
+    }
+    
     
     public function actionShowContP1AfterUnderForm(){//отчёт по итогам андеррайтинга
         $this->render('reports/ContP1AfterUnder',['Report'=>[]]);    

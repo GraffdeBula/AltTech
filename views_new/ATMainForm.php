@@ -291,8 +291,10 @@
                 <div class="col-lg-2">            
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContExpForm"><button class="btn btn-success">НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm"><button class="btn btn-info">Отчёт по расторжениям</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm"><button class="btn btn-warning">Отчёт Замечания андеррайтера</button></a></p>
+                    
                 </div>
                 <div class="col-lg-2">
                     <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
@@ -306,9 +308,7 @@
                 </div>
                 
             </div>
-            <div class="row">
-                <p><a target="_blank" href="index_admin.php?controller=TarifCalcCtrl&action=Index"><button class="btn btn-danger">Калькулятор единого тарифа</button></a></p>
-            </div>
+            
         </div><!--отчёты-->   
         <div class="tab-pane fade" id="discounts"> 
             <?php
