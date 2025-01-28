@@ -116,7 +116,7 @@
                         echo('<tr class="table-active">');
                         echo("<td>{$Comment->CMDATE}</td><td>{$Comment->CMAUTHOR}</td>");
                         echo("<form method='get' autocomplete='off'>");
-                            (new MyForm('ATContP1FileFrontCtrl','UpdComment',$_GET['ClCode']))->AddForm();
+                            (new MyForm('ATClientFileCtrl','UpdComment',$_GET['ClCode']))->AddForm();
                             echo("<td><textarea type='text' name='CmText' size=120 rows='5' style='height: 90px; width: 900px;'>$Comment->CMTEXT</textarea></td>");                        
                         if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
                             echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
@@ -128,7 +128,7 @@
                                                 
                         if ($Comment->CMAUTHOR==$_SESSION['EmName']) {
                             echo("<form method='get'>");
-                            (new MyForm('ATContP1FileFrontCtrl','DelComment',$_GET['ClCode'],0))->AddForm();
+                            (new MyForm('ATClientFileCtrl','DelComment',$_GET['ClCode'],0))->AddForm();
                             echo("<input type='hidden' name='ComID' value='{$Comment->ID}'>");
                             echo("<td><button class='btn btn-danger'>УДАЛИТЬ</button></td>");
                             echo("</form>");

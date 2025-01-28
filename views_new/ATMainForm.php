@@ -294,6 +294,7 @@
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm"><button class="btn btn-info">Отчёт по расторжениям</button></a></p>
                     <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
                     <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm"><button class="btn btn-warning">Отчёт Замечания андеррайтера</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm"><button class="btn btn-success">Отчёт по скидкам</button></a></p>
                     
                 </div>
                 <div class="col-lg-2">
