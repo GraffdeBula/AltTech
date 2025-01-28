@@ -10,7 +10,7 @@ class TarifCalcCtrl extends ControllerMain{
     public function actionIndex(){
         $this->ViewName='Тарифный калькулятор';
         
-        $this->render('TarifCalc',['TarifSum'=>0,'PaySum'=>0]);
+        $this->render('TarifCalc',['TarifSum'=>0,'PaySum'=>0,'TarifExSum'=>0,'PayExSum'=>0]);
     }
     public function actionGetTarifList0(){
         $TarifList=(new TarifMod())->getTarifElListByType('Тариф');
@@ -38,6 +38,7 @@ class TarifCalcCtrl extends ControllerMain{
         $Minus1=0;
         $Minus2=0;
         $Disc=0;
+        $Dop=0;
         if ((isset($_GET['Tarif']))&&($_GET['Tarif']=='Оплата сразу')){
             $Base=130000;
         }
@@ -85,10 +86,39 @@ class TarifCalcCtrl extends ControllerMain{
             $Disc=12000;
         }
         
+        if (isset($_GET['Dop1'])){
+            $Dop=$Dop+9000;
+        }
+        if ((isset($_GET['Dop2']))OR(isset($_GET['Dop3']))OR(isset($_GET['Dop4']))OR(isset($_GET['Dop5']))){
+            $Dop=$Dop+18000;
+        }
+        if (isset($_GET['Dop6'])){
+            $Dop=$Dop+9000;
+        }
+        if ((isset($_GET['Dop7']))OR(isset($_GET['Dop8']))){
+            $Dop=$Dop+45000;
+        }
+        if (isset($_GET['Dop9'])){
+            $Dop=$Dop+18000;
+        }
+        if (isset($_GET['Dop10'])){
+            $Dop=$Dop+18000;
+        }
+        if (isset($_GET['Dop11'])){
+            $Dop=$Dop+18000;
+        }
+        if (isset($_GET['Dop12'])){
+            $Dop=$Dop+24000;
+        }
+        if (isset($_GET['Dop13'])){
+            $Dop=$Dop+24000;
+        }
         
         $TarifSum=$Base+$Plus1+$Plus2+$Plus3-$Minus1-$Minus2-$Disc;
+        $TarifExSum=$TarifSum+$Dop;
         $PaySum=($TarifSum-$_GET['ZeroPay'])/$AnnNum;
-        $this->render('TarifCalc',['TarifSum'=>$TarifSum,'PaySum'=>$PaySum]);
+        $PayExSum=($TarifExSum-$_GET['ZeroPay'])/$AnnNum;
+        $this->render('TarifCalc',['TarifSum'=>$TarifSum,'PaySum'=>$PaySum,'TarifExSum'=>$TarifExSum,'PayExSum'=>$PayExSum]);
     }
     
     

@@ -10,7 +10,7 @@
     if (isset($_GET['AnnNum'])){
         $AnnNum=$_GET['AnnNum'];    
     } else {
-        $AnnNum='';
+        $AnnNum=1;
     }
     if (isset($_GET['CB01'])){
         $CB01='checked=""';    
@@ -67,6 +67,14 @@
     } else {
         $RB04='';
     }
+    
+    for ($i = 1; $i <= 16; $i++){
+        if (isset($_GET['Dop'.$i])){
+            ${'Dop'.$i}='checked=""';
+        }else{
+            ${'Dop'.$i}='';
+        }
+    }
 
 ?>
 <!DOCTYPE html>
@@ -74,98 +82,202 @@
 
 <body>
     <h1>Калькулятор</h1>
-    <div class="row">    
-        <div class="col-4">
+    
+    <form>
+        <div class="row">    
+            <div class="col-4">
 
-            <h4>Тариф</h4>
-            <form>
-                <?php
-                    (new MyForm('TarifCalcCtrl', 'CountTarif'))->AddForm2();
-                ?>
-                <div>
-                    <label>Тариф</label><select name="Tarif">
-                        <option value="<?=$Tarif?>"><?=$Tarif?></option>
-                        <option value="Оплата сразу">Оплата сразу</option>
-                        <option value="Рассрочка">Рассрочка</option>                        
-                    </select>
-                </div>    
-                <div>
-                    <lable>Срок расрочки (месяцев)</lable><select name="AnnNum">
-                        <option value="<?=$AnnNum?>"><?=$AnnNum?></option>
-                        <option value="6">6</option>
-                        <option value="12">12</option>
-                        <option value="18">18</option>
-                    </select>
-                </div>
+                <h4>Тариф</h4>
 
-                <h4>Доплаты</h4>
-                <div >
-                    <div class='form-check'>
-                        <input class='form-check-input' type='checkbox' value='' id='01' name="CB01" <?=$CB01?>>
-                        <label class='form-check-label' >Число кредитов</label>
-                        <input type='number' value='<?=$count01?>' name='count01'>
+                    <?php
+                        (new MyForm('TarifCalcCtrl', 'CountTarif'))->AddForm2();
+                    ?>
+                    <div>
+                        <label>Тариф</label><select name="Tarif">
+                            <option value="<?=$Tarif?>"><?=$Tarif?></option>
+                            <option value="Оплата сразу">Оплата сразу</option>
+                            <option value="Рассрочка">Рассрочка</option>                        
+                        </select>
+                    </div>    
+                    <div>
+                        <lable>Срок расрочки (месяцев)</lable><select name="AnnNum">
+                            <option value="<?=$AnnNum?>"><?=$AnnNum?></option>
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="18">18</option>
+                        </select>
                     </div>
-                    <div class='form-check'>
-                        <input class='form-check-input' type='checkbox' value='' id='02' name="CB02" <?=$CB02?>>
-                        <label class='form-check-label' >Число сложных кредиторов</label>
-                        <input type='number' value='<?=$count02?>' name='count02'>
-                    </div>
-                    <div class='form-check'>
-                        <input class='form-check-input' type='checkbox' value='' id='03' name="CB03" <?=$CB03?>>
-                        <label class='form-check-label' >Сохранение ипотеки</label>
-                        
-                    </div>
-                </div>                  
 
-                <h4>Вычеты</h4>
-                <div >
-                    <div class='form-check'>
-                        <input class='form-check-input' type='checkbox' value='' id='01' name="CB04" <?=$CB04?>>
-                        <label class='form-check-label' >Сумма долга до 400 000 руб.</label>
-                        
+                    <h4>Доплаты</h4>
+                    <div >
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' value='' id='01' name="CB01" <?=$CB01?>>
+                            <label class='form-check-label' >Число кредитов</label>
+                            <input type='number' value='<?=$count01?>' name='count01'>
+                        </div>
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' value='' id='02' name="CB02" <?=$CB02?>>
+                            <label class='form-check-label' >Число сложных кредиторов</label>
+                            <input type='number' value='<?=$count02?>' name='count02'>
+                        </div>
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' value='' id='03' name="CB03" <?=$CB03?>>
+                            <label class='form-check-label' >Сохранение ипотеки</label>
+
+                        </div>
+                    </div>                  
+
+                    <h4>Вычеты</h4>
+                    <div >
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' value='' id='01' name="CB04" <?=$CB04?>>
+                            <label class='form-check-label' >Сумма долга до 400 000 руб.</label>
+
+                        </div>
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' value='' id='02' name="CB05" <?=$CB05?>>
+                            <label class='form-check-label' >Простой должник (3 обязательства, нет имущества, нет мошенников)</label>                        
+                        </div>
                     </div>
-                    <div class='form-check'>
-                        <input class='form-check-input' type='checkbox' value='' id='02' name="CB05" <?=$CB05?>>
-                        <label class='form-check-label' >Простой должник (3 обязательства, нет имущества, нет мошенников)</label>                        
+                    <h4>Скидки</h4>
+                    <div >
+                        <fieldset>
+                        <div class='form-check'>
+                            <input class='form-check-input' type="radio" value='rb01-1' name="RB01" <?=$RB01?>>
+                            <label class='form-check-label' >Клиент имеет инвалидность. Скидка 12000 руб.</label>                        
+                        </div>
+                        <div class='form-check'>
+                            <input class='form-check-input' type="radio" value='rb01-2' name="RB01" <?=$RB02?>>
+                            <label class='form-check-label' >Совместное банкротство (супруги). Скидка 9000 </label>                        
+                        </div>
+                        <div class='form-check'>
+                            <input class='form-check-input' type="radio" value='rb01-3' name="RB01" <?=$RB03?>>
+                            <label class='form-check-label' >Рекомендация. Скидка 5000</label>                        
+                        </div>
+                        <div class='form-check'>
+                            <input class='form-check-input' type="radio" value='rb01-4' name="RB01" <?=$RB04?>>
+                            <label class='form-check-label' >Клиент пенсионер. Скидка 12000</label>                        
+                        </div>
+                        </fieldset>
                     </div>
+                    <hr>
+                    <h4>Расчёт тарифа</h4>                
+                    <div>        
+                        <lable>Платёж при заключении договора</lable><input name='ZeroPay' value="9000">
+                    </div>
+                    <button class='btn btn-warning'>Рассчитать ежемесячный платёж</button>
+                    <div>        
+                        <lable>Общая сумма по договору</lable><input id="TarifSum" value="<?=$TarifSum?>">
+                    </div>
+                    <lable>Ежемесячный платёж</lable><input id="AnnPay" value="<?=$PaySum?>">
+
+            </div>    
+            <div class="col-4">
+                <h4>Доплаты за риски</h4>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop1" <?=$Dop1?>>
+                    <label class='form-check-label' >
+                        В связи с не внесением ежемесячных платежей по обязательствам/одному из обязательств есть риск не списания долга по завершении процедуры банкротства из-за недобросовестных действий должника
+                    </label>
                 </div>
-                <h4>Скидки</h4>
-                <div >
-                    <fieldset>
-                    <div class='form-check'>
-                        <input class='form-check-input' type="radio" value='rb01-1' name="RB01" <?=$RB01?>>
-                        <label class='form-check-label' >Клиент имеет инвалидность. Скидка 12000 руб.</label>                        
-                    </div>
-                    <div class='form-check'>
-                        <input class='form-check-input' type="radio" value='rb01-2' name="RB01" <?=$RB02?>>
-                        <label class='form-check-label' >Совместное банкротство (супруги). Скидка 9000 </label>                        
-                    </div>
-                    <div class='form-check'>
-                        <input class='form-check-input' type="radio" value='rb01-3' name="RB01" <?=$RB03?>>
-                        <label class='form-check-label' >Рекомендация. Скидка 5000</label>                        
-                    </div>
-                    <div class='form-check'>
-                        <input class='form-check-input' type="radio" value='rb01-4' name="RB01" <?=$RB04?>>
-                        <label class='form-check-label' >Клиент пенсионер. Скидка 12000</label>                        
-                    </div>
-                    </fieldset>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop2" <?=$Dop2?>>
+                    <label class='form-check-label' >
+                        Сделка СУПРУГА по отчуждению имущества может быть признана недействительной и имущество может быть включено в конкурсную массу и реализовано
+                    </label>
                 </div>
-                <hr>
-                <h4>Расчёт тарифа</h4>                
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop3" <?=$Dop3?>>
+                    <label class='form-check-label' >
+                        Сделка БЫВШЕГО СУПРУГА по отчуждению имущества может быть признана недействительной и имущество может быть включено в конкурсную массу и реализовано
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop4" <?=$Dop4?>>
+                    <label class='form-check-label' >
+                        Имущество БЫВШЕГО СУПРУГА может быть включено в конкурсную массу и реализовано
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop5" <?=$Dop5?>>
+                    <label class='form-check-label' >
+                        Имущество СУПРУГА может быть включено в конкурсную массу и реализовано
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop6" <?=$Dop6?>>
+                    <label class='form-check-label' >
+                        В связи с наличием высокого официального дохода есть риск в процедуре реструктуризации утверждения плана реструктуризации
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop7" <?=$Dop7?>>
+                    <label class='form-check-label' >
+                        Имущество может быть включено в конкурсную массу и реализовано
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop8" <?=$Dop8?>>
+                    <label class='form-check-label' >
+                        Сделка по отчуждению имущества может быть признана недействительной и имущество может быть включено в конкурсную массу и реализовано
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop9" <?=$Dop9?>>
+                    <label class='form-check-label' >
+                        По причине предоставления кредитору заведомо ложных сведений при получении кредита правила об освобождении от исполнения обязательств не применяются
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop10" <?=$Dop10?>>
+                    <label class='form-check-label' >
+                        Необходимо предоставить договор ГПХ, действующий в период получения кредитов для увеличения дохода
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop11" <?=$Dop11?>>
+                    <label class='form-check-label' >
+                        Наличие паев в собственности
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop12" <?=$Dop12?>>
+                    <label class='form-check-label' >
+                        Кредиты оформлены единовременно в короткий период (в т.ч. через брокера)/либо кредиты "свежие" взятые в срок до 3х месяцев
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop13" <?=$Dop13?>>
+                    <label class='form-check-label' >
+                        Кредит, который планируется списать, был направлены на погашение залогового кредита
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop14" <?=$Dop14?>>
+                    <label class='form-check-label' >
+                        В связи с привлечением клиента к ответственности по ряду статей УК/КОАП, есть риск, что правила об освобождении от исполнения обязательств не будут применены
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop15" <?=$Dop15?>>
+                    <label class='form-check-label' >
+                        Учитывая трудоспособный возраст Заказчика и отсутствие официального дохода, есть риск введения процедуры реструктуризации долгов
+                    </label>
+                </div>
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name="Dop16" <?=$Dop16?>>
+                    <label class='form-check-label' >
+                        Не утверждение локального плана реструктуризации в отношении жилого помещения, являющегося единственным жильем и предметом ипотеки в связи с наличием сделок
+                    </label>
+                </div>
                 <div>        
-                    <lable>Платёж при заключении договора</lable><input name='ZeroPay' value="9000">
+                    <lable>Общая сумма по договору с учётом рисков</lable><input value="<?=$TarifExSum?>">
                 </div>
-                <button class='btn btn-warning'>Рассчитать ежемесячный платёж</button>
-                <div>        
-                    <lable>Общая сумма по договору</lable><input id="TarifSum" value="<?=$TarifSum?>">
-                </div>
-                <lable>Ежемесячный платёж</lable><input id="AnnPay" value="<?=$PaySum?>">
-            </form>
-        </div>    
-        <div class="col-4">
-            <h4>Доплаты</h4>
+                <lable>Ежемесячный платёж с учётом рисков</lable><input value="<?=$PayExSum?>">
+            </div>
         </div>
-    </div>
+    </form>
+    
 </body>
     
 </html>
