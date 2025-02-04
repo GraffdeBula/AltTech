@@ -18,6 +18,9 @@ class Status {
         if ($OldStatus<$StatNum){        
             $Model->UpdP1Status($StatNum,$ContCode);
         }
+        if (($OldStatus==98)&&($StatNum==91)){        
+            $Model->UpdP1Status($StatNum,$ContCode);
+        }
     }
     
     public function ChangeP4Status($StatNum,$ContCode){
