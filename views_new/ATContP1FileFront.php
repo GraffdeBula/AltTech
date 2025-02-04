@@ -733,7 +733,7 @@
                         <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
                             <?php
                                 echo("<form method='get' autoload='off' autocomplete='off'>");
-                                (new MyForm('ATContP1FileFrontCtrl','WorkBrake',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                                (new MyForm('ATContP1FileFrontCtrl','WorkBrake2',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
 
                                 echo("<p><label>ДАТА РАСТОРЖЕНИЯ ДОГОВОРА</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
                                 echo("<p><label>Причина расторжения</label><input type='text' name='FRARCHCOMMENT' value='{$Front->FRARCHCOMMENT}' required size='60'></p>");

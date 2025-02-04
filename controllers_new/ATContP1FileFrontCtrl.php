@@ -446,6 +446,12 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionWorkBrake2(){
+        $this->FrontSave();
+        (new Status())->ChangeP1Status(99, $_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
     public function actionWorkBrake(){
         $this->FrontSave();
         (new Status())->ChangeP1Status(91, $_GET['ContCode']);
