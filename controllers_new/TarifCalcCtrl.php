@@ -89,7 +89,7 @@ class TarifCalcCtrl extends ControllerMain{
         foreach($_GET as $MyKey=>$MyGet){
             if (in_array($MyKey,['CheckSum1','CheckSum2','CheckSum3','CheckSum4','CheckSum5','CheckSum6','CheckSum7','CheckSum8',
                 'CheckSum9','CheckSum10','CheckSum11','CheckSum12','CheckSum13','CheckSum14','CheckSum15','CheckSum16'])){
-                    if ($MyGet=''){
+                    if ($MyGet==''){
                         $Dop=$Dop+0;                    
                     } else {
                         $Dop=$Dop+$MyGet;                    

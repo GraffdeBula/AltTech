@@ -195,7 +195,11 @@
                     
                 </select>
                 <div id='RiskList' class="col-12">
-                    
+                    <?php
+                        foreach($_GET as $key=>$MyGet ){
+                            
+                        }                            
+                    ?>
                 </div>
                                           
                 <div>        
