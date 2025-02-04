@@ -86,34 +86,18 @@ class TarifCalcCtrl extends ControllerMain{
             $Disc=12000;
         }
         
-        if (isset($_GET['Dop1'])){
-            $Dop=$Dop+9000;
+        foreach($_GET as $MyKey=>$MyGet){
+            if (in_array($MyKey,['CheckSum1','CheckSum2','CheckSum3','CheckSum4','CheckSum5','CheckSum6','CheckSum7','CheckSum8',
+                'CheckSum9','CheckSum10','CheckSum11','CheckSum12','CheckSum13','CheckSum14','CheckSum15','CheckSum16'])){
+                    if ($MyGet=''){
+                        $Dop=$Dop+0;                    
+                    } else {
+                        $Dop=$Dop+$MyGet;                    
+                    }
+                    
+                }
         }
-        if ((isset($_GET['Dop2']))OR(isset($_GET['Dop3']))OR(isset($_GET['Dop4']))OR(isset($_GET['Dop5']))){
-            $Dop=$Dop+18000;
-        }
-        if (isset($_GET['Dop6'])){
-            $Dop=$Dop+9000;
-        }
-        if ((isset($_GET['Dop7']))OR(isset($_GET['Dop8']))){
-            $Dop=$Dop+45000;
-        }
-        if (isset($_GET['Dop9'])){
-            $Dop=$Dop+18000;
-        }
-        if (isset($_GET['Dop10'])){
-            $Dop=$Dop+18000;
-        }
-        if (isset($_GET['Dop11'])){
-            $Dop=$Dop+18000;
-        }
-        if (isset($_GET['Dop12'])){
-            $Dop=$Dop+24000;
-        }
-        if (isset($_GET['Dop13'])){
-            $Dop=$Dop+24000;
-        }
-        
+                
         $TarifSum=$Base+$Plus1+$Plus2+$Plus3-$Minus1-$Minus2-$Disc;
         $TarifExSum=$TarifSum+$Dop;
         $PaySum=($TarifSum-$_GET['ZeroPay'])/$AnnNum;
