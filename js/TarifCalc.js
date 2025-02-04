@@ -20,6 +20,7 @@ function MySelectFunction(MyValue){
     MyInp.name='Check'+Num;
     MyInp.type='hidden';
     MyInp2.type='number';
+    MyInp2.name='CheckSum'+Num;
     RiskList.insertAdjacentElement('afterbegin',MyP1);
     RiskList.insertAdjacentElement('afterbegin',MyInp);
     RiskList.insertAdjacentElement('afterbegin',MyInp2);
