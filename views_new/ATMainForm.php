@@ -305,7 +305,8 @@
                 </div>  
                 <div class="col-lg-2">                    
                     <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>                    
+                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
+                    <p><a target="_blank" href="index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm"><button class="btn btn-primary">Когортный анализ договоров</button></a></p>
                 </div>
                 
             </div>
