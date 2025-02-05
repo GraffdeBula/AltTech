@@ -21,5 +21,14 @@ class AmoCtrl extends ControllerMain{
         $this->actionIndex();
     }
     
+    public function actionGetLead(){
+        
+    }
+    
+    public function actionGetStatuses(){
+        $this->AmoResult=(new AmoMethods2())->getStatuses('');
+        $this->actionIndex();
+    }
+    
     
 }
