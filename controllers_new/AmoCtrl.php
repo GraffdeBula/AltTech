@@ -29,6 +29,5 @@ class AmoCtrl extends ControllerMain{
         $this->AmoResult=(new AmoMethods2())->getStatuses('');
         $this->actionIndex();
     }
-    
-    
+        
 }
