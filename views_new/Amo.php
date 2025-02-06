@@ -19,6 +19,20 @@
         <button class="btn btn-primary">АВТОРИЗАЦИЯ</button>
     </form>
     
+    <form>
+        <?php        
+            (new MyForm('AmoCtrl','GetLead'))->AddForm2()
+        ?>
+        <button class="btn btn-success">Получить сделку</button>
+    </form>
+    
+    <form>
+        <?php        
+            (new MyForm('AmoCtrl','GetStatuses'))->AddForm2()
+        ?>
+        <button class="btn btn-info">Получить воронки</button>
+    </form>
+    
     <?php
         foreach($AmoResult as $key=>$value){
             echo($key." :: ");
