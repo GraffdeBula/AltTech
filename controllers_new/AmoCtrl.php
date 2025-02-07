@@ -17,16 +17,29 @@ class AmoCtrl extends ControllerMain{
     }
     
     public function actionAuth(){
-        $this->AmoResult=(new AmoMethods2())->getAuth('');
+        $this->AmoResult=(new AmoMethods2())->getAuth();
         $this->actionIndex();
     }
     
     public function actionGetLead(){
-        
+        $this->AmoResult=(new AmoMethods2())->getLeadId($_GET['LeadId']);
+        $this->actionIndex();
     }
     
     public function actionGetStatuses(){
-        $this->AmoResult=(new AmoMethods2())->getStatuses('');
+        $this->AmoResult=(new AmoMethods2())->getStatuses();
+        $this->actionIndex();
+    }
+    
+    public function actionAddContact(){
+        $this->AmoResult=(new AmoMethods2())->addContact($_GET['Name'],$_GET['Phone']);
+        $this->actionIndex();
+    }
+    
+    public function actionAddLead(){
+        $ContactId=(new AmoMethods2())->addContact($_GET['Name'],$_GET['Phone'])['_embedded']['contacts']['0']['id'];        
+        
+        $this->AmoResult=(new AmoMethods2())->addLead($ContactId,$_GET['LeadName']);
         $this->actionIndex();
     }
         

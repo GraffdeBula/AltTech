@@ -40,13 +40,13 @@ class RefProgContactsCtrl extends ControllerMain {
             $Status='Открытый агент';
         }
         
-        $Amo=new AmoMethods();
+        $Amo=new AmoMethods2();
         $Answer=$Amo->addContact($_GET['ContName'],$_GET['ContPhone']);
-        new MyCheck($Answer,0);
+        #new MyCheck($Answer,0);
         $ContId=$Answer['_embedded']['contacts']['0']['id'];
         $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
                 
-        $Answer=$Amo->addLead('Рекомендация Active. '.$Status, $ContId,$Branch,$_GET['AgCode']);    
+        $Answer=$Amo->addLead($ContId,'Рекомендация Active. '.$Status,$Branch,$_GET['AgCode']);    
         $Amo->addTagToLead("Active", $Answer['_embedded']['leads']['0']['id']);
         //возврат на форму
         $this->ShowList();

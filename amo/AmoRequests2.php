@@ -46,8 +46,7 @@ class AmoRequests2{
         //Завершаем сеанс cURL
         curl_close($Curl);
         $this->Auth=json_decode($Out,true);//ответ
-        (new logger('log_amo'))->logToFile(json_encode($this->Auth));
-                
+        (new logger('log_amo'))->logToFile(json_encode($this->Auth));                
     }
     
     public function getAuth(){
@@ -70,10 +69,10 @@ class AmoRequests2{
         $Out=curl_exec($Curl);
         curl_close($Curl);
         $Response=json_decode($Out,true);
-        (new logger('log_amo'))->logToFile($this->AmoLink);
-        (new logger('log_amo'))->logToFile($this->AmoHeader);
-        (new logger('log_amo'))->logToFile(json_encode($this->AmoData));
-        (new logger('log_amo'))->logToFile(json_encode($Response));
+        #(new logger('log_amo'))->logToFile($this->AmoLink);
+        #(new logger('log_amo'))->logToFile($this->AmoHeader);
+        #(new logger('log_amo'))->logToFile(json_encode($this->AmoData));
+        #(new logger('log_amo'))->logToFile(json_encode($Response));
         
         return $Response;
     }
