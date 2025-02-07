@@ -31,12 +31,33 @@
                     }
                     echo("</select>");
                     
+                    echo("");
+                    
                     #echo("<label>|  тип платежа  |</label><select name='ContType'>");
                     #echo("<option value='{$ContType}'>{$ContType}</option>");
                     #echo("<option value=1>по ПКО</option>");
                     #echo("<option value=2>по чеку</option>");    
                     #echo("</select>");
-                ?>        
+                ?>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="PayTypeRep" id="payType1" value="Inc" checked="">
+                    <label class="form-check-label" for="payType1">
+                        Платежи по договорам
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="PayTypeRep" id="payType2" value="Dep" checked="">
+                    <label class="form-check-label" for="payType2">
+                        Платежи в ОХ
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="PayTypeRep" id="payType3" value="IncDep" checked="">
+                    <label class="form-check-label" for="payType3">
+                        Платежи по договорам и в ОХ
+                    </label>
+                </div>
+                
                 <button>Получить отчёт</button>
             </form>  
             
