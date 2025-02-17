@@ -86,7 +86,7 @@ class ATP4ContMod extends Model{
     
     //Формирование отчёта по новой БД
     public function getP4Rep($DateF,$DateL) {
-        $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frOffice,frPersManager,frContSum,frContDate,frJurist,frJurBranch,frContService,frContResult "
+        $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frOffice,frPersManager,frContSum,frContDate,frFinWorkDate,frJurist,frJurBranch,frContService,frContResult "
                 . "FROM tblClients INNER JOIN tblP4Anketa ON tblClients.ClCode=tblP4Anketa.ClCode "
                 . "INNER JOIN tblP4Front ON tblP4Anketa.ContCode=tblP4Front.ContCode WHERE frContDate BETWEEN ? and ? ORDER BY tblP4Anketa.ContCode";
         $Params=[$DateF,$DateL];  
@@ -94,7 +94,7 @@ class ATP4ContMod extends Model{
     }
     
     public function getP4RepBranch($DateF,$DateL,$Branch) {
-        $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frOffice,frPersManager,frContSum,frContDate,frJurist,frJurBranch,frContService,frContResult "
+        $Sql="SELECT tblClients.ClCode,tblP4Anketa.ContCode,ClFName||' '||cl1Name||' '||cl2Name AS ClName,frOffice,frPersManager,frContSum,frContDate,frFinWorkDate,frJurist,frJurBranch,frContService,frContResult "
                 . "FROM tblClients INNER JOIN tblP4Anketa ON tblClients.ClCode=tblP4Anketa.ClCode "
                 . "INNER JOIN tblP4Front ON tblP4Anketa.ContCode=tblP4Front.ContCode "
                 . "WHERE (frContDate BETWEEN ? AND ?) AND FrOffice=? ORDER BY tblP4Anketa.ContCode";

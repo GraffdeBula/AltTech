@@ -16,6 +16,7 @@ class RefProgContactsCtrl extends ControllerMain {
     
     public function actionSaveAgent(){
         $Model=new AT7ReferProg();
+        
         $Model->InsAgent($_GET['AgName'],$_GET['AgPhone'],$_SESSION['EmName'],$_GET['Status'],$_GET['PayType']);
         
         $NewAg=$Model->GetAgent($_GET['AgName']);

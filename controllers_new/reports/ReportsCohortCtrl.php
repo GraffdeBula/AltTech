@@ -74,7 +74,7 @@ class ReportsCohortCtrl extends ControllerMain{
     }
     
     protected function getPays($DateF,$DateL){
-        $Sql='SELECT Count(ContCode),Sum(PaySum),ContBranch FROM tbl5payments WHERE (PayDate BETWEEN ? AND ?) AND ContCode IN ('.$this->ContArrStr.') GROUP BY ContBranch';
+        $Sql='SELECT Count(Distinct ContCode),Sum(PaySum),ContBranch FROM tbl5payments WHERE (PayDate BETWEEN ? AND ?) AND ContCode IN ('.$this->ContArrStr.') GROUP BY ContBranch';
         $Pays=db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
         $PayArr=[];
         foreach($Pays as $Pay){

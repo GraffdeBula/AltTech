@@ -62,7 +62,7 @@ class AmoMethods2 {
         $Data=json_encode(
             array (array(
                 "name" => $LeadName,
-                "price" => 123,
+                "price" => 0,
                 "_embedded" => array(                
                     "contacts" => array(
                         array(
