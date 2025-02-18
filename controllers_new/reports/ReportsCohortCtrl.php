@@ -10,7 +10,7 @@ class ReportsCohortCtrl extends ControllerMain{
     protected $ContArrStr='';
     
     public function actionCohortRepForm(){//Форма для отчёта
-        $this->render('reports/CohortRep',['Report'=>[]]);    
+        $this->render('reports/CohortRep',['Contracts'=>[]]);    
     }
     
     public function actionCohortRep(){        
@@ -20,23 +20,16 @@ class ReportsCohortCtrl extends ControllerMain{
         $this->ContArrStr=$this->getContArrStr($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
         $Contracts=$this->getContList($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
         
-        (new ConvertFunctions())->AddMonth($DateF1);
-        (new ConvertFunctions())->AddMonth($DateL1);
-        
-        $Pays1=$this->getPays($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
-        
-        (new ConvertFunctions())->AddMonth($DateF1);
-        (new ConvertFunctions())->AddMonth($DateL1);
-        
-        $Pays2=$this->getPays($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
-        
-        (new ConvertFunctions())->AddMonth($DateF1);
-        (new ConvertFunctions())->AddMonth($DateL1);
-        
-        $Pays3=$this->getPays($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
-                                
-        $this->render('reports/CohortRep',['Contracts'=>$Contracts,'Pays1'=>$Pays1,'Pays2'=>$Pays2,'Pays3'=>$Pays3]);
+        $Pays=[];
+        for($i=1; $i<=6; $i++){ 
 
+            (new ConvertFunctions())->AddMonth($DateF1);
+            (new ConvertFunctions())->AddMonth($DateL1);
+
+            $Pays[$i]=$this->getPays($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
+        }
+                                        
+        $this->render('reports/CohortRep',['Contracts'=>$Contracts,'Pays'=>$Pays]);
             
     }
     
