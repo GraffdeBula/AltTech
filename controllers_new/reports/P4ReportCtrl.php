@@ -52,10 +52,11 @@ class P4ReportCtrl extends ControllerMain{
         $sheet->setCellValue("E2", "МЕНЕДЖЕР");
         $sheet->setCellValue("F2", "СУММА");
         $sheet->setCellValue("G2", "ДАТА");
-        $sheet->setCellValue("H2", "ИСПОЛНИТЕЛЬ");
-        $sheet->setCellValue("I2", "ОТРАСЛЬ");
-        $sheet->setCellValue("J2", "УСЛУГА");
-        $sheet->setCellValue("K2", "РЕЗУЛЬТАТ");
+        $sheet->setCellValue("H2", "ДАТА завершения");
+        $sheet->setCellValue("I2", "ИСПОЛНИТЕЛЬ");
+        $sheet->setCellValue("J2", "ОТРАСЛЬ");
+        $sheet->setCellValue("K2", "УСЛУГА");
+        $sheet->setCellValue("L2", "РЕЗУЛЬТАТ");
         $i=3;
         
         foreach ($this->Report as $reprow){
@@ -66,10 +67,11 @@ class P4ReportCtrl extends ControllerMain{
             $sheet->setCellValueByColumnAndRow(5,$i,$reprow->FRPERSMANAGER);
             $sheet->setCellValueByColumnAndRow(6,$i,$reprow->FRCONTSUM);
             $sheet->setCellValueByColumnAndRow(7,$i,$reprow->FRCONTDATE);
-            $sheet->setCellValueByColumnAndRow(8,$i,$reprow->FRJURIST);
-            $sheet->setCellValueByColumnAndRow(9,$i,$reprow->FRJURBRANCH);
-            $sheet->setCellValueByColumnAndRow(10,$i,$reprow->FRCONTSERVICE);
-            $sheet->setCellValueByColumnAndRow(11,$i,$reprow->FRCONTRESULT);
+            $sheet->setCellValueByColumnAndRow(8,$i,$reprow->FRFINWORKDATE);
+            $sheet->setCellValueByColumnAndRow(9,$i,$reprow->FRJURIST);
+            $sheet->setCellValueByColumnAndRow(10,$i,$reprow->FRJURBRANCH);
+            $sheet->setCellValueByColumnAndRow(11,$i,$reprow->FRCONTSERVICE);
+            $sheet->setCellValueByColumnAndRow(12,$i,$reprow->FRCONTRESULT);
             $i++;
         }
         //create file name  

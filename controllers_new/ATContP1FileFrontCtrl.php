@@ -227,7 +227,8 @@ class ATContP1FileFrontCtrl extends ControllerMain {
                 $FirstPaySum=9000;
             }
             
-            $PaySum=($Cont->getFront()->FRCONTSUM-$FirstPaySum)/$Period;
+            $PaySum=round(($Cont->getFront()->FRCONTSUM-$FirstPaySum)/$Period,-2);
+            $PayLeft=$Cont->getFront()->FRCONTSUM-$FirstPaySum;
             if ($Cont->getFront()->FRCONTDATE!=null){
                 $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
             }else{
@@ -242,7 +243,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             //сохранение последующих платежей
             for ($i=1; $i<=$Period; $i++){
                 $j=$i-1;
-                $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
+                if ($i<$Period){
+                    $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
+                } else {
+                    $Model->addPlanPay($_GET['ContCode'],$i,$PayLeft-$PaySum*($i-1),$PayDate->format('d.m.Y'));
+                }
                 $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
             }    
         } else {    
@@ -251,7 +256,8 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             }else{
                 $Period=(new TarifP1())->getPac($Cont->getFront()->FRCONTPAC)->PCPERIOD;
             }                       
-            $PaySum=$Cont->getFront()->FRCONTSUM/$Period;
+            $PaySum=round($Cont->getFront()->FRCONTSUM/$Period,-2);
+            $PayLeft=$Cont->getFront()->FRCONTSUM;
             if ($Cont->getFront()->FRCONTDATE!=null){
                 $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
             }else{
@@ -261,7 +267,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $Model->delAllPlanPays($_GET['ContCode']);
             for ($i=1; $i<=$Period; $i++){
                 $j=$i-1;
-                $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
+                if ($i<$Period){
+                    $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
+                } else {
+                    $Model->addPlanPay($_GET['ContCode'],$i,$PayLeft-$PaySum*($i-1),$PayDate->format('d.m.Y'));
+                }
                 $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
             }
         }       

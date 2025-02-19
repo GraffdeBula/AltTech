@@ -210,10 +210,13 @@
                                         <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXJURCOMMENT' maxlength=5000 ><?=$Expert->EXJURCOMMENT?></textarea>
                                     </div>
                                     
-                                    <p><label>Сумма доплаты за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>></p>
-                                    
-                                    <p><label>Описание доплаты за сложность</label>
-                                    <input name='FRDIFCOST2' type='text' value='<?=$Front->FRDIFCOST2?>'></p>
+                                    <p></p>
+                                                                        
+                                    <div class="form-group">
+                                        <label>Сумма доплаты за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>><br>                                        
+                                        <label for="exampleTextarea" class="form-label mt-4">Описание доплаты за сложность</label>
+                                        <textarea class="form-control" id="DopSumExp" rows="3" style="height: 60px;" name='FRDIFCOST2' maxlength=5000 ><?=$Front->FRDIFCOST2?></textarea>                                        
+                                    </div>
                                     
                                     <button type='summit' class='btn btn-info'>Сохранить заключение</button>           
                                 </form>  

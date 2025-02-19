@@ -1,5 +1,5 @@
 <?php
-
+    $MonthsNum=count($Pays);
 ?>
 <!DOCTYPE html>
 
@@ -27,12 +27,12 @@
                         <th scope='col'>Филиал</th>
                         <th scope='col'>Заключено договоров</th>
                         <th scope='col'>На сумму</th>
-                        <th scope='col'>Платежей+1</th>
-                        <th scope='col'>Сумма+1</th>
-                        <th scope='col'>Платежей+2</th>
-                        <th scope='col'>Сумма+2</th>
-                        <th scope='col'>Платежей+3</th>
-                        <th scope='col'>Сумма+3</th>
+                        <?php
+                            for($i=1; $i<=$MonthsNum; $i++){
+                                echo("<th scope='col'>M".$i."</th>");
+                            }
+                        ?>
+                        
                     </tr>
                 </thead>
                 <tbody>                    
@@ -43,35 +43,12 @@
                         echo("<td>{$Branch}</td>");
                         echo("<td>{$Cont[0]}</td>");
                         echo("<td>{$Cont[1]}</td>");  
-                        if (isset($Pays1[$Branch][0])){
-                            echo("<td>{$Pays1[$Branch][0]}</td>");                            
-                        } else {
-                            echo("<td>-</td>");
-                        }
-                        if (isset($Pays1[$Branch][1])){
-                            echo("<td>{$Pays1[$Branch][1]}</td>");                            
-                        } else {
-                            echo("<td>-</td>");
-                        }
-                        if (isset($Pays2[$Branch][0])){
-                            echo("<td>{$Pays2[$Branch][0]}</td>");                            
-                        } else {
-                            echo("<td>-</td>");
-                        }
-                        if (isset($Pays2[$Branch][1])){
-                            echo("<td>{$Pays2[$Branch][1]}</td>");                            
-                        } else {
-                            echo("<td>-</td>");
-                        }
-                        if (isset($Pays3[$Branch][0])){
-                            echo("<td>{$Pays3[$Branch][0]}</td>");                            
-                        } else {
-                            echo("<td>-</td>");
-                        }
-                        if (isset($Pays3[$Branch][1])){
-                            echo("<td>{$Pays3[$Branch][1]}</td>");                            
-                        } else {
-                            echo("<td>-</td>");
+                        for($i=1; $i<=$MonthsNum; $i++){
+                            if (isset($Pays[$i][$Branch][0])){
+                                echo("<td>{$Pays[$i][$Branch][0]}</td>");                            
+                            } else {
+                                echo("<td>-</td>");
+                            }
                         }
                         echo("<tr>");
                     }                    

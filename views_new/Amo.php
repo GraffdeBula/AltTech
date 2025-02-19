@@ -23,7 +23,27 @@
         <?php        
             (new MyForm('AmoCtrl','GetLead'))->AddForm2()
         ?>
+        <input name="LeadId" value='' placeholder="39868578">
         <button class="btn btn-success">Получить сделку</button>
+    </form>
+    
+    <form>
+        <?php        
+            (new MyForm('AmoCtrl','AddContact'))->AddForm2()
+        ?>
+        <input name="Name" value='' placeholder="имя">
+        <input name="Phone" value='' placeholder="телефон">
+        <button class="btn btn-warning">Добавить контакт</button>
+    </form>
+    
+    <form>
+        <?php        
+            (new MyForm('AmoCtrl','AddLead'))->AddForm2()
+        ?>
+        <input name="Name" value='' placeholder="имя">
+        <input name="Phone" value='' placeholder="телефон">
+        <input name="LeadName" value='' placeholder="сделка">
+        <button class="btn btn-warning">Добавить сделку</button>
     </form>
     
     <form>

@@ -65,10 +65,13 @@
                         switch ($Refer->STATUS){
                             case 1:
                                 $Status='Классика';
+                                break;
                             case 3:
                                 $Status='АктивОткрытый';
+                                break;
                             case 4:
                                 $Status='АктивАноним';
+                                break;
                         }
                             
                         echo("<tr class='table-info'>");

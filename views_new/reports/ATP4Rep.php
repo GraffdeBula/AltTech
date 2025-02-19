@@ -33,6 +33,7 @@
                         <th scope='col'>Менеджер</th>
                         <th scope='col'>Сумма</th>
                         <th scope='col'>Дата дог.</th>
+                        <th scope='col'>Дата заверш.</th>
                         <th scope='col'>Юрист</th>
                         <th scope='col'>Отрасль</th>
                         <th scope='col'>Услуга</th>
@@ -51,7 +52,8 @@
                                 echo("<td>$Cont->FROFFICE</td>");
                                 echo("<td>$Cont->FRPERSMANAGER</td>");
                                 echo str_replace('.',',',"<td>$Cont->FRCONTSUM</td>");
-                                echo("<td>$ContDate</td>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRCONTDATE)."</td>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRFINWORKDATE)."</td>");
                                 echo("<td>$Cont->FRJURIST</td>");
                                 echo("<td>$Cont->FRJURBRANCH</td>");
                                 echo("<td>$Cont->FRCONTSERVICE</td>");
