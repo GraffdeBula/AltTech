@@ -35,7 +35,7 @@ class ReportsCohortCtrl extends ControllerMain{
     
     protected function getContList($DateF,$DateL){
         
-        $Sql='SELECT Count(ContCode),FrOffice,Sum(FrContSum),ContPeriod FROM tblP1Front WHERE FrContDate BETWEEN ? AND ?  GROUP BY FrOffice';
+        $Sql='SELECT Count(ContCode),FrOffice,Sum(FrContSum),FrContPeriod FROM tblP1Front WHERE FrContDate BETWEEN ? AND ?  GROUP BY FrOffice,FrContPeriod ORDER BY FrOffice,FrContPeriod';
         
         $ContList=db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
         

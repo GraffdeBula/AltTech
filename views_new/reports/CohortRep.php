@@ -18,6 +18,7 @@
                 ?>
                 <label>Показать договоры от </label><input type='date' name='DateF'>
                 <label> до </label><input type='date' name='DateL'> 
+                                
                 <button class='btn btn-info'>Сформировать отчёт</button>
             </form>
                         
