@@ -26,6 +26,7 @@
                 <thead>
                     <tr>                       
                         <th scope='col'>Филиал</th>
+                        <th scope='col'>Тариф</th>
                         <th scope='col'>Заключено договоров</th>
                         <th scope='col'>На сумму</th>
                         <?php
@@ -37,16 +38,15 @@
                     </tr>
                 </thead>
                 <tbody>                    
-                <?php
-                    
+                <?php                    
                     foreach ($Contracts as $Branch=>$Cont){                                                
                         echo("<tr class='table-secondary'>");                        
                         echo("<td>{$Branch}</td>");
                         echo("<td>{$Cont[0]}</td>");
-                        echo("<td>{$Cont[1]}</td>");  
+                        echo("<td>{$Cont[1]}</td>");
                         for($i=1; $i<=$MonthsNum; $i++){
                             if (isset($Pays[$i][$Branch][0])){
-                                echo("<td>{$Pays[$i][$Branch][0]}</td>");                            
+                                echo("<td>{$Pays[$i][$Branch][0]}</td>");
                             } else {
                                 echo("<td>-</td>");
                             }
