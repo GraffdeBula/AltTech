@@ -18,6 +18,7 @@
                 ?>
                 <label>Показать договоры от </label><input type='date' name='DateF'>
                 <label> до </label><input type='date' name='DateL'> 
+                                
                 <button class='btn btn-info'>Сформировать отчёт</button>
             </form>
                         
@@ -25,6 +26,7 @@
                 <thead>
                     <tr>                       
                         <th scope='col'>Филиал</th>
+                        <th scope='col'>Тариф</th>
                         <th scope='col'>Заключено договоров</th>
                         <th scope='col'>На сумму</th>
                         <?php
@@ -36,16 +38,15 @@
                     </tr>
                 </thead>
                 <tbody>                    
-                <?php
-                    
+                <?php                    
                     foreach ($Contracts as $Branch=>$Cont){                                                
                         echo("<tr class='table-secondary'>");                        
                         echo("<td>{$Branch}</td>");
                         echo("<td>{$Cont[0]}</td>");
-                        echo("<td>{$Cont[1]}</td>");  
+                        echo("<td>{$Cont[1]}</td>");
                         for($i=1; $i<=$MonthsNum; $i++){
                             if (isset($Pays[$i][$Branch][0])){
-                                echo("<td>{$Pays[$i][$Branch][0]}</td>");                            
+                                echo("<td>{$Pays[$i][$Branch][0]}</td>");
                             } else {
                                 echo("<td>-</td>");
                             }

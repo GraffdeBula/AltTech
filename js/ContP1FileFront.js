@@ -157,9 +157,23 @@ function getPayList(){
 //                day: '2-digit'
 //            });
 //            console.log(MyDate);
+            var PayCodeStr='';
+            if ((PaymentList[i].PAYCODE<10)&&(PaymentList[i].CONTTYPE==1)){
+                PayCodeStr='0000'+PaymentList[i].PAYCODE;
+            } else if ((PaymentList[i].PAYCODE<100)&&(PaymentList[i].CONTTYPE==1)){
+                PayCodeStr='000'+PaymentList[i].PAYCODE;
+            } else if ((PaymentList[i].PAYCODE<1000)&&(PaymentList[i].CONTTYPE==1)){
+                PayCodeStr='00'+PaymentList[i].PAYCODE;
+            } else if ((PaymentList[i].PAYCODE<10000)&&(PaymentList[i].CONTTYPE==1)){
+                PayCodeStr='0'+PaymentList[i].PAYCODE;
+            } else if ((PaymentList[i].PAYCODE>=10000)&&(PaymentList[i].CONTTYPE==1)){
+                PayCodeStr=''+PaymentList[i].PAYCODE;
+            } else if ((PaymentList[i].CONTTYPE==2)) {
+                PayCodeStr=''+PaymentList[i].PAYCODE;
+            }
             
             output+="<tr class='table-active'>"+
-                "<td>"+PaymentList[i].PAYCODE+"</td>"+
+                "<td>"+PayCodeStr+"</td>"+
                 "<td>"+PaymentList[i].PAYDATE+"</td>"+
                 "<td>"+PaymentList[i].PAYSUM+"</td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+

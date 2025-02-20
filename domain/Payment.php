@@ -23,6 +23,7 @@ class Payment {
     protected $ContPr;    
     protected $ID;        
     protected $PayCode;
+    protected $PayCodeStr;
     protected $PaySum;
     protected $PayDate;
     protected $PayPr;
@@ -141,6 +142,19 @@ class Payment {
                 
         $this->ContClient=$Client->getClRec()->CLFNAME.' '.$Client->getClRec()->CL1NAME.' '.$Client->getClRec()->CL2NAME;
         $this->PayCode=$LastPay->PAYCODE;
+        $this->PayCodeStr=str($this->PayCode);
+        if ($this->ContType==1){
+            if ($this->PayCode<10){
+                $this->PayCodeStr='0000'.$this->PayCode;
+            } elseif ($this->PayCode<100){
+                $this->PayCodeStr='000'.$this->PayCode;
+            } elseif ($this->PayCode<1000){
+                $this->PayCodeStr='00'.$this->PayCode;
+            } elseif ($this->PayCode<10000){
+                $this->PayCodeStr='0'.$this->PayCode;
+            }
+        }
+        
         $this->PaySum=$LastPay->PAYSUM;
         $this->PayDate=$LastPay->PAYDATE;
         $this->OrgName=$Org->getRec()->ORGNAME;
@@ -171,7 +185,7 @@ class Payment {
         $sheet = $FileTemplate->getActiveSheet();        
         //ПКО
         $sheet->setCellValue("B6", $this->OrgName);
-        $sheet->setCellValue("F12", $this->PayCode);
+        $sheet->setCellValue("F12", $this->PayCodeStr);
         $sheet->setCellValue("H12", (new PrintFunctions)->DateToStr($this->PayDate));
         $sheet->setCellValue("G18", $this->PaySum);
         $sheet->setCellValue("C20", $this->ContClient);
@@ -181,7 +195,7 @@ class Payment {
         $sheet->setCellValue("F37", $this->KassName);
         //квитанция
         $sheet->setCellValue("L2", $this->OrgName);
-        $sheet->setCellValue("P5", $this->PayCode);
+        $sheet->setCellValue("P5", $this->PayCodeStr);
         $sheet->setCellValue("M6", (new PrintFunctions)->DateToStr($this->PayDate));
         $sheet->setCellValue("M8", $this->ContClient);
         $sheet->setCellValue("M12", $this->ContPr);
@@ -202,7 +216,7 @@ class Payment {
         $sheet = $FileTemplate->getActiveSheet();        
         //РКО
         $sheet->setCellValue("A6", $this->OrgName);
-        $sheet->setCellValue("CC11", $this->PayCode);
+        $sheet->setCellValue("CC11", $this->PayCodeStr);
         $sheet->setCellValue("CT11", (new PrintFunctions)->DateToStr($this->PayDate));
         $sheet->setCellValue("CC15", $this->PaySum*(-1));
         $sheet->setCellValue("H17", $this->ContClient);

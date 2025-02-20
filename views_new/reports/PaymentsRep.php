@@ -160,7 +160,7 @@
                         <tbody>                    
                             <?php
                                 foreach ($Report1 as $Pay){
-                                    $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
+                                    $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);                                    
                                     if ($Pay->PRODCODE==1) {
                                         $Controller='ATContP1FileFrontCtrl';
                                         $Product='БФЛ';
@@ -169,9 +169,22 @@
                                         $Controller='ATContP4FileFrontCtrl';
                                         $Product='РУ';
                                     }
+                                    $PayCode=$Pay->PAYCODE;
+                                    if ($Pay->CONTTYPE==1){
+                                        if ($Pay->PAYCODE<10){
+                                            $PayCode='0000'.$Pay->PAYCODE;
+                                        } elseif ($Pay->PAYCODE<100){
+                                            $PayCode='000'.$Pay->PAYCODE;
+                                        } elseif ($Pay->PAYCODE<1000){
+                                            $PayCode='00'.$Pay->PAYCODE;
+                                        } elseif ($Pay->PAYCODE<10000){
+                                            $PayCode='0'.$Pay->PAYCODE;
+                                        }
+                                    }
+                                    
                                     echo("<tr class='table-secondary'>");
                                     echo("<td>{$Pay->ID}</td>");                              
-                                    echo("<td>{$Pay->PAYCODE}</td>");
+                                    echo("<td>{$PayCode}</td>");
                                     echo("<td>{$Pay->CONTBRANCH}</td>");
                                     echo("<td>{$PayDate}</td>");
                                     echo str_replace('.',',',"<td>{$Pay->PAYSUM}</td>");
