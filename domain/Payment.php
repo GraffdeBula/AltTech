@@ -142,7 +142,7 @@ class Payment {
                 
         $this->ContClient=$Client->getClRec()->CLFNAME.' '.$Client->getClRec()->CL1NAME.' '.$Client->getClRec()->CL2NAME;
         $this->PayCode=$LastPay->PAYCODE;
-        $this->PayCodeStr=str($this->PayCode);
+        $this->PayCodeStr=$this->PayCode;
         if ($this->ContType==1){
             if ($this->PayCode<10){
                 $this->PayCodeStr='0000'.$this->PayCode;
