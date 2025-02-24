@@ -18,18 +18,13 @@ class ReportsCohortCtrl extends ControllerMain{
         $DateL1=new DateTime($_GET['DateL']);
                                                
         $RepContracts=$this->getRepContTab($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
-        
-        new MyCheck($RepContracts,0);
-        $Pays=[];
-        for($i=1; $i<=6; $i++){
-
-            (new ConvertFunctions())->AddMonth($DateF1);
-            (new ConvertFunctions())->AddMonth($DateL1);
-
-            $Pays[$i]=$this->getPays($DateF1->format('d.m.Y'),$DateL1->format('d.m.Y'));
+                
+        foreach($RepContracts as $key=>$RepStr){
+            
+            $RepContracts[$key][5]=$this->getPays($RepStr[4]);            
         }
-         
-        $this->render('reports/CohortRep',['Contracts'=>$Contracts,'Pays'=>$Pays]);
+                 
+        $this->render('reports/CohortRep',['Contracts'=>$RepContracts]);
             
     }
     
@@ -66,13 +61,25 @@ class ReportsCohortCtrl extends ControllerMain{
         return $ContArr;
     }
     
-    protected function getPays($DateF,$DateL,$ContList){
-        $Sql='SELECT Count(Distinct ContCode),Sum(PaySum) FROM tbl5payments WHERE (PayDate BETWEEN ? AND ?) AND ContCode IN ('.$ContList.')';
-        $Pays=db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
-        $PayArr=[];
-        foreach($Pays as $Pay){
-            $PayArr[$Pay->CONTBRANCH]=[$Pay->COUNT,$Pay->SUM];
+    protected function getPays($ContList){
+        $PaysArr=[];
+        $DateF1=new DateTime($_GET['DateF']);
+        $DateL1=new DateTime($_GET['DateL']);
+        
+        for($i=1; $i<=6; $i++){
+            $PaysArr[$i]='-';
+            (new ConvertFunctions())->AddMonth($DateF1);
+            (new ConvertFunctions())->AddMonth($DateL1);
+            
+            $Sql='SELECT Count(Distinct ContCode) AS ContNum FROM tbl5payments WHERE (PayDate BETWEEN ? AND ?) AND ContCode IN ('.$ContList.')';
+            $Pays=db2::getInstance()->FetchOne($Sql,[$DateF1->format('d.m.Y'),$DateL1->format('d.m.Y')]);
+            if ($Pays==NULL){
+                $PaysArr[$i]='-';
+            } else {
+                $PaysArr[$i]=$Pays->CONTNUM;
+            }
         }
-        return $PayArr;
+                       
+        return $PaysArr;
     }
 }
