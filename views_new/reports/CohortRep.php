@@ -1,5 +1,9 @@
 <?php
-    $MonthsNum=count($Contracts[0][5]);
+    if (isset($Contracts[0][5])){
+        $MonthsNum=count($Contracts[0][5]);
+    } else {
+        $MonthsNum=0;                
+    }
 ?>
 <!DOCTYPE html>
 
