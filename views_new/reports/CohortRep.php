@@ -1,5 +1,5 @@
 <?php
-    $MonthsNum=count($Pays);
+    $MonthsNum=count($Contracts[0][5]);
 ?>
 <!DOCTYPE html>
 
@@ -39,14 +39,15 @@
                 </thead>
                 <tbody>                    
                 <?php                    
-                    foreach ($Contracts as $Branch=>$Cont){                                                
+                    foreach ($Contracts as $Branch){                                                
                         echo("<tr class='table-secondary'>");                        
-                        echo("<td>{$Branch}</td>");
-                        echo("<td>{$Cont[0]}</td>");
-                        echo("<td>{$Cont[1]}</td>");
+                        echo("<td>{$Branch[0]}</td>");
+                        echo("<td>{$Branch[1]} мес.</td>");
+                        echo("<td>{$Branch[2]} шт.</td>");
+                        echo("<td>на {$Branch[3]} руб.</td>");
                         for($i=1; $i<=$MonthsNum; $i++){
-                            if (isset($Pays[$i][$Branch][0])){
-                                echo("<td>{$Pays[$i][$Branch][0]}</td>");
+                            if (isset($Branch[5][$i])){
+                                echo("<td>{$Branch[5][$i]} шт.</td>");
                             } else {
                                 echo("<td>-</td>");
                             }
