@@ -100,9 +100,10 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Pays">Платежи</a>
         </li> 
+        <!--
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Credit">Расчёт по кредиту</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Comments">Комментарии</a>
         </li> 
@@ -114,18 +115,7 @@
         <div class="tab-pane fade active show" id="Main">
                                                                            
             <?php
-//                echo("<form method='get' autoload='off'>");
-//                    (new MyForm('ATContP1FileFrontCtrl','ExpCont',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-//                    if ($Front->FROFFICE==''){
-//                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-//                    } else {
-//                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-//                    }
-//                    echo("                
-//                    <p><label>ДАТА ДОГОВОРА ЭПЭ</label><input type='date' name='FREXPDATE' value={$Front->FREXPDATE}></p>
-//                    <p><label>СТОИМОСТЬ ЭПЭ</label><input type='text' name='FREXPSUM' value={$Front->FREXPSUM}></p>
-//                    <button type='submit' class='btn btn-warning'>Заключён договор ЭПЭ</button>
-//                </form>");  
+
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','ContSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
@@ -151,12 +141,6 @@
                     <p><label>ДАТА ПОЛУЧЕНИЯ ДОКУМЕНТОВ ОТ КЛИЕНТА</label><input type='date' name='FREXPGETDATE' value={$Front->FREXPGETDATE}>
                     <button type='submit' class='btn btn-warning'>Клиент предоставил документы на ЭПЭ</button></p>
                 </form>");
-//                echo("<form method='get' autoload='off'>");
-//                    (new MyForm('ATContP1FileFrontCtrl','ExpSent',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();                    
-//                    echo("                
-//                    <p><label>ДАТА ОТПРАВКИ НА ЭПЭ</label><input type='date' name='FREXPSENTDATE' value={$Front->FREXPSENTDATE}></p>                    
-//                    <button type='submit' class='btn btn-danger'>Документы отправлены на ЭПЭ</button>
-//                </form>");
                     
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','ExpAct',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
@@ -214,66 +198,78 @@
                     </h3>
                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                         <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
-                            <?php
-                                echo("<form method='get' enable=>");
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4>Основной тариф</h4>
+                                    <?php
+                                        echo("<form method='get' enable=>");
 
-                                    (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                                    echo("
-                                        <p><label>Программа</label><select name='FRCONTPROG'>
-                                            <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
-                                            <option value='Банкротство физлиц'>Банкротство физлиц</option>
-                                            <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
-                                            <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
-                                            <option value='Защита от кредиторов'>Защита от кредиторов</option>
-                                        </select>
-                                        <label>Тариф</label><select name='FRCONTTARIF'>
-                                            <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
+                                            (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                                            echo("
+                                                <p><label>Программа</label><select name='FRCONTPROG'>
+                                                    <option value='{$Front->FRCONTPROG}'>{$Front->FRCONTPROG}</option>
+                                                    <option value='Банкротство физлиц'>Банкротство физлиц</option>
+                                                    <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
+                                                    <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
+                                                    <option value='Защита от кредиторов'>Защита от кредиторов</option>
+                                                </select><br>
+                                                <label>Тариф</label><select name='FRCONTTARIF'>
+                                                    <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
 
-                                    foreach($Tarif->getTarifList() as $TarifName ){
-                                        echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
-                                    }
-                                    echo("</select><lable>$Front->FRCONTPAC</label><br></p>");        
-                                    echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD'>
-                                            <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
-                                            <option value=1></option>
-                                            <option value=6>6</option>
-                                            <option value=12>12</option>
-                                            <option value=18>18</option>
-                                        </select>месяцев</p>");
+                                            foreach($Tarif->getTarifList() as $TarifName ){
+                                                echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
+                                            }
+                                            echo("</select><lable>$Front->FRCONTPAC</label><br></p>");        
+                                            echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD'>
+                                                    <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
+                                                    <option value=1></option>
+                                                    <option value=6>6</option>
+                                                    <option value=12>12</option>
+                                                    <option value=18>18</option>
+                                                </select>месяцев</p>");
+
+                                            $CB1='';
+                                            $CB2='';
+                                            if ($Front->FRSMALLCRED==1){$CB1='checked';}
+                                            if ($Front->FREASYCASE==1){$CB2='checked';}
+
+                                            echo("
+                                                <p>
+                                                    <label>Число кредитов</label><input type='number' name='FRCRNUM' value='$Front->FRCRNUM'><br>
+                                                    <label>Число сложных кредиторов</label><input type='number' name='FRCOMPLEXCRNUM' value='$Front->FRCOMPLEXCRNUM'><br>
+                                                    <input class='form-check-input' type='checkbox' $CB1 id='FRSMALLCRED' name='FRSMALLCRED'>
+                                                    <label class='form-check-label' for='FRSMALLCRED'>Сумма долга до 400 тыс.</label><br>
+                                                    <input class='form-check-input' type='checkbox' $CB2 id='FREASYCASE' name='FREASYCASE'>
+                                                    <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 обязательства)</label>
+                                                </p>
+                                            ");
+                                            echo("<p><label>Скидка по акции</label><select name='DISCACTION'>
+                                                <option value=''></option>
+                                                <option value='Рекомендация:_5000'>Рекомендация: 5000</option>
+                                                <option value='Клиент пенсионер:_12000'>Клиент пенсионер: 12000</option>
+                                                <option value='Клиент инвалид:_12000'>Клиент инвалид: 12000</option>
+                                                <option value='Совместное банкротство (супруги):_9000'>Совместное банкротство (супруги): 9000</option>
+                                                </select>
+                                            ");    
+                                            echo("<label>Скидка руководителя</label>");
+                                            echo("<input name='DISCDIRECTOR' type='number' value='0'></p>");
+        //                                  
+                                            echo("<p><label>Описание доплаты за сложность</label>");
+                                            echo("<textarea name='FRDIFCOST1' rows='7' style='height: 40px;'>{$Front->FRDIFCOST1}</textarea></p>");
+
+                                            echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
+                                        echo("</form>");
+
+                                    ?>
+                                </div>                                    
+                                <div class="col-4">
+                                    <h4>Доплаты за риски</h4>
                                     
-                                    $CB1='';
-                                    $CB2='';
-                                    if ($Front->FRSMALLCRED==1){$CB1='checked';}
-                                    if ($Front->FREASYCASE==1){$CB2='checked';}
-                                    
-                                    echo("
-                                        <p>
-                                            <label>Число кредитов</label><input type='number' name='FRCRNUM' value='$Front->FRCRNUM'><br>
-                                            <label>Число сложных кредиторов</label><input type='number' name='FRCOMPLEXCRNUM' value='$Front->FRCOMPLEXCRNUM'><br>
-                                            <input class='form-check-input' type='checkbox' $CB1 id='FRSMALLCRED' name='FRSMALLCRED'>
-                                            <label class='form-check-label' for='FRSMALLCRED'>Сумма долга до 400 тыс.</label><br>
-                                            <input class='form-check-input' type='checkbox' $CB2 id='FREASYCASE' name='FREASYCASE'>
-                                            <label class='form-check-label' for='FREASYCASE'>Простой клиент (нет мошеников, нет имущества, 3 обязательства)</label>
-                                        </p>
-                                    ");
-                                    echo("<p><label>Скидка по акции</label><select name='DISCACTION'>
-                                        <option value=''></option>
-                                        <option value='Рекомендация:_5000'>Рекомендация: 5000</option>
-                                        <option value='Клиент пенсионер:_12000'>Клиент пенсионер: 12000</option>
-                                        <option value='Клиент инвалид:_12000'>Клиент инвалид: 12000</option>
-                                        <option value='Совместное банкротство (супруги):_9000'>Совместное банкротство (супруги): 9000</option>
-                                        </select>
-                                    ");    
-                                    echo("<label>Скидка руководителя</label>");
-                                    echo("<input name='DISCDIRECTOR' type='number' value='0'></p>");
-//                                  
-                                    echo("<p><label>Описание доплаты за сложность</label>");
-                                    echo("<input name='FRDIFCOST1' type='text' value='{$Front->FRDIFCOST1}'></p>");
-                                    
-                                    echo("<button class='btn btn-warning' type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>");
-                                echo("</form>");
-                                
-                            ?>
+                                    <p>Риск 1.  <input placeholder="от 15000 руб."></p>
+                                    <p>Риск 2.  <input placeholder="от 20000 руб."></p>
+                                    <p>Риск 3.  <input placeholder="от 25000 руб."></p>
+                                </div>
+                            </div>
                             <div>
                                 <form>
                                     <?php (new MyForm('ATContP1FileFrontCtrl','ChangeSum',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>

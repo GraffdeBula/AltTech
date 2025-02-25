@@ -45,6 +45,40 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         header("Location: ".$DocName);
     }
     
+    public function actionCredList(){ 
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        
+        //заполнение таблицы кредиторов
+        $CredList=[];
+        $i=1;
+        foreach($ContP1->getCredList() as $CredRow){
+            
+            $CredList[]=[
+                
+                'CREDNAME'=>$CredRow->CRBANKCONTNAME,
+                'CREDPROG'=>$CredRow->CRPROG,
+                'CREDNUM'=>$CredRow->CRCONTNUM,
+                'CREDDATE'=>(new PrintFunctions())->DateToStr($CredRow->CROPENDAT),                
+                'CREDSUM'=>$CredRow->CRSUM,                                
+            ];
+            $i++;
+        }       
+        
+        $List=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Список кредиторов.docx");
+        
+        $List->setValue('ID',$_GET['ContCode']);
+        $List->setValue('NAME',$Client->getClRec()->CLFIO);
+        
+        $List->cloneRowAndSetValues('CREDNAME', $CredList); 
+        
+        //БЛОК 4
+        $FileName="Список кредиторов {$Client->getClRec()->CLFIO}";
+        $List->saveAs("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/documents/{$FileName}.docx");
+        
+        header("Location: documents/{$FileName}.docx");
+    }
+    
     public function actionDopGaranty(){ 
         $Client=new Client($_GET['ClCode']);             
         $ContP1=new ContP1($_GET['ContCode']);     
