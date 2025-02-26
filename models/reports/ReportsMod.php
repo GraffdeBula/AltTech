@@ -34,8 +34,8 @@ class ReportsMod extends Model {
                 . " INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode"                
                 . " INNER JOIN vwDiscountNewTotal ON tblP1Anketa.ContCode=vwDiscountNewTotal.ContCode"
                 . " LEFT JOIN tblP1ExpList ON tblP1Anketa.ContCode=tblP1ExpList.ContCode"
-                . " WHERE (FrContDate BETWEEN ? AND ?) AND (ExListName=? OR ExListName=? OR ExListName IS NULL) ORDER BY FrContDate DESC";
-        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,'Risk','Risk2']);
+                . " WHERE (FrContDate BETWEEN ? AND ?) AND (ExListName=? OR ExListName=? OR ExListName IS NULL) AND STATUS=? ORDER BY FrContDate DESC";
+        return db2::getInstance()->FetchAll($Sql,[$DateF,$DateL,'Risk','Risk2',17]);
     }
     ##отчёт по первым платежам
     public function getContNewPays($DateF,$DateL){
@@ -175,7 +175,7 @@ class ReportsMod extends Model {
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE (exresdat between ? AND ?) AND frOffice=? AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",
+                . "WHERE (ExpUnderDate between ? AND ?) AND frOffice=? AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",
                 [$DateF,$DateL,$Branch,'Выявлены ошибки']);
     }
     
@@ -184,7 +184,7 @@ class ReportsMod extends Model {
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE (exresdat between ? AND ?) AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",
+                . "WHERE (ExpUnderDate between ? AND ?) AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY tblP1Anketa.ContCode DESC",
                 [$DateF,$DateL,'Выявлены ошибки']);
     }
     
