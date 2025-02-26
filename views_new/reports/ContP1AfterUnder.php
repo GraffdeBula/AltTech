@@ -18,7 +18,7 @@
                         (new EchoBranchList())->echoList('','BranchName');
                         (new MyForm('ReportsCtrl','ShowContP1AfterUnder'))->AddForm2();
                     ?>
-                    <label> Дата проведения правового анализа от </label><input type='date' name='DateF'>
+                    <label> Дата проверки андеррайтера от </label><input type='date' name='DateF'>
                     <label> до </label><input type='date' name='DateL'> 
                     <button class='btn btn-info'>Сформировать отчёт</button>
                 </form>
