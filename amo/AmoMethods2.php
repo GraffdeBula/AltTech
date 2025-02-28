@@ -58,6 +58,34 @@ class AmoMethods2 {
         return $Amo->request();        
     }
     
+    public function updLeadCustomFields($LeadId,$FieldsArr){
+        $CustomFields=[];
+        foreach($FieldsArr as $Field=>$Value){
+            $CustomFields[]=array(
+                "field_id" => $Field,
+                "values" => array (
+                    array(
+                        "value"=>"".$Value
+                    )
+                )
+            );
+                    
+        }
+        
+        $Data=json_encode(
+            array (                                               
+                "custom_fields_values" => $CustomFields                
+        ));
+        $Amo=new AmoRequests2();
+        $Amo->setVar('AmoLink','https://fpcalternative.amocrm.ru/api/v4/leads/'.$LeadId);
+        $Amo->setVar('AmoHeader','application/json');
+        $Amo->setVar('AmoMethod','PATCH');
+        $Amo->setVar('AmoData',$Data);
+        #new MyCheck($Amo->request(),0);
+        return $Amo->request();
+        
+    }
+    
     public function addLead($ContId,$LeadName,$City,$Agent){
         $Data=json_encode(
             array (array(

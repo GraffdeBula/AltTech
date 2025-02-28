@@ -33,7 +33,13 @@ class db2{
             echo $e->getMessage();
         }  
     }
-        
+    
+    
+    public function lastContCode($TblName){
+        $MaxId=$this->FetchOne('SELECT MAX(ContCode) as MaxId FROM '.$TblName,[])->MAXID;
+        return $this->FetchOne('SELECT * FROM '.$TblName.' WHERE ContCode=?',[$MaxId]);
+    }
+    
     public function Query($sql,$params=[]) {//вызов запроса к БД c параметрами        
         try {
             $query=$this->getConnection()->prepare($sql);                     
@@ -46,7 +52,7 @@ class db2{
         } catch (\PDOException $e) {
             new MyCheck([$e,$sql,$params],1);
         }                
-        return $query;//->execute($params);                         
+        return $query;                         
     }
     
     public function FetchOne($sql='',$params=[]) {//разбор одной строки
