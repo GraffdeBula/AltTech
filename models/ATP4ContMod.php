@@ -33,7 +33,8 @@ class ATP4ContMod extends Model{
     public function InsP4Anketa($ClCode=0,$Branch='не указан',$Emp='не указан',$AkLeadId){
         $Sql="INSERT INTO tblP4Anketa (ClCode,AkBranch,lgEmp,akLeadId) values (?,?,?,?)";
         $Params=[$ClCode,$Branch,$Emp,$AkLeadId];
-        db2::getInstance()->Query($Sql,$Params); 
+        db2::getInstance()->Query($Sql,$Params);
+        return db2::getInstance()->lastContCode('tblP4Anketa');
     }
     
     public function DelP4Anketa($ContCode){
