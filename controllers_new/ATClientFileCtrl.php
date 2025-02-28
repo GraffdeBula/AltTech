@@ -29,7 +29,14 @@ class ATClientFileCtrl extends ControllerMain {
     
     public function actionContP1Create(){
         $Model=new ATP1ContMod();
-        $Model->InsP1Anketa($_GET['ClCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],$_GET['AkLeadId']);
+        $NewCont=$Model->InsP1Anketa($_GET['ClCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],$_GET['AkLeadId']);
+        //Получить реквизиты нового договора
+        
+        $Link="192.168.154.95/AltTech/index_admin.php?controller=ATContP1FileFrontCtrl&ClCode=".$NewCont->CLCODE."&ContCode=".$NewCont->CONTCODE;
+        
+        $Amo=new AmoMethods2();
+        $Amo->updLeadCustomFields($NewCont->AKLEADID,[1762084=>'№'.$NewCont->CONTCODE,1762088=>$Link]);
+        
         header("Location: index_admin.php?controller=ATClientFileCtrl&ClCode={$_GET['ClCode']}");
     }
     

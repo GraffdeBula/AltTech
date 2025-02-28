@@ -44,6 +44,8 @@ class ATP1ContMod extends Model{
         $Sql="INSERT INTO tblP1Anketa (ClCode,AkBranch,lgEmp,akLeadId) VALUES (?,?,?,?)";
         $Params=[$ClCode,$Branch,$Emp,$AkLeadId];
         db2::getInstance()->Query($Sql,$Params); 
+        return db2::getInstance()->lastContCode('tblP1Anketa');
+        
     }
     
     public function CopyP1Anketa($ContCode,$LgEmp){

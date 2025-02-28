@@ -26,6 +26,11 @@ class AmoCtrl extends ControllerMain{
         $this->actionIndex();
     }
     
+    public function actionUpdLead(){
+        $this->AmoResult=(new AmoMethods2())->updLead($_GET['LeadId'],1002,'тыгдык-ТУЯРЫК');
+        $this->actionIndex();
+    }
+    
     public function actionGetStatuses(){
         $this->AmoResult=(new AmoMethods2())->getStatuses();
         $this->actionIndex();

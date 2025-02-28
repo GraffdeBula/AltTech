@@ -29,6 +29,14 @@
     
     <form>
         <?php        
+            (new MyForm('AmoCtrl','UpdLead'))->AddForm2()
+        ?>
+        <input name="LeadId" value='' placeholder="12345678">
+        <button class="btn btn-success">Upd Lead Test</button>
+    </form>
+    
+    <form>
+        <?php        
             (new MyForm('AmoCtrl','AddContact'))->AddForm2()
         ?>
         <input name="Name" value='' placeholder="имя">
