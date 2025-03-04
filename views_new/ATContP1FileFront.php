@@ -14,6 +14,7 @@
             <p>ДОГОВОР БФЛ - ДОСЬЕ МЕНЕДЖЕРА</p>
         </h3>
         <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
+        <a target='_blank' href="https://fpcalternative.amocrm.ru/leads/detail/<?=$Anketa->AKLEADID?>"><button class='btn btn-light'>Перейти в АМО</button></a>
     </div>
     <div class='row'>
         <div class='col-3'>
@@ -263,11 +264,13 @@
                                     ?>
                                 </div>                                    
                                 <div class="col-4">
+                                    <!--
                                     <h4>Доплаты за риски</h4>
                                     
                                     <p>Риск 1.  <input placeholder="от 15000 руб."></p>
                                     <p>Риск 2.  <input placeholder="от 20000 руб."></p>
                                     <p>Риск 3.  <input placeholder="от 25000 руб."></p>
+                                    -->
                                 </div>
                             </div>
                             <div>
@@ -680,17 +683,31 @@
                         
         </div>
         <div class="tab-pane fade" id="Archive">            
-            
             <?php
-                echo("<form method='get' autoload='off'>");
-                (new MyForm('ATContP1FileFrontCtrl','WorkFinal',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    
-                echo("<p><label>ДАТА ЗАВЕРШЕНИЯ РАБОТЫ</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
-                echo("<p><label>Итоговая стоимость работ</label><input type='text' name='FRTOTALWORKSUM' value={$Front->FRTOTALWORKSUM}>  руб.</p>");               
-                echo("<button type='submit' class='btn btn-success'>Завершить работу (услуга оказана)</button>");
-                echo("</form>");   
-            ?>    
+                echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=ContStopPay&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+                . "<button class='btn btn-info'>Временное приостановление платежей </button></a>");
+            ?>
             <div class="accordion" id="accordionContDrop">    
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingCDZero">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCDZero" aria-expanded="true" aria-controls="collapseCDZero">
+                            Завершение работы в связи с окончанием процедуры банкротства
+                        </button>
+                    </h3>
+                    <div id="collapseCDZero" class="accordion-collapse collapse" aria-labelledby="headingCDZero" data-bs-parent="#accordionContDrop" style="">
+                        <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                        <?php
+                            echo("<form method='get' autoload='off'>");
+                            (new MyForm('ATContP1FileFrontCtrl','WorkFinal',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+
+                            echo("<p><label>ДАТА ЗАВЕРШЕНИЯ РАБОТЫ</label><input type='date' name='FRARCHDATE' value={$Front->FRARCHDATE}></p>");
+                            echo("<p><label>Итоговая стоимость работ</label><input type='text' name='FRTOTALWORKSUM' value={$Front->FRTOTALWORKSUM}>  руб.</p>");               
+                            echo("<button type='submit' class='btn btn-success'>Завершить работу (услуга оказана)</button>");
+                            echo("</form>");
+                        ?>    
+                        </div>    
+                    </div>
+                </div>
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="headingCDOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCDOne" aria-expanded="false" aria-controls="collapseCDOne">
@@ -762,12 +779,18 @@
                             ?>
                         </div>
                     </div>
-                    <?php
-                        echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=ContStopPay&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-                            . "<button class='btn btn-info'>Приостановление платежей</button></a>");
-                    ?>
+                    
                 </div>                              
             </div>    
+            <div>
+                <form>
+                    <?php
+                        (new MyForm('ATContP1FileFrontCtrl','ChangeLeadId',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    ?>
+                    <input type='number' maxlength='8' name='LeadId' value='<?=$Anketa->AKLEADID?>'>
+                    <button class='btn btn-dark'>Исправить номер сделки в АМО</button>
+                </form>
+            </div>
                 
         </div>
     </div>

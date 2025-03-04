@@ -33,8 +33,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $this->ShowFile();
     }
     
-    public function actionTest(){   
-        
+    public function actionChangeLeadId(){   
+        (new ATP1ContMod())->UpdP1Anketa(['AKLEADID'=>$_GET['LeadId']],$_GET['ContCode']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionFrontSave(){                
