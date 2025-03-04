@@ -25,6 +25,7 @@
                     <tr>                       
                         <th scope='col'>ClCode</th>
                         <th scope='col'>ContCode</th>
+                        <th scope='col'>AMO</th>
                         <th scope='col'>ФИО</th>
                         <th scope='col'>Подразделение</th>
                         <th scope='col'>Менеджер</th>                        
@@ -44,6 +45,7 @@
                         echo("<tr class='table-secondary'>");
                         echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>{$Cont->CLCODE}</a></td>");                        
                         echo("<td><a target='_blank' href='index.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CONTCODE}</a></td>");
+                        echo("<td><a target='_blank' href='https://fpcalternative.amocrm.ru/leads/detail/{$Cont->AKLEADID}'>$Cont->AKLEADID</a></td>");
                         echo("<td>$Cont->CLFIO</td>");
                         echo("<td>{$Cont->FROFFICE}</td>");
                         echo("<td>{$Cont->FRPERSMANAGER}</td>");                        
