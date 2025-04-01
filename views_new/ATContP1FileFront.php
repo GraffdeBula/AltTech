@@ -521,6 +521,8 @@
                         $CurDate=date("Y-m-d");
                         if (in_array($_SESSION['EmRole'],['top','admin'])){
                             echo("<label>Дата</label><input type='date' name='PAYDATE' value='{$CurDate}' required>");
+                        } elseif (in_array($_SESSION['EmName'],['Елена Докшина'])){
+                            echo("<label>Дата</label><input type='date' name='PAYDATE' value='{$CurDate}' required>");
                         } else {
                             echo("<input type='hidden' name='PAYDATE' value='{$CurDate}' required>");
                         }
