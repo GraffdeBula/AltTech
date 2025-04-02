@@ -503,6 +503,7 @@
             <div>
                 <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>
                 <p>Внесено по договору: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
+                <p>Внесено неустойки: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>
                 <p>Выдано из ОХ: <strong><?=$Payment->getTotalSum()['TotalDep2']->PAYSUM ?> руб.</strong><p>
             </div>
