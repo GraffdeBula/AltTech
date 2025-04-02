@@ -54,9 +54,10 @@ class Payment {
         $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
         $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$ProdCode); 
         $this->TotalSum=[ 
-            'TotalInc'=>(new PaymentMod())->countPayments($this->ContCode,3,9),
-            'TotalDep'=>(new PaymentMod())->countPayments($this->ContCode,11,11),
-            'TotalDep2'=>(new PaymentMod())->countPayments($this->ContCode,12,12)
+            'TotalInc'=>(new PaymentMod())->countPayments2($this->ContCode,[3,4,5,6,7,9]),
+            'TotalInc2'=>(new PaymentMod())->countPayments2($this->ContCode,[8]),
+            'TotalDep'=>(new PaymentMod())->countPayments2($this->ContCode,[11]),
+            'TotalDep2'=>(new PaymentMod())->countPayments2($this->ContCode,[12])
         ];
     }
     

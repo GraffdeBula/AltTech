@@ -1,3 +1,17 @@
+<?php
+    if (isset($_GET['DateF'])){
+        $DateF=$_GET['DateF'];
+    } else $DateF='';
+    if (isset($_GET['DateL'])){
+        $DateL=$_GET['DateL'];
+    } else $DateL='';
+    if (isset($_GET['DateDF'])){
+        $DateDF=$_GET['DateDF'];
+    } else $DateDF='';
+    if (isset($_GET['DateDL'])){
+        $DateDL=$_GET['DateDL'];
+    } else $DateDL='';
+?>
 <!DOCTYPE html>
 
 <html>
@@ -16,12 +30,12 @@
                         (new EchoBranchList())->echoList('','BranchName');
                         (new MyForm('ReportsCtrl','ShowContP1DropRep'))->AddForm2();
                     ?>
-                    <label>Показать договоры от </label><input type='date' name='DateF'>
-                    <label> до </label><input type='date' name='DateL'> 
+                    <label>Показать договоры от </label><input type='date' name='DateF' value='<?=$DateF?>'>
+                    <label> до </label><input type='date' name='DateL' value='<?=$DateL?>'> 
                 </p>
                 <p> 
-                    <label>Показать договоры расторгнутые с </label><input type='date' name='DateDF'>
-                    <label> до </label><input type='date' name='DateDL'> 
+                    <label>Показать договоры расторгнутые с </label><input type='date' name='DateDF' value='<?=$DateDF?>'>
+                    <label> до </label><input type='date' name='DateDL' value='<?=$DateDL?>'> 
                     <button class='btn btn-info'>Сформировать отчёт</button>
                 </p>    
             </form>

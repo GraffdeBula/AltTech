@@ -503,6 +503,7 @@
             <div>
                 <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>
                 <p>Внесено по договору: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
+                <p>Внесено неустойки: <strong><?=$Payment->getTotalSum()['TotalInc2']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>
                 <p>Выдано из ОХ: <strong><?=$Payment->getTotalSum()['TotalDep2']->PAYSUM ?> руб.</strong><p>
             </div>
@@ -520,6 +521,8 @@
                     <?php
                         $CurDate=date("Y-m-d");
                         if (in_array($_SESSION['EmRole'],['top','admin'])){
+                            echo("<label>Дата</label><input type='date' name='PAYDATE' value='{$CurDate}' required>");
+                        } elseif (in_array($_SESSION['EmName'],['Елена Докшина'])){
                             echo("<label>Дата</label><input type='date' name='PAYDATE' value='{$CurDate}' required>");
                         } else {
                             echo("<input type='hidden' name='PAYDATE' value='{$CurDate}' required>");

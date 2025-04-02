@@ -10,8 +10,8 @@ class SessionChecker {
     
     public function checkSession(){
         session_start();
-        if (isset($_SESSION['hash'])){            
-            return true;
+        if ((isset($_SESSION['hash']))){                                   
+            return true;                        
         } else {
             (new AdminAuthController)->run();
         }
