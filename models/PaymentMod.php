@@ -31,6 +31,21 @@ class PaymentMod extends Model{
         return db2::getInstance()->FetchOne($Sql,[$ContCode,$Type1,$Type2,1]); 
     }
     
+    public function countPayments2($ContCode,$Type=[]){
+        $Types='';
+        $Params=[$ContCode,1];
+        foreach($Type as $Key=>$Value){
+            if ($Key==0){
+                $Types=$Types.'?';
+            } else {
+                $Types=$Types.',?';
+            }
+            $Params[]=$Value;
+        }
+        $Sql='SELECT Sum(PaySum) AS PaySum FROM tbl5Payments WHERE ContCode=? AND ProdCode=? AND PayType IN ('.$Types.')';
+        return db2::getInstance()->FetchOne($Sql,$Params); 
+    }
+    
     public function getPaymentById($Id,$ContCode,$ProdCode){
         $Sql='SELECT * FROM tbl5Payments WHERE Id=? AND ContCode=? AND ProdCode=?';
         return db2::getInstance()->FetchOne($Sql,[$Id,$ContCode,$ProdCode]); 
