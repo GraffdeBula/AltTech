@@ -98,6 +98,22 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
+    public function actionTest(){
+        $ContFront=(new ContP1($_GET['ContCode']))->getFront();
+        $CountFirstSum=[
+            'Число кредитов'=>$ContFront->FRCRNUM,
+            'Сложных кредиторов'=>$ContFront->FRCOMPLEXCRNUM,
+            'Маленькая сумма'=>$ContFront->FRSMALLCRED,
+            'Простой случай'=>$ContFront->FREASYCASE,
+            'Срок договора (мес)'=>$ContFront->FRCONTPERIOD,
+        ];
+        new MyCheck(json_encode($CountFirstSum),0);
+        $this->FrontSave([
+            'CONTCODE'=>$_GET['ContCode'],
+            'FRCONTFIRSTSUMCOUNT'=>$CountFirstSum
+        ]);
+    }
+    
     public function actionTarifChoose(){                        
         $Discount=0;
         $DiscountName='';
