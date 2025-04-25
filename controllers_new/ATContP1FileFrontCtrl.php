@@ -17,7 +17,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
         'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF',
-        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO','FRDIFCOST1'];
+        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO','FRDIFCOST1','FRCONTFIRSTSUMCOUNT'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
@@ -107,11 +107,12 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'Простой случай'=>$ContFront->FREASYCASE,
             'Срок договора (мес)'=>$ContFront->FRCONTPERIOD,
         ];
-        new MyCheck(json_encode($CountFirstSum),0);
+        #new MyCheck(json_encode($CountFirstSum),0);
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],
-            'FRCONTFIRSTSUMCOUNT'=>$CountFirstSum
+            'FRCONTFIRSTSUMCOUNT'=>json_encode($CountFirstSum)
         ]);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionTarifChoose(){                        
