@@ -33,7 +33,12 @@
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
             </li>"); 
         }        
-        
+        if ((in_array($_SESSION['EmRole'],['admin','top']))or(in_array($_SESSION['EmName'],['Андрей Догаев']))){
+            echo("
+            <li class='nav-item'>
+              <a class='nav-link' data-bs-toggle='tab' href='#outcomes'>Расходы</a>
+            </li>");
+        }
         if (in_array($_SESSION['EmRole'],['admin','top'])){
             echo("
             <li class='nav-item'>
@@ -137,7 +142,7 @@
         
         <div class="tab-pane fade" id="refer">
             <p><a target='_blank' href='index_admin.php?controller=RefProgContactsCtrl'><button class="btn btn-warning">Активные рекомендации</button></a></p>
-            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-secondary">Классические рекомендции</button></a></p>
+            <p><a target='_blank' href='index_admin.php?controller=ATRefProgCtrl'><button class="btn btn-secondary">Классические рекомендации</button></a></p>
         </div><!--Реферальная программа-->
         <div  class='tab-pane fade' id='expert'>
 <!--            <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки на ЭПЭ/правовой анализ</button></a>-->
@@ -312,6 +317,9 @@
             </div>
             
         </div><!--отчёты-->   
+        <div class="tab-pane fade" id="outcomes"> 
+            <a target="_blank" href="index_admin.php?controller=OutcomesCtrl"><button class='btn btn-info'>ОТКРЫТЬ УЧЁТ РАСХОДОВ</button></a>
+        </div>
         <div class="tab-pane fade" id="discounts"> 
             <?php
                 foreach($DiscList as $key=>$Cont){
