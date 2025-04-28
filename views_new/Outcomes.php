@@ -29,12 +29,33 @@
         <button class="btn btn-primary">ДОБАВИТЬ</button>
     </form>
     <div class="row">
-        <?php
-            foreach($OutcomeList AS $key=>$Outcome){
-                var_dump($Outcome);
-                echo("<br>----------------------------------------------------------------------------------<br>");
-            }
-        ?>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"> </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Расход</th>                                
+                </tr>
+            </thead>
+            <tbody>
+            <?php 
+                foreach($OutcomeList AS $key=>$Outcome){ 
+                    //$ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
+                    echo("<tr class='table-info'>"                        
+                        ."<td> </td>"
+                        ."<td>$Outcome->ID</td>"
+                        ."<td>".(new PrintFunctions())->DateToStr($Outcome->OUTDATE)."</td>"
+                        ."<td>$Outcome->OUTSUM</td>"
+                        ."<td>$Outcome->OUTCOME</td>"
+                    ."</tr>");
+
+                }
+            ?>
+            </tbody>
+        </table>
+        
     </div>
     
     

@@ -24,7 +24,7 @@ class OutcomesCtrl extends ControllerMain{
     }
     
     protected function getOutcomes(){
-        $Sql='SELECT OutDate,OutSum,Outcome FROM tbl6Outcomes ORDER BY Id DESC';
+        $Sql='SELECT ID,OutDate,OutSum,Outcome FROM tbl6Outcomes ORDER BY Id DESC';
         $this->OutcomesList=db2::getInstance()->FetchAll($Sql,[]);
         
         $Sql='SELECT SUM(OutSum) AS TotSum FROM tbl6Outcomes WHERE OutDate BETWEEN ? AND ?';
