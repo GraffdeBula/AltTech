@@ -8,17 +8,22 @@
  */
 class AT7ReferProg extends Model{
     public function GetAgentList(){
-        $Sql="SELECT FIRST 200 * FROM tbl7ReferProg WHERE Status<9 ORDER BY ID DESC";
+        $Sql="SELECT FIRST 100 * FROM tbl7ReferProg WHERE Status=1 ORDER BY ID DESC";
+        return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
+    }
+    
+    public function GetAgentActList(){
+        $Sql="SELECT FIRST 100 * FROM tbl7ReferProg WHERE Status IN (3,4) ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
     public function GetAgentFullList(){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 ORDER BY ID DESC";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
     public function GetAgentListDate($DateF,$DateL){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 AND lgDate BETWEEN ? AND ? ORDER BY ID DESC";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND lgDate BETWEEN ? AND ? ORDER BY ID DESC";
         return $this->Data=db2::getInstance()->FetchAll($Sql,[$DateF,$DateL]);
     }
     
@@ -27,33 +32,33 @@ class AT7ReferProg extends Model{
         return $this->Data=db2::getInstance()->Query($Sql,[$Name,$Phone,$EmName,$Status,$PayType]);
     }
     
-    public function GetAgent($Name){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Name=?";
-        return $this->Data=db2::getInstance()->FetchOne($Sql,[$Name]);
+    public function GetAgent($Name,$Type=1){
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Name=? AND Status=?";
+        return $this->Data=db2::getInstance()->FetchOne($Sql,[$Name,$Type]);
     }
     
     public function GetAgentByName($Name){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 AND Name LIKE ?";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Name LIKE ?";
         return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Name."%"]);
     }
     
     public function GetAgentByCode($Code){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 AND ((Code LIKE ?) OR (Code=?))";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND ((Code LIKE ?) OR (Code=?))";
         return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Code."%",$Code]);
     }
     
     public function GetAgentByFullCode($Code){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 AND Code=?";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Code=?";
         return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Code."%"]);
     }
     
     public function GetAgentsByPhone($Phone){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 AND Phone LIKE ?";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Phone LIKE ?";
         return $this->Data=db2::getInstance()->FetchAll($Sql,["%".$Phone."%"]);
     }
     
     public function GetAgentByPhone($Phone){
-        $Sql="SELECT * FROM tbl7ReferProg WHERE Status<9 AND Phone=?";
+        $Sql="SELECT * FROM tbl7ReferProg WHERE Status=1 AND Phone=?";
         return $this->Data=db2::getInstance()->FetchOne($Sql,[$Phone]);
     }
     
@@ -72,10 +77,14 @@ class AT7ReferProg extends Model{
         db2::getInstance()->FetchOne($Sql,[$Name,$Phone,$Code,$Comment,$EmName]);
     }
     
-    public function getContactList($Code) {
+    public function getContactList1($Code) {
         $Sql='SELECT * FROM tbl7Contacts WHERE Agent=?';
         return db2::getInstance()->FetchAll($Sql,[$Code]);
     }
-            
-            
+    
+    public function getContactList($Code) {
+        $Sql='SELECT Name,Phone,Agent,Comment FROM tbl7Contacts';
+        return db2::getInstance()->FetchAll($Sql,[$Code]);
+    }
+                        
 }

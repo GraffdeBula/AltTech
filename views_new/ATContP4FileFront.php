@@ -66,6 +66,8 @@
         . "<button class='btn btn-info'>Доверенность</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=DovCompJur&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Передоверие</button></a>");
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=Act&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-primary'>АКТ ОКАЗАННЫХ УСЛУГ</button></a>");
         echo("</div>");
     ?>
 

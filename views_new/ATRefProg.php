@@ -66,6 +66,12 @@
                             case 1:
                                 $Status='Классика';
                                 break;
+                            case 2:
+                                $Status='???';
+                                break;
+                            case 9:
+                                $Status='!!!';
+                                break;
                             case 3:
                                 $Status='АктивОткрытый';
                                 break;
@@ -89,7 +95,7 @@
                             echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
                         }
                         echo("</form>");                        
-                        if (($_SESSION['EmRole']=='admin') or (in_array($_SESSION['EmName'],['Алёна Пышняк','Алина Смородина']))){
+                        if (($_SESSION['EmRole']=='admin') or (in_array($_SESSION['EmName'],['Алёна Пышняк']))){
                             echo("<form method='get' class='delAgForm'>");
                             (new MyForm('ATRefProgCtrl','DelAgent',0,0))->AddForm2();
                             echo("<input type='hidden' name='RefId' value='{$Refer->ID}'>");

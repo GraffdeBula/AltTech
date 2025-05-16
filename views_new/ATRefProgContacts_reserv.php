@@ -37,46 +37,63 @@
         </div>
     </div>
         
-    <div class="accordion" id="accordionAgentList">
-        <?php   
-            $i=0;
-            foreach($Agents as $Key=>$Agent){
-                $i++;
-                if ($i==1){
-                    echo("
-                        <div class='accordion-item'>
-                          <h2 class='accordion-header' id='heading".$i."'>
-                            <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse".$i."' aria-expanded='false' aria-controls='collapse".$i."'>
-                              Новый Агент__<strong>$Agent->NAME</strong>__телефон__<strong>$Agent->PHONE</strong>__с кодом__<strong>$Agent->CODE</strong>
-                            </button>
-                          </h2>
-                          <div id='collapse".$i."' class='accordion-collapse collapse' aria-labelledby='heading".$i."' data-bs-parent='#accordionAgentList' style=''>
-                            <div class='accordion-body'>
-                              <h3>Контакты агента ".$i."</h3>
-                            </div>
-                          </div>
-                        </div>
-                    ");
-                }else{
-                echo("                
-                    <div class='accordion-item'>
-                      <h2 class='accordion-header' id='heading".$i."'>
-                        <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse".$i."' aria-expanded='false' aria-controls='collapse".$i."'>
-                          Агент__<strong>$Agent->NAME</strong>__телефон__<strong>$Agent->PHONE</strong>__с кодом__<strong>$Agent->CODE</strong>
-                        </button>
-                      </h2>
-                      <div id='collapse".$i."' class='accordion-collapse collapse' aria-labelledby='heading".$i."' data-bs-parent='#accordionAgentList'>
-                        <div class='accordion-body'>
-                          <h6>Контакты агента ".$i."</h6>
-                              
-                        </div>
-                      </div>
-                    </div>
-                ");
-                }            
-            }
-        
-        ?>
+    <div>    
+        <table class="table table-hover">
+            <thead>
+                <tr>                      
+                  <th scope="col">ФИО</th>
+                  <th scope="col">Телефон</th>
+                  <th scope="col">ПромоКод</th>
+                  <th scope="col">Реферальная ссылка</th>
+                  <th scope="col">Статус</th>
+                  <th scope="col">Вознаграждение</th>
+                  <th scope="col">Кто внёс</th>
+                  <th scope="col">Изменить</th>
+                  <th scope="col">Удалить</th>
+                  <th scope="col">Причина удаления</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php               
+                    foreach($Refers as $Refer){//таблица
+                        switch ($Refer->STATUS){                                        
+                            case 3:
+                                $Status='АктивОткрытый';
+                                break;
+                            case 4:
+                                $Status='АктивАноним';
+                                break;
+                        }
+
+                        echo("<tr class='table-info'>");
+                        echo("<form method='get'>");
+                        (new MyForm('RefProgContactsCtrl','UpdAgent',0,0))->AddForm2();
+                        echo("<input type='hidden' name='Id' value='$Refer->ID'>");
+                        echo("<td><input type='text' name='Name' value='$Refer->NAME'></td>");
+                        echo("<td><input type='text' name='Phone' value='$Refer->PHONE' maxlength='12'></td>");
+                        echo("<td><input type='text' name='Code' value='$Refer->CODE'></td>");
+                        echo("<td><input type='text' name='Refer' value='$Refer->REFER'></td>");
+                        echo("<td>$Status</td>");
+                        echo("<td>$Refer->PAYTYPE</td>");
+                        echo("<td>$Refer->LGEMP</td>");
+                        if (($_SESSION['EmRole']=='admin') or ($_SESSION['EmName']=='Алёна Пышняк')){
+                            echo("<td><button type='submit' class='btn btn-success'>Изменить</button></td>");
+                        }
+                        echo("</form>");                        
+                        if (($_SESSION['EmRole']=='admin') or (in_array($_SESSION['EmName'],['Алёна Пышняк']))){
+                            echo("<form method='get' class='delAgForm'>");
+                            (new MyForm('RefProgContactsCtrl','DelAgent',0,0))->AddForm2();
+                            echo("<input type='hidden' name='RefId' value='{$Refer->ID}'>");
+                            echo("<td><button type='submit' class='btn btn-danger delAgBtn'>Удалить</button></td>");
+                            echo("<td><input name='DelComment' class='delComment' value=''></td>");
+                            echo("</form>");
+                        }
+                        echo("</tr>");
+                    }                                
+                ?>    
+            </tbody>
+        </table>
     </div>
 
     <div>
