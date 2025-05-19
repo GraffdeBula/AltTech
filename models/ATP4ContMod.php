@@ -43,9 +43,9 @@ class ATP4ContMod extends Model{
         db2::getInstance()->Query($Sql,$Params);  
     }
     
-    public function updP4Cons($FrOffice,$FrPersManager,$FrConsDate,$Emp,$ContCode){
-        $Sql="UPDATE tblP4Front SET FrOffice=?,FrPersManager=?,FrConsDate=?,lgEmp=? WHERE ContCode=?";
-        $Params=[$FrOffice,$FrPersManager,$FrConsDate,$Emp,$ContCode];
+    public function updP4Cons($FrOffice,$FrPersManager,$FrConsDate,$FrConsSum,$Emp,$ContCode){
+        $Sql="UPDATE tblP4Front SET FrOffice=?,FrPersManager=?,FrConsDate=?,FrConsSum=?,lgEmp=? WHERE ContCode=?";
+        $Params=[$FrOffice,$FrPersManager,$FrConsDate,$FrConsSum,$Emp,$ContCode];
         db2::getInstance()->Query($Sql,$Params); 
     }
     

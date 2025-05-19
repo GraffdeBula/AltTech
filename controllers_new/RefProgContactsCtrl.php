@@ -10,7 +10,7 @@ class RefProgContactsCtrl extends ControllerMain {
     protected $ContList=[];
     
     public function actionIndex(){        
-        $this->Agent=$this->getAgent();        
+        $this->Agent=new AgentNul();        
         $this->ShowList();
     }   
     
@@ -19,7 +19,7 @@ class RefProgContactsCtrl extends ControllerMain {
         
         $Model->InsAgent($_GET['AgName'],$_GET['AgPhone'],$_SESSION['EmName'],$_GET['Status'],$_GET['PayType']);
         
-        $NewAg=$Model->GetAgent($_GET['AgName']);
+        $NewAg=$Model->GetAgent($_GET['AgName'],$_GET['Status']);
         $ID=2731+$NewAg->ID;
         $Code='AgentActive'.$ID;
         $ReferLink="https://fpk-alternativa.ru/bankrotstvo?utm_term=promo&kod={$Code}";
@@ -29,11 +29,7 @@ class RefProgContactsCtrl extends ControllerMain {
     }
     
     public function actionSaveContact(){        
-        $Model=new AT7ReferProg();
-        $Model->addContact($_GET['ContName'], $_GET['ContPhone'], $_GET['AgCode'], 'comment',$_SESSION['EmName']);
         
-        $this->Agent=$this->getAgent();        
-        $this->getContList();
         //постановка задачи в АМО
         if ($_GET['AgStatus']=='4'){
             $Status='Анонимный агент';
@@ -47,10 +43,23 @@ class RefProgContactsCtrl extends ControllerMain {
         $ContId=$Answer['_embedded']['contacts']['0']['id'];
         $Branch=(new Branch($_SESSION['EmBranch']))->getRec()->BRCITY;
                 
-        $Answer=$Amo->addLead($ContId,'Рекомендация Active. '.$Status,$Branch,$_GET['AgCode']);    
-        $Amo->addTagToLead("Active", $Answer['_embedded']['leads']['0']['id']);
+        $Answer=$Amo->addLead($ContId,'Рекомендация Active. '.$Status,$Branch,$_GET['AgCode']);   
+        $LeadId=$Answer['_embedded']['leads']['0']['id'];
+        $Amo->addTagToLead("Active", $LeadId);
+        //сохранение агента в БД
+        $Model=new AT7ReferProg();
+        $Model->addContact($_GET['ContName'], $_GET['ContPhone'], $_GET['AgCode'], $LeadId, $_SESSION['EmName']);
+                
+        $this->Agent=$this->getAgent();        
+        $this->getContList();
         //возврат на форму
         $this->ShowList();
+    }
+    
+    public function actionDelAgent(){
+        $DelComment="{'Date':'".Date('d.m.Y')."','Name':'".$_SESSION['EmName']."','Comment':'".$_GET['DelComment']."'}";
+        (new AT7ReferProg())->DelAgent($_GET['RefId'], $DelComment);
+        header("Location: index_admin.php?controller=RefProgContactsCtrl");
     }
     
     protected function getContList(){
@@ -59,7 +68,7 @@ class RefProgContactsCtrl extends ControllerMain {
             
     protected function showList(){       
         $this->ViewName='Программа акивных рекомендаций';
-        $args=['Agent'=>$this->Agent,'Contacts'=>$this->ContList];        
+        $args=['Agent'=>$this->Agent,'Contacts'=>$this->ContList,'Agents'=>(new AT7ReferProg())->GetAgentActList()];        
         $this->render('ATRefProgContacts',$args);
     }
     

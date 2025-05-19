@@ -14,7 +14,7 @@
  */
 class ATContP4FileFrontCtrl extends ControllerMain {
     protected $TblP4Anketa=[];
-    protected $TblP4Front=['FROFFICE','FRPERSMANAGER','FRCONSDATE','FRCONTDATE','FRDOVDATE','FRCONTSUM','FRCONTSERVICE','FRCONTPAYTYPE','FRARCHDATE'];
+    protected $TblP4Front=['FROFFICE','FRPERSMANAGER','FRCONSDATE','FRCONTDATE','FRDOVDATE','FRCONTSUM','FRCONTSERVICE','FRCONTPAYTYPE','FRARCHDATE','FRCONSSUM'];
     
     protected $Params=[];
     protected $Cont=[];    
@@ -31,7 +31,7 @@ class ATContP4FileFrontCtrl extends ControllerMain {
     }
     
     public function actionCons(){
-        (new ATP4ContMod())->updP4Cons($_GET['FROFFICE'],$_SESSION['EmName'],$_GET['FRCONSDATE'],$_SESSION['EmName'],$_GET['ContCode']);
+        (new ATP4ContMod())->updP4Cons($_GET['FROFFICE'],$_SESSION['EmName'],$_GET['FRCONSDATE'],$_GET['FRCONSSUM'],$_SESSION['EmName'],$_GET['ContCode']);
         (new Status())->ChangeP4Status(2, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP4FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }

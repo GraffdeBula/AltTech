@@ -25,7 +25,7 @@ class PrintDoc{
         $this->DocClass=$DocClass;
         $this->DocData=$DocData;  
         $this->TemplName=$TemplName;          
-        #new MyCheck($DocData,2);
+        #new MyCheck($this,0);
     }
 
     public function PrintDoc(){//метод печатает документ, параметры для которого переданы при создании объекта        
@@ -37,7 +37,7 @@ class PrintDoc{
         //получение данных
         $this->GetTemplate();
         $this->GetBookmarkTable();      
-        
+        #new MyCheck($this->BookMarks,0);
         //обход массива закладок              
         foreach($this->BookMarks as $BookMark){
                          

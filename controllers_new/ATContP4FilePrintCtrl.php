@@ -61,6 +61,42 @@ class ATContP4FilePrintCtrl extends ControllerMain {
         header("Location: ".$DocName);        
     }
     
+    public function actionAct(){
+        $this->getData();
+        $Printer=new PrintDoc('NewContP4Act','Акт сдачи-приемки услуг РУ',[
+            'Client'=>$this->Data['Client']->getClRec(),
+            'ClientPas'=>$this->Data['Client']->getPasport(),
+            'ClientPhone'=>$this->Data['Client']->getContPhone(),
+            'ClientAdr'=>$this->Data['Client']->getAdr(),
+            'Front'=>$this->Data['ContP4']->getFront(),
+            'Org'=>$this->Data['Org']->getRec(),
+            'Branch'=>$this->Data['Branch']->getRec(),
+            'Director'=>$this->Data['Director']->getEmp(),
+            'DirectorDov'=>$this->Data['Director']->getEmpDov(),
+            'PayCalend'=>$this->Data['ContP4']->getPayCalend(),
+        ]);
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);        
+    }
+    
+    public function actionConsCont(){
+        $this->getData();
+        $Printer=new PrintDoc('ConsContP4','Договор-Акт консультация',[
+            'Client'=>$this->Data['Client']->getClRec(),
+            'ClientPas'=>$this->Data['Client']->getPasport(),
+            'ClientPhone'=>$this->Data['Client']->getContPhone(),
+            'ClientAdr'=>$this->Data['Client']->getAdr(),
+            'Front'=>$this->Data['ContP4']->getFront(),
+            'Org'=>$this->Data['Org']->getRec(),
+            'Branch'=>$this->Data['Branch']->getRec(),
+            'Director'=>$this->Data['Director']->getEmp(),
+            'DirectorDov'=>$this->Data['Director']->getEmpDov(),
+            'PayCalend'=>$this->Data['ContP4']->getPayCalend(),
+        ]);
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);        
+    }
+    
     public function actionDovComp(){
         $this->getData();
 
