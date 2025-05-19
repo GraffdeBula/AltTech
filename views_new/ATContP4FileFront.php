@@ -60,10 +60,12 @@
         echo("<div>");                            
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=PersDataPermit&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-danger'>Согласие на обработку ПД</button></a>");
+        echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=ConsCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+        . "<button class='btn btn-primary'>Договор и акт консультации</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Договор РУ</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=DovComp&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
-        . "<button class='btn btn-info'>Доверенность</button></a>");
+        . "<button class='btn btn-primary'>Доверенность</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=DovCompJur&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
         . "<button class='btn btn-info'>Передоверие</button></a>");
         echo("<a target='_blank' href='index_admin.php?controller=ATContP4FilePrintCtrl&action=Act&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
@@ -98,7 +100,8 @@
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
                     echo("                
-                    <p><label>ДАТА КОНСУЛЬТАЦИИ</label><input type='date' name='FRCONSDATE' value={$Front->FRCONSDATE}></p>                    
+                    <p><label>ДАТА КОНСУЛЬТАЦИИ</label><input type='date' name='FRCONSDATE' value={$Front->FRCONSDATE}></p>                   
+                    <p><label>СТОИМОСТЬ КОНСУЛЬТАЦИИ</label><input type='text' name='FRCONSSUM' value='{$Front->FRCONSSUM}' autocomplete='off'></p>
                     <button type='submit' class='btn btn-warning'>Проведена консультация</button>
                 </form>");                    
                 echo("<form method='get' autoload='off'>");
