@@ -63,7 +63,14 @@ class RefProgContactsCtrl extends ControllerMain {
     }
     
     protected function getContList(){
-        $this->ContList=(new AT7ReferProg())->getContactList($_GET['AgCode']);        
+        $ContList=(new AT7ReferProg())->getContactList(); 
+        $i=0;
+        $Agent=[];
+        foreach($ContList as $Cont){
+            $i++;
+            $Agent[$i]=$Cont->AGENT;
+        }
+        
     }
             
     protected function showList(){       
