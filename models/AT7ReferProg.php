@@ -82,8 +82,8 @@ class AT7ReferProg extends Model{
         return db2::getInstance()->FetchAll($Sql,[$Code]);
     }
     
-    public function getContactList($Code) {
-        $Sql='SELECT Name,Phone,Agent,Comment FROM tbl7Contacts';
+    public function getContactList() {
+        $Sql='SELECT Name,Phone,Agent,Comment FROM tbl7Contacts WHERE AGENT IN (SELECT FIRST 100 Code FROM tbl7referprog WHERE Status IN(3,4)) ORDER BY Agent,Name';
         return db2::getInstance()->FetchAll($Sql,[$Code]);
     }
                         
