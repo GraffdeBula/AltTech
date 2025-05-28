@@ -635,8 +635,11 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         }else{
             $FamCont=$Client->getFamcont();
         }
-        
-        $Printer=new PrintDoc('ContNewType3',$ContP1->getPac()->PCTEMPLATEROOT,[
+        $TemplateName=$ContP1->getPac()->PCTEMPLATEROOT;
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        $Printer=new PrintDoc('ContNewType3',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),
             'ClientINN'=>$Client->getINN(),
