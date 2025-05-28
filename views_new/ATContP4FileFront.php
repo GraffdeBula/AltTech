@@ -16,6 +16,7 @@
             <p>ДОГОВОР РАЗОВОЙ УСЛУГИ - ДОСЬЕ ДОГОВОРА</p>
         </h3>
         <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
+        <a target='_blank' href="https://fpcalternative.amocrm.ru/leads/detail/<?=$Anketa->AKLEADID?>"><button class='btn btn-light'>Перейти в АМО</button></a>
     </div>
     <div class='row'>
         <div class='col-3'>
