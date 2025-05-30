@@ -8,13 +8,17 @@
 class ATDrPaymentMod extends Model{
     
     public function getPaymentList1(){
-        $Sql='SELECT * FROM tbl5DRPayTypes ORDER BY ID';        
+        $Sql='SELECT * FROM tbl5DRPayTypes WHERE PAYPROD IN (0,1) ORDER BY ID';        
         return $this->data=db2::getInstance()->FetchAll($Sql,[]);
     }
-    
+            
     public function getPaymentList2(){
-        $Sql="SELECT * FROM tbl5DRPayRepTypes ORDER BY ID";
+        $Sql='SELECT * FROM tbl5DRPayTypes WHERE PAYPROD IN (0,2) ORDER BY ID';        
         return $this->data=db2::getInstance()->FetchAll($Sql,[]);
     }
     
+    public function getPaymentList4(){
+        $Sql='SELECT * FROM tbl5DRPayTypes WHERE PAYPROD IN (0,4) ORDER BY ID';        
+        return $this->data=db2::getInstance()->FetchAll($Sql,[]);
+    }
 }

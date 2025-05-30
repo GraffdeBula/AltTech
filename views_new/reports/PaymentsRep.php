@@ -89,20 +89,24 @@
                             <?php
                                 foreach ($Report2 as $Pay){
                                     switch($Pay->PAYNAME){
-                                        case 'Новые договоры':
-                                            echo("<tr class='table-success'>");
+                                        case 'Новые платежи БФЛ':
+                                            echo("<tr class='table-primary'>");
                                             break;
-                                        case 'Действующие договоры':
+                                        case 'Действующие платежи БФЛ':
                                             echo("<tr class='table-info'>");
                                             break;
-                                        case 'Разовые услуги юристов':
-                                        case 'Разовые услуги менеджеров':
+                                        case 'Новые платежи РУ':
+                                            echo("<tr class='table-danger'>");
+                                            break;
+                                        case 'Действующие платежи РУ':
                                             echo("<tr class='table-warning'>");
                                             break;
-                                        case 'Ответственное хранение':
+                                        case 'Внесено на ОХ':
                                             echo("<tr class='table-dark'>");
                                             break;
-                                        
+                                        case 'Выдано из ОХ':
+                                            echo("<tr class='table-light'>");
+                                            break;
                                     }
                                     
                                     echo("<td>{$Pay->PAYNAME}</td>");                              

@@ -51,7 +51,17 @@ class Payment {
         $this->ProdCode=$ProdCode;
         $this->PayMethod=$PayMethod;
         
-        $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
+        switch($ProdCode){
+            case 1:
+                $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
+                break;
+            case 2:
+                $this->PaymentType=(new ATDrPaymentMod())->getPaymentList2();
+                break;
+            case 4:
+                $this->PaymentType=(new ATDrPaymentMod())->getPaymentList4();
+                break;
+        }
         $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$ProdCode); 
         $this->TotalSum=[ 
             'TotalInc'=>(new PaymentMod())->countPayments2($this->ContCode,[3,4,5,6,7,9]),
@@ -195,7 +205,7 @@ class Payment {
         $sheet->setCellValue("F34", $this->BuchName);
         $sheet->setCellValue("F37", $this->KassName);
         //квитанция
-        $sheet->setCellValue("L2", $this->OrgName);
+        $sheet->setCellValue("L1", $this->OrgName);
         $sheet->setCellValue("P5", $this->PayCodeStr);
         $sheet->setCellValue("M6", (new PrintFunctions)->DateToStr($this->PayDate));
         $sheet->setCellValue("M8", $this->ContClient);
