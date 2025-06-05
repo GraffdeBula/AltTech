@@ -27,7 +27,7 @@
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>Списки на ЭПЭ/правовой анализ</a>
             </li>");     
         }
-        if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
+        if (in_array($_SESSION['EmRole'],['admin','top','director','expert'])){
         echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
