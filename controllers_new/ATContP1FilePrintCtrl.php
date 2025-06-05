@@ -95,9 +95,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         if (in_array($ContP1->getFront()->FRCONTPAC,['pac107','pac108'.'pac111','pac112'])){
             $TemplateName='Приложение Соглашение о гарантии ипотека';
         }
-              
+                      
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
         
-        $Printer=new PrintDoc('DopGarant','Приложение Соглашение о гарантии',[
+        $Printer=new PrintDoc('DopGarant',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),        
             'ClientAdr'=>$Client->getAdr(),   
@@ -130,7 +133,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $FamCont=$Client->getFamcont();
         }
         
-        $Printer=new PrintDoc('DopAnketa','Приложение №2 Анкета клиента',[
+        $TemplateName='Приложение №2 Анкета клиента';
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Printer=new PrintDoc('DopAnketa',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),
             'ClientINN'=>$Client->getINN(),
@@ -167,7 +175,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         $Org=new Organization($Branch->getRec()->BRORGPREF);
         $Emp=new Employee($Branch->getRec()->BRDIR);        
         
-        $Printer=new PrintDoc('PersDataPermit','Согласие на обработку ПД',[
+        $TemplateName='Согласие на обработку ПД';
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Printer=new PrintDoc('PersDataPermit',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),        
             'ClientAdr'=>$Client->getAdr(),            
@@ -233,34 +246,37 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $Branch=new Branch($Cont->getFront()->FROFFICE);        
         }                
         $Org=new Organization($Branch->getRec()->BRORGPREF);
-        if ($Cont->getFront()->FRPERSMANAGER==""){
-            $Emp=new Employee($_SESSION['EmName']);
-        } else
-        {
-            $Emp=new Employee($Cont->getFront()->FRPERSMANAGER);        
-        }
-        
+        $Emp=new Employee($Branch->getRec()->BRDIR);        
+                
         //БЛОК 2 выбор шаблона
         $ExpRec=$Cont->getExpert()->EXPRODREC;
+        $TemplateName='Отчёт ЭПЭ';
         switch($ExpRec){
             case "Банкротство физлиц":
             case "Защита от кредиторов":
-                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ.docx");
+                $TemplateName="Отчёт ЭПЭ";
                 break;
             case "Банкротство физлиц с ипотекой":
-                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ с ипотекой.docx");
+                $TemplateName="Отчёт ЭПЭ с ипотекой";
                 break;
             case "Внесудебное банкротство":
-                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
+                $TemplateName="Отчёт ЭПЭ ВБФЛ";
                 break;
             case "Не подходит внесудебное банкротство":
-                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
+                $TemplateName="Отчёт ЭПЭ ВБФЛ";
                 break;
             case "Судебное банкротство (внесудебное не подходит)":
-                $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/Отчёт ЭПЭ ВБФЛ.docx");
+                $TemplateName="Отчёт ЭПЭ ВБФЛ";
                 break;
         }
-                
+        
+        
+        if ($Cont->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Act=new \PhpOffice\PhpWord\TemplateProcessor("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/templates/".$TemplateName.".docx");
+        
         //БЛОК 3
         //заполнение шапки отчёта и первого абзаца
         $Act->setValue('ID',$_GET['ContCode']);
@@ -607,6 +623,11 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         //заполнение стоимости услуг
         $Act->setValue('CONTSUM',9000);
         $Act->setValue('CONTSUMSTR','девять тысяч');
+        
+        if ($Cont->getFront()->FROFFICE=='Онлайн-продажи'){
+            $Act->setValue('EMPNAME2',$Emp->getEmp()->EMFNAME1);
+        }
+        $Act->setValue('CONTSUM',9000);
         //БЛОК 4
         $FileName="Отчёт ЭПЭ {$Client->getClRec()->CLFIO}";
         $Act->saveAs("{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/documents/{$FileName}.docx");
@@ -687,7 +708,12 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $FamCont=$Client->getFamcont();
         }
         
-        $Printer=new PrintDoc('ContDop','Допсоглашение БФЛ',[
+        $TemplateName='Допсоглашение БФЛ';
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Printer=new PrintDoc('ContDop',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),
             'ClientINN'=>$Client->getINN(),
@@ -843,12 +869,16 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         
         $ContProg=$ContP1->getFront()->FRCONTPROG;
         if ($ContProg=='Внесудебное банкротство') {
-            $DocName='Доп соглашение Расторжение договора услуг 2';
+            $TemplateName='Доп соглашение Расторжение договора услуг 2';
         } else {
-            $DocName='Доп соглашение Расторжение договора услуг 1';
+            $TemplateName='Доп соглашение Расторжение договора услуг 1';
         }
-                
-        $Printer=new PrintDoc('ContDopWorkBrake',$DocName,[
+        
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Printer=new PrintDoc('ContDopWorkBrake',$TemplateNames,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientAdr'=>$Client->getAdr(),
@@ -887,12 +917,16 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         
         $PacNum= substr($ContP1->getFront()->FRCONTPAC,-2);        
         if ($PacNum>45) {
-            $DocName='Доп соглашение Расторжение договора поручения';
+            $TemplateName='Доп соглашение Расторжение договора поручения';
         } else {
-            $DocName='Доп соглашение Расторжение договора услуг';
+            $TemplateName='Доп соглашение Расторжение договора услуг';
+        }
+        
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
         }
                 
-        $Printer=new PrintDoc('ContDopWorkBrake',$DocName,[
+        $Printer=new PrintDoc('ContDopWorkBrake',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientAdr'=>$Client->getAdr(),
@@ -931,12 +965,16 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         
         $PacNum= substr($ContP1->getFront()->FRCONTPAC,-2);        
         if ($PacNum>45) {
-            $DocName='Отчёт об исполнении БФЛ 2';
+            $TemplateName='Отчёт об исполнении БФЛ 2';
         } else {
-            $DocName='Отчёт об исполнении БФЛ 1';
+            $TemplateName='Отчёт об исполнении БФЛ 1';
         }
-                
-        $Printer=new PrintDoc('WorkFinalAct',$DocName,[
+        
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Printer=new PrintDoc('WorkFinalAct',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(), 
             'ClientINN'=>$Client->getINN(),
