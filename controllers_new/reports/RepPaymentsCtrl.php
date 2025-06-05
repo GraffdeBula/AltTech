@@ -15,7 +15,10 @@ class RepPaymentsCtrl extends ControllerMain{
         $this->ViewName='Отчёт по платежам';
     }
     
-    public function actionIndex() {        
+    public function actionIndex() {    
+        if (in_array($_SESSION['EmRole'], ['juris','frontextra','front','franshman','franshdir'])){
+            header("Location: index_admin.php");
+        }
         $this->formRep();    
         $this->ExportToExcel($this->Payments,'PaymentRep');
         $this->render('reports/PaymentsRep',
