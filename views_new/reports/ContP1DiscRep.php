@@ -48,10 +48,17 @@
                         $i++;
                         $ThisCont[$i]=$Cont->CONTCODE;
                         echo("<tr class='table-secondary'>");
-                        echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>{$Cont->CLCODE}</a></td>");                        
-                        echo("<td><a target='_blank' href='index.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CONTCODE}</a></td>");
-                        echo("<td>$Cont->CLFIO</td>");
-                        echo("<td>{$Cont->FROFFICE}</td>");  
+                        if ($ThisCont[$i]!=$ThisCont[$i-1]){
+                            echo("<td><a target='_blank' href='index.php?controller=ATClientFileCtrl&ClCode={$Cont->CLCODE}'>{$Cont->CLCODE}</a></td>");                        
+                            echo("<td><a target='_blank' href='index.php?controller=ATContP1FileFrontCtrl&ClCode={$Cont->CLCODE}&ContCode={$Cont->CONTCODE}'>{$Cont->CONTCODE}</a></td>");
+                            echo("<td>$Cont->CLFIO</td>");
+                            echo("<td>{$Cont->FROFFICE}</td>");  
+                        }else{
+                            echo("<td>-</td>");
+                            echo("<td>-</td>");
+                            echo("<td>-</td>");
+                            echo("<td>-</td>");
+                        }
                         echo("<td>{$Cont->EXLISTVALUE}</td>");
                         if ($ThisCont[$i]!=$ThisCont[$i-1]){
                             echo("<td>".(new PrintFunctions())->DateToStr($Cont->FRCONTDATE)."</td>");
