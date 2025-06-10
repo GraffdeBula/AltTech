@@ -24,7 +24,16 @@ class ATRefProgCtrl extends ControllerMain {
         $NewAg=$Model->GetAgent($_GET['AgName']);
         $ID=2731+$NewAg->ID;
         $Code='AGENT'.$ID;
-        $ReferLink="https://fpk-alternativa.ru/bankrotstvo?utm_term=promo&kod={$Code}";
+        $Branch='';
+        switch ($_SESSION['EmBranch']) {
+            case 'ОП Барнаул':
+                $Branch='barnaul.';
+                break;
+            case 'ОП Томск':
+                $Branch='tomsk.';
+                break;            
+        }
+        $ReferLink="https://".$Branch."fpk-alternativa.ru/bankrotstvo?utm_term=promo&kod={$Code}";
         $Model->UpdAgent($NewAg->ID, $NewAg->NAME, $Code, $ReferLink, $_GET['AgPhone']);
 
         header("Location: index_admin.php?controller=ATRefProgCtrl");
