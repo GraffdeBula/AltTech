@@ -27,7 +27,7 @@
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>Списки на ЭПЭ/правовой анализ</a>
             </li>");     
         }
-        if (in_array($_SESSION['EmRole'],['admin','top','director','expert'])){
+        if ((in_array($_SESSION['EmRole'],['admin','top','director']))or(in_array($_SESSION['EmName'],['Елизавета Яковлева']))){
         echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
@@ -45,7 +45,7 @@
               <a class='nav-link' data-bs-toggle='tab' href='#discounts'>Согласование скидок</a>
             </li>");
         }
-        if (in_array($_SESSION['EmRole'],['admin','top','director'])){
+        if (in_array($_SESSION['EmRole'],['admin'])){
             echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#amo'>AmoCRM</a>
