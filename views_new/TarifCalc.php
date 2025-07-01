@@ -67,10 +67,10 @@
     } else {
         $RB04='';
     }
-    if ((isset($_GET['Sum04']))&&($_GET['Sum04']=='')){
-        $Sum04=$_GET['Sum04'];    
+    if ((isset($_GET['Sum04']))&&($_GET['Sum04']!='')){
+        $Sum04=$_GET['Sum04'];           
     } else {
-        $Sum04='';
+        $Sum04='';        
     }
     
     for ($i = 1; $i <= 30; $i++){
@@ -128,7 +128,7 @@
                         <div class='form-check'>
                             <input class='form-check-input' type='checkbox' value='' id='03' name="CB03" <?=$CB03?>>
                             <label class='form-check-label' >Доплата за сохранение ипотеки</label>
-                            <input type='number' id='Sum04' name='Sum04' value='' placeholder='от 100 000' <?=$Sum04?>>
+                            <input type='number' id='Sum04' name='Sum04' value='<?=$Sum04?>' placeholder='от 100 000'>
 
                         </div>
                     </div>                  
