@@ -23,10 +23,12 @@ function MySelectFunction(MyValue){
     MyLable.textContent='от';
     MyLable.for='CheckSum'+Num;
     MyInp2.type='number';
+    MyInp2.placeholder='от 1000';
     MyInp2.name='CheckSum'+Num;
     MyInp2.id='CheckSum'+Num;
     RiskList.insertAdjacentElement('afterbegin',MyP1);
     RiskList.insertAdjacentElement('afterbegin',MyInp);
-    RiskList.insertAdjacentElement('afterbegin',MyInp2);
-    RiskList.insertAdjacentElement('afterbegin',MyLable);
+    
+    //MyP1.insertAdjacentElement('beforebegin',MyLable);
+    MyP1.insertAdjacentElement('beforeend',MyInp2);
 }

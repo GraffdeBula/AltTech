@@ -5,12 +5,15 @@
  * @author Andrey
  */
 class TarifCalcCtrl extends ControllerMain{
-      
+    protected $TarifSum=0;
+    protected $PaySum=0;
+    protected $TarifExSum=0;
+    protected $PayExSum=0;
     
     public function actionIndex(){
-        $this->ViewName='Тарифный калькулятор';
-        
-        $this->render('TarifCalc',['TarifSum'=>0,'PaySum'=>0,'TarifExSum'=>0,'PayExSum'=>0]);
+        $ExpertDr=(new ExpertMod)->GetRiskDr(['Risk']);
+        $this->ViewName='Тарифный калькулятор';        
+        $this->render('TarifCalc',['TarifSum'=>$this->TarifSum,'PaySum'=>$this->PaySum,'TarifExSum'=>$this->TarifExSum,'PayExSum'=>$this->PayExSum,'ExpertDr'=>$ExpertDr]);
     }
     public function actionGetTarifList0(){
         $TarifList=(new TarifMod())->getTarifElListByType('Тариф');
@@ -68,11 +71,14 @@ class TarifCalcCtrl extends ControllerMain{
         }
         if (isset($_GET['CB03'])){
             $Plus3=100000;
+            if ((isset($_GET['Sum04']))&&($_GET['Sum04']!='')){
+                $Plus3=$_GET['Sum04'];
+            }
         }
-        if (isset($_GET['CB03'])){
+        if (isset($_GET['CB04'])){
             $Minus1=36000;
         }
-        if (isset($_GET['CB03'])){
+        if (isset($_GET['CB05'])){
             $Minus2=18000;
         }
         
@@ -88,7 +94,7 @@ class TarifCalcCtrl extends ControllerMain{
         
         foreach($_GET as $MyKey=>$MyGet){
             if (in_array($MyKey,['CheckSum1','CheckSum2','CheckSum3','CheckSum4','CheckSum5','CheckSum6','CheckSum7','CheckSum8',
-                'CheckSum9','CheckSum10','CheckSum11','CheckSum12','CheckSum13','CheckSum14','CheckSum15','CheckSum16'])){
+                'CheckSum9','CheckSum10','CheckSum11','CheckSum12','CheckSum13','CheckSum14','CheckSum15','CheckSum16','CheckSum17','CheckSum18'])){
                     if ($MyGet==''){
                         $Dop=$Dop+0;                    
                     } else {
@@ -98,11 +104,13 @@ class TarifCalcCtrl extends ControllerMain{
                 }
         }
                 
-        $TarifSum=$Base+$Plus1+$Plus2+$Plus3-$Minus1-$Minus2-$Disc;
-        $TarifExSum=$TarifSum+$Dop;
-        $PaySum=($TarifSum-$_GET['ZeroPay'])/$AnnNum;
-        $PayExSum=($TarifExSum-$_GET['ZeroPay'])/$AnnNum;
-        $this->render('TarifCalc',['TarifSum'=>$TarifSum,'PaySum'=>$PaySum,'TarifExSum'=>$TarifExSum,'PayExSum'=>$PayExSum]);
+        $this->TarifSum=$Base+$Plus1+$Plus2+$Plus3-$Minus1-$Minus2-$Disc;
+        $this->TarifExSum=$this->TarifSum+$Dop;
+        $this->PaySum=($this->TarifSum-$_GET['ZeroPay'])/$AnnNum;
+        $this->PayExSum=($this->TarifExSum-$_GET['ZeroPay'])/$AnnNum;
+        $ExpertDr=(new ExpertMod)->GetRiskDr(['Risk']);
+        $this->ViewName='Тарифный калькулятор';        
+        $this->render('TarifCalc',['TarifSum'=>$this->TarifSum,'PaySum'=>$this->PaySum,'TarifExSum'=>$this->TarifExSum,'PayExSum'=>$this->PayExSum,'ExpertDr'=>$ExpertDr]);
     }
     
     
