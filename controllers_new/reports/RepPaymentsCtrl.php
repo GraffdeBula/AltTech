@@ -15,8 +15,8 @@ class RepPaymentsCtrl extends ControllerMain{
         $this->ViewName='Отчёт по платежам';
     }
     
-    public function actionIndex() {    
-        if (in_array($_SESSION['EmRole'], ['juris','frontextra','front','franshman','franshdir'])){
+    public function actionIndex() {            
+        if ((in_array($_SESSION['EmRole'], ['juris','frontextra','front','franshman','franshdir']))&&(!in_array($_SESSION['EmName'],['Елизавета Яковлева']))){
             header("Location: index_admin.php");
         }
         $this->formRep();    
