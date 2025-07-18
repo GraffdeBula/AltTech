@@ -189,14 +189,6 @@
                             echo("</div>");
                             echo("<hr>");
                         }
-//                        for($i=1; $i<=16; $i++){
-//                            if (isset($_GET['Check'.$i])){
-//                                echo("<input type='hidden' name='Check".$i."' value='".$_GET['Check'.$i]."'>");
-//                                echo("<lable for='CheckSum".$i."'> от <lable>");
-//                                echo("<input type='number' id='CheckSum".$i."' name='CheckSum".$i."' value='".$_GET['CheckSum'.$i]."'>");                                
-//                                echo("<p>".$_GET['Check'.$i]."</p>");
-//                            }
-//                        }                            
                     ?>
                 </div>
             </div>

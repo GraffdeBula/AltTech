@@ -15,9 +15,9 @@ var List2=document.getElementById('TarifList2');
 var List3=document.getElementById('TarifList3');
 
 //formList0();
-formList1();
-formList2();
-formList3();
+//formList1();
+//formList2();
+//formList3();
 
 function GetPeriod(){
     var Period=document.getElementById('TarifPeriod');
@@ -49,7 +49,7 @@ function getSum(ListNum,CheckedSum,CheckId,SumType){
         TarSum.value=Number(TarSum.value)-CheckedSum*SumType*SumCount;
     }                
 }
-
+/*
 function formList0(){
     var TarListReq=new XMLHttpRequest();
     TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList0',true);
@@ -130,6 +130,7 @@ function formList3(){
     }
     TarListReq.send();    
 }
+*/
 /*получение суммы договора и пакета тарифа*/
 
 /*платежи*/
@@ -201,5 +202,26 @@ function delPayment(DelId){
     PaymentDelReq.send();
     alert('Платёж удалён');
     setTimeout(getPayList(),1000);
+    
+}
+
+function CheckRisk(id){
+    var MyCBValue=document.getElementById('CBR'+id).checked;    
+    var MyCode=document.getElementById('ContCode'+id).value;
+    var MyName=document.getElementById('RiskName'+id).value;
+    var MyCost=document.getElementById('RiskCost'+id).value;
+    
+    if (MyCBValue==true){               
+        var req= new XMLHttpRequest();
+        req.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=AddRisk&ContCode='+MyCode+'&RiskVal='+MyName+'&RiskCost='+MyCost,true);
+        req.send();        
+        console.log('Add1Done');        
+    }else{        
+        var req= new XMLHttpRequest();
+        req.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=DelRisk&ContCode='+MyCode+'&RiskVal='+MyName,true);
+        req.send(); 
+        console.log('DelDone');        
+    }
+    
     
 }

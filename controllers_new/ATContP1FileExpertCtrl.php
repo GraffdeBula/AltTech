@@ -51,9 +51,14 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'EXTOTDEBTSUM'=>$_GET['EXTOTDEBTSUM'],            
             'EXANNTOTPAY'=>$_GET['EXANNTOTPAY'],            
             'EXPRODREC'=>$_GET['EXPRODREC'],
-            'EXRES'=>$_GET['EXRES']
+            'EXRES'=>$_GET['EXRES'],
+            'EXCRNUM'=>$_GET['EXCRNUM'],
+            'EXCOMPLEXCRNUM'=>$_GET['EXCOMPLEXCRNUM'],
+            'EXJURCOMMENT'=>$_GET['EXJURCOMMENT'],
+                
         ];
         (new ATP1ContMod())->UpdP1Expert2($Params,$_GET['ContCode']);
+        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$_GET['FRDOPSUM'],'FRDIFCOST2'=>$_GET['FRDIFCOST2']],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
@@ -62,13 +67,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         (new P1SaveData('TblP1Expert','EXPJURSENTDATE',$_GET['ContCode']))->saveData();
         (new Status())->ChangeP1Status(7, $_GET['ContCode']);        
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
-    public function actionAddFromJurist(){ 
-        (new ExpertMod())->AddFromJurist($_GET['EXJURCOMMENT'],$_GET['ContCode']);
-        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$_GET['FRDOPSUM'],'FRDIFCOST2'=>$_GET['FRDIFCOST2']],$_GET['ContCode']);
-        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
+    }       
     
     public function actionSaveUnder(){ 
         $Params=[
@@ -126,15 +125,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    
-    public function actionAddRisk(){//добавить риск заключения БФЛ
-        if ((isset($_GET['AddRisk'])) && ($_GET['AddRisk']!='')){
-            $NewRisk=$_GET['AddRisk'];
-            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk',$NewRisk,'']);
-        }
-        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
-    }
-    
+           
     public function actionAddRisk2(){//добавить риск заключения БФЛ
         if ((isset($_GET['AddRisk2'])) && ($_GET['AddRisk2']!='')){
             $NewRisk=$_GET['AddRisk2'];
@@ -148,8 +139,22 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         (new ExpertMod())->updExpRisk($_GET['RiskValue2'],$_GET['RiskValue3'],$_GET['RiskID']);                
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    public function actionDelRisk(){//удалить риск заключения БФЛ
+    public function actionDelRisk_old(){//удалить риск заключения БФЛ
         (new ExpertMod)->DelExpRisk([$_GET['RiskID']]);        
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionAddRisk(){//добавить риск заключения БФЛ
+        (new ExpertMod())->InsExpRisk2($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Jurist',$_GET['RiskCost']);
+    }
+    
+    public function actionDelRisk(){
+        (new ExpertMod())->DelExpRisk2($_GET['ContCode'],$_GET['RiskVal'],'Jurist');
+    }
+    
+    public function actionCountRiskDopSum(){
+        $RiskDopSum=(new ExpertMod())->CountRiskSum($_GET['ContCode'],'Jurist')->RISKCOST;
+        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$RiskDopSum],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -193,7 +198,8 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->Cont=(new ATP1ContMod)->GetCont($_GET['ContCode']);        
         $this->CredList=(new ATP1CredMod)->GetP1CredList($_GET['ContCode']);
         $this->Expert=(new ExpertMod)->GetExp($_GET['ContCode']);
-        $this->RiskList=(new ExpertMod)->GetExpRiskList($_GET['ContCode']);
+        $this->RiskList=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');        
+        $this->RiskListMan=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Manager');        
         $this->RiskList2=(new ExpertMod)->GetExpRiskList2($_GET['ContCode']);
         $this->MinIncList=(new ExpertMod)->getExpMinInc($_GET['ContCode']);
         #$this->WorkHist=(new ATClientMod)->GetExp($_GET['ContCode']);
@@ -225,9 +231,10 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'Expert'=>$this->Expert,            
             'Front'=>(new ATP1ContMod)->GetFront($_GET['ContCode']),
             'Comments'=>$this->Comments,
+            'ExpertDr'=>$this->RiskListDr,
             'RiskList'=>$this->RiskList,
-            'RiskList2'=>$this->RiskList2,
-            'RiskListDr'=>$this->RiskListDr,
+            'RiskListMan'=>$this->RiskListMan,
+            'RiskList2'=>$this->RiskList2,            
             'RiskListDr2'=>$this->RiskListDr2,
             'MinIncList'=>$NewMinInc,
             'Credit'=>$this->Credit,

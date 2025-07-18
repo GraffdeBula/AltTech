@@ -12,10 +12,10 @@ class ExpertMod extends Model{
         return db2::getInstance()->FetchOne('SELECT * from tblP1Expert WHERE ContCode=?',[$ContCode]);
     }
     //получение списка рисков
-    public function GetExpRiskList($ContCode){
-        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3,DrValueType,DrRecomend 
+    public function GetExpRiskList($ContCode,$Value2='Jurist'){
+        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3,ExListValue4,DrValueType,DrRecomend 
             FROM tblP1ExpList INNER JOIN tbl1DrExpList ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
-            WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk']);
+            WHERE ContCode=? AND ExListName=? AND ExListValue2=?' ,[$ContCode,'Risk',$Value2]);
     }    
     public function GetExpRiskList2($ContCode){
         return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3 
@@ -25,14 +25,25 @@ class ExpertMod extends Model{
     public function InsExpRisk($param){
         db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue,exListValue2) VALUES (?,?,?,?)',$param); //должен получить массив из одного строкового элемента
     }
+    public function InsExpRisk2($ContCode,$Name,$Value,$Value2,$Value4){
+        db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue,exListValue2,exListValue4) VALUES (?,?,?,?,?)',[$ContCode,$Name,$Value,$Value2,$Value4]); //должен получить массив из одного строкового элемента
+    }
     //обновление инф по работе с риском
     public function updExpRisk($ExListValue2,$ExListValue3,$Id){
-        db2::getInstance()->Query('UPDATE tblP1ExpList SET ExListValue2=?,ExListValue3=? WHERE ID=?',[$ExListValue2,$ExListValue3,$Id]);
+        db2::getInstance()->Query('UPDATE tblP1ExpList SET ExListValue2=?,ExListValue3=? WHERE ID=?',[$ExListValue2,$ExListValue4,$Id]);
     }
     //удаление лишнего риска
     public function DelExpRisk($param){        
         db2::getInstance()->Query('DELETE FROM tblP1ExpList WHERE ID=?',$param);
     }
+    //удаление лишнего риска2
+    public function DelExpRisk2($ContCode,$RiskValue,$RiskValue2){        
+        db2::getInstance()->Query('DELETE FROM tblP1ExpList WHERE ContCode=? AND ExListValue=? AND ExListValue2=?',[$ContCode,$RiskValue,$RiskValue2]);
+    }
+    //расчёт доп стоимости за риски
+    public function CountRiskSum($ContCode,$RiskValue2){        
+        return db2::getInstance()->FetchOne('SELECT Sum(ExListValue4) AS RiskCost FROM tblP1ExpList WHERE ContCode=? AND ExListValue2=? AND ExListName=?',[$ContCode,$RiskValue2,'Risk']);
+    }    
     //получение справочника рисков
     public function GetRiskDr($param){        
         return db2::getInstance()->FetchAll('SELECT * FROM tbl1DrExpList WHERE DrName=?',$param);

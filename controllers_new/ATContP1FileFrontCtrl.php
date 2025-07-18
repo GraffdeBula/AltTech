@@ -19,6 +19,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF',
         'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO','FRDIFCOST1','FRCONTFIRSTSUMCOUNT'];
     protected $TblP1Expert=[];
+    protected $ExpertDr=[];
     protected $Params=[];
     protected $Cont=[];    
     protected $Client=[];
@@ -107,7 +108,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'Простой случай'=>$ContFront->FREASYCASE,
             'Срок договора (мес)'=>$ContFront->FRCONTPERIOD,
         ];
-        #new MyCheck(json_encode($CountFirstSum),0);
+
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],
             'FRCONTFIRSTSUMCOUNT'=>json_encode($CountFirstSum)
@@ -115,7 +116,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionTarifChoose(){                        
+    public function actionTarifChoose(){                                        
         $Discount=0;
         $DiscountName='';
         if (isset($_GET['DISCACTION'])&&($_GET['DISCACTION']!='')){
@@ -187,18 +188,21 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         }
         $ContSum=$ContSum-$Discount; //применена скидка
         
+        
+        //Расчёт допуслуг по списку рисков от менеджера
+        $DopRiskSum=(new ExpertMod())->CountRiskSum($_GET['ContCode'],'Manager')->RISKCOST;        
         $Params=[            
             'FRCONTSUM'=>$ContSum,
             'FRCONTPAC'=>$Tarif->TRPAC,
-            'FRCONTTYPE'=>$Pac->PACCONTTYPE
+            'FRCONTTYPE'=>$Pac->PACCONTTYPE,
+            'FRCONTDOPMANSUM'=>$DopRiskSum
         ];        
         (new ATP1ContMod())->UpdP1Front($Params,$_GET['ContCode']);
         
         $Params=[
             'FRCRNUM'=>$_GET['FRCRNUM'],
             'FRCOMPLEXCRNUM'=>$_GET['FRCOMPLEXCRNUM'],
-            'FRCONTPERIOD'=>$_GET['FRCONTPERIOD'],
-            'FRDIFCOST1'=>$_GET['FRDIFCOST1']
+            'FRCONTPERIOD'=>$_GET['FRCONTPERIOD'],            
         ];
         
         if (isset($_GET['FRSMALLCRED'])){
@@ -534,6 +538,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");        
     }
     
+    public function actionAddRisk(){
+        (new ExpertMod())->InsExpRisk2($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Manager',$_GET['RiskCost']);
+    }
+    
+    public function actionDelRisk(){
+        (new ExpertMod())->DelExpRisk2($_GET['ContCode'],$_GET['RiskVal'],'Manager');
+    }
+    
     protected function FrontSave($GetParams=[]){
         if ($GetParams==[]){
             $GetParams=$_GET;
@@ -578,6 +590,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'Anketa'=>$this->TblP1Anketa,
             'Front'=>$this->TblP1Front,
             'Expert'=>$this->TblP1Expert,
+            'ExpertDr'=>(new ExpertMod)->GetRiskDr(['Risk']),
+            'RiskList'=>(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist'),
+            'RiskListMan'=>(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Manager'),
             'Comments'=>$this->Comments,
             'Payment'=>new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1),
             'Tarif'=>new TarifP1(),

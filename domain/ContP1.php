@@ -34,7 +34,7 @@ class ContP1 {
         $this->CreditList=new CreditList($ContCode);
         $this->CredList=$this->CreditList->getCreditList();
         
-        $this->RiskList=(new ExpertMod())->GetExpRiskList($ContCode);
+        $this->RiskList=(new ExpertMod())->GetExpRiskList($ContCode,'Jurist');
         $this->RiskList2=(new ExpertMod())->GetExpRiskList2($ContCode);
         $this->Pac=(new Pacs())->getPacByName($this->Front->FRCONTPAC);
         $this->PayCalend=(new PayCalend())->getPayCalend($ContCode);
