@@ -14,10 +14,33 @@ var List1=document.getElementById('TarifList1');
 var List2=document.getElementById('TarifList2');
 var List3=document.getElementById('TarifList3');
 
-//formList0();
-//formList1();
-//formList2();
-//formList3();
+var BtnTarif=document.getElementById('btn-tarif');
+var FormTarif=document.getElementById('frm-tarif');
+
+var DiscRuk=document.getElementById('DiskRuk');
+var DiscDir=document.getElementById('DiskDir');
+
+
+var BtnDiscount=document.getElementById('btn-discount');
+var FormDiscount=document.getElementById('frm-discount');
+
+BtnTarif.addEventListener('click',function(){
+    FormTarif.submit();
+});
+
+BtnDiscount.addEventListener('click',function(){
+    FormDiscount.submit();
+});
+
+DiscRuk.addEventListener('input',function(){
+    var DiscRukRadio=document.getElementById('DiskRukValue');
+    DiscRukRadio.value=DiskRuk.value;    
+});
+
+DiscDir.addEventListener('input',function(){
+    var DiscDirRadio=document.getElementById('DiskDirValue');
+    DiscDirRadio.value=DiskDir.value;
+});
 
 function GetPeriod(){
     var Period=document.getElementById('TarifPeriod');
@@ -49,89 +72,6 @@ function getSum(ListNum,CheckedSum,CheckId,SumType){
         TarSum.value=Number(TarSum.value)-CheckedSum*SumType*SumCount;
     }                
 }
-/*
-function formList0(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList0',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(0,"+TarList[i].TRELSUM+","+TarList[i].ID+",1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+                
-                "</div>";
-        }
-        console.log(output);
-        List0.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-
-function formList1(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList1',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(1,"+TarList[i].TRELSUM+","+TarList[i].ID+",1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+
-                "<input type='number' value=1 id='count"+TarList[i].ID+"'>" +
-                "</div>";
-        }
-        console.log(output);
-        List1.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-
-function formList2(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList2',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(2,"+TarList[i].TRELSUM+","+TarList[i].ID+",-1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+
-                "</div>";
-        }
-        console.log(output);
-        List2.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-
-function formList3(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList3',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(3,"+TarList[i].TRELSUM+","+TarList[i].ID+",-1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+
-                "</div>";
-        }
-        console.log(output);
-        List3.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-*/
-/*получение суммы договора и пакета тарифа*/
 
 /*платежи*/
 
@@ -186,7 +126,7 @@ function getPayList(){
 
         }
         DivPaymentList.innerHTML=output;
-    }
+    };
     PaymentListReq.send();
 
 }

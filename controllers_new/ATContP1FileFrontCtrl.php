@@ -372,11 +372,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     public function actionAddDiscount(){
         $Cont=new ContP1($_GET['ContCode']);
         $Model=new P1DiscountMod();
-        $Model->addDiscount($_GET['ContCode'],$_GET['DiscountSum'],$_GET['DiscountComment'],$_GET['DiscountType'],$_SESSION['EmName']);
+        $Model->addDiscount($_GET['ContCode'],$_GET['DiscAct'],$_GET['DiscountComment'],$_GET['DiscountType'],$_SESSION['EmName']);
         if ($_GET['DiscountType']=='НД'){
             $this->FrontSave($GetParams=[
                 'ContCode'=>$_GET['ContCode'],
-                'FRCONTSUM'=>$Cont->getFront()->FRCONTSUM-$_GET['DiscountSum']
+                'FRCONTSUM'=>$Cont->getFront()->FRCONTSUM-$_GET['DiscAct']
             ]);
         }    
         
