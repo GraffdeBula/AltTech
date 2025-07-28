@@ -246,7 +246,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $Branch=new Branch($Cont->getFront()->FROFFICE);        
         }                
         $Org=new Organization($Branch->getRec()->BRORGPREF);
-        $Emp=new Employee($Branch->getRec()->BRDIR);        
+        $Emp=new Employee('Юлия Михайлова');        
                 
         //БЛОК 2 выбор шаблона
         $ExpRec=$Cont->getExpert()->EXPRODREC;

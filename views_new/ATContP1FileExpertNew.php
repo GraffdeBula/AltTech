@@ -72,9 +72,13 @@
                                             $i++;
                                             $Val='';
                                             $Sum='';
+                                            $Disabled='';
                                             foreach($RiskList as $RiskJur){
                                                 if ($RiskJur->EXLISTVALUE==$Risk->DRVALUE){
                                                     $Val="checked=''";
+                                                    if (! in_array($_SESSION['EmRole'],['top','director',])){
+                                                        $Disabled='disabled';
+                                                    } 
                                                     $Sum=$RiskJur->EXLISTVALUE4;
                                                 }
                                             }
@@ -82,7 +86,7 @@
                                             
                                             echo("<form method='get'>");                                                    
                                             echo("<div class='form-check'>");
-                                            echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('".$i."')>");
+                                            echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('".$i."') $Disabled>");
                                             echo("<input type='hidden' value='".$_GET['ContCode']."' id='ContCode".$i."' name='RiskName'>");
                                             echo("<input type='hidden' value='".$Risk->DRVALUE."' id='RiskName".$i."' name='RiskName'>");
                                             echo($Risk->DRVALUE);
@@ -210,7 +214,7 @@
                                     </p>
                                     <p>
                                         <label>Сумма долга</label><input name='EXTOTDEBTSUM' value=<?=$Expert->EXTOTDEBTSUM?>>
-                                        <p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value=<?=$Expert->EXANNTOTPAY?>></p>
+                                        <input type=hidden name='EXANNTOTPAY' value=<?=$Expert->EXANNTOTPAY?>>
                                     </p>
                                     <div class="form-group">
                                         <label for="exampleTextarea" class="form-label mt-4">Заключение юриста (в акт ЭПЭ)</label>
@@ -219,7 +223,7 @@
                                     
                                                                         
                                     <div class="form-group">
-                                        <label>Сумма доплаты за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>><br>                                        
+                                        <label>Доплата за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>><br>                                        
                                         <label for="exampleTextarea" class="form-label mt-4">Описание доплаты за сложность (для служебного пользования)</label>
                                         <textarea class="form-control" id="DopSumExp" rows="3" style="height: 60px;" name='FRDIFCOST2' maxlength=5000 ><?=$Front->FRDIFCOST2?></textarea>                                        
                                     </div>

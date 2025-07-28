@@ -116,7 +116,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionTarifChoose(){                                        
+    public function actionTarifChoose(){                                                
         $Discount=0;
         $DiscountName='';
         if (isset($_GET['DISCACTION'])&&($_GET['DISCACTION']!='')){

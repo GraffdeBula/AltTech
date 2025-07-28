@@ -131,7 +131,7 @@
                 echo("</form>");
                 
                 echo("<p>Первоначальная стоимость: {$Front->FRCONTFIRSTSUM} руб.</p>"
-                    . "<p>Доплата за сложность: {$Front->FRDOPSUM} руб.</p>"
+                    . "<p>Доплата за сложность по оценке юриста: {$Front->FRDOPSUM} руб.</p>"
                     . "<p>Общая стоимость: {$Front->FRCONTSUM} руб.</p>");
                         
             
@@ -163,7 +163,7 @@
                     }
                     
                     echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}'><br>
-                        <label>УВЕЛИЧЕНИЕ СТОИМОСТИ ЗА СЛОЖНОСТЬ</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
+                        <label>Доплата за сложность по оценке юриста</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
                     <button type='submit' class='btn btn-warning'>Допсолгашение подписано</button></p>
                 </form>");
                 
@@ -183,7 +183,7 @@
         </div>
         <div class="tab-pane fade" id="Tarif">
             <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
-            <label>Сумма доплаты за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'><br>
+            <label>Предварительная доплаты за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'><br>
             <?php
                 if ($Front->FRCONTPERIOD>1){
                     echo("в рассрочку на $Front->FRCONTPERIOD месяцев");
@@ -201,9 +201,14 @@
                         <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
                             <div class="row">
                                 <div class="col-4">
-                                    <form method='get' id='frm-tarif' enable=>
+                                    <form method='get' id='frm-tarif' >
                                         <h4>Основной тариф</h4>
-                                        <?php                                            
+                                        <?php        
+                                            if ($Anketa->STATUS>=15){
+                                                $Disabled='disabled';
+                                            }else{
+                                                $Disabled='';
+                                            }
                                             (new MyForm('ATContP1FileFrontCtrl','TarifChoose',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                                             echo("
                                                 <p><label>Программа</label><select name='FRCONTPROG'>
@@ -213,21 +218,22 @@
                                                     <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
                                                     <option value='Защита от кредиторов'>Защита от кредиторов</option>
                                                 </select><br>
-                                                <label>Тариф</label><select name='FRCONTTARIF'>
+                                                <label>Тариф</label><select name='FRCONTTARIF' id='FRCONTTARIF'>
                                                     <option value='{$Front->FRCONTTARIF}'>{$Front->FRCONTTARIF}</option>");
 
                                             foreach($Tarif->getTarifList() as $TarifName ){
                                                 echo("<option value='{$TarifName->TRNAME}'>{$TarifName->TRNAME}</option>");
                                             }
                                             echo("</select><lable>$Front->FRCONTPAC</label><br></p>");        
-                                            echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD'>
+                                            echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD' >
                                                     <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
-                                                    <option value=1></option>
+                                                    <option value=1>1</option>
                                                     <option value=6>6</option>
                                                     <option value=12>12</option>
                                                     <option value=18>18</option>
                                                     <option value=24>24</option>
                                                 </select>месяцев</p>");
+                                            echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
 
                                             $CB1='';
                                             $CB2='';
@@ -267,7 +273,7 @@
                                                     
                                                     echo("<form method='get'>");                                                    
                                                     echo("<div class='form-check'>");
-                                                    echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('".$i."')>");
+                                                    echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('".$i."') ".$Disabled.">");
                                                     echo("<input type='hidden' value='".$_GET['ContCode']."' id='ContCode".$i."' name='RiskName'>");
                                                     echo("<input type='hidden' value='".$Risk->DRVALUE."' id='RiskName".$i."' name='RiskName'>");
                                                     echo($Risk->DRVALUE);
@@ -278,17 +284,18 @@
                                                 }
                                             ?>
                                         </div>
+                                        <label>Предварительная доплаты за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'>
                                 </div>
                             </div>
                             <div>
-                                <button class='btn btn-warning' id='btn-tarif'  type='submit'>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>                                
+                                <button class='btn btn-warning' id='btn-tarif' type='submit' <?=$Disabled?>>ВЫБРАТЬ ТАРИФ.Расчитать стоимость</button>                                
                             </div>
-                            
+                            <hr>
                             <div>
                                 <form>
                                     <?php (new MyForm('ATContP1FileFrontCtrl','ChangeSum',$_GET['ClCode'],$_GET['ContCode']))->AddForm(); ?>
-                                    <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
-                                    <button class='btn btn-warning' type='submit'>Изменить стоимость договора</button>
+                                    <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>                                    
+                                    <button class='btn btn-warning' type='submit' <?=$Disabled?>>Изменить стоимость договора</button>
                                 </form>
                             </div>
                                                                                                                                      
@@ -315,15 +322,19 @@
                                             ?>
                                             <input type='hidden' name='DiscountType' value='НД'>
                                             <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='12000' name="DiscAct" >
+                                                <input class='form-check-input' type="radio" value='12000' name="DiscAct" id="DiscRB1">
                                                 <label class='form-check-label' >Клиент имеет инвалидность. Скидка 12000 руб.</label>                        
                                             </div>
                                             <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='9000' name="DiscAct" >
+                                                <input class='form-check-input' type="radio" value='12000' name="DiscAct" id="DiscRB2">
+                                                <label class='form-check-label' >Клиент пенсионер. Скидка 12000 руб.</label>                        
+                                            </div>
+                                            <div class='form-check'>
+                                                <input class='form-check-input' type="radio" value='9000' name="DiscAct" id="DiscRB3">
                                                 <label class='form-check-label' >Совместное банкротство (супруги). Скидка 9000 </label>                        
                                             </div>
                                             <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='5000' name="DiscAct" >
+                                                <input class='form-check-input' type="radio" value='5000' name="DiscAct" id="DiscRB4">
                                                 <label class='form-check-label' >Рекомендация. Скидка 5000</label>                        
                                             </div>
                                             <div class='form-check'>
@@ -336,11 +347,12 @@
                                                 <label class='form-check-label' >Скидка директора (по согласованию)</label>                        
                                                 <input id='DiskDir' 0>
                                             </div>
-                                            <label>Обоснование скидки</label><input type='text' style='width:400' required name='DiscountComment'>
+                                            <label>Обоснование скидки</label><input type='text' style='width:400' required name='DiscountComment' id='DiscountComment'>
+                                            <p><button class='btn btn-warning' id='btn-discount'>ПРИМЕНИТЬ</button></p>
                                         </form>
 
                                     </div>
-                                    <button class='btn btn-warning' id='btn-discount'>ПРИМЕНИТЬ</button>
+                                    
                                 </div>
                                 <div class='col-lg-5'>
                                     <h6>На действующий договор</h6>                                    

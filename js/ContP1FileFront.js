@@ -20,25 +20,61 @@ var FormTarif=document.getElementById('frm-tarif');
 var DiscRuk=document.getElementById('DiskRuk');
 var DiscDir=document.getElementById('DiskDir');
 
+var FrContTarif=document.getElementById('FRCONTTARIF');
+var AnnNum=document.getElementById('AnnNum');
 
-var BtnDiscount=document.getElementById('btn-discount');
-var FormDiscount=document.getElementById('frm-discount');
+var DiscRB1=document.getElementById('DiscRB1');
+var DiscRB2=document.getElementById('DiscRB2');
+var DiscRB3=document.getElementById('DiscRB3');
+var DiscRB4=document.getElementById('DiscRB4');
+
+DiscRB1.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Клиент имеет инвалидность';
+});
+DiscRB2.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Клиент пенсионер';
+});
+DiscRB3.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Совместное банкротство (супруги)';
+});
+DiscRB4.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Рекомендация';
+});
+
+
+FrContTarif.addEventListener('input',function(){
+    
+    TarifOne=['2024 БФЛ оплата сразу','2024 БФЛ Пенсионерам сразу','2024 БФЛ внесудебное сразу','2024 БФЛ+ипотека оплата сразу'];
+    if (TarifOne.includes(FrContTarif.value)){               
+        AnnNum.value='';
+        var FRCONTPERIOD=document.getElementById('FRCONTPERIOD');
+        FRCONTPERIOD.disabled=false;
+        FRCONTPERIOD.value=1;
+        AnnNum.disabled=true;
+    }else{
+        var FRCONTPERIOD=document.getElementById('FRCONTPERIOD');
+        FRCONTPERIOD.disabled=true;
+        AnnNum.disabled=false;
+    }
+});
 
 BtnTarif.addEventListener('click',function(){
     FormTarif.submit();
 });
 
-BtnDiscount.addEventListener('click',function(){
-    FormDiscount.submit();
-});
-
 DiscRuk.addEventListener('input',function(){
     var DiscRukRadio=document.getElementById('DiskRukValue');
+    DiscRukRadio.checked=true;
     DiscRukRadio.value=DiskRuk.value;    
 });
 
 DiscDir.addEventListener('input',function(){
     var DiscDirRadio=document.getElementById('DiskDirValue');
+    DiscDirRadio.checked=true;
     DiscDirRadio.value=DiskDir.value;
 });
 

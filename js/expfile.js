@@ -19,12 +19,13 @@ MySelect.addEventListener('change',function(){
 
 /*сохранение рисков (классика БФЛ) по нажатию галочки*/
 function CheckRisk(id){
-    var MyCBValue=document.getElementById('CBR'+id).checked;    
+    var MyCB=document.getElementById('CBR'+id);    
     var MyCode=document.getElementById('ContCode'+id).value;
     var MyName=document.getElementById('RiskName'+id).value;
     var MyCost=document.getElementById('RiskCost'+id).value;
     
-    if (MyCBValue==true){               
+    if (MyCB.checked==true){ 
+        MyCB.disabled=true;
         var req= new XMLHttpRequest();
         req.open('GET','index_admin.php?controller=ATContP1FileExpertCtrl&action=AddRisk&ContCode='+MyCode+'&RiskVal='+MyName+'&RiskCost='+MyCost,true);
         req.send();        
