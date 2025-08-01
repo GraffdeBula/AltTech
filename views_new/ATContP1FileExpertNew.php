@@ -209,7 +209,7 @@
                                         <option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>
                                     </select></p>
                                     <p>
-                                        <label>Число кредитов/займов</label><input name='EXCRNUM' value=<?=$Expert->EXCRNUM?>>
+                                        <label>Число кредитов/обязательств</label><input name='EXCRNUM' value=<?=$Expert->EXCRNUM?>>
                                         <label>Число сложных кредиторов</label><input name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?>>
                                     </p>
                                     <p>

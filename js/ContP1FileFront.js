@@ -199,5 +199,9 @@ function CheckRisk(id){
         console.log('DelDone');        
     }
     
+function InputSum(id){
+    console.log(id);
+}
+    
     
 }

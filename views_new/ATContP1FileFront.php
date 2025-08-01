@@ -183,7 +183,7 @@
         </div>
         <div class="tab-pane fade" id="Tarif">
             <label>Стоимость договора</label><input name="FRCONTSUM" id="TarifSum" value='<?=$Front->FRCONTSUM?>'>
-            <label>Предварительная доплаты за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'><br>
+            <label>Предварительная доплата за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'><br>
             <?php
                 if ($Front->FRCONTPERIOD>1){
                     echo("в рассрочку на $Front->FRCONTPERIOD месяцев");
@@ -271,20 +271,20 @@
                                                     }
                                                     $i++;
                                                     
-                                                    echo("<form method='get'>");                                                    
+                                                    echo("<form method='get'>");
                                                     echo("<div class='form-check'>");
-                                                    echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('".$i."') ".$Disabled.">");
+                                                    echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('$i') ".$Disabled.">");
                                                     echo("<input type='hidden' value='".$_GET['ContCode']."' id='ContCode".$i."' name='RiskName'>");
                                                     echo("<input type='hidden' value='".$Risk->DRVALUE."' id='RiskName".$i."' name='RiskName'>");
                                                     echo($Risk->DRVALUE);
-                                                    echo("<br><input type='number' id='RiskCost".$i."' name='RiskCost' value='".$Sum."' placeholder='от ".$Risk->DRVALUECOST."'>");
+                                                    echo("<br><input type='number' id='RiskCost".$i."' name='RiskCost' value='".$Sum."' placeholder='от ".$Risk->DRVALUECOST."' onInput=InputSum('$i') >");
                                                     echo("</div>");
                                                     echo("</form>");
                                                     echo("<hr>");
                                                 }
                                             ?>
                                         </div>
-                                        <label>Предварительная доплаты за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'>
+                                        <label>Предварительная доплата за риски</label><input name="FRCONTDOPMANSUM" id="FRCONTDOPMANSUM" value='<?=$Front->FRCONTDOPMANSUM?>'>
                                 </div>
                             </div>
                             <div>
@@ -342,12 +342,9 @@
                                                 <label class='form-check-label' >Скидка руководителя</label>                        
                                                 <input id='DiskRuk' 0>
                                             </div>
-                                            <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='0' name="DiscAct" id='DiskDirValue'>
-                                                <label class='form-check-label' >Скидка директора (по согласованию)</label>                        
-                                                <input id='DiskDir' 0>
-                                            </div>
-                                            <label>Обоснование скидки</label><input type='text' style='width:400' required name='DiscountComment' id='DiscountComment'>
+                                            
+                                            <label>Обоснование скидки</label>
+                                            <p><textarea style='width: 700px;height: 65px' maxlength=500 required name='DiscountComment'></textarea></p>
                                             <p><button class='btn btn-warning' id='btn-discount'>ПРИМЕНИТЬ</button></p>
                                         </form>
 
@@ -394,28 +391,45 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class='col-lg-8'>
+                            <div class='row'>
                                 
-                                <h6>Согласование скидки с директором</h6>                    
-                                <form method='get' autocomplete="off">
+                                <h5>Согласование скидки с директором</h5>                                          
+                                <div class='col-3'>
+                                    <form method='get' autocomplete="off">
+                                        <?php
+                                            (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
+                                            echo("<p><label>Сумма</label><input type='text' style='width:150' name='FRDISCSUM' value='{$Front->FRDISCSUM}'></p>");
+                                            echo("<p><label>Обоснование</label><br><textarea style='width: 400px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea></p>");
+                                            echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
+                                        ?>
+                                    </form>
+                                </div>
+                                <div class='col-3'>  
                                     <?php
-                                        (new MyForm('ATContP1FileFrontCtrl','RequestDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                            
-                                        echo("<p><label>Сумма</label><br><input type='text' style='width:100' name='FRDISCSUM' value='{$Front->FRDISCSUM}'><br>");
-                                        echo("<p><label>Обоснование</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCCOMMENT'>{$Front->FRDISCCOMMENT}</textarea><br>");
-                                        echo("<button class='btn btn-dark'>Отправить на согласование</button></p>");
+                                        echo("<p><label for='FRDISCAPPROVEDATE'>Согласовано директором<label><input id='FRDISCAPPROVEDATE' type='date' $Front->FRDISCAPPROVEDATE></p>");
                                     ?>
-                                </form>
-                                <hr>
-                                <form method='get' autocomplete="off">
+                                    <form method='get' autocomplete="off">
+                                        <?php
+                                            (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                            echo("<label>Комментарий директора</label><br><textarea style='width: 400px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
+                                            if (in_array($_SESSION['EmRole'],['top','admin'])){
+                                                echo("<button class='btn btn-danger'>Согласовать</button>");
+                                            }
+                                        ?>
+                                    </form>                                        
+                                </div>   
+                                <div class='col-3'>
+                                    <p><br></p>
+                                    <p><br></p>
+                                    <p><br></p>
+                                    <p><br></p>
                                     <?php
-                                        (new MyForm('ATContP1FileFrontCtrl','ApproveDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                        echo("<label>Комментарий директора</label><br><textarea style='width: 500px;height: 80px' maxlength=500 name='FRDISCAPPROVECOMMENT'>{$Front->FRDISCAPPROVECOMMENT}</textarea><br>");
-                                        if (in_array($_SESSION['EmRole'],['top','admin'])){
-                                            echo("<button class='btn btn-danger'>Согласовать</button>");
-                                        }
+                                        #if ($Front->FRDISCAPPROVEDATE!=null){
+                                            
+                                            echo("<p><button class='btn btn-warning'>ПРИМЕНИТЬ</button></p>");
+                                        #}
                                     ?>
-                                </form>
-                                
+                                </div>
                             </div>
                         </div>
                     </div>        
@@ -526,7 +540,7 @@
                 <table class='table table-hover'>
                     <tbody>
                         <tr>
-                            <th>Число кредитов/займов</th>
+                            <th>Число кредитов/обязательств</th>
                             <th><?=$Expert->EXCRNUM?></th>
                         </tr>
                         <tr>

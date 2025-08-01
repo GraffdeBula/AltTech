@@ -110,6 +110,7 @@
                             <option value="6">6</option>
                             <option value="12">12</option>
                             <option value="18">18</option>
+                            <option value="24">24</option>
                         </select>
                     </div>
 
@@ -117,7 +118,7 @@
                     <div >
                         <div class='form-check'>
                             <input class='form-check-input' type='checkbox' value='' id='01' name="CB01" <?=$CB01?>>
-                            <label class='form-check-label' >Число кредитов</label>
+                            <label class='form-check-label' >Число кредитов/обязательств</label>
                             <input type='number' value='<?=$count01?>' name='count01'>
                         </div>
                         <div class='form-check'>
