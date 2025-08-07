@@ -72,11 +72,11 @@ DiscRuk.addEventListener('input',function(){
     DiscRukRadio.value=DiskRuk.value;    
 });
 
-DiscDir.addEventListener('input',function(){
-    var DiscDirRadio=document.getElementById('DiskDirValue');
-    DiscDirRadio.checked=true;
-    DiscDirRadio.value=DiskDir.value;
-});
+//DiscDir.addEventListener('input',function(){
+//    var DiscDirRadio=document.getElementById('DiskDirValue');
+//    DiscDirRadio.checked=true;
+//    DiscDirRadio.value=DiskDir.value;
+//});
 
 function GetPeriod(){
     var Period=document.getElementById('TarifPeriod');
