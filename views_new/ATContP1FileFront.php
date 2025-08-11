@@ -503,6 +503,7 @@
         <div class="tab-pane fade" id="Pays">
             <div>
                 <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>
+                <div class='row'>    
                 <p>Внесено по договору: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено неустойки: <strong><?=$Payment->getTotalSum()['TotalInc2']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>

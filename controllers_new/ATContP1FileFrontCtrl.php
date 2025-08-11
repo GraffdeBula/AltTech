@@ -18,6 +18,19 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
         'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF',
         'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO','FRDIFCOST1','FRCONTFIRSTSUMCOUNT'];
+    protected $TblP1BackOf=['BOJURNAME',
+        'BOISKDATE',
+        'BOISKSENTDATE',
+        'BOPROCRESTDATE',
+        'BOPROCRESTFINDATE',
+        'BOPROCREALDATE',
+        'BOPROCREALFINDATE',
+        'BOBANKRMIRDATE',
+        'BOBANKRFINDATE',
+        'BOCOURTFILENUM',
+        'BOARBUPRNAME',
+        'BOARBDEPDATE',
+        'BOPUBDATE'];
     protected $TblP1Expert=[];
     protected $Params=[];
     protected $Cont=[];    
@@ -541,6 +554,20 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Params=[];
         foreach($GetParams as $Key => $Param){
             if (in_array($Key,$this->TblP1Front)){
+                $Params[$Key]=$Param;
+            }
+        }                
+        $Model=new ATP1ContMod();        
+        $Model->UpdP1Front($Params,$_GET['ContCode']);        
+    }
+    
+    protected function BackOfSave($GetParams=[]){
+        if ($GetParams==[]){
+            $GetParams=$_GET;
+        }        
+        $Params=[];
+        foreach($GetParams as $Key => $Param){
+            if (in_array($Key,$this->TblP1BackOf)){
                 $Params[$Key]=$Param;
             }
         }                

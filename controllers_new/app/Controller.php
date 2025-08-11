@@ -3,7 +3,7 @@
 abstract class Controller {
     protected $action; //название метода (action) который выполняет контроллер
     protected $defaultAction='index';
-    protected $templateRoot='AltTech/views';
+    protected $templateRoot=WORK_FOLDER.'/views';
     protected $useLayout=true; //по умолчанию всё с лэйаутом
     protected $userLayout='layouts/Main'; // по умолчанию обычный лэйаут
        
