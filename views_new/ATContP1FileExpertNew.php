@@ -31,12 +31,17 @@
             <li class="nav-item">
                 <a class="nav-link active" data-bs-toggle="tab" href="#result">Правовой анализ</a>
             </li>            
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#risksman">Список рисков от менеджера</a>
+            </li>
 <!--            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#risks">Риски</a>
             </li>-->
+<!--
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#mininc">Расчёт прожиточного минимума</a>
             </li>            
+-->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
             </li>
@@ -59,52 +64,40 @@
                         </h3>
                         <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
-                                <table class='table table-hover'>
-                                    <thead>
-                                        <tr>
-
-                                            <th>РИСК ДЛЯ КЛАССИЧЕСКОГО БФЛ</th>
-                                            <th>УДАЛИТЬ<th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <h4>Доплаты за риски</h4>
+                                <div id='RiskList'>
                                     <?php
-
-                                        foreach($RiskList as $Risk){
-                                            echo("<tr>");
-                                            echo("<form method='get'>");
-                                            (new MyForm('ATContP1FileExpertCtrl','DelRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
-                                            echo("<input type='hidden' name='RiskID' value='{$Risk->ID}'>");
-                                            echo("<th>{$Risk->EXLISTVALUE}</th>");
-                                            if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','DelRisk')){
-                                                echo("<th><button type='submit' class='btn btn-danger'>УДАЛИТЬ</button></th>");
+                                        $i=0;
+                                        foreach($ExpertDr as $Risk){                            
+                                            $i++;
+                                            $Val='';
+                                            $Sum='';
+                                            $Disabled='';
+                                            foreach($RiskList as $RiskJur){
+                                                if ($RiskJur->EXLISTVALUE==$Risk->DRVALUE){
+                                                    $Val="checked=''";
+                                                    if (! in_array($_SESSION['EmRole'],['top','director',])){
+                                                        $Disabled='disabled';
+                                                    } 
+                                                    $Sum=$RiskJur->EXLISTVALUE4;
+                                                }
                                             }
+                                            $i++;
+                                            
+                                            echo("<form method='get'>");                                                    
+                                            echo("<div class='form-check'>");
+                                            echo("<input class='form-check-input' type='checkbox' id='CBR".$i."' name='CBR".$i."' ".$Val." onChange=CheckRisk('".$i."') $Disabled>");
+                                            echo("<input type='hidden' value='".$_GET['ContCode']."' id='ContCode".$i."' name='RiskName'>");
+                                            echo("<input type='hidden' value='".$Risk->DRVALUE."' id='RiskName".$i."' name='RiskName'>");
+                                            echo($Risk->DRVALUE);
+                                            echo("<br><input type='number' id='RiskCost".$i."' name='RiskCost' value='".$Sum."' placeholder='от ".$Risk->DRVALUECOST."'>");
+                                            echo("</div>");
                                             echo("</form>");
-                                            echo("<tr>");
-                                        }                    
+                                            echo("<hr>");
+                                        }
                                     ?>
-                                    </tbody>
-                                </table>
-
-                                <h6>Добавить риск заключения БФЛ</h6>
-                                <form method='get'>                    
-                                    <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
-                                    <label>РИСК</label>                    
-                                    <select name='AddRisk' value='' id='RiskSelect'>                            
-                                        <option value=''></option>
-                                        <?php
-                                            foreach($RiskListDr as $RiskDr){
-                                                echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
-                                            }
-                                        ?>
-                                    </select>
-                                    <?php
-                                        
-                                            echo("<button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>");
-                                        
-                                    ?>
-                                </form>
-                                
+                                </div>  
+                                <a href='index_admin.php?controller=ATContP1FileExpertCtrl&action=CountRiskDopSum&ClCode=<?=$_GET['ClCode']?>&ContCode=<?=$_GET['ContCode']?>'><button class='btn btn-warning'>Расчитать стоимость доплаты за риски</button></a>
                             </div>    
                         </div>
                     </div><!<!-- collapse1 -->   
@@ -204,17 +197,34 @@
                         <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
                                 <form method='get'>
-                                    <?php (new MyForm('ATContP1FileExpertCtrl','AddFromJurist',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
+                                    <?php (new MyForm('ATContP1FileExpertCtrl','ExpRes',$_GET['ClCode'],$_GET['ContCode']))->AddForm() ?>
+                                    <input type='hidden' name='EXRES' value='ЭПЭ проведена'>
+                                    <label>Рекомендуемая программа</label><select name='EXPRODREC'>
+                                        <option value='<?=$Expert->EXPRODREC?>'><?=$Expert->EXPRODREC?></option>
+                                        <option value='Банкротство физлиц'>Банкротство физлиц</option>
+                                        <option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>
+                                        <option value='Внесудебное банкротство'>Внесудебное банкротство</option>
+                                        <option value='Судебное банкротство (внесудебное не подходит)'>Судебное банкротство (внесудебное не подходит)</option>
+                                        <option value='Защита от кредиторов'>Защита от кредиторов</option>
+                                        <option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>
+                                    </select></p>
+                                    <p>
+                                        <label>Число кредитов/обязательств</label><input name='EXCRNUM' value=<?=$Expert->EXCRNUM?>>
+                                        <label>Число сложных кредиторов</label><input name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?>>
+                                    </p>
+                                    <p>
+                                        <label>Сумма долга</label><input name='EXTOTDEBTSUM' value=<?=$Expert->EXTOTDEBTSUM?>>
+                                        <input type=hidden name='EXANNTOTPAY' value=<?=$Expert->EXANNTOTPAY?>>
+                                    </p>
                                     <div class="form-group">
-                                        <label for="exampleTextarea" class="form-label mt-4"></label>
+                                        <label for="exampleTextarea" class="form-label mt-4">Заключение юриста (в акт ЭПЭ)</label>
                                         <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXJURCOMMENT' maxlength=5000 ><?=$Expert->EXJURCOMMENT?></textarea>
                                     </div>
                                     
-                                    <p></p>
                                                                         
                                     <div class="form-group">
-                                        <label>Сумма доплаты за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>><br>                                        
-                                        <label for="exampleTextarea" class="form-label mt-4">Описание доплаты за сложность</label>
+                                        <label>Доплата за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>><br>                                        
+                                        <label for="exampleTextarea" class="form-label mt-4">Описание доплаты за сложность (для служебного пользования)</label>
                                         <textarea class="form-control" id="DopSumExp" rows="3" style="height: 60px;" name='FRDIFCOST2' maxlength=5000 ><?=$Front->FRDIFCOST2?></textarea>                                        
                                     </div>
                                     
@@ -223,42 +233,7 @@
                             </div>    
                         </div>
                     </div><!<!-- collapse4 -->    
-                    
-                    <div class="accordion-item">
-                        <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                Общая информация
-                            </button>
-                        </h3>
-                        <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
-                            <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
-                                <form method='get'>
-                                    <?php
-                                        (new MyForm('ATContP1FileExpertCtrl','ExpRes',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-
-                                        echo("<p><label>Результат ЭПЭ</label><select name='EXRES'>");
-                                        echo("<option value='{$Expert->EXRES}'>{$Expert->EXRES}</option>");                                        
-                                        echo("<option value='ЭПЭ проведена'>ЭПЭ проведена</option>");                                        
-                                        echo("</select>");
-                                        echo("<label>Рекомендуемая программа</label><select name='EXPRODREC'>");
-                                        echo("<option value='{$Expert->EXPRODREC}'>{$Expert->EXPRODREC}</option>");
-                                        echo("<option value='Банкротство физлиц'>Банкротство физлиц</option>");
-                                        echo("<option value='Банкротство физлиц с ипотекой'>Банкротство физлиц с ипотекой</option>");
-                                        echo("<option value='Внесудебное банкротство'>Внесудебное банкротство</option>");
-                                        echo("<option value='Судебное банкротство (внесудебное не подходит)'>Судебное банкротство (внесудебное не подходит)</option>");
-                                        echo("<option value='Защита от кредиторов'>Защита от кредиторов</option>");                                
-                                        echo("<option value='Не подходит внесудебное банкротство'>Не подходит внесудебное банкротство</option>");
-                                        echo("</select></p>");
-                                        echo("<p><label>Сумма долга</label><input name='EXTOTDEBTSUM' value={$Expert->EXTOTDEBTSUM}></p>");                                        
-                                        echo("<p><label>Общий ежемесячный платёж</label><input name='EXANNTOTPAY' value={$Expert->EXANNTOTPAY}></p>");                            
-                                        if (in_array($_SESSION['EmRole'],['admin','expert','top','director','jurist'])){
-                                            echo("<button type='summit' class='btn btn-info'>Сохранить результат</button>");
-                                        }
-                                    ?>
-                                </form>
-                            </div>    
-                        </div>
-                    </div><!<!-- collapse5 -->
+                                        
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
@@ -374,51 +349,7 @@
             
             <div class="tab-pane fade" id="risks">
 
-                <table class='table table-hover'>
-                    <thead>
-                        <tr>
-                            
-                            <th>РИСК ДЛЯ КЛАССИЧЕСКОГО БФЛ</th>
-                            <th>УДАЛИТЬ<th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                <?php
-                    
-                    foreach($RiskList as $Risk){
-                        echo("<tr>");
-                        echo("<form method='get'>");
-                        (new MyForm('ATContP1FileExpertCtrl','DelRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
-                        echo("<input type='hidden' name='RiskID' value='{$Risk->ID}'>");
-                        echo("<th>{$Risk->EXLISTVALUE}</th>");
-                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','DelRisk')){
-                            echo("<th><button type='submit' class='btn btn-danger'>УДАЛИТЬ</button></th>");
-                        }
-                        echo("</form>");
-                        echo("<tr>");
-                    }                    
-                ?>
-                    </tbody>
-                </table>
                 
-                <h6>Добавить риск заключения БФЛ</h6>
-                <form method='get'>                    
-                    <?php (new MyForm('ATContP1FileExpertCtrl','AddRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
-                    <label>РИСК</label>                    
-                    <select name='AddRisk' value='' id='RiskSelect'>                            
-                        <option value=''></option>
-                        <?php
-                            foreach($RiskListDr as $RiskDr){
-                                echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
-                            }
-                        ?>
-                    </select>
-                    <?php
-                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','AddRisk')){
-                            echo("<button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>");
-                        }
-                    ?>
-                </form>
                 
                 <table class='table table-hover'>
                     <thead>
@@ -463,20 +394,27 @@
                     <button class='btn btn-warning' type='submit'>ДОБАВИТЬ</button>
                 </form>
             </div>
-            <div class="tab-pane fade" id="mininc">                            
-                <form autocomplete='off'>
-                    <?php (new MyForm('ATContP1FileExpertCtrl','SaveMinInc',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
-                    <label>в расчете на душу населения</label><input name='MinIncAvg' value='<?=$MinIncList['Avg']?>'><br>
-                    <label>для трудоспособного населения</label><input name='MinIncWork' value='<?=$MinIncList['Work']?>'><br>
-                    <label>для пенсионеров</label><input name='MinIncPens' value='<?=$MinIncList['Pens']?>'><br>
-                    <label>для детей</label><input name='MinIncChild' value='<?=$MinIncList['Child']?>'><br>                
-                    <div class="form-group">
-                        <label for="exampleTextarea" class="form-label mt-4">Расчёт</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="10" style="height: 60px;" name='MinIncResult' maxlength=5000 ><?=$MinIncList['Result']?></textarea>
-                    </div>
-                    <button type='summit' class='btn btn-info'>Сохранить результат</button>
-                </form>                
+            <div class="tab-pane fade" id="risksman">                            
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>                            
+                            <th>РИСК </th>
+                            <th>Стоимость<th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <?php
+                            foreach($RiskListMan as $Risk){
+                                echo("<tr>");
+                                echo("<th>".$Risk->EXLISTVALUE."</th>");
+                                echo("<th>".$Risk->EXLISTVALUE4."</th>");
+                                echo("</tr>");
+                            }
+                        ?>
+                    </tbody>
+                </table>
             </div>
+            
             <div class="tab-pane fade" id="creditors">
                 <table class='table table-hover'>
                     <thead>
@@ -531,7 +469,7 @@
                         <label for="UnderTextarea" class="form-label mt-4">Заключение андеррайтера</label>
                         <textarea class="form-control" id="UnderTextarea" rows="10" style="height: 200px;" name='EXPUNDERCOMMENT' maxlength=3000 ><?=$Expert->EXPUNDERCOMMENT?></textarea>
                     </div>
-                    <button type='summit' class='btn btn-success'>Сохранить андеррайтера по результатам проверки</button>
+                    <button type='summit' class='btn btn-success'>Сохранить заключение андеррайтера по результатам проверки</button>
                 </form>
                 
                 

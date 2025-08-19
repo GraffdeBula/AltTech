@@ -14,10 +14,69 @@ var List1=document.getElementById('TarifList1');
 var List2=document.getElementById('TarifList2');
 var List3=document.getElementById('TarifList3');
 
-//formList0();
-formList1();
-formList2();
-formList3();
+var BtnTarif=document.getElementById('btn-tarif');
+var FormTarif=document.getElementById('frm-tarif');
+
+var DiscRuk=document.getElementById('DiskRuk');
+var DiscDir=document.getElementById('DiskDir');
+
+var FrContTarif=document.getElementById('FRCONTTARIF');
+var AnnNum=document.getElementById('AnnNum');
+
+var DiscRB1=document.getElementById('DiscRB1');
+var DiscRB2=document.getElementById('DiscRB2');
+var DiscRB3=document.getElementById('DiscRB3');
+var DiscRB4=document.getElementById('DiscRB4');
+
+DiscRB1.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Клиент имеет инвалидность';
+});
+DiscRB2.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Клиент пенсионер';
+});
+DiscRB3.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Совместное банкротство (супруги)';
+});
+DiscRB4.addEventListener('input',function(){
+    var DiscountComment=document.getElementById('DiscountComment');
+    DiscountComment.value='Рекомендация';
+});
+
+
+FrContTarif.addEventListener('input',function(){
+    
+    TarifOne=['2024 БФЛ оплата сразу','2024 БФЛ Пенсионерам сразу','2024 БФЛ внесудебное сразу','2024 БФЛ+ипотека оплата сразу'];
+    if (TarifOne.includes(FrContTarif.value)){               
+        AnnNum.value='';
+        var FRCONTPERIOD=document.getElementById('FRCONTPERIOD');
+        FRCONTPERIOD.disabled=false;
+        FRCONTPERIOD.value=1;
+        AnnNum.disabled=true;
+    }else{
+        var FRCONTPERIOD=document.getElementById('FRCONTPERIOD');
+        FRCONTPERIOD.disabled=true;
+        AnnNum.disabled=false;
+    }
+});
+
+BtnTarif.addEventListener('click',function(){
+    FormTarif.submit();
+});
+
+DiscRuk.addEventListener('input',function(){
+    var DiscRukRadio=document.getElementById('DiskRukValue');
+    DiscRukRadio.checked=true;
+    DiscRukRadio.value=DiskRuk.value;    
+});
+
+//DiscDir.addEventListener('input',function(){
+//    var DiscDirRadio=document.getElementById('DiskDirValue');
+//    DiscDirRadio.checked=true;
+//    DiscDirRadio.value=DiskDir.value;
+//});
 
 function GetPeriod(){
     var Period=document.getElementById('TarifPeriod');
@@ -49,88 +108,6 @@ function getSum(ListNum,CheckedSum,CheckId,SumType){
         TarSum.value=Number(TarSum.value)-CheckedSum*SumType*SumCount;
     }                
 }
-
-function formList0(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList0',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(0,"+TarList[i].TRELSUM+","+TarList[i].ID+",1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+                
-                "</div>";
-        }
-        console.log(output);
-        List0.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-
-function formList1(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList1',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(1,"+TarList[i].TRELSUM+","+TarList[i].ID+",1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+
-                "<input type='number' value=1 id='count"+TarList[i].ID+"'>" +
-                "</div>";
-        }
-        console.log(output);
-        List1.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-
-function formList2(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList2',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(2,"+TarList[i].TRELSUM+","+TarList[i].ID+",-1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+
-                "</div>";
-        }
-        console.log(output);
-        List2.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-
-function formList3(){
-    var TarListReq=new XMLHttpRequest();
-    TarListReq.open('GET','index_admin.php?controller=TarifCalcCtrl&action=GetTarifList3',true);
-    TarListReq.onload = function(){
-        var TarList=JSON.parse(this.responseText);
-        
-        var output='';
-        for (var i in TarList ){
-
-            output+="<div class='form-check'>"+
-                "<input class='form-check-input' type='checkbox' value='"+i+"' id='"+TarList[i].ID+"' onchange='getSum(3,"+TarList[i].TRELSUM+","+TarList[i].ID+",-1)'>"+
-                "<label class='form-check-label' for='"+TarList[i].ID+"'>"+TarList[i].TRELNAME +"    "+ TarList[i].TRELSUM +"рублей</label>"+
-                "</div>";
-        }
-        console.log(output);
-        List3.innerHTML=output;
-    }
-    TarListReq.send();    
-}
-/*получение суммы договора и пакета тарифа*/
 
 /*платежи*/
 
@@ -185,7 +162,7 @@ function getPayList(){
 
         }
         DivPaymentList.innerHTML=output;
-    }
+    };
     PaymentListReq.send();
 
 }
@@ -201,5 +178,30 @@ function delPayment(DelId){
     PaymentDelReq.send();
     alert('Платёж удалён');
     setTimeout(getPayList(),1000);
+    
+}
+
+function CheckRisk(id){
+    var MyCBValue=document.getElementById('CBR'+id).checked;    
+    var MyCode=document.getElementById('ContCode'+id).value;
+    var MyName=document.getElementById('RiskName'+id).value;
+    var MyCost=document.getElementById('RiskCost'+id).value;
+    
+    if (MyCBValue==true){               
+        var req= new XMLHttpRequest();
+        req.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=AddRisk&ContCode='+MyCode+'&RiskVal='+MyName+'&RiskCost='+MyCost,true);
+        req.send();        
+        console.log('Add1Done');        
+    }else{        
+        var req= new XMLHttpRequest();
+        req.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=DelRisk&ContCode='+MyCode+'&RiskVal='+MyName,true);
+        req.send(); 
+        console.log('DelDone');        
+    }
+    
+function InputSum(id){
+    console.log(id);
+}
+    
     
 }
