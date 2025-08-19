@@ -110,6 +110,7 @@
                             <option value="6">6</option>
                             <option value="12">12</option>
                             <option value="18">18</option>
+                            <option value="24">24</option>
                         </select>
                     </div>
 
@@ -117,7 +118,7 @@
                     <div >
                         <div class='form-check'>
                             <input class='form-check-input' type='checkbox' value='' id='01' name="CB01" <?=$CB01?>>
-                            <label class='form-check-label' >Число кредитов</label>
+                            <label class='form-check-label' >Число кредитов/обязательств</label>
                             <input type='number' value='<?=$count01?>' name='count01'>
                         </div>
                         <div class='form-check'>
@@ -189,14 +190,6 @@
                             echo("</div>");
                             echo("<hr>");
                         }
-//                        for($i=1; $i<=16; $i++){
-//                            if (isset($_GET['Check'.$i])){
-//                                echo("<input type='hidden' name='Check".$i."' value='".$_GET['Check'.$i]."'>");
-//                                echo("<lable for='CheckSum".$i."'> от <lable>");
-//                                echo("<input type='number' id='CheckSum".$i."' name='CheckSum".$i."' value='".$_GET['CheckSum'.$i]."'>");                                
-//                                echo("<p>".$_GET['Check'.$i]."</p>");
-//                            }
-//                        }                            
                     ?>
                 </div>
             </div>

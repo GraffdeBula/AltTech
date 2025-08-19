@@ -22,7 +22,7 @@
                 
         <?php                
             echo("ФИО Клиента:   <b>{$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</b></p>");
-            echo("<p>Филиал обслужвания: <b>");
+            echo("<p>Филиал обслуживания: <b>");
             if(isset($ContP1List[0])){
                 echo($ContP1List[0]->FROFFICE);
             }

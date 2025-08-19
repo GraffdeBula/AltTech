@@ -106,8 +106,8 @@ class TarifCalcCtrl extends ControllerMain{
                 
         $this->TarifSum=$Base+$Plus1+$Plus2+$Plus3-$Minus1-$Minus2-$Disc;
         $this->TarifExSum=$this->TarifSum+$Dop;
-        $this->PaySum=($this->TarifSum-$_GET['ZeroPay'])/$AnnNum;
-        $this->PayExSum=($this->TarifExSum-$_GET['ZeroPay'])/$AnnNum;
+        $this->PaySum=round(($this->TarifSum-$_GET['ZeroPay'])/$AnnNum,0);
+        $this->PayExSum=round(($this->TarifExSum-$_GET['ZeroPay'])/$AnnNum,0);
         $ExpertDr=(new ExpertMod)->GetRiskDr(['Risk']);
         $this->ViewName='Тарифный калькулятор';        
         $this->render('TarifCalc',['TarifSum'=>$this->TarifSum,'PaySum'=>$this->PaySum,'TarifExSum'=>$this->TarifExSum,'PayExSum'=>$this->PayExSum,'ExpertDr'=>$ExpertDr]);
