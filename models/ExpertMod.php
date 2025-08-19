@@ -21,6 +21,10 @@ class ExpertMod extends Model{
         return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3 
             FROM tblP1ExpList WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk2']);
     }
+    public function GetExpRiskListOld($ContCode){
+        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3 
+            FROM tblP1ExpList WHERE ContCode=? AND ExListName=? AND exListValue2=?',[$ContCode,'Risk','']);
+    }
     //добавление нового риска
     public function InsExpRisk($param){
         db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue,exListValue2) VALUES (?,?,?,?)',$param); //должен получить массив из одного строкового элемента

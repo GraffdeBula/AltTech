@@ -17,6 +17,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     protected $Expert=[];
     protected $RiskList=[];
     protected $RiskList2=[];
+    protected $RiskListOld=[];
     protected $MinIncList=[];
     protected $WorkHist=[];
     protected $IncHist=[];
@@ -199,7 +200,8 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->CredList=(new ATP1CredMod)->GetP1CredList($_GET['ContCode']);
         $this->Expert=(new ExpertMod)->GetExp($_GET['ContCode']);
         $this->RiskList=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');        
-        $this->RiskListMan=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Manager');        
+        $this->RiskListMan=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Manager');  
+        $this->RiskListOld=(new ExpertMod)->GetExpRiskListOld($_GET['ContCode']);
         $this->RiskList2=(new ExpertMod)->GetExpRiskList2($_GET['ContCode']);
         $this->MinIncList=(new ExpertMod)->getExpMinInc($_GET['ContCode']);
         #$this->WorkHist=(new ATClientMod)->GetExp($_GET['ContCode']);
@@ -233,6 +235,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'Comments'=>$this->Comments,
             'ExpertDr'=>$this->RiskListDr,
             'RiskList'=>$this->RiskList,
+            'RiskListOld'=>$this->RiskListOld,
             'RiskListMan'=>$this->RiskListMan,
             'RiskList2'=>$this->RiskList2,            
             'RiskListDr2'=>$this->RiskListDr2,
