@@ -40,4 +40,4 @@ function CheckRisk(id){
 }
 
 /*УТВ *сохранение рисков (классика БФЛ) по нажатию галочки*/
-console.log('yes_expfile')
+console.log('yes_expfile');

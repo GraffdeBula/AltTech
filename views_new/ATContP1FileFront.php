@@ -58,7 +58,7 @@
             echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
         }
-        if (($Expert->EXDIRSOGLNAME=='')or($Expert->EXJURSOGLNAME=='')or($Expert->EXJURCOMMENT=='')or($Front->FREXPACTDATE==null)){}
+        if (($Expert->EXDIRSOGLNAME=='')or($Expert->EXJURSOGLNAME=='')or($Expert->EXJURCOMMENT=='')){}
         else{
             echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
