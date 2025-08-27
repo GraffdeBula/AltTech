@@ -233,7 +233,7 @@
                                                     <option value=18>18</option>
                                                     <option value=24>24</option>
                                                 </select>месяцев</p>");
-                                            echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
+                                            #echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
 
                                             $CB1='';
                                             $CB2='';
