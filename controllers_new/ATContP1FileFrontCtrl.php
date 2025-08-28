@@ -64,7 +64,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionExpSigned(){                        
         $this->FrontSave();
-        (new Status())->ChangeP1Status(18, $_GET['ContCode']);
+        #(new Status())->ChangeP1Status(18, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -407,6 +407,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionDelDiscount(){
         (new P1DiscountMod())->delDiscount($_GET['DiscId']);
+        $Cont=new ContP1($_GET['ContCode']);
+        if ($_GET['DiscType']=='НД'){
+            $this->FrontSave($GetParams=[
+                'ContCode'=>$_GET['ContCode'],
+                'FRCONTSUM'=>$Cont->getFront()->FRCONTSUM+$_GET['DiscSum']
+            ]);
+        }
+        
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
