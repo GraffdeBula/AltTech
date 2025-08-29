@@ -111,19 +111,14 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     }
     
     public function actionJurSogl(){
-        (new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
-        if ($this->CheckStatus()){
-            (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
-        }
+        (new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);        
+        (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionDirSogl(){
         (new ExpertMod())->UpdSoglDir($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
-        $this->CheckStatus();
-        if ($this->CheckStatus()){
-            (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
-        }
+        (new Status())->ChangeP1Status(18, $_GET['ContCode']);            
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
            

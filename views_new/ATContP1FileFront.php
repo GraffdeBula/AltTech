@@ -58,7 +58,7 @@
             echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=MainCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-info'>ДОГОВОР УСЛУГ</button></a>");
         }
-        if (($Expert->EXDIRSOGLNAME=='')or($Expert->EXJURSOGLNAME=='')or($Expert->EXJURCOMMENT=='')or($Front->FREXPACTDATE==null)){}
+        if (($Expert->EXJURSOGLNAME=='')or($Expert->EXJURCOMMENT=='')){}
         else{
             echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=ExpAct&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
@@ -150,8 +150,8 @@
                         echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
                     }
                     echo("                
-                        <p><label>ДАТА ПОДПИСАНИЯ АКТА ЭПЭ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
-                        <button type='submit' class='btn btn-warning'>Подписан акт ЭПЭ</button></p>");
+                        <p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
+                        <button type='submit' class='btn btn-warning'>ЭКСПЕРТИЗА ПРОВЕДЕНА</button></p>");
                 echo("</form>");     
                 
                 echo("<form method='get' autoload='off'>");
@@ -164,7 +164,7 @@
                     
                     echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}'><br>
                         <label>Доплата за сложность по оценке юриста</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
-                    <button type='submit' class='btn btn-warning'>Допсолгашение подписано</button></p>
+                    <button type='submit' class='btn btn-warning'>Допсолгашение согласовано</button></p>
                 </form>");
                 
                 echo("<form method='get' autoload='off'>");
@@ -228,12 +228,13 @@
                                             echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD' >
                                                     <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
                                                     <option value=1>1</option>
+                                                    <option value=5>5</option>
                                                     <option value=6>6</option>
                                                     <option value=12>12</option>
                                                     <option value=18>18</option>
                                                     <option value=24>24</option>
                                                 </select>месяцев</p>");
-                                            echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
+                                            #echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
 
                                             $CB1='';
                                             $CB2='';
@@ -382,7 +383,7 @@
                                             echo("<td>{$Discount->DISCOUNTCOMMENT}</td>");
                                             echo("<td>{$Discount->DISCOUNTTYPE}</td>");
                                             if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelDiscount')){
-                                                echo("<td><a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelDiscount&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&DiscId={$Discount->ID}'>"
+                                                echo("<td><a href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DelDiscount&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&DiscId={$Discount->ID}&DiscSum={$Discount->DISCOUNTSUM}&DiscType={$Discount->DISCOUNTTYPE}'>"
                                                     . "<button class='btn btn-danger'>Удалить</button></a></td>");
                                             }
                                             echo("</tr>");
@@ -423,11 +424,8 @@
                                     <p><br></p>
                                     <p><br></p>
                                     <p><br></p>
-                                    <?php
-                                        #if ($Front->FRDISCAPPROVEDATE!=null){
-                                            
-                                            echo("<p><button class='btn btn-warning'>ПРИМЕНИТЬ</button></p>");
-                                        #}
+                                    <?php                                            
+                                        echo("<p><button class='btn btn-warning'>ПРИМЕНИТЬ</button></p>");                                        
                                     ?>
                                 </div>
                             </div>
@@ -443,6 +441,7 @@
                     </h3>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                         <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">
+                            <h6><strong>Рассчитать стандартный график</strong></h6>
                             <form method='get'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','SaveCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm()
@@ -469,7 +468,7 @@
                                 <fieldset>
                                     <h6>Рассчитать индивидуальный график</h6>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios1" value="AnnSum" checked="">
+                                        <input class="form-check-input" type="radio" name="CalendType" id="optionsRadios1" value="AnnSum">
                                         <label class="form-check-label" for="optionsRadios1">
                                             По сумме ежемесячного платежа
                                         </label>
