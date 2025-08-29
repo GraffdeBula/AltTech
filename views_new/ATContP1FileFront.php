@@ -228,6 +228,7 @@
                                             echo("<p><lable>Срок расрочки по договору </lable><select id='AnnNum' name='FRCONTPERIOD' >
                                                     <option value=$Front->FRCONTPERIOD>$Front->FRCONTPERIOD</option>
                                                     <option value=1>1</option>
+                                                    <option value=5>5</option>
                                                     <option value=6>6</option>
                                                     <option value=12>12</option>
                                                     <option value=18>18</option>

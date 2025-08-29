@@ -240,7 +240,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Cont=new ContP1($_GET['ContCode']);
         
         
-        if  (in_array($Cont->getFront()->FRCONTPAC,['pac105','pac106','pac107','pac108','pac115','pac116','pac117','pac118'])){
+        if  (in_array($Cont->getFront()->FRCONTPAC,['pac105','pac106','pac107','pac108','pac115','pac116','pac117','pac118','pac119','pac120'])){
             $Period=$Cont->getFront()->FRCONTPERIOD;
             
             if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')){
