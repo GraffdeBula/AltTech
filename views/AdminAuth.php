@@ -4,34 +4,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ФОРМА АВТОРИЗАЦИИ</title>
-    <link  href='/AltTech/css/css-framework.css' rel='stylesheet'>
+    <title>ФОРМА АВТОРИЗАЦИИ</title>    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/_bootswatch.scss">
+    <link rel="stylesheet" type="text/css" href="css/_variables.scss">
 </head>
 <body>
-    <div class='g'>
-	<div class='g-row'><br></div>
-        <div class='g-row'><br></div>
-        <div class='g-row'>
-        <?php
-            
-        ?>
-        <br></div>
-	<div class='f-row'>
+    <div>
+	<div class='row'><br></div>
+        <div class='row'><br></div>
+        
+	<div class='row'>
             
             <form method='POST' autocomplete="off">
                 <input type='hidden' name='usAuth' value='authTrue'>
-		<div class='f-input'>
-                    <label for='fd_auth'>ЛОГИН</label>
-                    <input type='text' name='usLogin' value='' id='usLogin'>
-		</div>
+                    <p>
+                        <label for='usLogin'>ЛОГИН</label>
+                        <input type='text' name='usLogin' value='' id='usLogin' required="">
+                    </p>
 				
-		<div class='f-input'>
-                    <label for='fd_auth'>ПАРОЛЬ</label>
-                    <input type='password' name='usPass' value='' id='usPass'>
-		</div>
-		<div class='f-actions'>
-                    <button type='submit' class='f-bu f-bu-warning'>Авторизация</button>
-		</div>
+                    <p>
+                        <label for='usPass'>ПАРОЛЬ</label>
+                        <input type='password' name='usPass' value='' id='usPass' required="">
+                    </p>
+		
+                    <button class='btn btn-danger'>Авторизация</button>
+		
             </form>
         </div>
     </div>

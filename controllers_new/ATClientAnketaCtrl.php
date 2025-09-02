@@ -254,12 +254,7 @@ class ATClientAnketaCtrl extends ControllerMain {
         $this->ViewName='Анкета клиента '.$this->Client->CLFNAME;
         
         $Sql='SELECT * FROM tblClPhones WHERE ClCode=?';
-        #if (($_SESSION['EmRole']=='top')or ($_SESSION['EmRole']=='admin')){
-        #$PhonesRes=dbres::getInstance()->FetchAll($Sql,[$_GET['ClCode']]);
-        #} else {
-        $PhonesRes=[];
-        #}
-        
+                
         $args=['Client'=>$this->Client,
             'ClPhoneList'=>$Model->GetClPhoneList($_GET['ClCode']),            
             'ClRelativesList'=>$Model->GetClRelativesList($_GET['ClCode']),
@@ -269,7 +264,7 @@ class ATClientAnketaCtrl extends ControllerMain {
             'ClDealsList'=>$Model->GetClDealsList($_GET['ClCode']),
             'ClBankAccsList'=>$Model->GetClBankAccsList($_GET['ClCode']),
             'DRRegionsList'=>(new ATDrRegionsMod())->GetRegList(),
-            'PhonesRes'=>$PhonesRes,
+            
         ];
         $this->render('ATClientAnketa',$args);
     }
