@@ -256,7 +256,8 @@ class ATClientAnketaCtrl extends ControllerMain {
         $Sql='SELECT * FROM tblClPhones WHERE ClCode=?';
                 
         $args=['Client'=>$this->Client,
-            'ClPhoneList'=>$Model->GetClPhoneList($_GET['ClCode']),            
+            'ClPhoneList'=>$Model->GetClPhoneList($_GET['ClCode']),  
+            'PhonesRes'=>[],
             'ClRelativesList'=>$Model->GetClRelativesList($_GET['ClCode']),
             'ClDocumentsList'=>$Model->GetClDocumentsList($_GET['ClCode']),
             'ClIncomesList'=>$Model->GetClIncomesList($_GET['ClCode']),
