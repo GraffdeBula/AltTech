@@ -131,7 +131,7 @@
                 echo("</form>");
                 
                 echo("<p>Первоначальная стоимость: {$Front->FRCONTFIRSTSUM} руб.</p>"
-                    . "<p>Доплата за сложность по оценке юриста: {$Front->FRDOPSUM} руб.</p>"
+                    . "<p>Доплата за сложность: {$Front->FRDOPSUM} руб.</p>"
                     . "<p>Общая стоимость: {$Front->FRCONTSUM} руб.</p>");
                         
             
@@ -141,19 +141,9 @@
                     <p><label>ДАТА ПОЛУЧЕНИЯ ДОКУМЕНТОВ ОТ КЛИЕНТА</label><input type='date' name='FREXPGETDATE' value={$Front->FREXPGETDATE}>
                     <button type='submit' class='btn btn-warning'>Клиент предоставил документы на ЭПЭ</button></p>
                 </form>");
-                    
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','ExpAct',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    echo("                
-                        <p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
-                        <button type='submit' class='btn btn-warning'>ЭКСПЕРТИЗА ПРОВЕДЕНА</button></p>");
-                echo("</form>");     
-                
+                                    
+                echo("<p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}></p>");
+                                
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','DopSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
@@ -163,7 +153,7 @@
                     }
                     
                     echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}'><br>
-                        <label>Доплата за сложность по оценке юриста</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
+                        <label>Сумма доплаты за сложность</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
                     <button type='submit' class='btn btn-warning'>Допсолгашение согласовано</button></p>
                 </form>");
                 
@@ -178,7 +168,46 @@
                     <button type='submit' class='btn btn-warning'>Получена доверенность</button></p>
                 </form>");                
             ?>
-            
+            <div class='row'>                                 
+                <div class='col-lg-2'>
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Согласование менеджера</div>
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>  
+                            <p class="card-text"></p>
+                            <input disabled type='text' name='FRMANSOGLNAME' value='<?=$Front->FRMANSOGLNAME;?>'>
+                            <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>
+                            <form method='get'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
+                                    if ((in_array($_SESSION['EmRole'],['admin','front','franshman']))&&(is_null($Front->FRMANSOGLDATE))){    
+                                        echo("<button type='submit' class='btn btn-secondary'>Подтверждаю, что всё внесено и расчитано верно</button>");
+                                    }
+                                ?>    
+                            </form>
+                        </div>
+                    </div> 
+                </div>  
+                <div class='col-lg-2'>
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Согласование руководителя</div>
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>  
+                            <p class="card-text"></p>
+                            <input disabled type='text' name='EXRESEMP' value='<?=$Expert->EXDIRSOGLNAME;?>'>
+                            <input disabled type='date' name='EXRESDAT' value='<?=$Expert->EXDIRSOGLDATE;?>'>
+                            <form method='get'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    if ((in_array($_SESSION['EmRole'],['admin','director','franshdir','top']))&&(is_null($Expert->EXDIRSOGLDATE))&&(!is_null($Expert->EXJURSOGLDATE))){  
+                                        echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
+                                    }
+                                ?>    
+                            </form>
+                        </div>
+                    </div> 
+                </div>
+            </div>
 
         </div>
         <div class="tab-pane fade" id="Tarif">
@@ -511,9 +540,9 @@
                                             echo("<form method='get'>");
                                                 (new MyForm('ATContP1FileFrontCtrl','UpdPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                                 echo("<input type='hidden' name='ID' value={$PlanPay->ID}>");
-                                                echo("<th>Платёж <input type=text name='PayNum' value={$PlanPay->PAYNUM} size=1></th>");                                    
-                                                echo("<th><input type=date name='PayDate' value={$PlanPay->PAYDATE} size=7></th>");
-                                                echo("<th><input type=text name='PaySum' value={$PlanPay->PAYSUM} size=7></th>");
+                                                echo("<th>Платёж <input type=text name='PayNum' value='{$PlanPay->PAYNUM}' size=1></th>");                                    
+                                                echo("<th><input type=date name='PayDate' value='{$PlanPay->PAYDATE}' size=7></th>");
+                                                echo("<th><input type=text name='PaySum' value='{$PlanPay->PAYSUM}' size=7></th>");
                                                 echo("<th><button class='btn btn-success'>V</button></th>");
                                             echo("</form>");
                                             echo("<th><form method='get'>");

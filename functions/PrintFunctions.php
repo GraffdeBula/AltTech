@@ -66,6 +66,14 @@ class PrintFunctions {
     public function DateToStr($Date){
         return substr($Date,8,2).".".substr($Date,5,2).".".substr($Date,0,4);
     }
+        
+    public function YesNo($Value=0){
+        if ($Value==1){
+            return 'Да';
+        } else {
+            return 'Нет';
+        }
+    }
     
     public function SumToStr($SumFloat){
         static $dic = array(

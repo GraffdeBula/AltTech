@@ -147,25 +147,32 @@
         <div  class='tab-pane fade' id='expert'>
 <!--            <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки на ЭПЭ/правовой анализ</button></a>-->
             <ul class="nav nav-tabs">
-                
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#exp01" style='color:#000000; background-color: #b1d17d'>Договоры для правового анализа</a>                  
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp01" style='color:#000000; background-color: #b1d17d'>Подписан договор услуг</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp02" style='color:#000000; background-color: #d1b97d'>Проведён правовой анализ</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp02" style='color:#000000; background-color: #ffcd3c'>Предоставлены документы для анализа</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #7d83d1'>Проведён андеррайтинг</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #d1b97d'>Экспертиза проведена</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp04" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp04" style='color:#000000; background-color: #7d83d1'>Итоговые условия согласованы с клиентом</a>                  
                 </li>
-                
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp05" style='color:#000000; background-color: #5ea7e9'>Договор  согласован руководителем</a>                  
+                </li>                
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp06" style='color:#000000; background-color: #7d83d1'>Проведён андеррайтинг</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp07" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
+                </li>                
               
             </ul>
             <div id="ExpertContent" class="tab-content">
                 <div class="tab-pane fade show active" id="exp01" role="tabpanel">
-                    <p>Договоры на правовой анализ</p>
+                    <p>Подписан договор услуг</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -176,12 +183,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($ExpList[11] as $Cont){ 
-                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
+                            <?php foreach($ExpList[11] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 echo("<tr class='table-info'>"
-                                    ."<th scope='row'>{$Cont->CLFIO}</th>"
-                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$Cont->CLCODE&ContCode=$Cont->CONTCODE'>$Cont->CONTCODE</a></td>"
-                                    ."<td>$Cont->FROFFICE</td>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
+                </div>
+                <div class="tab-pane fade" id="exp02" role="tabpanel">
+                    <p>Предоставлены документы для анализа</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[12] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ContDate</td>"
                                 ."</tr>");
                                 
@@ -190,8 +223,8 @@
                         </tbody>
                     </table>                            
                 </div>    
-                <div class="tab-pane fade" id="exp02" role="tabpanel">
-                    <p>Правовой анализ проведён</p>
+                <div class="tab-pane fade" id="exp03" role="tabpanel">
+                    <p>Экспертиза проведена</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -204,9 +237,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($ExpList[12] as $ExpCont){ 
+                            <?php foreach($ExpList[13] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
-                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE);
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
@@ -221,7 +254,81 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="exp03" role="tabpanel">
+                <div class="tab-pane fade" id="exp04" role="tabpanel">
+                    <p>Итоговые условия согласованы с клиентом</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">Дата согласования с клиентом</th>
+                                <th scope="col">ФИО менеджера</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[14] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                    ."<td>$ExpDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRMANSOGLDATE)."</td>"
+                                    ."<td>$ExpCont->FRMANSOGLNAME</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="exp05" role="tabpanel">
+                    <p>Согласованы руководителем</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">ФИО юриста</th>
+                                <th scope="col">Дата согласования руководителя</th>
+                                <th scope="col">m</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[15] as $ExpCont){ 
+                                $DateNow=new DateTime('now');
+                                $DateSogl=new DateTime($ExpCont->EXDIRSOGLDATE);
+                                $m=$DateNow->diff($DateSogl)->m;
+                                if ($m>1){
+                                    continue;
+                                }
+                                
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE)."</td>"
+                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXDIRSOGLDATE)."</td>"
+                                            ."<td>".$m."</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
+                </div>
+                <div class="tab-pane fade" id="exp06" role="tabpanel">
                     <p>Андеррайтинг проведён</p>
                     <table class="table table-hover">
                         <thead>
@@ -237,7 +344,7 @@
                         </thead>
                         <tbody>
                             <?php 
-                            foreach($ExpList[13] as $ExpCont){ 
+                            foreach($ExpList[16] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
                                 $UnderDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
@@ -256,7 +363,7 @@
                         </tbody>
                     </table>                            
                 </div>
-                <div class="tab-pane fade" id="exp04" role="tabpanel">
+                <div class="tab-pane fade" id="exp07" role="tabpanel">
                     <p>Критические ошибки в анализе</p>
                     <table class="table table-hover">
                         <thead>
@@ -271,7 +378,7 @@
                         </thead>
                         <tbody>
                             <?php 
-                            foreach($ExpList[14] as $ExpCont){ 
+                            foreach($ExpList[17] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
                                 echo("<tr class='table-info'>"
@@ -288,6 +395,7 @@
                         </tbody>
                     </table>                            
                 </div>
+                
                                                 
             </div>
         </div><!--экспертизы-->        

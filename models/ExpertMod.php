@@ -13,12 +13,12 @@ class ExpertMod extends Model{
     }
     //получение списка рисков
     public function GetExpRiskList($ContCode,$Value2='Jurist'){
-        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3,ExListValue4,DrValueType,DrRecomend 
+        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListName,ExListValue,ExListValue2,ExListValue3,ExListValue4,DrValueType,DrRecomend 
             FROM tblP1ExpList INNER JOIN tbl1DrExpList ON tblP1ExpList.ExListValue=tbl1DrExpList.DrValue 
-            WHERE ContCode=? AND ExListName=? AND ExListValue2=?' ,[$ContCode,'Risk',$Value2]);
+            WHERE ContCode=? AND ExListValue2=?' ,[$ContCode,$Value2]);
     }    
     public function GetExpRiskList2($ContCode){
-        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListValue,ExListValue2,ExListValue3 
+        return  db2::getInstance()->FetchAll('SELECT tblP1ExpList.Id AS ID,ContCode,ExListName,ExListValue,ExListValue2,ExListValue3,ExListValue4 
             FROM tblP1ExpList WHERE ContCode=? AND ExListName=?',[$ContCode,'Risk2']);
     }
     public function GetExpRiskListOld($ContCode){
@@ -26,12 +26,9 @@ class ExpertMod extends Model{
             FROM tblP1ExpList WHERE ContCode=? AND ExListName=? AND exListValue2=?',[$ContCode,'Risk','']);
     }
     //добавление нового риска
-    public function InsExpRisk($param){
-        db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue,exListValue2) VALUES (?,?,?,?)',$param); //должен получить массив из одного строкового элемента
-    }
-    public function InsExpRisk2($ContCode,$Name,$Value,$Value2,$Value4){
-        db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue,exListValue2,exListValue4) VALUES (?,?,?,?,?)',[$ContCode,$Name,$Value,$Value2,$Value4]); //должен получить массив из одного строкового элемента
-    }
+    public function InsExpRisk($ContCode,$Name='',$Value='',$Value2='',$Value3='',$Value4=''){
+        db2::getInstance()->Query('INSERT INTO tblP1ExpList (ContCode,exListName,exListValue,exListValue2,exListValue3,exListValue4) VALUES (?,?,?,?,?,?)',[$ContCode,$Name,$Value,$Value2,$Value3,$Value4]); //должен получить массив из одного строкового элемента
+    }    
     //обновление инф по работе с риском
     public function updExpRisk($ExListValue2,$ExListValue3,$Id){
         db2::getInstance()->Query('UPDATE tblP1ExpList SET ExListValue2=?,ExListValue3=? WHERE ID=?',[$ExListValue2,$ExListValue4,$Id]);
@@ -99,6 +96,13 @@ class ExpertMod extends Model{
     
     //***НОВЫЕ списки договоров на ЭПЭ
     //*договоры на правовой анализ
+    public function getContList(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
+                . "WHERE tblP1Anketa.Status=? ORDER BY tblP1Anketa.ContCode DESC",[15]);
+    }
+    //*договоры на правовой анализ
     public function getContJurList(){
         return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
@@ -107,16 +111,33 @@ class ExpertMod extends Model{
     }
     //*проведён правовой анализ (договоры для постконтроля)
     public function getContJurSogl(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,exjursogldate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
                 . "WHERE tblP1Anketa.Status=? AND expunderdate is null ORDER BY exresdat,tblP1Anketa.ContCode",[17]);
     }
+    //*условия согласованы с клиентом
+    public function getContManSogl(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,exjursogldate,frmansoglname,frmansogldate "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "         
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE tblP1Anketa.Status=? ORDER BY tblP1Anketa.ContCode DESC",[18]);
+    }
+    //*договоры согласованы руководителем
+    public function getContDirSogl(){
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,exjursogldate,exdirsogldate "
+                . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
+                . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
+                . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
+                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND is null expunderdate ORDER BY tblP1Anketa.ContCode DESC",[20,21]);
+    }
+    
     
     //*проведён постконтроль
     public function getContAfterUnder(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname,exjursogldate,exdirsogldate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
@@ -125,7 +146,7 @@ class ExpertMod extends Model{
     
     //*проведён постконтроль, выявлены ошибки
     public function getContAfterUnderErr(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,expunderdate,expunderres,exjursoglname,exjursogldate,exdirsogldate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
@@ -140,4 +161,5 @@ class ExpertMod extends Model{
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
                 . "WHERE exJurErrWorkdate>=? AND expUnderRes=? ORDER BY tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
     }
+    
 }
