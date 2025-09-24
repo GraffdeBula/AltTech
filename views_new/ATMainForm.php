@@ -8,7 +8,7 @@
 </head>
 <body>    
     <ul class="nav nav-tabs">
-        <?php 
+        <?php
         echo("
             <li class='nav-item'>
               <a class='nav-link active' data-bs-toggle='tab' href='#home'>Список клиентов</a>
@@ -20,7 +20,7 @@
         echo("
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#refer'>Реферальная программа</a>
-            </li>");   
+            </li>");
         if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
         echo("
             <li class='nav-item'>
@@ -32,7 +32,7 @@
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
             </li>"); 
-        }        
+        }
         if ((in_array($_SESSION['EmRole'],['admin','top']))or(in_array($_SESSION['EmName'],['Андрей Догаев']))){
             echo("
             <li class='nav-item'>
@@ -347,14 +347,14 @@
                             foreach($ExpList[16] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
-                                $UnderDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
+                                
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ContDate</td>"
                                     ."<td>$ExpDate</td>"
-                                    ."<td>$UnderDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE)."</td>"
                                     ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                 ."</tr>");
                                 

@@ -171,7 +171,7 @@
             <div class='row'>                                 
                 <div class='col-lg-2'>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">Согласование менеджера</div>
+                        <div class="card-header">Согласование с клиентом</div>
                         <div class="card-body">
                             <h4 class="card-title"></h4>  
                             <p class="card-text"></p>

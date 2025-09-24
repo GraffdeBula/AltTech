@@ -127,11 +127,11 @@ class ExpertMod extends Model{
     }
     //*договоры согласованы руководителем
     public function getContDirSogl(){
-        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,exjursogldate,exdirsogldate "
+        return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate,exresdat,exjursoglname,exjursogldate,exdirsogldate,expunderdate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND is null expunderdate ORDER BY tblP1Anketa.ContCode DESC",[20,21]);
+                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND (expunderdate is null) ORDER BY tblP1Anketa.ContCode DESC",[20,21]);
     }
     
     
