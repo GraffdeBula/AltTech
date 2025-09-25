@@ -144,17 +144,12 @@
                                     
                 echo("<p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}></p>");
                                 
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','DopSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
+                echo("");
                     
-                    echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}'><br>
-                        <label>Сумма доплаты за сложность</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
-                    <button type='submit' class='btn btn-warning'>Допсолгашение согласовано</button></p>
+                                        
+                    echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}' id='FRDOPDATE'><br>
+                        <label>Корректировка стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM'>
+                        
                 </form>");
                 
                 echo("<form method='get' autoload='off'>");
