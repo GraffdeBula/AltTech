@@ -131,7 +131,7 @@
                 echo("</form>");
                 
                 echo("<p>Первоначальная стоимость: {$Front->FRCONTFIRSTSUM} руб.</p>"
-                    . "<p>Доплата за сложность: {$Front->FRDOPSUM} руб.</p>"
+                    . "<p>Итоговая корректировка стоимости договора: {$Front->FRDOPSUM} руб.</p>"
                     . "<p>Общая стоимость: {$Front->FRCONTSUM} руб.</p>");
                         
             
@@ -148,7 +148,8 @@
                     
                                         
                     echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}' id='FRDOPDATE'><br>
-                        <label>Корректировка стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM'>
+                        <label>Итоговая корректировка стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM'>
+                            <label><strong  style='color:red;'>Обязательно указать сумму (если не корректируется, то поставить 0)</strong></label>
                         
                 </form>");
                 

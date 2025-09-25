@@ -26,13 +26,11 @@
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#expert'>Списки на ЭПЭ/правовой анализ</a>
             </li>");     
-        }
-        if ((in_array($_SESSION['EmRole'],['admin','top','director']))or(in_array($_SESSION['EmName'],['Елизавета Яковлева']))){
+        }        
         echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
-            </li>"); 
-        }
+            </li>");         
         if ((in_array($_SESSION['EmRole'],['admin','top']))or(in_array($_SESSION['EmName'],['Андрей Догаев']))){
             echo("
             <li class='nav-item'>
@@ -401,27 +399,33 @@
         </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
             <div class="row">
-                <div class="col-lg-2">            
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContExpForm"><button class="btn btn-success">НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm"><button class="btn btn-info">Отчёт по расторжениям</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm"><button class="btn btn-warning">Отчёт Замечания андеррайтера</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm"><button class="btn btn-success">Отчёт по скидкам</button></a></p>
-                    
-                </div>
-                <div class="col-lg-2">
-                    <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>                    
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContNew"><button class="btn btn-info">Плановые платежи по новым договорам</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBaseBranchCtrl"><button class="btn btn-success">База действующих договоров</button></a></p>                    
-                </div>  
-                <div class="col-lg-2">                    
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm"><button class="btn btn-primary">Когортный анализ договоров</button></a></p>
-                </div>
-                
+                <?php
+                echo("<div class='col-lg-2'>");                                
+                echo("
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContExpForm'><button class='btn btn-success'>НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm'><button class='btn btn-info'>НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm'><button class='btn btn-info'>Отчёт по расторжениям</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=P4ReportCtrl'><button class='btn btn-success'>Отчёт по разовым услугам</button></p>                    
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm'><button class='btn btn-warning'>Отчёт Замечания андеррайтера</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm'><button class='btn btn-success'>Отчёт по скидкам</button></a></p>
+                ");    
+                echo("</div>");
+                echo("<div class='col-lg-2'>");
+                echo("
+                    <p><a target='_blank' href='index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date('d.m.Y')?>&DateL=<?=date('d.m.Y')?>'><button class='btn btn-info'>ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl'><button class='btn btn-success'>Списки плановых платежей</button></a></p>                    
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContNew'><button class='btn btn-info'>Плановые платежи по новым договорам</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=CurBaseBranchCtrl'><button class='btn btn-success'>База действующих договоров</button></a></p>
+                ");
+                echo("</div>");
+                echo("<div class='col-lg-2'>");
+                echo("
+                    <p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep1'><button class='btn btn-success'>ОСТАТКИ ОХ</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep2'><button class='btn btn-info'>ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
+                    <p><a target='_blank' href='index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm'><button class='btn btn-primary'>Когортный анализ договоров</button></a></p>
+                ");
+                echo("</div>");
+                ?>
             </div>
             
         </div><!--отчёты-->   
