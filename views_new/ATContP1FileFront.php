@@ -131,7 +131,7 @@
                 echo("</form>");
                 
                 echo("<p>Первоначальная стоимость: {$Front->FRCONTFIRSTSUM} руб.</p>"
-                    . "<p>Итоговая корректировка стоимости договора: {$Front->FRDOPSUM} руб.</p>"
+                    . "<p>Итоговое изменение стоимости договора: {$Front->FRDOPSUM} руб.</p>"
                     . "<p>Общая стоимость: {$Front->FRCONTSUM} руб.</p>");
                         
             
@@ -144,15 +144,11 @@
                                     
                 echo("<p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}></p>");
                                 
-                echo("");
-                    
-                                        
-                    echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}' id='FRDOPDATE'><br>
-                        <label>Итоговая корректировка стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM'>
-                            <label><strong  style='color:red;'>Обязательно указать сумму (если не корректируется, то поставить 0)</strong></label>
-                        
-                </form>");
-                
+                                                                           
+                echo("<p>
+                    <label>Итоговое изменение стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM'>
+                    <label><strong  style='color:red;'>Обязательно указать сумму. Если договор сохраняется на первоначальных условиях, то поставить 0.</strong></label>");
+                                       
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
