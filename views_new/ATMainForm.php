@@ -399,33 +399,57 @@
         </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
             <div class="row">
+                
+                
                 <?php
                 echo("<div class='col-lg-2'>");                                
-                echo("
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContExpForm'><button class='btn btn-success'>НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm'><button class='btn btn-info'>НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm'><button class='btn btn-info'>Отчёт по расторжениям</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=P4ReportCtrl'><button class='btn btn-success'>Отчёт по разовым услугам</button></p>                    
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm'><button class='btn btn-warning'>Отчёт Замечания андеррайтера</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm'><button class='btn btn-success'>Отчёт по скидкам</button></a></p>
-                ");    
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContExpForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContExpForm'><button class='btn btn-success'>НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContP1RepForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm'><button class='btn btn-info'>НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContP1DropForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm'><button class='btn btn-info'>Отчёт по расторжениям</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('P4ReportCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=P4ReportCtrl'><button class='btn btn-success'>Отчёт по разовым услугам</button></p>                    ");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContP1AfterUnderForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm'><button class='btn btn-warning'>Отчёт Замечания андеррайтера</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ContP1DiscRepForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm'><button class='btn btn-success'>Отчёт по скидкам</button></a></p>");
+                    }                                    
                 echo("</div>");
                 echo("<div class='col-lg-2'>");
-                echo("
-                    <p><a target='_blank' href='index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date('d.m.Y')?>&DateL=<?=date('d.m.Y')?>'><button class='btn btn-info'>ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl'><button class='btn btn-success'>Списки плановых платежей</button></a></p>                    
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContNew'><button class='btn btn-info'>Плановые платежи по новым договорам</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=CurBaseBranchCtrl'><button class='btn btn-success'>База действующих договоров</button></a></p>
-                ");
+                    if ((new CheckRole)->Check2('RepPaymentsCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=RepPaymentsCtrl&DateF=".date('d.m.Y')."&DateL=".date('d.m.Y')."'><button class='btn btn-info'>ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('CurBasePlanCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl'><button class='btn btn-success'>Списки плановых платежей</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContNew',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContNew'><button class='btn btn-info'>Плановые платежи по новым договорам</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('CurBaseBranchCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=CurBaseBranchCtrl'><button class='btn btn-success'>База действующих договоров</button></a></p>");
+                    }                                                                                                                    
                 echo("</div>");
                 echo("<div class='col-lg-2'>");
-                echo("
-                    <p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep1'><button class='btn btn-success'>ОСТАТКИ ОХ</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep2'><button class='btn btn-info'>ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
-                    <p><a target='_blank' href='index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm'><button class='btn btn-primary'>Когортный анализ договоров</button></a></p>
-                ");
+                    if ((new CheckRole)->Check2('report1_ctrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep1'><button class='btn btn-success'>ОСТАТКИ ОХ</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('report1_ctrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep2'><button class='btn btn-info'>ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCohortCtrl','CohortRepForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm'><button class='btn btn-primary'>Когортный анализ договоров</button></a></p>");
+                    }
+                                                                                                
                 echo("</div>");
                 ?>
+                
             </div>
             
         </div><!--отчёты-->   

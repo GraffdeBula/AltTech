@@ -172,7 +172,11 @@
                             <form method='get'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
-                                    if ((in_array($_SESSION['EmRole'],['admin','front','franshman']))&&(is_null($Front->FRMANSOGLDATE))){    
+                                    if ((
+                                        in_array($_SESSION['EmRole'],['admin','front','director','franshman']))
+                                        &&(is_null($Front->FRMANSOGLDATE))
+                                        &&(!is_null($Expert->EXJURSOGLDATE))                                        
+                                    ){    
                                         echo("<button type='submit' class='btn btn-secondary'>Подтверждаю, что всё внесено и расчитано верно</button>");
                                     }
                                 ?>    
@@ -191,7 +195,12 @@
                             <form method='get'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                    if ((in_array($_SESSION['EmRole'],['admin','director','franshdir','top']))&&(is_null($Expert->EXDIRSOGLDATE))&&(!is_null($Expert->EXJURSOGLDATE))){  
+                                    if ((
+                                        in_array($_SESSION['EmRole'],['admin','director','franshdir','top']))
+                                        &&(is_null($Expert->EXDIRSOGLDATE))
+                                        &&(!is_null($Expert->EXJURSOGLDATE))
+                                        &&(!is_null($Front->FRMANSOGLDATE))
+                                    ){  
                                         echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                     }
                                 ?>    
