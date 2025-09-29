@@ -146,7 +146,7 @@
                                 
                                                                            
                 echo("<p>
-                    <label>Итоговое изменение стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM'>
+                    <label>Итоговое изменение стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM_V'>
                     <label><strong  style='color:red;'>Обязательно указать сумму. Если договор сохраняется на первоначальных условиях, то поставить 0.</strong></label>");
                                        
                 echo("<form method='get' autoload='off'>");
@@ -169,6 +169,7 @@
                             <p class="card-text"></p>
                             <input disabled type='text' name='FRMANSOGLNAME' value='<?=$Front->FRMANSOGLNAME;?>'>
                             <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>
+                            <input type='text' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUM'>
                             <form method='get'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
@@ -192,6 +193,7 @@
                             <p class="card-text"></p>
                             <input disabled type='text' name='EXRESEMP' value='<?=$Expert->EXDIRSOGLNAME;?>'>
                             <input disabled type='date' name='EXRESDAT' value='<?=$Expert->EXDIRSOGLDATE;?>'>
+                            <input type='text' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUM'>
                             <form method='get'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();

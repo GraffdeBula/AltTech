@@ -297,15 +297,16 @@
                                 <th scope="col">Дата правового анализа</th>
                                 <th scope="col">ФИО юриста</th>
                                 <th scope="col">Дата согласования руководителя</th>
-                                <th scope="col">m</th>
+                                <th scope="col">y</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($ExpList[15] as $ExpCont){ 
                                 $DateNow=new DateTime('now');
                                 $DateSogl=new DateTime($ExpCont->EXDIRSOGLDATE);
-                                $m=$DateNow->diff($DateSogl)->m;
-                                if ($m>1){
+                                $m=$DateSogl->diff($DateNow)->m;
+                                $y=$DateSogl->diff($DateNow)->y;
+                                if (($m>1)or($y>0)or($ExpCont->EXDIRSOGLDATE==null)){
                                     continue;
                                 }
                                 
@@ -318,7 +319,7 @@
                                     ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE)."</td>"
                                     ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                     ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXDIRSOGLDATE)."</td>"
-                                            ."<td>".$m."</td>"
+                                            ."<td>".$ExpCont->EXDIRSOGLDATE."</td>"
                                 ."</tr>");
                                 
                             }

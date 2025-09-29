@@ -9,11 +9,6 @@
 
 var TarSum=0; 
 
-var List0=document.getElementById('TarifList0');
-var List1=document.getElementById('TarifList1');
-var List2=document.getElementById('TarifList2');
-var List3=document.getElementById('TarifList3');
-
 var BtnTarif=document.getElementById('btn-tarif');
 var FormTarif=document.getElementById('frm-tarif');
 
@@ -27,6 +22,10 @@ var DiscRB1=document.getElementById('DiscRB1');
 var DiscRB2=document.getElementById('DiscRB2');
 var DiscRB3=document.getElementById('DiscRB3');
 var DiscRB4=document.getElementById('DiscRB4');
+
+//для сохранения итоговой суммы доплаты за сложность
+var FrDopSumVisible=document.getElementById('FRDOPSUM_V');
+var FrDopSum=document.getElementById('FRDOPSUM');
 
 DiscRB1.addEventListener('input',function(){
     var DiscountComment=document.getElementById('DiscountComment');
@@ -71,12 +70,6 @@ DiscRuk.addEventListener('input',function(){
     DiscRukRadio.checked=true;
     DiscRukRadio.value=DiskRuk.value;    
 });
-
-//DiscDir.addEventListener('input',function(){
-//    var DiscDirRadio=document.getElementById('DiskDirValue');
-//    DiscDirRadio.checked=true;
-//    DiscDirRadio.value=DiskDir.value;
-//});
 
 function GetPeriod(){
     var Period=document.getElementById('TarifPeriod');
