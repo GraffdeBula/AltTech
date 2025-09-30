@@ -25,7 +25,8 @@ var DiscRB4=document.getElementById('DiscRB4');
 
 //для сохранения итоговой суммы доплаты за сложность
 var FrDopSumVisible=document.getElementById('FRDOPSUM_V');
-var FrDopSum=document.getElementById('FRDOPSUM');
+var FrDopSumDir=document.getElementById('FRDOPSUMDIR');
+var FrDopSumMan=document.getElementById('FRDOPSUMMAN');
 
 DiscRB1.addEventListener('input',function(){
     var DiscountComment=document.getElementById('DiscountComment');
@@ -101,7 +102,15 @@ function getSum(ListNum,CheckedSum,CheckId,SumType){
         TarSum.value=Number(TarSum.value)-CheckedSum*SumType*SumCount;
     }                
 }
-
+/*получение кнопкой согласование фокуса*/
+function FrDopSumManFocus(){
+    console.log(FrDopSumVisible.value);
+    FrDopSumMan.value=FrDopSumVisible.value;
+}
+function FrDopSumDirFocus(){
+    console.log(FrDopSumVisible.value);
+    FrDopSumDir.value=FrDopSumVisible.value;
+}
 /*платежи*/
 
 var url=new URL(window.location.href);

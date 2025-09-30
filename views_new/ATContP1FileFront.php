@@ -168,9 +168,9 @@
                             <h4 class="card-title"></h4>  
                             <p class="card-text"></p>
                             <input disabled type='text' name='FRMANSOGLNAME' value='<?=$Front->FRMANSOGLNAME;?>'>
-                            <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>
-                            <input type='text' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUM'>
+                            <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>                            
                             <form method='get'>
+                                <input type='hidden' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUMMAN'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
                                     if ((
@@ -178,7 +178,7 @@
                                         &&(is_null($Front->FRMANSOGLDATE))
                                         &&(!is_null($Expert->EXJURSOGLDATE))                                        
                                     ){    
-                                        echo("<button type='submit' class='btn btn-secondary'>Подтверждаю, что всё внесено и расчитано верно</button>");
+                                        echo("<button type='submit' class='btn btn-secondary' onMouseover=FrDopSumManFocus()>Подтверждаю, что всё внесено и расчитано верно</button>");
                                     }
                                 ?>    
                             </form>
@@ -192,9 +192,9 @@
                             <h4 class="card-title"></h4>  
                             <p class="card-text"></p>
                             <input disabled type='text' name='EXRESEMP' value='<?=$Expert->EXDIRSOGLNAME;?>'>
-                            <input disabled type='date' name='EXRESDAT' value='<?=$Expert->EXDIRSOGLDATE;?>'>
-                            <input type='text' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUM'>
+                            <input disabled type='date' name='EXRESDAT' value='<?=$Expert->EXDIRSOGLDATE;?>'>                            
                             <form method='get'>
+                                <input type='hidden' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUMDIR'>
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                     if ((
@@ -203,7 +203,7 @@
                                         &&(!is_null($Expert->EXJURSOGLDATE))
                                         &&(!is_null($Front->FRMANSOGLDATE))
                                     ){  
-                                        echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
+                                        echo("<button type='submit' class='btn btn-secondary' onMouseover=FrDopSumDirFocus()>Согласовать заключение договора</button>");
                                     }
                                 ?>    
                             </form>
@@ -266,8 +266,7 @@
                                                     <option value=18>18</option>
                                                     <option value=24>24</option>
                                                 </select>месяцев</p>");
-                                            #echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
-
+                                            
                                             $CB1='';
                                             $CB2='';
                                             if ($Front->FRSMALLCRED==1){$CB1='checked';}
