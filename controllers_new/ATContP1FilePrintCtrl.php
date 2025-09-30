@@ -687,7 +687,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
     }
     
     public function actionDopCont(){
-        /*печатьдоговора услуг
+        /*печать допсоглашения к договору услуг об увеличении стоимости
          * 
          */
         
@@ -708,12 +708,20 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $FamCont=$Client->getFamcont();
         }
         
-        $TemplateName='Допсоглашение БФЛ';
+        if($ContP1->getFront()->FRDOPSUM==0){
+            $TemplateName='Допсоглашение БФЛ (согласованные условия)';
+            $DocumentName='ContDop2';
+        }else{
+            $TemplateName='Допсоглашение БФЛ';
+            $DocumentName='ContDop';
+        }
+        
+        
         if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
             $TemplateName=$TemplateName.'_online';
         }
         
-        $Printer=new PrintDoc('ContDop',$TemplateName,[
+        $Printer=new PrintDoc($DocumentName,$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),
             'ClientINN'=>$Client->getINN(),

@@ -128,6 +128,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],                        
             'FRDOPSUM'=>$_GET['FRDOPSUM'],
+            'FRDOPDATE'=>Date('d.m.Y')
         ]);
         (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
         //копирование рисков
