@@ -878,7 +878,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $TemplateName=$TemplateName.'_online';
         }
         
-        $Printer=new PrintDoc('ContDopWorkBrake',$TemplateNames,[
+        $Printer=new PrintDoc('ContDopWorkBrake',$TemplateName,[
             'Client'=>$Client->getClRec(),
             'ClientPas'=>$Client->getPasport(),             
             'ClientAdr'=>$Client->getAdr(),
