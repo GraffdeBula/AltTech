@@ -155,7 +155,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     public function actionCountRiskDopSum(){
         $RiskDopSum=(new ExpertMod())->CountRiskSum($_GET['ContCode'],'Jurist')->RISKCOST;
-        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$RiskDopSum],$_GET['ContCode']);
+        (new ATP1ContMod())->UpdP1Expert2(['EXCONTDOPSUM'=>$RiskDopSum],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     

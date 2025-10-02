@@ -205,7 +205,7 @@
                                     </select></p>
                                     <p>
                                         <label>Число кредитов/обязательств</label><input name='EXCRNUM' value=<?=$Expert->EXCRNUM?>>
-                                        <label>Число сложных кредиторов</label><input name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?>>
+                                        <label>Число сложных кредиторов</label><input  name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?> required>
                                     </p>
                                     <p>
                                         <label>Сумма долга</label><input name='EXTOTDEBTSUM' value=<?=$Expert->EXTOTDEBTSUM?>>
@@ -239,7 +239,8 @@
                                                         (new MyForm('ATContP1FileExpertCtrl','JurSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                                         if (($_SESSION['EmRole']=='admin') 
                                                                 or ($_SESSION['EmRole']=='jurist') 
-                                                                or ($_SESSION['EmRole']=='expert') 
+                                                                or ($_SESSION['EmRole']=='director') 
+                                                                or ($_SESSION['EmRole']=='top') 
                                                             ){                                    
                                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                                         }

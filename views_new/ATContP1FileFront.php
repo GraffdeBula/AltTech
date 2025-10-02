@@ -147,17 +147,7 @@
                 echo("<p>
                     <label>Итоговое изменение стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM_V'>
                     <label><strong  style='color:red;'>Обязательно указать сумму. Если договор сохраняется на первоначальных условиях, то поставить 0.</strong></label>");
-                                       
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    echo("<p><label>ДАТА ДОВЕРЕННОСТИ</label><input type='date' name='FRDOVDATE' value={$Front->FRDOVDATE}>
-                    <button type='submit' class='btn btn-warning'>Получена доверенность</button></p>
-                </form>");                
+                                                                       
             ?>
             <div class='row'>                                 
                 <div class='col-lg-2'>
@@ -173,7 +163,7 @@
                                 <?php
                                     (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
                                     if ((
-                                        in_array($_SESSION['EmRole'],['admin','front','director','franshman']))
+                                        in_array($_SESSION['EmRole'],['admin','front','director','franshman','top']))
                                         &&(is_null($Front->FRMANSOGLDATE))
                                         &&(!is_null($Expert->EXJURSOGLDATE))                                        
                                     ){    
@@ -210,6 +200,18 @@
                     </div> 
                 </div>
             </div>
+            <?php
+                echo("<form method='get' autoload='off'>");
+                    (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
+                    if ($Front->FROFFICE==''){
+                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
+                    } else {
+                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
+                    }
+                    echo("<p><label>ДАТА ДОВЕРЕННОСТИ</label><input type='date' name='FRDOVDATE' value={$Front->FRDOVDATE}>
+                    <button type='submit' class='btn btn-warning'>Получена доверенность</button></p>
+                </form>");
+            ?>
 
         </div>
         <div class="tab-pane fade" id="Tarif">
@@ -582,11 +584,11 @@
                         </tr>
                         <tr>
                             <th>Сумма доплаты за сложность</th>
-                            <th><?=$Front->FRDOPSUM?></th>
+                            <th><?=$Expert->EXCONTDOPSUM?></th>
                         </tr>
                         <tr>
                             <th>Описание доплаты за сложность (для служебного пользования)</th>
-                            <th><?=$Front->FRDIFCOST2?></th>
+                            <th><?=$Expert->EXDIFCOST?></th>
                         </tr>
                     </tbody>
                 </table>
@@ -680,41 +682,41 @@
                 </div>
             </form>
             <div class='col-6'>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                      <th scope="col">Код</th>
-                      <th scope="col">Дата</th>
-                      <th scope="col">Сумма</th>
-                      <th scope="col">Назначение платежа</th>
-                      <th scope="col">Способ платежа</th>
-                      <th scope="col">Скачать</th>
-                    </tr>
-                </thead>
-                <tbody id='PaymentList'>        
-                    
-                    <?php
-//                    foreach($Payment->getPaymentList() as $i => $Pay){
-//                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
-//                        echo('<tr class="table-active">');
-//                        echo("<td>{$Pay->PAYCODE}</td>");
-//                        echo("<td>{$PayDate}</td>");
-//                        echo("<td>{$Pay->PAYSUM}</td>");
-//                        echo("<td>{$Pay->PAYPR}</td>");
-//                        
-//                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
-//                        
-//                        
-//                        echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
-//                        
-//                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
-//                            echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
-//                        }
-//                        echo('</tr>');
-//                    }
-                    ?>
-                </tbody>
-            </table>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th scope="col">Код</th>
+                          <th scope="col">Дата</th>
+                          <th scope="col">Сумма</th>
+                          <th scope="col">Назначение платежа</th>
+                          <th scope="col">Способ платежа</th>
+                          <th scope="col">Скачать</th>
+                        </tr>
+                    </thead>
+                    <tbody id='PaymentList'>        
+
+                        <?php
+    //                    foreach($Payment->getPaymentList() as $i => $Pay){
+    //                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
+    //                        echo('<tr class="table-active">');
+    //                        echo("<td>{$Pay->PAYCODE}</td>");
+    //                        echo("<td>{$PayDate}</td>");
+    //                        echo("<td>{$Pay->PAYSUM}</td>");
+    //                        echo("<td>{$Pay->PAYPR}</td>");
+    //                        
+    //                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
+    //                        
+    //                        
+    //                        echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
+    //                        
+    //                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
+    //                            echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
+    //                        }
+    //                        echo('</tr>');
+    //                    }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div><!--Внесение платежей-->
         <div class="tab-pane fade" id="Credit">
@@ -801,7 +803,7 @@
                 </tbody>
             </table>
                         
-        </div>
+        </div><!--комментарии-->
         <div class="tab-pane fade" id="Archive">            
             <?php
                 echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=ContStopPay&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"

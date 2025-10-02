@@ -296,8 +296,7 @@
                                 <th scope="col">Дата договора</th>
                                 <th scope="col">Дата правового анализа</th>
                                 <th scope="col">ФИО юриста</th>
-                                <th scope="col">Дата согласования руководителя</th>
-                                <th scope="col">y</th>
+                                <th scope="col">Дата согласования руководителя</th>                                
                             </tr>
                         </thead>
                         <tbody>
