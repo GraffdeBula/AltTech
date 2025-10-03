@@ -16,7 +16,7 @@ class RepPaymentsCtrl extends ControllerMain{
     }
     
     public function actionIndex() {            
-        if ((in_array($_SESSION['EmRole'], ['juris','frontextra','front','franshman','franshdir']))&&(!in_array($_SESSION['EmName'],['Елизавета Яковлева']))){
+        if (!(new CheckRole())->Check2('RepPaymentsCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
             header("Location: index_admin.php");
         }
         $this->formRep();    

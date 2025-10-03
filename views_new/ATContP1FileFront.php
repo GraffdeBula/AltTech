@@ -64,8 +64,7 @@
             . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
         }
         
-        if (($Front->FRDOPDATE==null)){}
-        else{
+        if ((!$Expert->EXDIRSOGLDATE==null)){
             echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-info'>Допсоглашение к договору</button></a>");
         }
@@ -131,7 +130,7 @@
                 echo("</form>");
                 
                 echo("<p>Первоначальная стоимость: {$Front->FRCONTFIRSTSUM} руб.</p>"
-                    . "<p>Доплата за сложность по оценке юриста: {$Front->FRDOPSUM} руб.</p>"
+                    . "<p>Итоговое изменение стоимости договора: {$Front->FRDOPSUM} руб.</p>"
                     . "<p>Общая стоимость: {$Front->FRCONTSUM} руб.</p>");
                         
             
@@ -141,32 +140,67 @@
                     <p><label>ДАТА ПОЛУЧЕНИЯ ДОКУМЕНТОВ ОТ КЛИЕНТА</label><input type='date' name='FREXPGETDATE' value={$Front->FREXPGETDATE}>
                     <button type='submit' class='btn btn-warning'>Клиент предоставил документы на ЭПЭ</button></p>
                 </form>");
-                    
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','ExpAct',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    echo("                
-                        <p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}>
-                        <button type='submit' class='btn btn-warning'>ЭКСПЕРТИЗА ПРОВЕДЕНА</button></p>");
-                echo("</form>");     
-                
-                echo("<form method='get' autoload='off'>");
-                    (new MyForm('ATContP1FileFrontCtrl','DopSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
-                    if ($Front->FROFFICE==''){
-                        echo("<input type='hidden' name=FROFFICE value='{$_SESSION['EmBranch']}'>");
-                    } else {
-                        echo("<input type='hidden' name=FROFFICE value='{$Front->FROFFICE}'>");                    
-                    }
-                    
-                    echo("<p><label>ДАТА ДОПСОГЛАШЕНИЯ ОБ ИЗМЕНЕНИИ СТОИМОСТИ</label><input type='date' name='FRDOPDATE' value='{$Front->FRDOPDATE}'><br>
-                        <label>Доплата за сложность по оценке юриста</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}'>
-                    <button type='submit' class='btn btn-warning'>Допсолгашение согласовано</button></p>
-                </form>");
-                
+                                    
+                echo("<p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}></p>");
+                                
+                                                                           
+                echo("<p>
+                    <label>Итоговое изменение стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM_V'>
+                    <label><strong  style='color:red;'>Обязательно указать сумму. Если договор сохраняется на первоначальных условиях, то поставить 0.</strong></label>");
+                                                                       
+            ?>
+            <div class='row'>                                 
+                <div class='col-lg-2'>
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Согласование с клиентом</div>
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>  
+                            <p class="card-text"></p>
+                            <input disabled type='text' name='FRMANSOGLNAME' value='<?=$Front->FRMANSOGLNAME;?>'>
+                            <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>                            
+                            <form method='get'>
+                                <input type='hidden' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUMMAN'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
+                                    if ((
+                                        in_array($_SESSION['EmRole'],['admin','front','director','franshman','top']))
+                                        &&(is_null($Front->FRMANSOGLDATE))
+                                        &&(!is_null($Expert->EXJURSOGLDATE))                                        
+                                    ){    
+                                        echo("<button type='submit' class='btn btn-secondary' onMouseover=FrDopSumManFocus()>Подтверждаю, что всё внесено и расчитано верно</button>");
+                                    }
+                                ?>    
+                            </form>
+                        </div>
+                    </div> 
+                </div>  
+                <div class='col-lg-2'>
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Согласование руководителя</div>
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>  
+                            <p class="card-text"></p>
+                            <input disabled type='text' name='EXRESEMP' value='<?=$Expert->EXDIRSOGLNAME;?>'>
+                            <input disabled type='date' name='EXRESDAT' value='<?=$Expert->EXDIRSOGLDATE;?>'>                            
+                            <form method='get'>
+                                <input type='hidden' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUMDIR'>
+                                <?php
+                                    (new MyForm('ATContP1FileFrontCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    if ((
+                                        in_array($_SESSION['EmRole'],['admin','director','franshdir','top']))
+                                        &&(is_null($Expert->EXDIRSOGLDATE))
+                                        &&(!is_null($Expert->EXJURSOGLDATE))
+                                        &&(!is_null($Front->FRMANSOGLDATE))
+                                    ){  
+                                        echo("<button type='submit' class='btn btn-secondary' onMouseover=FrDopSumDirFocus()>Согласовать заключение договора</button>");
+                                    }
+                                ?>    
+                            </form>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <?php
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','DovGet',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
@@ -176,9 +210,8 @@
                     }
                     echo("<p><label>ДАТА ДОВЕРЕННОСТИ</label><input type='date' name='FRDOVDATE' value={$Front->FRDOVDATE}>
                     <button type='submit' class='btn btn-warning'>Получена доверенность</button></p>
-                </form>");                
+                </form>");
             ?>
-            
 
         </div>
         <div class="tab-pane fade" id="Tarif">
@@ -234,8 +267,7 @@
                                                     <option value=18>18</option>
                                                     <option value=24>24</option>
                                                 </select>месяцев</p>");
-                                            #echo("<input type='hidden' name='FRCONTPERIOD' id='FRCONTPERIOD'>");
-
+                                            
                                             $CB1='';
                                             $CB2='';
                                             if ($Front->FRSMALLCRED==1){$CB1='checked';}
@@ -511,9 +543,9 @@
                                             echo("<form method='get'>");
                                                 (new MyForm('ATContP1FileFrontCtrl','UpdPayCalend',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                                 echo("<input type='hidden' name='ID' value={$PlanPay->ID}>");
-                                                echo("<th>Платёж <input type=text name='PayNum' value={$PlanPay->PAYNUM} size=1></th>");                                    
-                                                echo("<th><input type=date name='PayDate' value={$PlanPay->PAYDATE} size=7></th>");
-                                                echo("<th><input type=text name='PaySum' value={$PlanPay->PAYSUM} size=7></th>");
+                                                echo("<th>Платёж <input type=text name='PayNum' value='{$PlanPay->PAYNUM}' size=1></th>");                                    
+                                                echo("<th><input type=date name='PayDate' value='{$PlanPay->PAYDATE}' size=7></th>");
+                                                echo("<th><input type=text name='PaySum' value='{$PlanPay->PAYSUM}' size=7></th>");
                                                 echo("<th><button class='btn btn-success'>V</button></th>");
                                             echo("</form>");
                                             echo("<th><form method='get'>");
@@ -552,11 +584,11 @@
                         </tr>
                         <tr>
                             <th>Сумма доплаты за сложность</th>
-                            <th><?=$Front->FRDOPSUM?></th>
+                            <th><?=$Expert->EXCONTDOPSUM?></th>
                         </tr>
                         <tr>
                             <th>Описание доплаты за сложность (для служебного пользования)</th>
-                            <th><?=$Front->FRDIFCOST2?></th>
+                            <th><?=$Expert->EXDIFCOST?></th>
                         </tr>
                     </tbody>
                 </table>
@@ -587,8 +619,7 @@
         </div>
         <div class="tab-pane fade" id="Pays">
             <div>
-                <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>
-                <div class='row'>    
+                <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>                 
                 <p>Внесено по договору: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено неустойки: <strong><?=$Payment->getTotalSum()['TotalInc2']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>
@@ -650,41 +681,21 @@
                 </div>
             </form>
             <div class='col-6'>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                      <th scope="col">Код</th>
-                      <th scope="col">Дата</th>
-                      <th scope="col">Сумма</th>
-                      <th scope="col">Назначение платежа</th>
-                      <th scope="col">Способ платежа</th>
-                      <th scope="col">Скачать</th>
-                    </tr>
-                </thead>
-                <tbody id='PaymentList'>        
-                    
-                    <?php
-//                    foreach($Payment->getPaymentList() as $i => $Pay){
-//                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
-//                        echo('<tr class="table-active">');
-//                        echo("<td>{$Pay->PAYCODE}</td>");
-//                        echo("<td>{$PayDate}</td>");
-//                        echo("<td>{$Pay->PAYSUM}</td>");
-//                        echo("<td>{$Pay->PAYPR}</td>");
-//                        
-//                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
-//                        
-//                        
-//                        echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
-//                        
-//                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
-//                            echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
-//                        }
-//                        echo('</tr>');
-//                    }
-                    ?>
-                </tbody>
-            </table>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th scope="col">Код</th>
+                          <th scope="col">Дата</th>
+                          <th scope="col">Сумма</th>
+                          <th scope="col">Назначение платежа</th>
+                          <th scope="col">Способ платежа</th>
+                          <th scope="col">Скачать</th>
+                        </tr>
+                    </thead>
+                    <tbody id='PaymentList'>        
+                        
+                    </tbody>
+                </table>
             </div>
         </div><!--Внесение платежей-->
         <div class="tab-pane fade" id="Credit">
@@ -771,7 +782,7 @@
                 </tbody>
             </table>
                         
-        </div>
+        </div><!--комментарии-->
         <div class="tab-pane fade" id="Archive">            
             <?php
                 echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=ContStopPay&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"

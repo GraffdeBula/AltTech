@@ -152,6 +152,7 @@ class ATContP1AnketaCtrl extends ControllerMain {
         
         $Model=new ATP1ContMod();
         $Model->UpdP1Anketa(['AKCREDNUM'=>$CredNum,'AKCREDTOTSUM'=>$CredTotal,'AKCREDMAINSUM'=>$CredMain],$_GET['ContCode']);
+        $Model->UpdP1Expert2(['EXCRNUM'=>$CredNum],$_GET['ContCode']);
         (new ATP1ContMod())->UpdP1Expert2(['EXTOTDEBTSUM'=>$CredTotal,'EXMAINDEBTSUM'=>$CredMain,'EXANNTOTPAY'=>$PayTotal],$_GET['ContCode']);
     }
                 
