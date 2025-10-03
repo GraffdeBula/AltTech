@@ -108,15 +108,13 @@ class ATMainFormCtrl extends ControllerMain {
      */
     protected function getExpList(){
         $Model=new ExpertMod();        
-//        $this->ExpList[1]=$Model->getExpContList(); //заключен договор ЭПЭ
-//        $this->ExpList[2]=$Model->getExpGetList(); //Получены док-ты от клиента
-//        $this->ExpList[3]=$Model->getExpSentList(); //Отправлены на ЭПЭ
-//        $this->ExpList[4]=$Model->getExpReturnList(); //Направлены на доработку
-//        $this->ExpList[5]=$Model->getExpJurSoglList(); //Направлены юристу
-        $this->ExpList[11]=$Model->getContJurList(); //заключен договор услуг
-        $this->ExpList[12]=$Model->getContJurSogl(); //заключен договор услуг
-        $this->ExpList[13]=$Model->getContAfterUnder(); //проведён андеррайтинг
-        $this->ExpList[14]=$Model->getContAfterUnderErr(); //выявлены ошибки
+        $this->ExpList[11]=$Model->getContList(); //подписан договор
+        $this->ExpList[12]=$Model->getContJurList(); //собраны документы для ЭПЭ
+        $this->ExpList[13]=$Model->getContJurSogl(); //проведена ЭПЭ
+        $this->ExpList[14]=$Model->getContManSogl(); //договор согласован клиентом
+        $this->ExpList[15]=$Model->getContDirSogl(); //договор согласован руководителем
+        $this->ExpList[16]=$Model->getContAfterUnder(); //проведён андеррайтинг
+        $this->ExpList[17]=$Model->getContAfterUnderErr(); //Выявлены ошибки в правовом анализе
     }
     /*получение списка скидок на согласование*/
     protected function getDiscList(){

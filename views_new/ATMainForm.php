@@ -8,7 +8,7 @@
 </head>
 <body>    
     <ul class="nav nav-tabs">
-        <?php 
+        <?php
         echo("
             <li class='nav-item'>
               <a class='nav-link active' data-bs-toggle='tab' href='#home'>Список клиентов</a>
@@ -20,19 +20,17 @@
         echo("
             <li class='nav-item'>
                 <a class='nav-link' data-bs-toggle='tab' href='#refer'>Реферальная программа</a>
-            </li>");   
+            </li>");
         if (in_array($_SESSION['EmRole'],['admin','top','director','expert','jurist','front','frontextra'])){
         echo("
             <li class='nav-item'>
-                <a class='nav-link' data-bs-toggle='tab' href='#expert'>Списки на ЭПЭ/правовой анализ</a>
+                <a class='nav-link' data-bs-toggle='tab' href='#expert'>Контроль этапов договора по клиентам</a>
             </li>");     
-        }
-        if ((in_array($_SESSION['EmRole'],['admin','top','director']))or(in_array($_SESSION['EmName'],['Елизавета Яковлева']))){
+        }        
         echo("
             <li class='nav-item'>
               <a class='nav-link' data-bs-toggle='tab' href='#reports'>Отчёты</a>
-            </li>"); 
-        }        
+            </li>");         
         if ((in_array($_SESSION['EmRole'],['admin','top']))or(in_array($_SESSION['EmName'],['Андрей Догаев']))){
             echo("
             <li class='nav-item'>
@@ -147,25 +145,32 @@
         <div  class='tab-pane fade' id='expert'>
 <!--            <a target='_blank' href='index_admin.php?controller=ATExpListCtrl'><button class="btn btn-primary">Списки на ЭПЭ/правовой анализ</button></a>-->
             <ul class="nav nav-tabs">
-                
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#exp01" style='color:#000000; background-color: #b1d17d'>Договоры для правового анализа</a>                  
+                  <a class="nav-link active" data-bs-toggle="tab" href="#exp01" style='color:#000000; background-color: #b1d17d'>Подписан договор услуг</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp02" style='color:#000000; background-color: #d1b97d'>Проведён правовой анализ</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp02" style='color:#000000; background-color: #ffcd3c'>Предоставлены документы для анализа</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #7d83d1'>Проведён андеррайтинг</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp03" style='color:#000000; background-color: #d1b97d'>Экспертиза проведена</a>                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#exp04" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp04" style='color:#000000; background-color: #7d83d1'>Итоговые условия согласованы с клиентом</a>                  
                 </li>
-                
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp05" style='color:#000000; background-color: #5ea7e9'>Договор  согласован руководителем</a>                  
+                </li>                
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp06" style='color:#000000; background-color: #7d83d1'>Проведён андеррайтинг</a>                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#exp07" style='color:#000000; background-color: #d17d7d'>Выявлены ошибки в правовом анализе</a>                  
+                </li>                
               
             </ul>
             <div id="ExpertContent" class="tab-content">
                 <div class="tab-pane fade show active" id="exp01" role="tabpanel">
-                    <p>Договоры на правовой анализ</p>
+                    <p>Подписан договор услуг</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -176,12 +181,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($ExpList[11] as $Cont){ 
-                                $ContDate=(new PrintFunctions())->DateToStr($Cont->FRCONTDATE);
+                            <?php foreach($ExpList[11] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 echo("<tr class='table-info'>"
-                                    ."<th scope='row'>{$Cont->CLFIO}</th>"
-                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$Cont->CLCODE&ContCode=$Cont->CONTCODE'>$Cont->CONTCODE</a></td>"
-                                    ."<td>$Cont->FROFFICE</td>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
+                </div>
+                <div class="tab-pane fade" id="exp02" role="tabpanel">
+                    <p>Предоставлены документы для анализа</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[12] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ContDate</td>"
                                 ."</tr>");
                                 
@@ -190,8 +221,8 @@
                         </tbody>
                     </table>                            
                 </div>    
-                <div class="tab-pane fade" id="exp02" role="tabpanel">
-                    <p>Правовой анализ проведён</p>
+                <div class="tab-pane fade" id="exp03" role="tabpanel">
+                    <p>Экспертиза проведена</p>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -204,9 +235,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($ExpList[12] as $ExpCont){ 
+                            <?php foreach($ExpList[13] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
-                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE);
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
@@ -221,7 +252,81 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="exp03" role="tabpanel">
+                <div class="tab-pane fade" id="exp04" role="tabpanel">
+                    <p>Итоговые условия согласованы с клиентом</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">Дата согласования с клиентом</th>
+                                <th scope="col">ФИО менеджера</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[14] as $ExpCont){ 
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                    ."<td>$ExpDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRMANSOGLDATE)."</td>"
+                                    ."<td>$ExpCont->FRMANSOGLNAME</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="exp05" role="tabpanel">
+                    <p>Согласованы руководителем</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ФИО клиента</th>
+                                <th scope="col">ID договора</th>
+                                <th scope="col">Филиал</th>
+                                <th scope="col">Дата договора</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">ФИО юриста</th>
+                                <th scope="col">Дата согласования руководителя</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ExpList[15] as $ExpCont){ 
+                                $DateNow=new DateTime('now');
+                                $DateSogl=new DateTime($ExpCont->EXDIRSOGLDATE);
+                                $m=$DateSogl->diff($DateNow)->m;
+                                $y=$DateSogl->diff($DateNow)->y;
+                                if (($m>1)or($y>0)or($ExpCont->EXDIRSOGLDATE==null)){
+                                    continue;
+                                }
+                                
+                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                echo("<tr class='table-info'>"
+                                    ."<th scope='row'>{$ExpCont->CLFIO}</th>"
+                                    ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
+                                    ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ContDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE)."</td>"
+                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXDIRSOGLDATE)."</td>"
+                                            ."<td>".$ExpCont->EXDIRSOGLDATE."</td>"
+                                ."</tr>");
+                                
+                            }
+                            ?>
+                        </tbody>
+                    </table>                            
+                </div>
+                <div class="tab-pane fade" id="exp06" role="tabpanel">
                     <p>Андеррайтинг проведён</p>
                     <table class="table table-hover">
                         <thead>
@@ -237,17 +342,17 @@
                         </thead>
                         <tbody>
                             <?php 
-                            foreach($ExpList[13] as $ExpCont){ 
+                            foreach($ExpList[16] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
-                                $UnderDate=(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE);
+                                
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
                                     ."<td>$ContDate</td>"
                                     ."<td>$ExpDate</td>"
-                                    ."<td>$UnderDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXPUNDERDATE)."</td>"
                                     ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                 ."</tr>");
                                 
@@ -256,7 +361,7 @@
                         </tbody>
                     </table>                            
                 </div>
-                <div class="tab-pane fade" id="exp04" role="tabpanel">
+                <div class="tab-pane fade" id="exp07" role="tabpanel">
                     <p>Критические ошибки в анализе</p>
                     <table class="table table-hover">
                         <thead>
@@ -271,7 +376,7 @@
                         </thead>
                         <tbody>
                             <?php 
-                            foreach($ExpList[14] as $ExpCont){ 
+                            foreach($ExpList[17] as $ExpCont){ 
                                 $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
                                 $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXRESDAT);
                                 echo("<tr class='table-info'>"
@@ -288,31 +393,62 @@
                         </tbody>
                     </table>                            
                 </div>
+                
                                                 
             </div>
         </div><!--экспертизы-->        
         <div class="tab-pane fade" id="reports">
             <div class="row">
-                <div class="col-lg-2">            
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContExpForm"><button class="btn btn-success">НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm"><button class="btn btn-info">НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm"><button class="btn btn-info">Отчёт по расторжениям</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=P4ReportCtrl"><button class="btn btn-success">Отчёт по разовым услугам</button></p>                    
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm"><button class="btn btn-warning">Отчёт Замечания андеррайтера</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm"><button class="btn btn-success">Отчёт по скидкам</button></a></p>
-                    
-                </div>
-                <div class="col-lg-2">
-                    <p><a target="_blank" href="index_admin.php?controller=RepPaymentsCtrl&DateF=<?=date("d.m.Y")?>&DateL=<?=date("d.m.Y")?>"><button class="btn btn-info">ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBasePlanCtrl"><button class="btn btn-success">Списки плановых платежей</button></a></p>                    
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCtrl&action=ShowContNew"><button class="btn btn-info">Плановые платежи по новым договорам</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=CurBaseBranchCtrl"><button class="btn btn-success">База действующих договоров</button></a></p>                    
-                </div>  
-                <div class="col-lg-2">                    
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep1"><button class="btn btn-success">ОСТАТКИ ОХ</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=report1_ctrl&repInd=rep2"><button class="btn btn-info">ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>
-                    <p><a target="_blank" href="index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm"><button class="btn btn-primary">Когортный анализ договоров</button></a></p>
-                </div>
+                
+                
+                <?php
+                echo("<div class='col-lg-2'>");                                
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContExpForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContExpForm'><button class='btn btn-success'>НОВЫЕ ЭКСПЕРТИЗЫ</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContP1RepForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1RepForm'><button class='btn btn-info'>НОВЫЕ ДОГОВОРЫ БФЛ/ЗОК</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContP1DropForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1DropForm'><button class='btn btn-info'>Отчёт по расторжениям</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('P4ReportCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=P4ReportCtrl'><button class='btn btn-success'>Отчёт по разовым услугам</button></p>                    ");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContP1AfterUnderForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContP1AfterUnderForm'><button class='btn btn-warning'>Отчёт Замечания андеррайтера</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ContP1DiscRepForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ContP1DiscRepForm'><button class='btn btn-success'>Отчёт по скидкам</button></a></p>");
+                    }                                    
+                echo("</div>");
+                echo("<div class='col-lg-2'>");
+                    if ((new CheckRole)->Check2('RepPaymentsCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=RepPaymentsCtrl&DateF=".date('d.m.Y')."&DateL=".date('d.m.Y')."'><button class='btn btn-info'>ОТЧЁТ ПО ПЛАТЕЖАМ</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('CurBasePlanCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=CurBasePlanCtrl'><button class='btn btn-success'>Списки плановых платежей</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCtrl','ShowContNew',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCtrl&action=ShowContNew'><button class='btn btn-info'>Плановые платежи по новым договорам</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('CurBaseBranchCtrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=CurBaseBranchCtrl'><button class='btn btn-success'>База действующих договоров</button></a></p>");
+                    }                                                                                                                    
+                echo("</div>");
+                echo("<div class='col-lg-2'>");
+                    if ((new CheckRole)->Check2('report1_ctrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep1'><button class='btn btn-success'>ОСТАТКИ ОХ</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('report1_ctrl','Index',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=report1_ctrl&repInd=rep2'><button class='btn btn-info'>ДВИЖЕНИЕ ОХ ЗА ПЕРИОД</button></a></p>");
+                    }
+                    if ((new CheckRole)->Check2('ReportsCohortCtrl','CohortRepForm',$_SESSION['EmRole'],$_SESSION['EmName'])){
+                        echo("<p><a target='_blank' href='index_admin.php?controller=ReportsCohortCtrl&action=CohortRepForm'><button class='btn btn-primary'>Когортный анализ договоров</button></a></p>");
+                    }
+                                                                                                
+                echo("</div>");
+                ?>
                 
             </div>
             

@@ -17,7 +17,21 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     protected $TblP1Anketa=[];
     protected $TblP1Front=['FROFFICE','FRPERSMANAGER','FREXPDATE','FREXPSUM','FREXPGETDATE','FREXPSENTDATE','FREXPACTDATE',
         'FRCONTDATE','FRDOVDATE','FRCONTSUM','FRDOPDATE','FRDOPSUM','FRCONTFIRSTSUM','FRCONTTOTSUM','CONTPAC','FRCONTPROG','FRCONTTARIF',
-        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO','FRDIFCOST1','FRCONTFIRSTSUMCOUNT'];
+        'FRARCHDATE','FRTOTALWORKSUM','FRARCHCOMMENT','FRCRNUM','FRCOMPLEXCRNUM','FRSMALLCRED','FREASYCASE','FRCONTPERIIOD','FRCONTDROPWHO','FRDIFCOST1','FRCONTFIRSTSUMCOUNT',
+        'FRMANSOGLNAME','FRMANSOGLDATE'];
+    protected $TblP1BackOf=['BOJURNAME',
+        'BOISKDATE',
+        'BOISKSENTDATE',
+        'BOPROCRESTDATE',
+        'BOPROCRESTFINDATE',
+        'BOPROCREALDATE',
+        'BOPROCREALFINDATE',
+        'BOBANKRMIRDATE',
+        'BOBANKRFINDATE',
+        'BOCOURTFILENUM',
+        'BOARBUPRNAME',
+        'BOARBDEPDATE',
+        'BOPUBDATE'];
     protected $TblP1Expert=[];
     protected $ExpertDr=[];
     protected $Params=[];
@@ -63,8 +77,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionExpSigned(){                        
-        $this->FrontSave();
-        #(new Status())->ChangeP1Status(18, $_GET['ContCode']);
+        $this->FrontSave();        
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -86,13 +99,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $this->SaveTypeCalend();
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    
-    public function actionExpAct(){                
-        $this->FrontSave();
-        (new Status())->ChangeP1Status(12, $_GET['ContCode']);
-        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
-    }
-    
+        
     public function actionChangeBranch(){      
         $this->FrontSave();
         (new ATClientMod())->updClient(['CLBRANCH'=>$_GET['FROFFICE']],$_GET['ClCode']);
@@ -113,6 +120,64 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'CONTCODE'=>$_GET['ContCode'],
             'FRCONTFIRSTSUMCOUNT'=>json_encode($CountFirstSum)
         ]);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDirSogl(){
+        (new ExpertMod())->UpdSoglDir($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
+        $this->FrontSave([
+            'CONTCODE'=>$_GET['ContCode'],                        
+            'FRDOPSUM'=>$_GET['FRDOPSUM'],
+            'FRDOPDATE'=>Date('d.m.Y')
+        ]);
+        (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
+        //копирование рисков
+        $RiskListJur=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');
+        foreach($RiskListJur as $Risk){
+            (new ExpertMod())->InsExpRisk($Risk->CONTCODE, $Risk->EXLISTNAME, $Risk->EXLISTVALUE, 'DirSogl', $Risk->EXLISTVALUE3, $Risk->EXLISTVALUE4);
+        }
+        $RiskListJur2=(new ExpertMod)->GetExpRiskList2($_GET['ContCode']);
+        foreach($RiskListJur2 as $Risk){
+            (new ExpertMod())->InsExpRisk($Risk->CONTCODE, $Risk->EXLISTNAME, $Risk->EXLISTVALUE, 'DirSogl', $Risk->EXLISTVALUE3, $Risk->EXLISTVALUE4);
+        }
+        //сохранение значений 
+        $ContP1=new ContP1($_GET['ContCode']);
+        $Discounts=$ContP1->getDiscounts();
+        $DiscSum=0;
+        $DiscComment='нет скидки';
+        foreach($Discounts as $Discount){
+            if (($Discount->DISCOUNTSUM>0)&&($Discount->DISCOUNTTYPE=='НД')){
+                $DiscSum=$Discount->DISCOUNTSUM;
+                $DiscComment=$Discount->DISCOUNTCOMMENT;
+            }
+        }
+        $InfToSave=[
+            'FRCONTPROG'=>$ContP1->getFront()->FRCONTPROG,
+            'FRCONTTARIF'=>$ContP1->getFront()->FRCONTTARIF,
+            'FRCONTSUM'=>$ContP1->getFront()->FRCONTSUM,
+            'FRSMALLCRED'=>$ContP1->getFront()->FRSMALLCRED,
+            'FREASYCASE'=>$ContP1->getFront()->FREASYCASE,
+            'EXCRNUM'=>$ContP1->getExpert()->EXCRNUM,
+            'EXCOMPLEXCRNUM'=>$ContP1->getExpert()->EXCOMPLEXCRNUM,
+            'DISCOUNTSUM'=>$DiscSum,
+            'DISCOUNTCOMMENT'=>$DiscComment,
+        ];
+        foreach($InfToSave as $key=>$value){
+            #new MyCheck([$key,$value],0);
+            (new InfSave())->insertInf($_GET['ContCode'], Date('d.m.Y'), $key, $value);
+        }
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionManSogl(){
+        $this->FrontSave([
+            'CONTCODE'=>$_GET['ContCode'],
+            'FRMANSOGLDATE'=>Date('d.m.Y'),
+            'FRMANSOGLNAME'=>$_SESSION['EmName'],
+            'FRDOPSUM'=>$_GET['FRDOPSUM'],
+        ]);
+        (new Status())->ChangeP1Status(18, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -432,7 +497,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionDovGet(){
         $this->FrontSave();
-        (new Status())->ChangeP1Status(19, $_GET['ContCode']);
+        (new Status())->ChangeP1Status(21, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
@@ -547,7 +612,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionAddRisk(){
-        (new ExpertMod())->InsExpRisk2($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Manager',$_GET['RiskCost']);
+        (new ExpertMod())->InsExpRisk($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Manager','',$_GET['RiskCost']);
     }
     
     public function actionDelRisk(){
@@ -561,6 +626,20 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Params=[];
         foreach($GetParams as $Key => $Param){
             if (in_array($Key,$this->TblP1Front)){
+                $Params[$Key]=$Param;
+            }
+        }                
+        $Model=new ATP1ContMod();        
+        $Model->UpdP1Front($Params,$_GET['ContCode']);        
+    }
+    
+    protected function BackOfSave($GetParams=[]){
+        if ($GetParams==[]){
+            $GetParams=$_GET;
+        }        
+        $Params=[];
+        foreach($GetParams as $Key => $Param){
+            if (in_array($Key,$this->TblP1BackOf)){
                 $Params[$Key]=$Param;
             }
         }                

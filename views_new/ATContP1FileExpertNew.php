@@ -2,8 +2,8 @@
 /*
  * досье ЭПЭ
  *  */
-#var_dump($RiskList);
-#exit();
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,8 +22,8 @@
     <a href='index_admin.php?controller=ATClientFileCtrl&ClCode=<?=$Client->CLCODE?>'><button class='btn btn-danger'>Вернуться в досье клиента</button></a>
            
     <?php
-        echo("<h4>ФИО Клиента: {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</h4>");
-        echo("<h4>Статус: {$Cont->STATUS}</h4>");
+        echo("<h5>ФИО Клиента: {$Client->CLFNAME} {$Client->CL1NAME} {$Client->CL2NAME}</h5>");
+        echo("<h5>Статус: {$Cont->STATUS}</h5>");
             ?>
         </div>
         
@@ -32,16 +32,11 @@
                 <a class="nav-link active" data-bs-toggle="tab" href="#result">Правовой анализ</a>
             </li>            
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#risksman">Список рисков от менеджера</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#risksman">Условия заключения договора</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#risks">Риски со старыми формулировками</a>
             </li>
-<!--
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#mininc">Расчёт прожиточного минимума</a>
-            </li>            
--->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#comments">Комментарии</a>
             </li>
@@ -68,7 +63,7 @@
                                 <div id='RiskList'>
                                     <?php
                                         $i=0;
-                                        foreach($ExpertDr as $Risk){                            
+                                        foreach($RiskDr as $Risk){                            
                                             $i++;
                                             $Val='';
                                             $Sum='';
@@ -112,14 +107,12 @@
                                 <table class='table table-hover'>
                                     <thead>
                                         <tr>
-
                                             <th>РИСК ДЛЯ ВНЕСУДЕБНОГО БФЛ</th>
                                             <th>УДАЛИТЬ<th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-
                                         foreach($RiskList2 as $Risk){
                                             echo("<tr>");
                                             echo("<form method='get'>");
@@ -131,7 +124,7 @@
                                             }
                                             echo("</form>");
                                             echo("<tr>");
-                                        }                    
+                                        }
                                     ?>
                                     </tbody>
                                 </table>
@@ -140,7 +133,7 @@
                                 <select name='AddRisk2' value='' id='Risk2Select'>
                                     <option value=''></option>
                                     <?php
-                                            foreach($RiskListDr2 as $RiskDr){
+                                            foreach($RiskDr2 as $RiskDr){
                                                 echo("<option value='{$RiskDr->DRVALUE}'>{$RiskDr->DRVALUE}</option>");
                                             }
                                         ?>
@@ -164,14 +157,16 @@
                         </h3>
                         <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
                             <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">              
+                                <!--
                                 <select name='Region'>
                                     <option></option>
-                                    <?php
-                                    foreach($DRRegionsList as $Region){
-                                        echo("<option value='{$Region->REGNAME}'>{$Region->REGNAME}</option>");
-                                    }
-                                    ?>
+                                    //<?php
+//                                    foreach($DRRegionsList as $Region){
+//                                        echo("<option value='{$Region->REGNAME}'>{$Region->REGNAME}</option>");
+//                                    }
+//                                    ?>
                                 </select>
+                                -->
                                 <form autocomplete='off'>
                                     <?php (new MyForm('ATContP1FileExpertCtrl','SaveMinInc',$Client->CLCODE,$Cont->CONTCODE))->AddForm(); ?>
                                     <label>в расчете на душу населения</label><input name='MinIncAvg' value='<?=$MinIncList['Avg']?>'><br>
@@ -186,7 +181,7 @@
                                 </form>
                             </div>    
                         </div>
-                    </div><!<!-- collapse3 -->
+                    </div><!-- collapse3 -->
                     
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="headingOne">
@@ -210,7 +205,7 @@
                                     </select></p>
                                     <p>
                                         <label>Число кредитов/обязательств</label><input name='EXCRNUM' value=<?=$Expert->EXCRNUM?>>
-                                        <label>Число сложных кредиторов</label><input name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?>>
+                                        <label>Число сложных кредиторов</label><input  name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?> required>
                                     </p>
                                     <p>
                                         <label>Сумма долга</label><input name='EXTOTDEBTSUM' value=<?=$Expert->EXTOTDEBTSUM?>>
@@ -218,31 +213,19 @@
                                     </p>
                                     <div class="form-group">
                                         <label for="exampleTextarea" class="form-label mt-4">Заключение юриста (в акт ЭПЭ)</label>
-                                        <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXJURCOMMENT' maxlength=5000 ><?=$Expert->EXJURCOMMENT?></textarea>
+                                        <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 60px;" name='EXJURCOMMENT' maxlength=5000 required><?=$Expert->EXJURCOMMENT?></textarea>
                                     </div>
                                     
                                                                         
                                     <div class="form-group">
-                                        <label>Доплата за сложность</label><input name='FRDOPSUM' value=<?=$Front->FRDOPSUM?>><br>                                        
+                                        <label>Доплата за сложность</label><input name='EXCONTDOPSUM' value=<?=$Expert->EXCONTDOPSUM?>><br>                                        
                                         <label for="exampleTextarea" class="form-label mt-4">Описание доплаты за сложность (для служебного пользования)</label>
-                                        <textarea class="form-control" id="DopSumExp" rows="3" style="height: 60px;" name='FRDIFCOST2' maxlength=5000 ><?=$Front->FRDIFCOST2?></textarea>                                        
+                                        <textarea class="form-control" id="DopSumExp" rows="3" style="height: 60px;" name='EXDIFCOST' maxlength=5000 required><?=$Expert->EXDIFCOST?></textarea>                                        
                                     </div>
                                     
                                     <button type='summit' class='btn btn-info'>Сохранить заключение</button>           
                                 </form>  
-                            </div>    
-                        </div>
-                    </div><!<!-- collapse4 -->    
-                                        
-                    <div class="accordion-item">
-                        <h3 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
-                                Согласование договора
-                            </button>
-                        </h3>
-                        <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExp" style="">
-                            <div class="accordion-body" style="background-color: <?=VIEW_BACKGROUND?>">                            
-                                <div class='row'>                    
+                                <div class='row'>
                                     <div class='col-lg-2'>
                                         <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                                             <div class="card-header">Согласование юриста</div>
@@ -256,9 +239,8 @@
                                                         (new MyForm('ATContP1FileExpertCtrl','JurSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                                         if (($_SESSION['EmRole']=='admin') 
                                                                 or ($_SESSION['EmRole']=='jurist') 
-                                                                or ($_SESSION['EmRole']=='top')
-                                                                or ($_SESSION['EmRole']=='expert')
-                                                                or ($_SESSION['EmRole']=='director')
+                                                                or ($_SESSION['EmRole']=='director') 
+                                                                or ($_SESSION['EmRole']=='top') 
                                                             ){                                    
                                                             echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
                                                         }
@@ -266,31 +248,13 @@
                                                 </form>
                                             </div>
                                         </div> 
-                                    </div>    
-                                    <div class='col-lg-2'>
-                                        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-                                            <div class="card-header">Согласование руководителя</div>
-                                            <div class="card-body">
-                                                <h4 class="card-title"></h4>  
-                                                <p class="card-text"></p>
-                                                <input disabled type='text' name='EXRESEMP' value='<?=$Expert->EXDIRSOGLNAME;?>'>
-                                                <input disabled type='date' name='EXRESDAT' value='<?=$Expert->EXDIRSOGLDATE;?>'>
-                                                <form method='get'>
-                                                    <?php
-                                                        (new MyForm('ATContP1FileExpertCtrl','DirSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
-                                                        if (in_array($_SESSION['EmRole'],['admin','director','franshdir','top'])){                                    
-                                                            echo("<button type='submit' class='btn btn-secondary'>Согласовать заключение договора</button>");
-                                                        }
-                                                    ?>    
-                                                </form>
-                                            </div>
-                                        </div> 
-                                    </div>    
-                                </div>                                
+                                    </div>                                    
+                                </div>
                             </div>    
                         </div>
-                    </div><!<!-- collapse6 -->
-                </div><!<!-- accordion -->                                           
+                    </div><!<!-- collapse4 -->    
+                                        
+                </div><!-- accordion -->                                           
                 
             </div>
             <div class="tab-pane fade" id="comments">
@@ -368,7 +332,40 @@
                 </table>
                                 
             </div>
-            <div class="tab-pane fade" id="risksman">                            
+            <div class="tab-pane fade" id="risksman">      
+                <h5>Условия заключения договора</h5>
+                <?php
+                    if (isset($InfSave['FRCONTPROG'])){
+                        echo('<p>Программа: '.($InfSave['FRCONTPROG']).'<br>');
+                    }
+                    if (isset($InfSave['FRCONTTARIF'])){    
+                        echo('Тариф: '.$InfSave['FRCONTTARIF'].'<br>');
+                    }
+                    if (isset($InfSave['FRCONTSUM'])){
+                        echo('Стоимость договора: '.$InfSave['FRCONTSUM'].'<br>');
+                    }
+                    if (isset($InfSave['EXCRNUM'])){
+                        echo('Число кредитов: '.$InfSave['EXCRNUM'].'<br>');
+                    }
+                    if (isset($InfSave['EXCOMPLEXCRNUM'])){
+                        echo('Число сложных кредиторов: '.$InfSave['EXCOMPLEXCRNUM'].'<br>');
+                    }
+                    if (isset($InfSave['FRSMALLCRED'])){
+                        echo('Сумма долга до 400 тыс.: '.(new PrintFunctions())->YesNo($InfSave['FRSMALLCRED']).'<br>');
+                    }
+                    if (isset($InfSave['FREASYCASE'])){
+                        echo('Простой клиент: '.(new PrintFunctions())->YesNo($InfSave['FREASYCASE']).'<br>');
+                    }
+                    if (isset($InfSave['DISCOUNTCOMMENT'])){
+                        echo('Скидка: '.$InfSave['DISCOUNTCOMMENT'].'<br>');
+                    }
+                    if (isset($InfSave['DISCOUNTSUM'])){
+                        echo('Сумма скидки: '.$InfSave['DISCOUNTSUM'].'</p>');
+                    }
+                    
+                ?>
+                
+                <h5>Риски по подсчёту менеджера</h5>
                 <table class='table table-hover'>
                     <thead>
                         <tr>                            
@@ -376,7 +373,14 @@
                             <th>Стоимость<th>
                         </tr>
                     </thead>
-                    <tbody>                        
+                    <tbody>  
+                        <tr>
+                            <th>Всего по подсчёту менеджера</th>
+                            <th><?=$Front->FRCONTDOPMANSUM?></th>
+                        </tr>
+                        <tr class="table-active">
+                            <th>в том числе</th>
+                        </tr>
                         <?php
                             foreach($RiskListMan as $Risk){
                                 echo("<tr>");
@@ -387,6 +391,33 @@
                         ?>
                     </tbody>
                 </table>
+                <h5>Риски по подсчёту юриста</h5>
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>                            
+                            <th>РИСК </th>
+                            <th>Стоимость<th>
+                        </tr>
+                    </thead>
+                    <tbody>  
+                        <tr>
+                            <th>Всего по подсчёту юриста</th>
+                            <th><?=$Expert->EXCONTDOPSUM?></th>
+                        </tr>
+                        <tr class="table-active">
+                            <th>в том числе</th>
+                        </tr>
+                        <?php
+                            foreach($RiskListDirSogl as $Risk){
+                                echo("<tr>");
+                                echo("<th>".$Risk->EXLISTVALUE."</th>");
+                                echo("<th>".$Risk->EXLISTVALUE4."</th>");
+                                echo("</tr>");
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                
             </div>
             
             <div class="tab-pane fade" id="creditors">

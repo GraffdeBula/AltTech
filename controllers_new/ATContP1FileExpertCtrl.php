@@ -16,19 +16,22 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     protected $CredList=[];
     protected $Expert=[];
     protected $RiskList=[];
+    protected $RiskListMan=[];
     protected $RiskList2=[];
     protected $RiskListOld=[];
+    protected $RiskListDirSogl=[];
     protected $MinIncList=[];
     protected $WorkHist=[];
     protected $IncHist=[];
     protected $Comments=[];
     protected $Credit=[];
+    protected $InfSave=[];
     
     protected $Params=[];
     
     //Данные для заполнения
-    protected $RiskListDr=[];
-    protected $RiskListDr2=[];
+    protected $RiskDr=[];//справочник обычных рисков
+    protected $RiskDr2=[];//справочник рисков ВБФЛ
     //для вывода во вью
     
     
@@ -56,10 +59,11 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'EXCRNUM'=>$_GET['EXCRNUM'],
             'EXCOMPLEXCRNUM'=>$_GET['EXCOMPLEXCRNUM'],
             'EXJURCOMMENT'=>$_GET['EXJURCOMMENT'],
-                
+            'EXCONTDOPSUM'=>$_GET['EXCONTDOPSUM'],
+            'EXDIFCOST'=>$_GET['EXDIFCOST'],
         ];
         (new ATP1ContMod())->UpdP1Expert2($Params,$_GET['ContCode']);
-        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$_GET['FRDOPSUM'],'FRDIFCOST2'=>$_GET['FRDIFCOST2']],$_GET['ContCode']);
+        
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
 
@@ -112,6 +116,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     public function actionJurSogl(){
         (new ExpertMod())->UpdSoglJur($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);        
+        (new P1SaveData('TblP1Front','FREXPACTDATE',$_GET['ContCode']))->saveData();
         (new Status())->ChangeP1Status(17, $_GET['ContCode']);            
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
@@ -126,7 +131,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         if ((isset($_GET['AddRisk2'])) && ($_GET['AddRisk2']!='')){
             $NewRisk=$_GET['AddRisk2'];
             $RiskVal2=$_GET['Risk2Value2'];
-            (new ExpertMod)->InsExpRisk([$_GET['ContCode'],'Risk2',$NewRisk,$RiskVal2]);
+            (new ExpertMod)->InsExpRisk($_GET['ContCode'],'Risk2',$NewRisk,$RiskVal2,'',0);
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
     }
@@ -141,7 +146,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     }
     
     public function actionAddRisk(){//добавить риск заключения БФЛ
-        (new ExpertMod())->InsExpRisk2($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Jurist',$_GET['RiskCost']);
+        (new ExpertMod())->InsExpRisk($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Jurist','',$_GET['RiskCost']);
     }
     
     public function actionDelRisk(){
@@ -150,7 +155,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
     
     public function actionCountRiskDopSum(){
         $RiskDopSum=(new ExpertMod())->CountRiskSum($_GET['ContCode'],'Jurist')->RISKCOST;
-        (new ATP1ContMod())->UpdP1Front(['FRDOPSUM'=>$RiskDopSum],$_GET['ContCode']);
+        (new ATP1ContMod())->UpdP1Expert2(['EXCONTDOPSUM'=>$RiskDopSum],$_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -196,16 +201,22 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         $this->Expert=(new ExpertMod)->GetExp($_GET['ContCode']);
         $this->RiskList=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');        
         $this->RiskListMan=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Manager');  
+        $this->RiskListDirSogl=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'DirSogl');
         $this->RiskListOld=(new ExpertMod)->GetExpRiskListOld($_GET['ContCode']);
         $this->RiskList2=(new ExpertMod)->GetExpRiskList2($_GET['ContCode']);
         $this->MinIncList=(new ExpertMod)->getExpMinInc($_GET['ContCode']);
         #$this->WorkHist=(new ATClientMod)->GetExp($_GET['ContCode']);
         #$this->IncHist=(new ATClientMod)->GetExp($_GET['ContCode']);
         $this->Comments=(new ATCommentMod())->GetContComments($_GET['ClCode'],$_GET['ContCode'],1);
-        $this->RiskListDr=(new ExpertMod)->GetRiskDr(['Risk']);
-        $this->RiskListDr2=(new ExpertMod)->GetRiskDr(['Risk2']); //риски по ВБФЛ
+        $this->RiskDr=(new ExpertMod)->GetRiskDr(['Risk']);//справочник обычных рисков
+        $this->RiskDr2=(new ExpertMod)->GetRiskDr(['Risk2']); //справочник рисков по ВБФЛ
         
-               
+        $TmpInfSave=(new InfSave())->getInf($_GET['ContCode']);
+        $this->InfSave=[];
+        foreach($TmpInfSave as $Inf){
+            $this->InfSave[$Inf->INFVARIABLE]=$Inf->INFVALUE;
+        }
+                                       
         if (isset($_GET['CrCode'])){
             $this->Credit=(new ATP1CredMod)->GetP1Credit($_GET['CrCode']);
         }
@@ -228,17 +239,19 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'Expert'=>$this->Expert,            
             'Front'=>(new ATP1ContMod)->GetFront($_GET['ContCode']),
             'Comments'=>$this->Comments,
-            'ExpertDr'=>$this->RiskListDr,
+            'RiskDr'=>$this->RiskDr,
             'RiskList'=>$this->RiskList,
             'RiskListOld'=>$this->RiskListOld,
             'RiskListMan'=>$this->RiskListMan,
+            'RiskListDirSogl'=>$this->RiskListDirSogl,
             'RiskList2'=>$this->RiskList2,            
-            'RiskListDr2'=>$this->RiskListDr2,
+            'RiskDr2'=>$this->RiskDr2,
             'MinIncList'=>$NewMinInc,
             'Credit'=>$this->Credit,
             'WorkHist'=>$this->WorkHist,
             'IncHist'=>$this->IncHist,
-            'DRRegionsList'=>(new ATDrRegionsMod())->GetRegList()            
+            'DRRegionsList'=>(new ATDrRegionsMod())->GetRegList(),
+            'InfSave'=>$this->InfSave
         ];
         
     }

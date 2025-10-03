@@ -134,8 +134,7 @@
                                         <label>Остаток долга</label><input type='{$AnketaShowField}' name='CRSUMREST' value='{$Cred->CRSUMREST}' autocomplete='off'>
                                         <input type='hidden' name='CRSUMRESTMAIN' value='{$Cred->CRSUMRESTMAIN}' autocomplete='off'>
                                         </p>
-                                        <p> 
-                                        <label>Сумма платежа</label><input type='{$AnketaShowField}' name='CRPAYSUM' value='{$Cred->CRPAYSUM}' autocomplete='off'>
+                                        <p>                                         
                                         <input type='hidden' name='CRPAYDAY' value='{$Cred->CRPAYDAY}' autocomplete='off'>");
                                     
                                     echo("
