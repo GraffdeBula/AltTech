@@ -619,8 +619,7 @@
         </div>
         <div class="tab-pane fade" id="Pays">
             <div>
-                <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>
-                <div class='row'>    
+                <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>                 
                 <p>Внесено по договору: <strong><?=$Payment->getTotalSum()['TotalInc']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено неустойки: <strong><?=$Payment->getTotalSum()['TotalInc2']->PAYSUM ?> руб.</strong><p>
                 <p>Внесено в ОХ: <strong><?=$Payment->getTotalSum()['TotalDep']->PAYSUM ?> руб.</strong><p>
@@ -694,27 +693,7 @@
                         </tr>
                     </thead>
                     <tbody id='PaymentList'>        
-
-                        <?php
-    //                    foreach($Payment->getPaymentList() as $i => $Pay){
-    //                        $PayDate=(new PrintFunctions())->DateToStr($Pay->PAYDATE);
-    //                        echo('<tr class="table-active">');
-    //                        echo("<td>{$Pay->PAYCODE}</td>");
-    //                        echo("<td>{$PayDate}</td>");
-    //                        echo("<td>{$Pay->PAYSUM}</td>");
-    //                        echo("<td>{$Pay->PAYPR}</td>");
-    //                        
-    //                        echo("<td><a href='payments/{$Pay->ID}.xlsx'><button class='btn btn-success'>Скачать ПКО</button></a></td>");                            
-    //                        
-    //                        
-    //                        echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=FormPayBill&Id={$Pay->ID}&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}><button class='btn btn-info'>Переформировать</button></a></td>");
-    //                        
-    //                        if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
-    //                            echo("<td><a href=index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}&PayId={$Pay->ID}><button class='btn btn-danger'>УДАЛИТЬ_{$Pay->ID}</button></a></td>");
-    //                        }
-    //                        echo('</tr>');
-    //                    }
-                        ?>
+                        
                     </tbody>
                 </table>
             </div>
