@@ -125,11 +125,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function actionDirSogl(){
         (new ExpertMod())->UpdSoglDir($_SESSION['EmName'], Date('d.m.Y'), $_GET['ContCode']);
+        $Cont=new ContP1($_GET['ContCode']);
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],                        
             'FRDOPSUM'=>$_GET['FRDOPSUM'],
-            'FRDOPDATE'=>Date('d.m.Y')
+            'FRDOPDATE'=>Date('d.m.Y'),
+            'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
+        $this->SaveTypeCalend();
         (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
         //копирование рисков
         $RiskListJur=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');
@@ -171,11 +174,13 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionManSogl(){
+        $Cont=new ContP1($_GET['ContCode']);
         $this->FrontSave([
             'CONTCODE'=>$_GET['ContCode'],
             'FRMANSOGLDATE'=>Date('d.m.Y'),
             'FRMANSOGLNAME'=>$_SESSION['EmName'],
             'FRDOPSUM'=>$_GET['FRDOPSUM'],
+            'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
         (new Status())->ChangeP1Status(18, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
