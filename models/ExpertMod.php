@@ -100,14 +100,14 @@ class ExpertMod extends Model{
         return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
-                . "WHERE tblP1Anketa.Status=? ORDER BY frOffice, tblP1Anketa.ContCode DESC",[15]);
+                . "WHERE tblP1Anketa.Status=? ORDER BY frOffice, frContdate DESC",[15]);
     }
     //*договоры на правовой анализ
     public function getContJurList(){
         return db2::getInstance()->fetchAll("SELECT tblClients.ClCode,tblP1Anketa.ContCode AS ContCode,ClFIO,frOffice,frContdate "
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
-                . "WHERE tblP1Anketa.Status=? ORDER BY frOffice, tblP1Anketa.ContCode DESC",[16]);
+                . "WHERE tblP1Anketa.Status=? ORDER BY frOffice, frContdate DESC",[16]);
     }
     //*проведён правовой анализ
     public function getContJurSogl(){
@@ -115,7 +115,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? AND expunderdate is null ORDER BY frOffice, exresdat,tblP1Anketa.ContCode",[17]);
+                . "WHERE tblP1Anketa.Status=? AND expunderdate is null ORDER BY frOffice, exjursogldate DESC",[17]);
     }
     //*условия согласованы с клиентом
     public function getContManSogl(){
@@ -123,7 +123,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "         
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE tblP1Anketa.Status=? ORDER BY frOffice, tblP1Anketa.ContCode DESC",[18]);
+                . "WHERE tblP1Anketa.Status=? ORDER BY frOffice, frmansogldate DESC",[18]);
     }
     //*договоры согласованы руководителем (договоры для постконтроля)
     public function getContDirSogl(){
@@ -131,7 +131,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND (expunderdate is null) ORDER BY frOffice, tblP1Anketa.ContCode DESC",[20,21]);
+                . "WHERE (tblP1Anketa.Status=? OR tblP1Anketa.Status=?) AND (expunderdate is null) ORDER BY frOffice, exdirsogldate DESC",[20,21]);
     }
     
     
@@ -141,7 +141,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE expunderdate>=? ORDER BY frOffice, tblP1Anketa.ContCode DESC",['01.08.2024']);
+                . "WHERE expunderdate>=? ORDER BY frOffice, expunderdate DESC",['01.08.2024']);
     }
     
     //*проведён постконтроль, выявлены ошибки
@@ -150,7 +150,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE expunderdate>=? AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY frOffice, tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
+                . "WHERE expunderdate>=? AND expUnderRes=? AND exJurErrWorkDate IS NULL ORDER BY frOffice, expunderdate DESC",['01.08.2024','Выявлены ошибки']);
     }
     
     //*выявленные ошибки исправлены
@@ -159,7 +159,7 @@ class ExpertMod extends Model{
                 . "FROM tblClients INNER JOIN tblP1Anketa ON tblClients.ClCode=tblP1Anketa.ClCode "
                 . "INNER JOIN tblP1Front ON tblP1Anketa.ContCode=tblP1Front.ContCode "                
                 . "INNER JOIN tblP1Expert ON tblP1Anketa.ContCode=tblP1Expert.ContCode "
-                . "WHERE exJurErrWorkdate>=? AND expUnderRes=? ORDER BY frOffice, tblP1Anketa.ContCode DESC",['01.08.2024','Выявлены ошибки']);
+                . "WHERE exJurErrWorkdate>=? AND expUnderRes=? ORDER BY frOffice, expunderdate DESC",['01.08.2024','Выявлены ошибки']);
     }
     
 }
