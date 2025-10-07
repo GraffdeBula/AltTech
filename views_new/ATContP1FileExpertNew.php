@@ -205,7 +205,7 @@
                                     </select></p>
                                     <p>
                                         <label>Число кредитов/обязательств</label><input name='EXCRNUM' value=<?=$Expert->EXCRNUM?>>
-                                        <label>Число сложных кредиторов</label><input  name='EXCOMPLEXCRNUM' value=<?=$Expert->EXCOMPLEXCRNUM?> required>
+                                        <label>Число сложных кредиторов</label><input  name='EXCOMPLEXCRNUM' value='<?=$Expert->EXCOMPLEXCRNUM?>' required>
                                     </p>
                                     <p>
                                         <label>Сумма долга</label><input name='EXTOTDEBTSUM' value=<?=$Expert->EXTOTDEBTSUM?>>
