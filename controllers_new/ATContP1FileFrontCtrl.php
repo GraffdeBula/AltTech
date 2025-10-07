@@ -132,7 +132,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRDOPDATE'=>Date('d.m.Y'),
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
-        $this->SaveTypeCalend();
+        #$this->SaveTypeCalend();
         (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
         //копирование рисков
         $RiskListJur=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');
