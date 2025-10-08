@@ -132,7 +132,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRDOPDATE'=>Date('d.m.Y'),
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
-        $this->SaveTypeCalend();
+        #$this->SaveTypeCalend();
         (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
         //копирование рисков
         $RiskListJur=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');
@@ -512,7 +512,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionDelPayment(){
-        if (in_array($_SESSION['EmRole'],['top','admin'])){
+        if ((in_array($_SESSION['EmRole'],['top','admin',]))OR($_SESSION['EmName']=='Александра Речнова')){
             (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
             (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
         }
