@@ -178,16 +178,19 @@
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора</th>
+                                <th scope="col">Дней в статусе</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($ExpList[11] as $ExpCont){ 
-                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                            <?php foreach($ExpList[11] as $ExpCont){                                 
+                                $CurDate=new DateTime();
+                                $Diff=(int)$CurDate->diff(new DateTime($ExpCont->FRCONTDATE))->format('%a');
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
-                                    ."<td>$ContDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE)."</td>"
+                                    ."<td>".$Diff."<td>" 
                                 ."</tr>");
                                 
                             }
@@ -204,16 +207,21 @@
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора</th>
+                                <th scope="col">Дата предоставления документов</th>
+                                <th scope="col">Дней в статусе</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($ExpList[12] as $ExpCont){ 
-                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                            <?php foreach($ExpList[12] as $ExpCont){  
+                                $CurDate=new DateTime();
+                                $Diff=(int)$CurDate->diff(new DateTime($ExpCont->FREXPGETDATE))->format('%a');
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
-                                    ."<td>$ContDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE)."</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FREXPGETDATE)."</td>"
+                                    ."<td>".$Diff."<td>"        
                                 ."</tr>");
                                 
                             }
@@ -230,21 +238,23 @@
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора</th>
-                                <th scope="col">Дата правового анализа</th>
                                 <th scope="col">ФИО юриста</th>
+                                <th scope="col">Дата правового анализа</th>
+                                <th scope="col">Дней в статусе</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($ExpList[13] as $ExpCont){ 
-                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
-                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE);
+                                $CurDate=new DateTime();
+                                $Diff=(int)$CurDate->diff(new DateTime($ExpCont->EXJURSOGLDATE))->format('%a');
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
-                                    ."<td>$ContDate</td>"
-                                    ."<td>$ExpDate</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE)."</td>"
                                     ."<td>$ExpCont->EXJURSOGLNAME</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE)."</td>"
+                                    ."<td>".$Diff."<td>"
                                 ."</tr>");
                                 
                             }
@@ -261,23 +271,24 @@
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора</th>
-                                <th scope="col">Дата правового анализа</th>
-                                <th scope="col">Дата согласования с клиентом</th>
                                 <th scope="col">ФИО менеджера</th>
+                                <th scope="col">Дата согласования с клиентом</th>
+                                <th scope="col">Дней в статусе</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($ExpList[14] as $ExpCont){ 
-                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
-                                $ExpDate=(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE);
+                                $CurDate=new DateTime();
+                                $Diff=(int)$CurDate->diff(new DateTime($ExpCont->FRMANSOGLDATE))->format('%a');
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
-                                    ."<td>$ContDate</td>"
-                                    ."<td>$ExpDate</td>"
-                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRMANSOGLDATE)."</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE)."</td>"                                    
                                     ."<td>$ExpCont->FRMANSOGLNAME</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRMANSOGLDATE)."</td>"
+                                    ."<td>".$Diff."<td>"
                                 ."</tr>");
                                 
                             }
@@ -294,9 +305,8 @@
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
                                 <th scope="col">Дата договора</th>
-                                <th scope="col">Дата правового анализа</th>
-                                <th scope="col">ФИО юриста</th>
-                                <th scope="col">Дата согласования руководителя</th>                                
+                                <th scope="col">Дата согласования руководителя</th>    
+                                <th scope="col">Дней в статусе</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -308,17 +318,15 @@
                                 if (($m>1)or($y>0)or($ExpCont->EXDIRSOGLDATE==null)){
                                     continue;
                                 }
-                                
-                                $ContDate=(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE);
+                                $CurDate=new DateTime();
+                                $Diff=(int)$CurDate->diff(new DateTime($ExpCont->EXDIRSOGLDATE))->format('%a');
                                 echo("<tr class='table-info'>"
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
-                                    ."<td>$ContDate</td>"
-                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXJURSOGLDATE)."</td>"
-                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
+                                    ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE)."</td>"
                                     ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXDIRSOGLDATE)."</td>"
-                                            ."<td>".$ExpCont->EXDIRSOGLDATE."</td>"
+                                    ."<td>".$Diff."<td>"
                                 ."</tr>");
                                 
                             }

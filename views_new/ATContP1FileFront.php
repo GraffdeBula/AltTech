@@ -64,7 +64,7 @@
             . "<button class='btn btn-primary'>Правовое заключение (акт ЭПЭ)</button></a>");
         }
         
-        if ((!$Expert->EXDIRSOGLDATE==null)){
+        if (($Anketa->STATUS>=18)&&(!$Front->FRMANSOGLDATE==null)){
             echo("<a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-info'>Допсоглашение к договору</button></a>");
         }

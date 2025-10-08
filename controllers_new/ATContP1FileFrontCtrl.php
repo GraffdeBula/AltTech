@@ -512,7 +512,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionDelPayment(){
-        if (in_array($_SESSION['EmRole'],['top','admin'])){
+        if ((in_array($_SESSION['EmRole'],['top','admin',]))OR($_SESSION['EmName']=='Александра Речнова')){
             (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
             (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
         }
