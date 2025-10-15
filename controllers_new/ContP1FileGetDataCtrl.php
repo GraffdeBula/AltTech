@@ -24,4 +24,14 @@ class ContP1FileGetDataCtrl extends ControllerMain {
         (new PaymentMod())->delPayment($_GET['ID'],$_GET['ContCode']);
     }
     
+    public function actionGetPaymentMethodList(){
+        $PaymentMethod=(new PaymentMod())->getPaymentList($_GET['ContCode'],1);
+        echo json_encode($PaymentMethod);        
+    }
+    
+    public function actionGetPaymentPrList(){
+        $PaymentPr=(new PaymentMod())->getPaymentList($_GET['ContCode'],1);
+        echo json_encode($PaymentPr);        
+    }
+    
 }

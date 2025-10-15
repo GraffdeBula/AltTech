@@ -6,7 +6,7 @@
  * 3. удаление платежа без обновления страницы
  * 
  */
-
+var SessionEmRole=document.getElementById('SessionEmRole').value;
 var TarSum=0; 
 
 var BtnTarif=document.getElementById('btn-tarif');
@@ -123,19 +123,19 @@ getPayList();
 function getPayList(){
     var PaymentListReq=new XMLHttpRequest();
     PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
+    var PaymentMethodList=new XMLHttpRequest();
+    PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
+    var PaymentPrList=new XMLHttpRequest();
+    PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
+    var now = new Date();
+    var TodayMonth=now.getMonth()+1;
+    var TodayDay=now.getDate();
     PaymentListReq.onload = function(){
-        var PaymentList=JSON.parse(this.responseText);
-        console.log(PaymentList);
+        var PaymentList=JSON.parse(this.responseText);        
         output='';
         for (var i in PaymentList ){
             var MyDate=PaymentList[i].PAYDATE;
             
-//            MyDate.toLocaleDateString('ru-RU', {
-//                year: 'numeric',
-//                month: '2-digit',
-//                day: '2-digit'
-//            });
-//            console.log(MyDate);
             var PayCodeStr='';
             if ((PaymentList[i].PAYCODE<10)&&(PaymentList[i].CONTTYPE==1)){
                 PayCodeStr='0000'+PaymentList[i].PAYCODE;
@@ -150,15 +150,39 @@ function getPayList(){
             } else if ((PaymentList[i].CONTTYPE==2)) {
                 PayCodeStr=''+PaymentList[i].PAYCODE;
             }
+            MyPayDateArr=PaymentList[i].PAYDATE.split("-");
+            var MyPayDate=new Date(MyPayDateArr[0],MyPayDateArr[1]-1,MyPayDateArr[2]);
+            var PayMonth=MyPayDate.getMonth()+1;
+            var PayDay=MyPayDate.getDate();
+            var UpdButton="";
+            var DelButton="";
+            console.log([TodayMonth,PayMonth,TodayDay,PayDay]);
+            var months1=[1,3,5,7,8,10];
+            var months2=[4,6,9];
+            var days=[28,29];
+            if (
+                    ((SessionEmRole=='director')&&
+                    (((PayMonth==TodayMonth)&&(PayDay>=TodayDay-1))
+                    ||((PayMonth==TodayMonth-1)&&(months1.includes(TodayMonth))&&(TodayDay==1)&&(PayDay==31))
+                    ||((PayMonth==TodayMonth-1)&&(months2.includes(TodayMonth))&&(TodayDay==1)&&(PayDay==30))
+                    ||((PayMonth==TodayMonth-1)&&(TodayMonth==3)&&(TodayDay==1)&&(days.includes(PayDay))))
+                )
+                ||(SessionEmRole=='top')
+                ||(SessionEmRole=='admin')
+                )
+            {
+                DelButton="<a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить "+PaymentList[i].ID+"</button></a>";
+            };
             
+            SessionEmRole
             output+="<tr class='table-active'>"+
                 "<td>"+PayCodeStr+"</td>"+
                 "<td>"+PaymentList[i].PAYDATE+"</td>"+
-                "<td>"+PaymentList[i].PAYSUM+"</td>"+
+                "<td><input name='PAYSUM' size=9 value='"+PaymentList[i].PAYSUM+"'></td>"+
                 "<td>"+PaymentList[i].PAYPR+"</td>"+
                 "<td>"+PaymentList[i].PAYMETHOD+"</td>"+
                 "<td><a target='_blanc' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=DownloadPayBill&ClCode="+PaymentList[i].CLCODE+"&ContCode="+PaymentList[i].CONTCODE+"&PayID="+PaymentList[i].ID+"'><button class='btn btn-success'>Скачать ПКО</button></a></td>"+
-                "<td><a><button onclick=delPayment("+PaymentList[i].ID+") class='btn btn-danger'>Удалить "+PaymentList[i].ID+"</button></a></td>"+
+                "<td>"+DelButton+"</td>"+
                 
                 "</tr>";
 
