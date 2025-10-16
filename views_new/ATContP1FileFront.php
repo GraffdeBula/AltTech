@@ -666,7 +666,11 @@
                             foreach($Payment->getTypeList() as $PayPr){
                                 echo("<option value='{$PayPr->NAME}'>{$PayPr->NAME}</option>");
                             }
+                            if ($Front->FROFFICE=='ФР Берёзовский'){
+                                echo("<option value='Принято на ответственное хранение'>Принято на ответственное хранение</option>");
+                            }
                         ?>
+                        
                         </select>
                 </div>
                 <div class='col-10'>

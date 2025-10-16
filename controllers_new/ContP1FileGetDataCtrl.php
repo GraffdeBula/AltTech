@@ -25,12 +25,12 @@ class ContP1FileGetDataCtrl extends ControllerMain {
     }
     
     public function actionGetPaymentMethodList(){
-        $PaymentMethod=(new PaymentMod())->getPaymentList($_GET['ContCode'],1);
+        $PaymentMethod=(new ATDrPaymentMod())->getPaymentMethod();
         echo json_encode($PaymentMethod);        
     }
     
     public function actionGetPaymentPrList(){
-        $PaymentPr=(new PaymentMod())->getPaymentList($_GET['ContCode'],1);
+        $PaymentPr=(new ATDrPaymentMod())->getPaymentList1();
         echo json_encode($PaymentPr);        
     }
     

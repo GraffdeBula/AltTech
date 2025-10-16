@@ -123,10 +123,13 @@ getPayList();
 function getPayList(){
     var PaymentListReq=new XMLHttpRequest();
     PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
-    var PaymentMethodList=new XMLHttpRequest();
-    PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
-    var PaymentPrList=new XMLHttpRequest();
-    PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
+    var PaymentMethodList=new XMLHttpRequest();    
+    PaymentMethodList.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentMethodList',true);    
+    PaymentMethodList.onload = function(){
+        console.log(this);
+        var PaymentMethods=JSON.parse(this.responseText);
+        console.log(PaymentMethods);
+    };
     var now = new Date();
     var TodayMonth=now.getMonth()+1;
     var TodayDay=now.getDate();
