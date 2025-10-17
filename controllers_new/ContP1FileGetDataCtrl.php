@@ -31,6 +31,7 @@ class ContP1FileGetDataCtrl extends ControllerMain {
     
     public function actionGetPaymentPrList(){
         $PaymentPr=(new ATDrPaymentMod())->getPaymentList1();
+        new MyCheck($PaymentPr,1);
         echo json_encode($PaymentPr);        
     }
     

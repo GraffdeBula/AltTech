@@ -120,21 +120,28 @@ var AddPayBtn=document.getElementById('AddPayBtn');
 
 getPayList();
 
+var PaymentMethodReq=fetch('index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentMethodList',['GET']);
+
+
+console.log('1');
+
+console.log(PaymentMethodReq.json());
+
+
+console.log('2');
+PaymentMethodReq.send();
+
 function getPayList(){
     var PaymentListReq=new XMLHttpRequest();
     PaymentListReq.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentList&ContCode='+ContCode,true);
-    var PaymentMethodList=new XMLHttpRequest();    
-    PaymentMethodList.open('GET','index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentMethodList',true);    
-    PaymentMethodList.onload = function(){
-        console.log(this);
-        var PaymentMethods=JSON.parse(this.responseText);
-        console.log(PaymentMethods);
-    };
+    
     var now = new Date();
     var TodayMonth=now.getMonth()+1;
-    var TodayDay=now.getDate();
+    var TodayDay=now.getDate();    
+    
     PaymentListReq.onload = function(){
-        var PaymentList=JSON.parse(this.responseText);        
+        var PaymentList=JSON.parse(this.responseText); 
+        console.log(PaymentList);
         output='';
         for (var i in PaymentList ){
             var MyDate=PaymentList[i].PAYDATE;
