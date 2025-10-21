@@ -71,7 +71,7 @@
                                             foreach($RiskList as $RiskJur){
                                                 if ($RiskJur->EXLISTVALUE==$Risk->DRVALUE){
                                                     $Val="checked=''";
-                                                    if (! in_array($_SESSION['EmRole'],['top','director',])){
+                                                    if (($Anketa->STATUS>=17)&&(! in_array($_SESSION['EmRole'],['top','director']))){
                                                         $Disabled='disabled';
                                                     } 
                                                     $Sum=$RiskJur->EXLISTVALUE4;

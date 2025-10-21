@@ -238,6 +238,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
             'CredList'=>$this->CredList,
             'Expert'=>$this->Expert,            
             'Front'=>(new ATP1ContMod)->GetFront($_GET['ContCode']),
+            'Anketa'=>(new ATP1ContMod)->GetAnketa($_GET['ContCode']),
             'Comments'=>$this->Comments,
             'RiskDr'=>$this->RiskDr,
             'RiskList'=>$this->RiskList,
