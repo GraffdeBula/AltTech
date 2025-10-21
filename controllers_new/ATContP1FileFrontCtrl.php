@@ -511,12 +511,17 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionDelPayment(){
-        if ((in_array($_SESSION['EmRole'],['top','admin',]))OR($_SESSION['EmName']=='Александра Речнова')){
-            (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
-            (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
-        }
-        #header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    public function actionUpdPayment(){                
+        (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDelPayment(){        
+        (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
+        (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
+        
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionDownloadPayBill(){

@@ -713,7 +713,7 @@
                                 echo("<option value='{$PayPr->NAME}'>{$PayPr->NAME}</option>");
                             }
                             if ($Front->FROFFICE=='ФР Берёзовский'){
-                                echo("<option value='Принято на ответственное хранение'>Принято на ответственное хранение</option>");
+                                echo("<option value='Принято на ответственное хранение'>Принято на ответственное хранение</option>");                                                    
                             }
                         ?>
                         
@@ -746,19 +746,39 @@
                     </thead>
                     <tbody>        
                         <?php
-                            foreach($Payment->getPaymentList() as $Payment){
+                            foreach($Payment->getPaymentList() as $Pay){
                                 echo('<tr>');
-                                echo('<th>'.$Payment->PAYCODE.'</th>');
-                                echo('<th>'.(new PrintFunctions())->DateToStr($Payment->PAYDATE).'</th>');
-                                echo('<th><input type="number" required value='.$Payment->PAYSUM.'></th>');
-                                echo('<th><input type="text" required value='.$Payment->PAYPR.'></th>');
-                                echo('<th>'.$Payment->PAYMETHOD.'</th>');
-                                
-                                echo('<th><button class="btn btn-sucess">Изменить</button></th>');
-                                if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
-                                    echo('<th><button class="btn btn-sucess">Удалить</button></th>');
-                                    echo('<th><button class="btn btn-sucess">Скачать</button></th>');
+                                echo('<th>'.$Pay->PAYCODE.'</th>');
+                                echo('<th>'.(new PrintFunctions())->DateToStr($Pay->PAYDATE).'</th>');
+                                echo('<th><input type="text" required size="8" value='.$Pay->PAYSUM.'></th>');
+                                echo('<th>');
+                                echo('<select required name="PAYPR">');                                
+                                echo('<option value='.$Pay->PAYPR.'>'.$Pay->PAYPR.'</option>');
+                                foreach($Payment->getTypeList() as $PayPr){
+                                    echo('<option value='.$PayPr->NAME.'>'.$PayPr->NAME.'</option>');
                                 }
+                                echo('</select>');
+                                echo('</th>');
+                                echo('<th>');
+                                echo('<select required name="PAYMETHOD">');                                
+                                echo('<option value='.$Pay->PAYMETHOD.'>'.$Pay->PAYMETHOD.'</option>');
+                                foreach($Payment->getMethodList() as $PayPr){
+                                    echo('<option value='.$PayPr->METHOD.'>'.$PayPr->METHOD.'</option>');
+                                }
+                                echo('</select>');
+                                echo('</th>');
+                                if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
+                                    echo('<form>');
+                                    new MyForm('ATContP1FileFrontCtrl',' ',$_GET['ClCode'],$_GET['ContCode']);
+                                    echo('<input type="hidden" name="ID" id="PAYSUM">');
+                                    echo('<input type="hidden" name="PAYSUM" id="PAYSUM">');
+                                    echo('<input type="hidden" name="PAYPR" id="PAYPR">');
+                                    echo('<input type="hidden" name="PAYMETHOD" id="PAYMETHOD">');
+                                    echo('<th><button class="btn btn-warning">Изменить</button></th>');                                
+                                    echo('</form>');
+                                    echo('<th><button class="btn btn-danger">Удалить</button></th>');
+                                }
+                                echo('<th><button class="btn btn-success">Скачать</button></th>');                                
                                 echo('</tr>');
                             }
                         ?>
