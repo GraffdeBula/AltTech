@@ -99,6 +99,9 @@
           <a class="nav-link" data-bs-toggle="tab" href="#Tarif">Тариф, график платежей</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#ContDopList">Допсоглашения к договору</a>
+        </li> 
+        <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#Pays">Платежи</a>
         </li> 
         <li class="nav-item">
@@ -618,6 +621,48 @@
             </div>
          
         </div>
+        <div class="tab-pane fade" id="ContDopList">
+            <h5>Список допсоглашений к договору</h5>            
+            <div class='col-6'>
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Дата</th>
+                            <th>Изменение стоимости</th>
+                            <th>Описание</th>
+                            <th>Печать</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>1</th>
+                            <th><input type='date' size='9' required value='01.10.2025'></th>
+                            <th><input type='number' size='5' required value='3000'></th>
+                            <th><input type='text' size='80' required value='Причина увеличения стоимости на 3000'></th>
+                            <th><button class='btn btn-warning'>Сохранить</button></th>
+                            <th><button class='btn btn-info'>Печать</button></th>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <th><input type='date' required value='15.10.2025'></th>
+                            <th><input type='number' required value='27000'></th>
+                            <th><input type='text' required value='Причина увеличения стоимости на 27000'></th>
+                            <th><button class='btn btn-warning'>Сохранить</button></th>
+                            <th><button class='btn btn-info'>Печать</button></th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th><input type='date' required value='28.10.2025'></th>
+                            <th><input type='number' required value='-15000'></th>
+                            <th><input type='text' required value='Причина уменьшения стоимости на 15000'></th>
+                            <th><button class='btn btn-warning'>Сохранить</button></th>
+                            <th><button class='btn btn-info'>Печать</button></th>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
         <div class="tab-pane fade" id="Pays">
             <div>
                 <p>Общая сумма договора: <strong><?=$Front->FRCONTSUM ?> руб.</strong><p>                 
@@ -694,11 +739,29 @@
                           <th scope="col">Сумма</th>
                           <th scope="col">Назначение платежа</th>
                           <th scope="col">Способ платежа</th>
+                          <th scope="col">Изменить</th>
+                          <th scope="col">Удалить</th>
                           <th scope="col">Скачать</th>
                         </tr>
                     </thead>
-                    <tbody id='PaymentList'>        
-                        
+                    <tbody>        
+                        <?php
+                            foreach($Payment->getPaymentList() as $Payment){
+                                echo('<tr>');
+                                echo('<th>'.$Payment->PAYCODE.'</th>');
+                                echo('<th>'.(new PrintFunctions())->DateToStr($Payment->PAYDATE).'</th>');
+                                echo('<th><input type="number" required value='.$Payment->PAYSUM.'></th>');
+                                echo('<th><input type="text" required value='.$Payment->PAYPR.'></th>');
+                                echo('<th>'.$Payment->PAYMETHOD.'</th>');
+                                
+                                echo('<th><button class="btn btn-sucess">Изменить</button></th>');
+                                if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
+                                    echo('<th><button class="btn btn-sucess">Удалить</button></th>');
+                                    echo('<th><button class="btn btn-sucess">Скачать</button></th>');
+                                }
+                                echo('</tr>');
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>
