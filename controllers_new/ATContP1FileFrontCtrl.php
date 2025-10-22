@@ -512,7 +512,8 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionUpdPayment(){                
-        (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
+        new MyCheck($_GET,0);
+        (new PaymentMod())->updPayment($_GET['PayId'],$_GET['ContCode']);
         
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }

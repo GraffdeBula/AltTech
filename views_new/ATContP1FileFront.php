@@ -115,10 +115,8 @@
         </li> 
     </ul>
     <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade active show" id="Main">
-                                                                           
+        <div class="tab-pane fade active show" id="Main">                                                                           
             <?php
-
                 echo("<form method='get' autoload='off'>");
                     (new MyForm('ATContP1FileFrontCtrl','ContSigned',$Client->CLCODE,$Anketa->CONTCODE))->AddForm();
                     if ($Front->FROFFICE==''){
@@ -146,31 +144,29 @@
                 </form>");
                                     
                 echo("<p><label>ДАТА ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</label><input type='date' name='FREXPACTDATE' value={$Front->FREXPACTDATE}></p>");
-                                
-                                                                           
+                                                                                                           
                 echo("<p>
                     <label>Итоговое изменение стоимости договора</label><input type='number' name='FRDOPSUM' value='{$Front->FRDOPSUM}' id='FRDOPSUM_V'>
                     <label><strong  style='color:red;'>Обязательно указать сумму. Если договор сохраняется на первоначальных условиях, то поставить 0.</strong></label>");
-                                                                       
             ?>
-            <div class='row'>                                 
+            <div class='row'>
                 <div class='col-lg-2'>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
                         <div class="card-header">Согласование с клиентом</div>
                         <div class="card-body">
-                            <h4 class="card-title"></h4>  
+                            <h4 class="card-title"></h4>
                             <p class="card-text"></p>
                             <input disabled type='text' name='FRMANSOGLNAME' value='<?=$Front->FRMANSOGLNAME;?>'>
-                            <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>                            
+                            <input disabled type='date' name='FRMANSOGLDATE' value='<?=$Front->FRMANSOGLDATE;?>'>
                             <form method='get'>
                                 <input type='hidden' name='FRDOPSUM' value='<?=$Front->FRDOPSUM;?>' id='FRDOPSUMMAN'>
                                 <?php
-                                    (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();                                            
+                                    (new MyForm('ATContP1FileFrontCtrl','ManSogl',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                     if ((
                                         in_array($_SESSION['EmRole'],['admin','front','director','franshman','top']))
                                         &&(is_null($Front->FRMANSOGLDATE))
-                                        &&(!is_null($Expert->EXJURSOGLDATE))                                        
-                                    ){    
+                                        &&(!is_null($Expert->EXJURSOGLDATE))
+                                    ){
                                         echo("<button type='submit' class='btn btn-secondary' onMouseover=FrDopSumManFocus()>Подтверждаю, что всё внесено и расчитано верно</button>");
                                     }
                                 ?>    
@@ -750,31 +746,31 @@
                                 echo('<tr>');
                                 echo('<th>'.$Pay->PAYCODE.'</th>');
                                 echo('<th>'.(new PrintFunctions())->DateToStr($Pay->PAYDATE).'</th>');
-                                echo('<th><input type="text" required size="8" value='.$Pay->PAYSUM.'></th>');
+                                echo('<th><input type="text" size="8" id="PAYSUM'.$Pay->ID.'" value='.$Pay->PAYSUM.'></th>');
                                 echo('<th>');
-                                echo('<select required name="PAYPR">');                                
-                                echo('<option value='.$Pay->PAYPR.'>'.$Pay->PAYPR.'</option>');
+                                echo('<select id="PAYPR'.$Pay->ID.'">');                                
+                                echo('<option value="'.$Pay->PAYPR.'">'.$Pay->PAYPR.'</option>');
                                 foreach($Payment->getTypeList() as $PayPr){
-                                    echo('<option value='.$PayPr->NAME.'>'.$PayPr->NAME.'</option>');
+                                    echo('<option value="'.$PayPr->NAME.'">'.$PayPr->NAME.'</option>');
                                 }
                                 echo('</select>');
                                 echo('</th>');
                                 echo('<th>');
-                                echo('<select required name="PAYMETHOD">');                                
-                                echo('<option value='.$Pay->PAYMETHOD.'>'.$Pay->PAYMETHOD.'</option>');
+                                echo('<select id="PAYMETHOD'.$Pay->ID.'">');                                
+                                echo('<option value="'.$Pay->PAYMETHOD.'">'.$Pay->PAYMETHOD.'</option>');
                                 foreach($Payment->getMethodList() as $PayPr){
-                                    echo('<option value='.$PayPr->METHOD.'>'.$PayPr->METHOD.'</option>');
+                                    echo('<option value="'.$PayPr->METHOD.'">'.$PayPr->METHOD.'</option>');
                                 }
                                 echo('</select>');
                                 echo('</th>');
                                 if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
-                                    echo('<form>');
-                                    new MyForm('ATContP1FileFrontCtrl',' ',$_GET['ClCode'],$_GET['ContCode']);
-                                    echo('<input type="hidden" name="ID" id="PAYSUM">');
-                                    echo('<input type="hidden" name="PAYSUM" id="PAYSUM">');
-                                    echo('<input type="hidden" name="PAYPR" id="PAYPR">');
-                                    echo('<input type="hidden" name="PAYMETHOD" id="PAYMETHOD">');
-                                    echo('<th><button class="btn btn-warning">Изменить</button></th>');                                
+                                    echo('<form method="get">');
+                                    (new MyForm('ATContP1FileFrontCtrl','UpdPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    echo('<input type="hidden" name="ID" value="'.$Pay->ID.'">');
+                                    echo('<input type="hidden" required name="PAYSUM" id="PAYSUMFORM'.$Pay->ID.'">');
+                                    echo('<input type="hidden" name="PAYPR" id="PAYPRFORM'.$Pay->ID.'">');
+                                    echo('<input type="hidden" name="PAYMETHOD" id="PAYMETHODFORM'.$Pay->ID.'">');
+                                    echo('<th><button class="btn btn-warning" onMouseover=PayUpdFocus('.$Pay->ID.')>Изменить</button></th>');                                
                                     echo('</form>');
                                     echo('<th><button class="btn btn-danger">Удалить</button></th>');
                                 }

@@ -112,24 +112,27 @@ function FrDopSumDirFocus(){
     FrDopSumDir.value=FrDopSumVisible.value;
 }
 /*платежи*/
+/***получение фокуса кнопкой изменить*/
+function PayUpdFocus(Id){
+    var Sum=document.getElementById('PAYSUM'+Id);
+    var SumForm=document.getElementById('PAYSUMFORM'+Id);
+    SumForm.value=Sum.value;
+    var PayPr=document.getElementById('PAYPR'+Id);
+    var PayPrForm=document.getElementById('PAYPRFORM'+Id);
+    PayPrForm.value=PayPr.value;
+    var PayMethod=document.getElementById('PAYMETHOD'+Id);
+    var PayMethodForm=document.getElementById('PAYMETHODFORM'+Id);
+    PayMethodForm.value=PayMethod.value;
+}
+
+/*отключено*/
 
 var url=new URL(window.location.href);
 var ContCode=url.searchParams.get('ContCode');
 var DivPaymentList=document.getElementById('PaymentList');
 var AddPayBtn=document.getElementById('AddPayBtn');
 
-getPayList();
-
-var PaymentMethodReq=fetch('index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentMethodList',['GET']);
-
-
-console.log('1');
-
-console.log(PaymentMethodReq.json());
-
-
-console.log('2');
-PaymentMethodReq.send();
+//getPayList();
 
 function getPayList(){
     var PaymentListReq=new XMLHttpRequest();
@@ -203,19 +206,19 @@ function getPayList(){
 
 }
 
-function addPayment(){
-    
-}
-
-function delPayment(DelId){
-    
-    var PaymentDelReq=new XMLHttpRequest();
-    PaymentDelReq.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ContCode='+ContCode+'&PayId='+DelId,true);
-    PaymentDelReq.send();
-    alert('Платёж удалён');
-    setTimeout(getPayList(),1000);
-    
-}
+//function addPayment(){
+//    
+//}
+//
+//function delPayment(DelId){
+//    
+//    var PaymentDelReq=new XMLHttpRequest();
+//    PaymentDelReq.open('GET','index_admin.php?controller=ATContP1FileFrontCtrl&action=DelPayment&ContCode='+ContCode+'&PayId='+DelId,true);
+//    PaymentDelReq.send();
+//    alert('Платёж удалён');
+//    setTimeout(getPayList(),1000);
+//    
+//}
 
 function CheckRisk(id){
     var MyCBValue=document.getElementById('CBR'+id).checked;    

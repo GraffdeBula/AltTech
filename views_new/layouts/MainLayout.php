@@ -1,4 +1,5 @@
-<?php    
+<?php 
+    echo('TEST');
     if ((isset($_SESSION['EmRole']))&&($_SESSION['EmRole']=='admin')) {var_dump($_SESSION);}
 ?>
 <!DOCTYPE html>
