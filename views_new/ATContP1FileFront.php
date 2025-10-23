@@ -735,9 +735,11 @@
                           <th scope="col">Сумма</th>
                           <th scope="col">Назначение платежа</th>
                           <th scope="col">Способ платежа</th>
-                          <th scope="col">Изменить</th>
-                          <th scope="col">Удалить</th>
-                          <th scope="col">Скачать</th>
+                          <th scope="col">-</th>
+                          <th scope="col">-</th>
+                          <th scope="col">-</th>
+                          <th scope="col">Комментарий</th>
+                          
                         </tr>
                     </thead>
                     <tbody>        
@@ -763,18 +765,26 @@
                                 }
                                 echo('</select>');
                                 echo('</th>');
+                                echo('<th>');
                                 if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileFrontCtrl','DelPayment')){
                                     echo('<form method="get">');
                                     (new MyForm('ATContP1FileFrontCtrl','UpdPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                     echo('<input type="hidden" name="ID" value="'.$Pay->ID.'">');
-                                    echo('<input type="hidden" required name="PAYSUM" id="PAYSUMFORM'.$Pay->ID.'">');
+                                    echo('<input type="hidden" name="PAYSUM" id="PAYSUMFORM'.$Pay->ID.'">');
                                     echo('<input type="hidden" name="PAYPR" id="PAYPRFORM'.$Pay->ID.'">');
                                     echo('<input type="hidden" name="PAYMETHOD" id="PAYMETHODFORM'.$Pay->ID.'">');
-                                    echo('<th><button class="btn btn-warning" onMouseover=PayUpdFocus('.$Pay->ID.')>Изменить</button></th>');                                
-                                    echo('</form>');
-                                    echo('<th><button class="btn btn-danger">Удалить</button></th>');
+                                    echo('<input type="hidden" name="COMMENT" id="COMMENTUPDFORM'.$Pay->ID.'">');
+                                    echo('<button class="btn btn-warning" onMouseover=PayUpdFocus('.$Pay->ID.')>Изменить</button>');                                
+                                    echo('</form></th>');
+                                    echo('<th><form method="get">');
+                                    echo('<input type="hidden" name="ID" value="'.$Pay->ID.'">');
+                                    (new MyForm('ATContP1FileFrontCtrl','DelPayment',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                                    echo('<input type="hidden" name="COMMENT" id="COMMENTDELFORM'.$Pay->ID.'">');
+                                    echo('<button class="btn btn-danger" onMouseover=PayDelFocus('.$Pay->ID.')>Удалить</button>');
+                                    echo('</form></th>');
                                 }
-                                echo('<th><button class="btn btn-success">Скачать</button></th>');                                
+                                echo('<th><button class="btn btn-success">Скачать</button></th>'); 
+                                echo('<th><input type="text" size=20 maxlength=100 id="COMMENT'.$Pay->ID.'"></th>');
                                 echo('</tr>');
                             }
                         ?>

@@ -45,7 +45,6 @@ DiscRB4.addEventListener('input',function(){
     DiscountComment.value='Рекомендация';
 });
 
-
 FrContTarif.addEventListener('input',function(){
     
     TarifOne=['2024 БФЛ оплата сразу','2024 БФЛ Пенсионерам сразу','2024 БФЛ внесудебное сразу','2024 БФЛ+ипотека оплата сразу'];
@@ -123,8 +122,16 @@ function PayUpdFocus(Id){
     var PayMethod=document.getElementById('PAYMETHOD'+Id);
     var PayMethodForm=document.getElementById('PAYMETHODFORM'+Id);
     PayMethodForm.value=PayMethod.value;
+    var PayComment=document.getElementById('COMMENT'+Id);
+    var PayCommentForm=document.getElementById('COMMENTUPDFORM'+Id);
+    PayComment.value=PayCommentForm.value;
 }
-
+function PayDelFocus(Id){
+    var PayComment=document.getElementById('COMMENT'+Id);
+    var PayCommentForm=document.getElementById('COMMENTDELFORM'+Id);
+    PayCommentForm.value=PayComment.value;
+    if (PayComment.value==''){PayCommentForm.value='нет комментария';} 
+}
 /*отключено*/
 
 var url=new URL(window.location.href);
