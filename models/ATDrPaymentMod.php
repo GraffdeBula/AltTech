@@ -21,4 +21,14 @@ class ATDrPaymentMod extends Model{
         $Sql='SELECT * FROM tbl5DRPayTypes WHERE PAYPROD IN (0,4) ORDER BY ID';        
         return $this->data=db2::getInstance()->FetchAll($Sql,[]);
     }
+    
+    public function getPaymentMethod(){
+        $Sql='SELECT * FROM tbl5DRPayMethods';        
+        return $this->data=db2::getInstance()->FetchAll($Sql,[]);
+    }
+    
+    public function getPaymentType($TypeName){
+        $Sql='SELECT * FROM tbl5DRPayTypes WHERE Name=?';                
+        return $this->data=db2::getInstance()->FetchOne($Sql,[$TypeName]);
+    }
 }
