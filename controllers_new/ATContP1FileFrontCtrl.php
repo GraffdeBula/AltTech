@@ -511,12 +511,24 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
-    public function actionDelPayment(){
-        if ((in_array($_SESSION['EmRole'],['top','admin',]))OR($_SESSION['EmName']=='Александра Речнова')){
-            (new PaymentMod())->updPaymentLg($_GET['PayId'],$_GET['ContCode'],$_SESSION['EmName']);
-            (new PaymentMod())->delPayment($_GET['PayId'],$_GET['ContCode']);
-        }
-        #header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    public function actionUpdPayment(){
+        $PayType=(new ATDrPaymentMod())->getPaymentType($_GET['PAYPR'])->PAYTYPE1;
+        $Param=[
+            'PAYSUM'=>$_GET['PAYSUM'],
+            'PAYPR'=>$_GET['PAYPR'],
+            'PAYMETHOD'=>$_GET['PAYMETHOD'],
+            'PAYTYPE'=>$PayType,
+        ];
+        (new PaymentMod())->updPayment($Param,$_GET['ID']);  
+        (new PaymentMod())->addUpdDelReestr($_GET['ID'], $_GET['ContCode'], 'изменить', $_GET['COMMENT'], $_SESSION['EmName']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
+    
+    public function actionDelPayment(){        
+        (new PaymentMod())->updPaymentLg($_GET['ID'],$_GET['ContCode'],$_SESSION['EmName']);
+        (new PaymentMod())->delPayment($_GET['ID'],$_GET['ContCode']);
+        (new PaymentMod())->addUpdDelReestr($_GET['ID'], $_GET['ContCode'], 'удалить', $_GET['COMMENT'], $_SESSION['EmName']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionDownloadPayBill(){

@@ -10,6 +10,7 @@
  */
 class Payment {    
     protected $PaymentType; //список типов платежей
+    protected $PaymentMethod; //список способов платежей
     protected $PaymentList; //список платежей по договору
     protected $TotalSum=[]; //общие суммы по договору P1
     
@@ -53,7 +54,7 @@ class Payment {
         
         switch($ProdCode){
             case 1:
-                $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();
+                $this->PaymentType=(new ATDrPaymentMod())->getPaymentList1();                
                 break;
             case 2:
                 $this->PaymentType=(new ATDrPaymentMod())->getPaymentList2();
@@ -62,6 +63,7 @@ class Payment {
                 $this->PaymentType=(new ATDrPaymentMod())->getPaymentList4();
                 break;
         }
+        $this->PaymentMethod=(new ATDrPaymentMod())->getPaymentMethod();
         $this->PaymentList=(new PaymentMod())->getPaymentList($this->ContCode,$ProdCode); 
         $this->TotalSum=[ 
             'TotalInc'=>(new PaymentMod())->countPayments2($this->ContCode,[3,4,5,6,7,9]),
@@ -181,6 +183,10 @@ class Payment {
             
     public function getTypeList(){
         return $this->PaymentType;
+    }
+    
+    public function getMethodList(){
+        return $this->PaymentMethod;
     }
     
     public function getPaymentList(){

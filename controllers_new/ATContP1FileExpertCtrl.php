@@ -131,7 +131,7 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         if ((isset($_GET['AddRisk2'])) && ($_GET['AddRisk2']!='')){
             $NewRisk=$_GET['AddRisk2'];
             $RiskVal2=$_GET['Risk2Value2'];
-            (new ExpertMod)->InsExpRisk($_GET['ContCode'],'Risk2',$NewRisk,$RiskVal2,'',0);
+            (new ExpertMod)->InsExpRisk($_GET['ContCode'],'Risk2',$NewRisk,$RiskVal2,'Jurist',0);
         }
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}#risks");
     }
@@ -140,17 +140,19 @@ class ATContP1FileExpertCtrl extends ControllerMain {
         (new ExpertMod())->updExpRisk($_GET['RiskValue2'],$_GET['RiskValue3'],$_GET['RiskID']);                
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
-    public function actionDelRisk_old(){//удалить риск заключения БФЛ
+    public function actionDelRiskId(){//удалить риск заключения БФЛ
         (new ExpertMod)->DelExpRisk([$_GET['RiskID']]);        
         header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionAddRisk(){//добавить риск заключения БФЛ
         (new ExpertMod())->InsExpRisk($_GET['ContCode'],'Risk',$_GET['RiskVal'],'Jurist','',$_GET['RiskCost']);
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionDelRisk(){
         (new ExpertMod())->DelExpRisk2($_GET['ContCode'],$_GET['RiskVal'],'Jurist');
+        header("Location: index_admin.php?controller=ATContP1FileExpertCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
     public function actionCountRiskDopSum(){

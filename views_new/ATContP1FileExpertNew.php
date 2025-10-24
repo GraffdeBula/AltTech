@@ -116,7 +116,7 @@
                                         foreach($RiskList2 as $Risk){
                                             echo("<tr>");
                                             echo("<form method='get'>");
-                                            (new MyForm('ATContP1FileExpertCtrl','DelRisk',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
+                                            (new MyForm('ATContP1FileExpertCtrl','DelRiskId',$Client->CLCODE,$Cont->CONTCODE))->AddForm();
                                             echo("<input type='hidden' name='RiskID' value='{$Risk->ID}'>");
                                             echo("<th>{$Risk->EXLISTVALUE}</th>");
                                             if ((new CheckRole)->Check($_SESSION['EmRole'],'ATContP1FileExpertCtrl','DelRisk')){

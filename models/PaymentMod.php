@@ -17,6 +17,20 @@ class PaymentMod extends Model{
         db2::getInstance()->Query($Sql,$Params);
     }
     
+    public function updPayment($Param=[],$Id){
+        $Sql="UPDATE tbl5Payments SET lgEmp='{$_SESSION['EmName']}', lgDat=current_timestamp";
+        $Params=[];
+        foreach($Param as $Key=>$Value){
+            $Sql=$Sql.", {$Key}=?";
+            $Params[]=$Value;
+            
+        }
+        $Sql=$Sql." WHERE ID=?";        
+        $Params[]=$Id;
+                
+        return $this->Data=db2::getInstance()->Query($Sql,$Params);
+    }
+    
     public function updPaymentLg($Id,$ContCode,$LgEmp){
         $Sql='UPDATE tbl5Payments set lgEmp=? WHERE Id=? AND ContCode=? ';
         db2::getInstance()->Query($Sql,[$LgEmp,$Id,$ContCode]);
@@ -24,6 +38,11 @@ class PaymentMod extends Model{
     public function delPayment($Id,$ContCode){
         $Sql='DELETE FROM tbl5Payments WHERE Id=? AND ContCode=? ';
         db2::getInstance()->Query($Sql,[$Id,$ContCode]);
+    }
+    
+    public function addUpdDelReestr($PayId,$ContCode,$PayOper,$Comment,$EmName){
+        $Sql='INSERT INTO tbl5UpdDelReestr (PayId,ContCode,PayOper,Comment,EmName) values (?,?,?,?,?)';
+        db2::getInstance()->Query($Sql,[$PayId,$ContCode,$PayOper,$Comment,$EmName]);
     }
     
     public function countPayments($ContCode,$Type1,$Type2){
