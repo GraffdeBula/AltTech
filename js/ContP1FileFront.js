@@ -124,13 +124,18 @@ function PayUpdFocus(Id){
     PayMethodForm.value=PayMethod.value;
     var PayComment=document.getElementById('COMMENT'+Id);
     var PayCommentForm=document.getElementById('COMMENTUPDFORM'+Id);
-    PayComment.value=PayCommentForm.value;
+    if (PayComment.value===''){
+        alert('НУЖНО ВНЕСТИ КОММЕНТАРИЙ');
+    }
+    PayCommentForm.value=PayComment.value;
 }
 function PayDelFocus(Id){
     var PayComment=document.getElementById('COMMENT'+Id);
-    var PayCommentForm=document.getElementById('COMMENTDELFORM'+Id);
+    var PayCommentForm=document.getElementById('COMMENTDELFORM'+Id);    
+    if (PayComment.value==''){
+        alert('НУЖНО ВНЕСТИ КОММЕНТАРИЙ');
+    }
     PayCommentForm.value=PayComment.value;
-    if (PayComment.value==''){PayCommentForm.value='нет комментария';} 
 }
 /*отключено*/
 
