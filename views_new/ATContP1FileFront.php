@@ -761,7 +761,7 @@
                                 }
                                 echo('</select></p>');
                                 echo('</th>');
-                                echo('<th><button class="btn btn-success">Скачать</button></th>');
+                                echo('<th><a target="_blanc" href="index_admin.php?controller=ATContP1FileFrontCtrl&action=DownloadPayBill&ClCode='.$Pay->CLCODE.'&ContCode='.$Pay->CONTCODE.'&PayID='.$Pay->ID.'"><button class="btn btn-success">Скачать</button></a></th>');
                                 echo('<th><input type="text" size=20 maxlength=100 id="COMMENT'.$Pay->ID.'"></th>');
                                 echo('<th>');
                                 

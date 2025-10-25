@@ -138,8 +138,8 @@
                                         <input type='hidden' name='CRPAYDAY' value='{$Cred->CRPAYDAY}' autocomplete='off'>");
                                     
                                     echo("
-                                    <label>Сумма последнего платежа</label>
-                                    <input type='text' name='CRPAYLASTSUM' value='{$Cred->CRPAYLASTSUM}' autocomplete='off'>
+                                    <label>Сумма ежемесячного платежа</label>
+                                    <input type='text' name='CRPAYSUM' value='{$Cred->CRPAYSUM}' autocomplete='off'>
                                     </p>
                                     <p>    
                                         <label>Дата последнего платежа</label><input type='date' name='CRPAYLASTDAT' value='{$Cred->CRPAYLASTDAT}' autocomplete='off'>
