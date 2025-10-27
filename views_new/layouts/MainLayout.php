@@ -1,6 +1,10 @@
 <?php 
     echo('TEST');
+    $MyName='';
+    $MyRole='';
     if ((isset($_SESSION['EmRole']))&&($_SESSION['EmRole']=='admin')) {var_dump($_SESSION);}
+    if (isset($_SESSION['EmName'])){$MyName=$_SESSION['EmName'];}
+    if (isset($_SESSION['EmRole'])){$MyRole=$_SESSION['EmRole'];}
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +32,7 @@
                     <p>Информационная система АЛЬТ-ТЕХ
                         <a href="index_admin.php?controller=ATMainFormCtrl&action=Exit"><button class='btn btn-secondary'>ВЫХОД</button></a>
                     </p>
-                    <p>Добрый день, <?=$_SESSION['EmName']?><input type='hidden' id='SessionEmRole' name='SessionEmRole' value='<?=$_SESSION['EmRole']?>'></p>
+                    <p>Добрый день, <?=$MyName?><input type='hidden' id='SessionEmRole' name='SessionEmRole' value='<?=$MyRole?>'></p>
                 </h4>                
             </div>
             <?=$content?>
