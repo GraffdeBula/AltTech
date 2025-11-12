@@ -508,7 +508,11 @@
             <div>
                 <a target='_blank' href="index_admin.php?controller=AmoAdminPanelCtrl"><button class="btn btn-info">Админ панель АМО</button></a>
             </div>
-                        
+            <?php
+                
+                echo(dirname(dirname($_SERVER['DOCUMENT_ROOT'])));
+
+            ?>            
         </div>     
         <div class="tab-pane fade" id="adminka">
                      
