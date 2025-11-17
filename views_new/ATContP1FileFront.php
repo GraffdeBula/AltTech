@@ -85,7 +85,7 @@
         . "<button class='btn btn-primary'>СПРАВКА О ПЛАТЕЖАХ</button></a>");
         
         if ($_SESSION['EmRole']=='admin'){
-            echo("<a target='_blank' href='index_admin.php?controller=ContP1FileGetDataCtrl&action=GetPaymentMethodList&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
+            echo("<a target='_blank' href='index_admin.php?controller=ATContP1FileFrontCtrl&action=Test&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}'>"
             . "<button class='btn btn-secondary'>TEST</button></a>");
         }
         echo("</div>");
@@ -354,21 +354,10 @@
                                                 (new MyForm('ATContP1FileFrontCtrl','AddDiscount',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
                                             ?>
                                             <input type='hidden' name='DiscountType' value='НД'>
+                                            
                                             <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='12000' name="DiscAct" id="DiscRB1">
-                                                <label class='form-check-label' >Клиент имеет инвалидность. Скидка 12000 руб.</label>                        
-                                            </div>
-                                            <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='12000' name="DiscAct" id="DiscRB2">
-                                                <label class='form-check-label' >Клиент пенсионер. Скидка 12000 руб.</label>                        
-                                            </div>
-                                            <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='9000' name="DiscAct" id="DiscRB3">
-                                                <label class='form-check-label' >Совместное банкротство (супруги). Скидка 9000 </label>                        
-                                            </div>
-                                            <div class='form-check'>
-                                                <input class='form-check-input' type="radio" value='5000' name="DiscAct" id="DiscRB4">
-                                                <label class='form-check-label' >Рекомендация. Скидка 5000</label>                        
+                                                <input class='form-check-input' type="radio" value='10000' name="DiscAct" id="DiscRB4">
+                                                <label class='form-check-label' >Рекомендация. Скидка 10000</label>                        
                                             </div>
                                             <div class='form-check'>
                                                 <input class='form-check-input' type="radio" value='0' name="DiscAct" id='DiskRukValue'>

@@ -107,19 +107,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     }
     
     public function actionTest(){
-        $ContFront=(new ContP1($_GET['ContCode']))->getFront();
-        $CountFirstSum=[
-            'Число кредитов'=>$ContFront->FRCRNUM,
-            'Сложных кредиторов'=>$ContFront->FRCOMPLEXCRNUM,
-            'Маленькая сумма'=>$ContFront->FRSMALLCRED,
-            'Простой случай'=>$ContFront->FREASYCASE,
-            'Срок договора (мес)'=>$ContFront->FRCONTPERIOD,
-        ];
-
-        $this->FrontSave([
-            'CONTCODE'=>$_GET['ContCode'],
-            'FRCONTFIRSTSUMCOUNT'=>json_encode($CountFirstSum)
-        ]);
+        $Payments=(new ContP1($_GET['ContCode']))->getPayCalend()[0];
+        new MyCheck($Payments,0);
+        
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
     
@@ -132,7 +122,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRDOPDATE'=>Date('d.m.Y'),
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
-        #$this->SaveTypeCalend();
+        $this->SaveTypeCalend();
         (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
         //копирование рисков
         $RiskListJur=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');
@@ -182,6 +172,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRDOPSUM'=>$_GET['FRDOPSUM'],
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
+        $this->SaveTypeCalend();
         (new Status())->ChangeP1Status(18, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
@@ -219,29 +210,22 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Pac=(new TarifP1())->getTarifContType($Tarif->TRPAC,$Branch);        
         $ContSum=$Tarif->TRSUMFIX;
         #увеличение стоимости потарифу классический для 11 и более кредиторов
-        $MailExp=0;
-        if (($Cont->getAnketa()->AKCREDNUM>10)&&(in_array($Tarif->TRPAC,['pac85','pac86','pac87','pac88','pac89']))){
-            $ContSum=$ContSum+10000;
-        }
+        
+//        if (($Cont->getAnketa()->AKCREDNUM>10)&&(in_array($Tarif->TRPAC,['pac85','pac86','pac87','pac88','pac89']))){
+//            $ContSum=$ContSum+10000;
+//        }
         
         if (isset($_GET['FRCRNUM'])){
             
             $DopSum=0;
             
-            if (($_GET['FRCRNUM']>=11)&&($_GET['FRCRNUM']<=20)){
-                $DopSum=9000;
-            }
-            if (($_GET['FRCRNUM']>=21)&&($_GET['FRCRNUM']<=40)){
+            if (($_GET['FRCRNUM']>=15)&&($_GET['FRCRNUM']<=25)){
                 $DopSum=18000;
-            }
-            if (($_GET['FRCRNUM']>=41)&&($_GET['FRCRNUM']<=460)){
+            }            
+            if ($_GET['FRCRNUM']>=26){
                 $DopSum=27000;
             }
-            if ($_GET['FRCRNUM']>=61){
-                $DopSum=36000;
-            }
-            
-            
+                        
             $ContSum=$ContSum+$DopSum;                        
         }
         
@@ -250,11 +234,11 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         }
         
         if (isset($_GET['FRSMALLCRED'])){
-            $ContSum=$ContSum-36000;
+            $ContSum=$ContSum-30000;
         }
         
         if (isset($_GET['FREASYCASE'])){
-            $ContSum=$ContSum-18000;
+            $ContSum=$ContSum-15000;
         }
         $ContSum=$ContSum-$Discount; //применена скидка
         
@@ -308,65 +292,42 @@ class ATContP1FileFrontCtrl extends ControllerMain {
     
     public function SaveTypeCalend(){
         $Cont=new ContP1($_GET['ContCode']);
+                        
+        $Period=$Cont->getFront()->FRCONTPERIOD;
+        $FirstPayMin=12000;
+        if (in_array($Cont->getFront()->FRCONTPROG,['Внесудебное банкротство',])){
+            $FirstPayMin=7500;
+        }
         
-        
-        if  (in_array($Cont->getFront()->FRCONTPAC,['pac105','pac106','pac107','pac108','pac115','pac116','pac117','pac118','pac119','pac120'])){
-            $Period=$Cont->getFront()->FRCONTPERIOD;
-            
-            if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')){
-                $FirstPaySum=$_GET['FIRSTPAYSUM'];                
-            }else{
-                $FirstPaySum=9000;
-            }
-            
-            $PaySum=round(($Cont->getFront()->FRCONTSUM-$FirstPaySum)/$Period,-2);
-            $PayLeft=$Cont->getFront()->FRCONTSUM-$FirstPaySum;
-            if ($Cont->getFront()->FRCONTDATE!=null){
-                $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
-            }else{
-                $PayDate=new DateTime(date("d.m.Y"));
-            }
-            $Model=new PayCalend();
-            $Model->delAllPlanPays($_GET['ContCode']);
-            //сохранение первого платежа
-            $Model->addPlanPay($_GET['ContCode'],0,$FirstPaySum,$PayDate->format('d.m.Y'));
-            $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
+        if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')&&($_GET['FIRSTPAYSUM']>=$FirstPayMin)){
+            $FirstPaySum=$_GET['FIRSTPAYSUM'];                
+        }else{
+            $FirstPaySum=$FirstPayMin;
+        }
 
-            //сохранение последующих платежей
-            for ($i=1; $i<=$Period; $i++){
-                $j=$i-1;
-                if ($i<$Period){
-                    $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
-                } else {
-                    $Model->addPlanPay($_GET['ContCode'],$i,$PayLeft-$PaySum*($i-1),$PayDate->format('d.m.Y'));
-                }
-                $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
-            }    
-        } else {    
-            if ($Cont->getFront()->FRCONTPERIOD>1){
-                $Period=$Cont->getFront()->FRCONTPERIOD;
-            }else{
-                $Period=(new TarifP1())->getPac($Cont->getFront()->FRCONTPAC)->PCPERIOD;
-            }                       
-            $PaySum=round($Cont->getFront()->FRCONTSUM/$Period,-2);
-            $PayLeft=$Cont->getFront()->FRCONTSUM;
-            if ($Cont->getFront()->FRCONTDATE!=null){
-                $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
-            }else{
-                $PayDate=new DateTime(date("d.m.Y"));
+        $PaySum=round(($Cont->getFront()->FRCONTSUM-$FirstPaySum)/$Period,-2);
+        $PayLeft=$Cont->getFront()->FRCONTSUM-$FirstPaySum;
+        if ($Cont->getFront()->FRCONTDATE!=null){
+            $PayDate=new DateTime($Cont->getFront()->FRCONTDATE);
+        }else{
+            $PayDate=new DateTime(date("d.m.Y"));
+        }
+        $Model=new PayCalend();
+        $Model->delAllPlanPays($_GET['ContCode']);
+        //сохранение первого платежа
+        $Model->addPlanPay($_GET['ContCode'],1,$FirstPaySum,$PayDate->format('d.m.Y'));
+        $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
+
+        //сохранение последующих платежей
+        for ($i=1; $i<=$Period; $i++){
+            $PayNum=$i+1;
+            if ($i<$Period){
+                $Model->addPlanPay($_GET['ContCode'],$PayNum,$PaySum,$PayDate->format('d.m.Y'));
+            } else {
+                $Model->addPlanPay($_GET['ContCode'],$PayNum,$PayLeft-$PaySum*($i-1),$PayDate->format('d.m.Y'));
             }
-            $Model=new PayCalend();
-            $Model->delAllPlanPays($_GET['ContCode']);
-            for ($i=1; $i<=$Period; $i++){
-                $j=$i-1;
-                if ($i<$Period){
-                    $Model->addPlanPay($_GET['ContCode'],$i,$PaySum,$PayDate->format('d.m.Y'));
-                } else {
-                    $Model->addPlanPay($_GET['ContCode'],$i,$PayLeft-$PaySum*($i-1),$PayDate->format('d.m.Y'));
-                }
-                $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
-            }
-        }       
+            $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
+        }                
     }
         
     public function actionDelCalend(){

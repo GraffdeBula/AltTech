@@ -676,6 +676,7 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'EmpDov'=>$Emp->getEmpDov(),
             'Pac'=>$ContP1->getPac(),
             'PayCalend'=>$ContP1->getPayCalend(),
+            'FirstPaySum'=>$ContP1->getFirstPaySum(),
             'ClProperty'=>$Client->getPropertyList(),
             'ClDeals'=>$Client->getDealList(),
             'ClIncome'=>$Client->getIncomeList(),
