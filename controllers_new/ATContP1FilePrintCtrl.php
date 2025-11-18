@@ -9,7 +9,7 @@
  * отчёт о процедуре БФЛ
  * доверенность для нотариуса
  * доверенность - предоверие
- * 
+ * Доп соглашение в процессе исполнения БФЛ
  */
 class ATContP1FilePrintCtrl extends ControllerMain {
     protected $Client; //клиент
@@ -738,6 +738,61 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             'EmpDov'=>$Emp->getEmpDov(),
             'Pac'=>$ContP1->getPac(),
             'PayCalend'=>$ContP1->getPayCalend(),
+            'ClProperty'=>$Client->getPropertyList(),
+            'ClDeals'=>$Client->getDealList(),
+            'ClIncome'=>$Client->getIncomeList(),
+        ]);
+        
+        $DocName=$Printer->PrintDoc();
+        header("Location: ".$DocName);        
+    }
+    
+    public function actionDopCurrCont(){
+        /*печать допсоглашения к договору услуг об увеличении стоимости
+         * 
+         */
+        
+        $Client=new Client($_GET['ClCode']);             
+        $ContP1=new ContP1($_GET['ContCode']);     
+        if ($ContP1->getFront()->FROFFICE==""){
+            $Branch=new Branch($_SESSION['EmBranch']);
+        } else
+        {
+            $Branch=new Branch($ContP1->getFront()->FROFFICE);        
+        }                
+        $Org=new Organization($Branch->getRec()->BRORGPREF);        
+        $Emp=new Employee($Branch->getRec()->BRDIR);        
+        
+        if ($Client->getFamcont()==null){
+            $FamCont=new ClientRec();
+        }else{
+            $FamCont=$Client->getFamcont();
+        }
+        
+        $TemplateName='Доп соглашение в процессе исполнения БФЛ';
+        $DocumentName='ContDop2';
+                      
+        if ($ContP1->getFront()->FROFFICE=='Онлайн-продажи'){
+            $TemplateName=$TemplateName.'_online';
+        }
+        
+        $Printer=new PrintDoc($DocumentName,$TemplateName,[
+            'Client'=>$Client->getClRec(),
+            'ClientPas'=>$Client->getPasport(),
+            'ClientINN'=>$Client->getINN(),
+            'ClientPens'=>$Client->getPens(),
+            'ClientFamcont'=>$FamCont,
+            'ClientPhone'=>$Client->getContPhone(),
+            'ClientAdr'=>$Client->getAdr(),
+            'Anketa'=>$ContP1->getAnketa(),
+            'Front'=>$ContP1->getFront(),
+            'OrgRec'=>$Org->getRec(),
+            'BranchRec'=>$Branch->getRec(),
+            'Emp'=>$Emp->getEmp(),
+            'EmpDov'=>$Emp->getEmpDov(),
+            'Pac'=>$ContP1->getPac(),
+            'PayCalend'=>$ContP1->getPayCalend(),
+            'DopContSum'=>['DOPCONTSUM'=>(new ATP1ContMod())->getDopCont($_GET['ContCode'],$_GET['Id'])->DOPSUM],
             'ClProperty'=>$Client->getPropertyList(),
             'ClDeals'=>$Client->getDealList(),
             'ClIncome'=>$Client->getIncomeList(),

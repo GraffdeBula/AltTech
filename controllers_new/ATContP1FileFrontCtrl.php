@@ -466,6 +466,14 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         (new Status())->ChangeP1Status(21, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }
+    
+    public function actionAddDopCont(){
+        $ContP1=new ContP1($_GET['ContCode']);
+        $DopSumBefore=$ContP1->getFront()->FRCONTSUM;
+        $DopSumAfter=$DopSumBefore+$_GET['DopSum'];
+        (new ATP1ContMod())->addDopCont($_SESSION['EmName'], $_GET['ContCode'], $_GET['DopDate'], $_GET['DopSum'], $DopSumBefore, $DopSumAfter, $_GET['DopComment']);
+        header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
+    }
 
     public function actionAddPayment(){        
         (new Payment($_GET['ClCode'],$_GET['ContCode'],$_SESSION['EmBranch'],$_SESSION['EmName'],1,$_GET['PAYCONTTYPE'],$_GET['PAYSUM'],'','',$_GET['PAYMETHOD']))->addPayment();

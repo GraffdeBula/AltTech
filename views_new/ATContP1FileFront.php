@@ -607,12 +607,21 @@
          
         </div>
         <div class="tab-pane fade" id="ContDopList">
-            <h5>Список допсоглашений к договору</h5>            
+            <h5>Список допсоглашений к договору</h5> 
+            <form autocomplete="off">
+                <?php
+                    (new MyForm('ATContP1FileFrontCtrl','AddDopCont',$_GET['ClCode'],$_GET['ContCode']))->AddForm();
+                    
+                ?>
+                <label>Дата</label><input type='date' name='DopDate'>
+                <label>Изменение стоимости</label><input size='20' type='text' name='DopSum'>
+                <label>Описание</label><input type='text' size='60' name='DopComment'>
+                <button class='btn btn-warning'>Сохранить</button>
+            </form>
             <div class='col-6'>
                 <table class='table table-hover'>
                     <thead>
-                        <tr>
-                            <th>№</th>
+                        <tr>                            
                             <th>Дата</th>
                             <th>Изменение стоимости</th>
                             <th>Описание</th>
@@ -620,30 +629,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <th><input type='date' size='9' required value='01.10.2025'></th>
-                            <th><input type='number' size='5' required value='3000'></th>
-                            <th><input type='text' size='80' required value='Причина увеличения стоимости на 3000'></th>
-                            <th><button class='btn btn-warning'>Сохранить</button></th>
-                            <th><button class='btn btn-info'>Печать</button></th>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <th><input type='date' required value='15.10.2025'></th>
-                            <th><input type='number' required value='27000'></th>
-                            <th><input type='text' required value='Причина увеличения стоимости на 27000'></th>
-                            <th><button class='btn btn-warning'>Сохранить</button></th>
-                            <th><button class='btn btn-info'>Печать</button></th>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <th><input type='date' required value='28.10.2025'></th>
-                            <th><input type='number' required value='-15000'></th>
-                            <th><input type='text' required value='Причина уменьшения стоимости на 15000'></th>
-                            <th><button class='btn btn-warning'>Сохранить</button></th>
-                            <th><button class='btn btn-info'>Печать</button></th>
-                        </tr>
+                        <?php
+                            foreach($ContP1->getDopContList() as $DopCont){
+                                echo("<tr>");
+                                echo("<td>".(new PrintFunctions())->DateToStr($DopCont->DOPDATE)."</td>");
+                                echo("<td>$DopCont->DOPSUM</td>");
+                                echo("<td>$DopCont->DOPCOMMENT</td>");                                
+                                echo("<td><a target='_blank' href='index_admin.php?controller=ATContP1FilePrintCtrl&action=DopCurrCont&ClCode={$Client->CLCODE}&ContCode={$Anketa->CONTCODE}&Id=$DopCont->ID'>"
+                                    ."<button>Печать</button></a></td>");                                
+                                echo("</tr>");
+                            }
+                        ?>
                     </tbody>
                 </table> 
             </div>
