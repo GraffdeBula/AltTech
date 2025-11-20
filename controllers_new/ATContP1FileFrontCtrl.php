@@ -299,7 +299,7 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             $FirstPayMin=7500;
         }
         
-        if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')&&($_GET['FIRSTPAYSUM']>=$FirstPayMin)){
+        if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')){
             $FirstPaySum=$_GET['FIRSTPAYSUM'];                
         }else{
             $FirstPaySum=$FirstPayMin;
