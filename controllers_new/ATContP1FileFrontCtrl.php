@@ -294,11 +294,13 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Cont=new ContP1($_GET['ContCode']);
                         
         $Period=$Cont->getFront()->FRCONTPERIOD;
-        $FirstPayMin=12000;
+        $FirstPayMin=12000;                
         if (in_array($Cont->getFront()->FRCONTPROG,['Внесудебное банкротство',])){
             $FirstPayMin=7500;
         }
-        
+        if ($Cont->getFirstPaySum()['FIRSTPAYSUM']>0){
+            $FirstPayMin=$Cont->getFirstPaySum()['FIRSTPAYSUM'];
+        }
         if ((isset($_GET['FIRSTPAYSUM']))&&($_GET['FIRSTPAYSUM']!='')){
             $FirstPaySum=$_GET['FIRSTPAYSUM'];                
         }else{
