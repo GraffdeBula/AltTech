@@ -473,6 +473,15 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $ContP1=new ContP1($_GET['ContCode']);
         $DopSumBefore=$ContP1->getFront()->FRCONTSUM;
         $DopSumAfter=$DopSumBefore+$_GET['DopSum'];
+        $this->FrontSave([
+            'CONTCODE'=>$_GET['ContCode'],
+            'FRCONTSUM'=>$DopSumAfter,            
+        ]);
+        
+        $PayNum='25';
+        $PayDate=(new DateTime($ContP1->getFront()->FRCONTDATE))->modify("+24 month")->format('d.m.Y');
+        (new PayCalend())->addPlanPay($_GET['ContCode'],$PayNum,$_GET['DopSum'],$PayDate);
+        
         (new ATP1ContMod())->addDopCont($_SESSION['EmName'], $_GET['ContCode'], $_GET['DopDate'], $_GET['DopSum'], $DopSumBefore, $DopSumAfter, $_GET['DopComment']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }

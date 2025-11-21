@@ -621,8 +621,9 @@ class ATContP1FilePrintCtrl extends ControllerMain {
             $Act->setValue('WHATTODO',$Cont->getExpert()->EXJURCOMMENT);
         }
         //заполнение стоимости услуг
-        $Act->setValue('CONTSUM',9000);
-        $Act->setValue('CONTSUMSTR','девять тысяч');
+        $ExpCost=$Cont->getFirstPaySum()['FIRSTPAYSUM'];
+        $Act->setValue('CONTSUM',$ExpCost);
+        $Act->setValue('CONTSUMSTR',(new PrintFunctions())->SumToStr($ExpCost));
         
         if ($Cont->getFront()->FROFFICE=='Онлайн-продажи'){
             $Act->setValue('EMPNAME2',$Emp->getEmp()->EMFNAME1);

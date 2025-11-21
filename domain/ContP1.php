@@ -24,6 +24,7 @@ class ContP1 {
     protected $FirstPaySum=0;
     
     protected $Discounts=[];
+    protected $DDiscounts=0;
     public $Credit=[];
     public $CreditPays=[];
     
@@ -42,6 +43,7 @@ class ContP1 {
         $this->PayCalend=(new PayCalend())->getPayCalend($ContCode);        
         $this->PayList=(new PaymentMod())->getPaymentListP1($ContCode);
         $this->Discounts=(new P1DiscountMod())->getDiscount($ContCode);
+        $this->DDiscounts=(new P1DiscountMod())->getDDiscount($ContCode)->DISCOUNTSUM;
         $this->Credit=(new CreditDTO($ContCode));  
         $this->DopContList=(new ATP1ContMod())->getDopContList($ContCode);
         
