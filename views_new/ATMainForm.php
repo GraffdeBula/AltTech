@@ -304,6 +304,7 @@
                                 <th scope="col">ФИО клиента</th>
                                 <th scope="col">ID договора</th>
                                 <th scope="col">Филиал</th>
+                                <th scope="col">Юрист</th>
                                 <th scope="col">Дата договора</th>
                                 <th scope="col">Дата согласования руководителя</th>    
                                 <th scope="col">Дней в статусе</th>
@@ -324,6 +325,7 @@
                                     ."<th scope='row'>{$ExpCont->CLFIO}</th>"
                                     ."<td><a target='_blank' href='index_admin.php?controller=ATContP1FileExpertCtrl&ClCode=$ExpCont->CLCODE&ContCode=$ExpCont->CONTCODE'>$ExpCont->CONTCODE</a></td>"
                                     ."<td>$ExpCont->FROFFICE</td>"
+                                    ."<td>$ExpCont->EXJURSOGLNAME</td>"
                                     ."<td>".(new PrintFunctions())->DateToStr($ExpCont->FRCONTDATE)."</td>"
                                     ."<td>".(new PrintFunctions())->DateToStr($ExpCont->EXDIRSOGLDATE)."</td>"
                                     ."<td>".$Diff."<td>"

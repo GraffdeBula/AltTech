@@ -17,11 +17,14 @@ class ContP1 {
     protected $MinIncList;
     protected $CredList;
     protected $CreditList;
+    protected $DopContList;
     protected $Pac;
     protected $PayCalend=[];
     protected $PayList=[];
+    protected $FirstPaySum=0;
     
     protected $Discounts=[];
+    protected $DDiscounts=0;
     public $Credit=[];
     public $CreditPays=[];
     
@@ -37,10 +40,12 @@ class ContP1 {
         $this->RiskList=(new ExpertMod())->GetExpRiskList($ContCode,'Jurist');
         $this->RiskList2=(new ExpertMod())->GetExpRiskList2($ContCode);
         $this->Pac=(new Pacs())->getPacByName($this->Front->FRCONTPAC);
-        $this->PayCalend=(new PayCalend())->getPayCalend($ContCode);
+        $this->PayCalend=(new PayCalend())->getPayCalend($ContCode);        
         $this->PayList=(new PaymentMod())->getPaymentListP1($ContCode);
         $this->Discounts=(new P1DiscountMod())->getDiscount($ContCode);
-        $this->Credit=(new CreditDTO($ContCode));        
+        $this->DDiscounts=(new P1DiscountMod())->getDDiscount($ContCode)->DISCOUNTSUM;
+        $this->Credit=(new CreditDTO($ContCode));  
+        $this->DopContList=(new ATP1ContMod())->getDopContList($ContCode);
         
         $this->MinIncList=(new ExpertMod)->getExpMinInc($ContCode);
         $NewMinInc=[];
@@ -48,6 +53,12 @@ class ContP1 {
             $NewMinInc[$Inc->EXLISTVALUE]=$Inc->EXLISTVALUE2;
         }
         $this->MinIncList=$NewMinInc;
+        if (isset($this->PayCalend[0]->PAYSUM)){
+            $this->FirstPaySum=['FIRSTPAYSUM'=>$this->PayCalend[0]->PAYSUM];
+        }else{
+            $this->FirstPaySum=['FIRSTPAYSUM'=>0];
+        }
+        
     }
     
     public function getAnketa(){
@@ -86,12 +97,24 @@ class ContP1 {
         return $this->CreditList;
     }
     
+    public function getDopContList(){
+        return $this->DopContList;
+    }
+    
+    public function getDopContSum(){
+        return $this->DopContList;
+    }
+    
     public function getPac(){
         return $this->Pac;
     }
 
     public function getPayCalend(){
         return $this->PayCalend;
+    }
+    
+    public function getFirstPaySum(){
+        return $this->FirstPaySum;
     }
     
     public function getPayList(){

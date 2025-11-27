@@ -12,6 +12,24 @@ class ATP1ContMod extends Model{
     public $ClCode;
     protected $Data=[];
     
+    public function addDopCont($LgEmp,$ContCode,$DopDate,$DopSum,$DopSumBefore,$DopSumAfter,$DopComment){
+        $Sql="INSERT INTO tblP1ContDop (lgEmp,ContCode,DopDate,DopSum,ContSumBefore,ContSumAfter,DopComment) VALUES (?,?,?,?,?,?,?)";                
+        $Params=[$LgEmp,$ContCode,$DopDate,$DopSum,$DopSumBefore,$DopSumAfter,$DopComment];
+        return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
+    }
+    
+    public function getDopCont($ContCode,$Id){
+        $Sql="SELECT * FROM tblP1ContDop WHERE ContCode=? AND Id=?";                
+        $Params=[$ContCode,$Id];
+        return $this->Data=db2::getInstance()->FetchOne($Sql,$Params);    
+    }
+    
+    public function getDopContList($ContCode){
+        $Sql="SELECT * FROM tblP1ContDop WHERE ContCode=?";                
+        $Params=[$ContCode];
+        return $this->Data=db2::getInstance()->FetchAll($Sql,$Params);    
+    }
+            
     public function GetP1ContList($ClCode){
         $Sql="SELECT * FROM vwP1ContList WHERE ClCode=?;";                
         $Params=[$ClCode];
