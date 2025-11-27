@@ -317,12 +317,12 @@ class ATContP1FileFrontCtrl extends ControllerMain {
         $Model=new PayCalend();
         $Model->delAllPlanPays($_GET['ContCode']);
         //сохранение первого платежа
-        $Model->addPlanPay($_GET['ContCode'],1,$FirstPaySum,$PayDate->format('d.m.Y'));
+        $Model->addPlanPay($_GET['ContCode'],0,$FirstPaySum,$PayDate->format('d.m.Y'));
         $PayDate=(new ConvertFunctions())->AddMonth($PayDate);
 
         //сохранение последующих платежей
         for ($i=1; $i<=$Period; $i++){
-            $PayNum=$i+1;
+            $PayNum=$i;
             if ($i<$Period){
                 $Model->addPlanPay($_GET['ContCode'],$PayNum,$PaySum,$PayDate->format('d.m.Y'));
             } else {

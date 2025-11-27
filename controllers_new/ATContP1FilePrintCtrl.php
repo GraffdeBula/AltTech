@@ -559,7 +559,8 @@ class ATContP1FilePrintCtrl extends ControllerMain {
         foreach($Cont->getRiskList() as $Risk){            
             $RiskFList[]=[
                 'RISKFIN'=>$Risk->EXLISTVALUE,
-                'RISKJURWORK'=>$Risk->EXLISTVALUE2,
+                'RISKJURWORK'=>'',
+                #'RISKJURWORK'=>$Risk->EXLISTVALUE2,
                 'RISKPROPERTY'=>$Risk->EXLISTVALUE3
             ];
             
