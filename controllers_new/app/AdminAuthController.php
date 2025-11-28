@@ -5,7 +5,7 @@
  *
  * @author andrey
  */
-class AdminAuthController extends Controller{
+class AdminAuthController extends ControllerMain{
     public function actionIndex(){ //метод по умолчанию показывает форму для авторизации
         #echo('ih bin auth');
         #exit();

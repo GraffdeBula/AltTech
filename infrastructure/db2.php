@@ -10,10 +10,11 @@ class db2{
 
     protected $conn; //подключение к бд
     protected static $instance; //свойство для хранения экземпляра класса
-
+    
+    
     private function __construct(){ //закрываем конструктор для доступа снаружи
-        $this->dblogin='dbadmin';
-        $this->dbpass='dev$%2501';       
+        $this->dblogin=USER_NAME;
+        $this->dbpass=USER_PASS;       
         $this->conn = new \PDO(DB_NAME_MAIN, $this->dblogin, $this->dbpass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 
@@ -33,8 +34,7 @@ class db2{
             echo $e->getMessage();
         }  
     }
-    
-    
+        
     public function lastContCode($TblName){
         $MaxId=$this->FetchOne('SELECT MAX(ContCode) as MaxId FROM '.$TblName,[])->MAXID;
         return $this->FetchOne('SELECT * FROM '.$TblName.' WHERE ContCode=?',[$MaxId]);

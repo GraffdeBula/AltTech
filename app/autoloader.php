@@ -5,8 +5,6 @@
  *  функция для автоматичемской подгрузки классов
  * @author Andrey
  */
-define('CONFIG_ROOT', __DIR__);
-define('UPPER_ROOT', dirname(CONFIG_ROOT));
 
 class autoloader {
     protected $paths=[        

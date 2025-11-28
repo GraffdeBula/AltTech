@@ -68,12 +68,18 @@ class PrintDoc{
 //        }
         
         if ($BookMark->BMCHANGE<4){
-            $Data=$this->
-                DocData[$BookMark->BMTABLE]->
-                {$BookMark->BMFIELD};             
+            if (is_object($this->DocData[$BookMark->BMTABLE])){
+                $Data=$this->
+                    DocData[$BookMark->BMTABLE]->
+                    {$BookMark->BMFIELD};             
+            }
+            if (is_array($this->DocData[$BookMark->BMTABLE])){
+                $Data=$this->
+                    DocData[$BookMark->BMTABLE][$BookMark->BMFIELD];             
+            }
         }
    
-        if ($BookMark->BMCHANGE==0){ //проста вставка без преобразований
+        if ($BookMark->BMCHANGE==0){ //просто вставка без преобразований
             $this->PasteDataSimple($BookMark->BMNAME,$Data);
         } elseif ($BookMark->BMCHANGE==1){ //вызов вставки даты (преобразование из строки)
             $this->PasteDataSimple($BookMark->BMNAME,$this->StrToDate($Data));
