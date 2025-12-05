@@ -1,4 +1,4 @@
-<?php
+value='<?=$_SESSION['DateF']?>'<?php
 /*
  * для внесения расходов в таблицу
  *  */
@@ -13,29 +13,31 @@
     <a style="pointer-events: none;" href='downloads/Расходы.xlsx'><button  type='button' class='btn btn-success disabled'>В EXCEL</button></a>
         <form>            
             <?php   
-                if ($_SESSION['EmRole']=='top'){
+                if (in_array($_SESSION['EmRole'],['top','admin'])){
                     echo("<label>Филиал</label>");
-                    (new EchoBranchList())->echoList('','BranchName');
+                    (new EchoBranchList())->echoList($_SESSION['EmBranch'],'BranchName');
                 } else {
                     echo("<input type='hidden' name='BranchName' value='{$_SESSION['EmBranch']}'>");
                 }
-                (new MyForm('OutcomesCtrl',''))->AddForm2();
+                (new MyForm('OutcomesCtrl','FilterOutcomes'))->AddForm2();
             ?>
-            <label>Показать расходы от </label><input type='date' name='DateF'>
-            <label> до </label><input type='date' name='DateL'> 
+            <label>Показать расходы от </label><input type='date' name='DateF' value='<?=$_SESSION['DateF']?>'>
+            <label> до </label><input type='date' name='DateL' > 
             <button class='btn btn-info'>Сформировать спиок</button>
         </form>
     <h5><u>Финансовый результат</u></h5>
-    <?php
-        $Total=$TotalIncomes-$TotalOutcomes;
-        echo("Доходы всего: ".$TotalIncomes);
-        echo("<br>Расходы всего: ".$TotalOutcomes);
-        echo("<br>Итого финрез: ".$Total);
-    ?>
+    
     <h5><u>Внесение расходов</u></h5>
     <form autocomplete='off'>
         <?php
-            (new MyForm('OutcomesCtrl', 'AddOutcome'))->AddForm2();
+            (new MyForm('OutcomesCtrl', 'AddOutcome'))->AddForm2();        
+            if (in_array($_SESSION['EmRole'],['top','admin'])){
+                echo("<label>Филиал</label>");
+                (new EchoBranchList())->echoList('','OutBranch');
+            } else {
+                echo("<input type='hidden' name='OutBranch' value='{$_SESSION['EmBranch']}'>");
+            }
+        
         ?>
         <label>Расход</label><select type="text" name='Outcome'><!-- расход по справочнику --> 
             <option></option>
@@ -45,17 +47,18 @@
                 }
             ?>
         </select>
-        <label>Способ оплаты</label><select type="text" name='OutcomeType'><!-- способ оплаты --> 
+        <label>Способ оплаты</label><select type="text" name='OutcomeType' required="on"><!-- способ оплаты --> 
             <option></option>
             <option>с расчётного счёта</option>
             <option>наличными</option>
             <option>другими наличными</option>
         </select>
         <br>
-        <label>Комментарий</label><input type="text" size='80' name='Comment'><!-- расшифровка расхода -->  
-        <label>Сумма</label><input type="number" name='OutSum'><!-- сумма -->
-        <label>Дата</label><input type="date" name="OutDate"><!-- дата расхода -->
-        <input type="hidden" name="OutBranch" value="<?=$_SESSION['EmBranch']?>">
+        <label>Комментарий</label><input type="text" size='80' name='Comment' required="on"><!-- расшифровка расхода -->  
+        <label>Сумма</label><input type="number" name='OutSum' required="on"><!-- сумма -->
+        <label>Дата</label><input type="date" name="OutDate" required="on"><!-- дата расхода -->
+        
+        
         <button class="btn btn-primary">ДОБАВИТЬ</button>
     </form>
     <div class="row">
