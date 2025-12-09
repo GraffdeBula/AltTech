@@ -29,4 +29,30 @@ class OutcomesMod extends Model{
         $Sql='INSERT INTO tbl6Outcomes (OutBranch,OutDate,OutSum,Outcome,Comment,OutcomeType) VALUES (?,?,?,?,?,?)';
         db2::getInstance()->Query($Sql,[$OutBranch,$OutDate,$OutSum,$Outcome,$Comment,$OutType]);
     }
+    
+    public function getTotalPayments($OutBranch,$DateF,$DateL,$ContType,$PayMethod){
+        if ($OutBranch==''){
+            $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ?"; 
+            $Params=[$DateF,$DateL,$ContType,'%'.$PayMethod.'%'];
+        }else{
+            $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE ContBranch=? AND (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ?";
+            $Params=[$OutBranch,$DateF,$DateL,$ContType,'%'.$PayMethod.'%'];
+        }
+         
+        $this->Data=db2::getInstance()->FetchOne($Sql,$Params);
+        return $this->Data;
+    }
+    
+    public function getTotalOutcomes($OutBranch,$DateF,$DateL,$PayMethod){
+        if ($OutBranch==''){
+            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE (OutDate BETWEEN ? AND ?) AND OutcomeType=?"; 
+            $Params=[$DateF,$DateL,$PayMethod];
+        }else{
+            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE OutBranch=? AND (OutDate BETWEEN ? AND ?) AND OutcomeType=?";
+            $Params=[$OutBranch,$DateF,$DateL,$PayMethod];
+        }
+         
+        $this->Data=db2::getInstance()->FetchOne($Sql,$Params);        
+        return $this->Data;
+    }
 }

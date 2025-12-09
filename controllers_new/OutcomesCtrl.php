@@ -6,16 +6,26 @@
  */
 class OutcomesCtrl extends ControllerMain{
     protected $OutcomesList=[];  
-    protected $TotalOutcomes=0;
-    protected $TotalIncomes=0;
+    protected $TotalOutcomes=[];
+    protected $TotalIncomes=[];
+    protected $TotalIncomesDays=[];
     protected $OutcomeDr;
     protected $DateF='';
     protected $DateL='';
     
     public function actionIndex(){
         $this->ViewName='Учёт расходов';
-        $_SESSION['DateF']='';
-        $_SESSION['DateL']='';
+        $this->DateF=date('Y-m-01');        
+        $LastDay='31';
+        if (in_array(date('m'),[4,6,9,11])){
+            $LastDay='30';
+        }elseif(in_array(date('m'),[2,])){
+            $LastDay='28';
+        }
+        $this->DateL=date('Y-m-'.$LastDay);
+        $_SESSION['DateF']=$this->DateF;
+        $_SESSION['DateL']=$this->DateL;
+        
         if (isset($_GET['BranchName'])) {
            $_SESSION['OutcomesBranch']=$_GET['BranchName'];
         }
@@ -36,7 +46,7 @@ class OutcomesCtrl extends ControllerMain{
             $Branch=$_SESSION['OutcomesBranch'];
         }
         
-        $this->getOutcomes();
+        $this->getData();
         
         $this->actionShowOutcomes();
     }
@@ -74,12 +84,13 @@ class OutcomesCtrl extends ControllerMain{
     }
     
     public function actionShowOutcomes(){
-        $this->getOutcomes();
+        $this->getData();
         
         $this->render('Outcomes',
             ['OutcomeList'=>$this->OutcomesList,
                 'TotalOutcomes'=>$this->TotalOutcomes,
                 'TotalIncomes'=>$this->TotalIncomes,
+                'TotalIncomesDays'=>$this->TotalIncomesDays,
                 'OutcomeDr'=>$this->OutcomeDr,
                 'Dates'=>[$this->DateF,$this->DateL],                
             ]
@@ -88,24 +99,77 @@ class OutcomesCtrl extends ControllerMain{
     
     public function actionAddOutcome(){        
         (new OutcomesMod())->addOutcome($_GET['OutBranch'],$_GET['OutDate'],$_GET['OutSum'],$_GET['Outcome'],$_GET['Comment'],$_GET['OutcomeType']);
-        header("Location: index_admin.php?controller=OutcomesCtrl");
+        $this->actionShowOutcomes();
     }
     
-    protected function getOutcomes(){        
-        $this->OutcomeDr=(new OutcomesMod())->getOutcomesDr();
-        $this->OutcomesList=(new OutcomesMod())->getOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL);
-                
-        $Sql='SELECT SUM(OutSum) AS TotSum FROM tbl6Outcomes WHERE OutBranch=? AND (OutDate BETWEEN ? AND ?)';
-        $this->TotalOutcomes=0;
-        if (isset(db2::getInstance()->FetchOne($Sql,[$_SESSION['OutcomesBranch'],$this->DateF,$this->DateL])->TOTSUM)){
-            $this->TotalOutcomes=db2::getInstance()->FetchOne($Sql,[$_SESSION['OutcomesBranch'],$this->DateF,$this->DateL])->TOTSUM;
+    protected function getData(){  
+        $Model=new OutcomesMod();
+        $this->OutcomeDr=$Model->getOutcomesDr();
+        $this->OutcomesList=$Model->getOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL);
+        $OutcomesArray=[];
+        foreach($this->OutcomesList as $Outcome){
+            $Date=(new DateTime($Outcome->OUTDATE))->format('d.m.Y');
+            if ($Outcome->OUTCOMETYPE=='С расчётного счёта'){
+                if (isset($OutcomesArray[$Date][0])){
+                    $OutcomesArray[$Date][0]=$OutcomesArray[$Date][0]+$Outcome->OUTSUM;
+                }else{
+                    $OutcomesArray[$Date][0]=$Outcome->OUTSUM;
+                }
+            }
+            if ($Outcome->OUTCOMETYPE=='Наличные Б'){ 
+                if (isset($OutcomesArray[$Date][1])){
+                    $OutcomesArray[$Date][1]=$OutcomesArray[$Date][1]+$Outcome->OUTSUM;
+                }else{
+                    $OutcomesArray[$Date][1]=$Outcome->OUTSUM;
+                }
+            }
+            if ($Outcome->OUTCOMETYPE=='Наличные С'){
+                if (isset($OutcomesArray[$Date][2])){
+                    $OutcomesArray[$Date][2]=$OutcomesArray[$Date][2]+$Outcome->OUTSUM;
+                }else{
+                    $OutcomesArray[$Date][2]=$Outcome->OUTSUM;
+                }
+            }
+            
         }
-        $Sql='SELECT SUM(PaySUM) AS TotSum FROM tbl5Payments WHERE ContBranch=? AND (PayDate BETWEEN ? AND ?) AND PayType>?';
-        $this->TotalIncomes=0;
-        if (isset(db2::getInstance()->FetchOne($Sql,[$_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,10])->TOTSUM)){
-            $this->TotalIncomes=db2::getInstance()->FetchOne($Sql,[$_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,10])->TOTSUM;
+        
+        $this->TotalIncomes=[
+            $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,2,'Безналичный')->PAYSUM,
+            $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,2,'Наличные')->PAYSUM,
+            $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,1,'Наличные')->PAYSUM,            
+        ];
+        $this->TotalOutcomes=[
+            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'С расчётного счёта')->PAYSUM,
+            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные Б')->PAYSUM,
+            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные С')->PAYSUM,            
+        ];
+        
+        $this->TotalIncomesDays=[];
+        $Date1=new DateTime($this->DateF);
+        $Datel=new DateTime($this->DateL);
+        while($Date1->getTimestamp()<=$Datel->getTimestamp()){
+            
+            $this->TotalIncomesDays[$Date1->format('d.m.Y')]=[];
+            if (isset($OutcomesArray[$Date1->format('d.m.Y')][0])){
+                $this->TotalIncomesDays[$Date1->format('d.m.Y')][0]=$OutcomesArray[$Date1->format('d.m.Y')][0];                 
+            }else{
+                $this->TotalIncomesDays[$Date1->format('d.m.Y')][0]=0; 
+            }
+            if (isset($OutcomesArray[$Date1->format('d.m.Y')][1])){
+                $this->TotalIncomesDays[$Date1->format('d.m.Y')][1]=$OutcomesArray[$Date1->format('d.m.Y')][1];                 
+            }else{
+                $this->TotalIncomesDays[$Date1->format('d.m.Y')][1]=0; 
+            }
+            if (isset($OutcomesArray[$Date1->format('d.m.Y')][2])){
+                $this->TotalIncomesDays[$Date1->format('d.m.Y')][2]=$OutcomesArray[$Date1->format('d.m.Y')][2];                 
+            }else{
+                $this->TotalIncomesDays[$Date1->format('d.m.Y')][2]=0; 
+            }
+
+            $Date1->add(new DateInterval('P1D'));
         }
+   
     }
-    
+  
     
 }
