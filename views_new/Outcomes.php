@@ -23,7 +23,7 @@
             ?>
             <label>Показать расходы от </label><input type='date' name='DateF' value='<?=$_SESSION['DateF']?>'>
             <label> до </label><input type='date' name='DateL' value='<?=$_SESSION['DateL']?>'> 
-            <button class='btn btn-info'>Сформировать спиок</button>
+            <button class='btn btn-info'>Сформировать спиcок</button>
         </form>
     <h5><u>Финансовый результат</u></h5>
     <div>
@@ -31,28 +31,39 @@
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">Безналичные</th>
-                    <th scope="col">Наличные Б</th>
-                    <th scope="col">Наличные С</th>
+                    <th scope="col">Безналичный расчёт</th>
+                    <th scope="col">Наличные по чеку</th>
+                    <th scope="col">Наличные по ПКО</th>
+                    <th scope="col">ВСЕГО</th>
                 </tr>
             </thead>
                 <tr>
-                    <th>Приход</th>
+                    <th>Выручка</th>
                     <th><?=$TotalIncomes[0]?></th>
                     <th><?=$TotalIncomes[1]?></th>
                     <th><?=$TotalIncomes[2]?></th>
+                    <th><?=$TotalIncomes[3]?></th>
+                </tr>
+                <tr>
+                    <th>Иной приход</th>
+                    <th><?=$OtherIncomes[0]?></th>
+                    <th><?=$OtherIncomes[1]?></th>
+                    <th><?=$OtherIncomes[2]?></th>
+                    <th><?=$OtherIncomes[3]?></th>
                 </tr>
                 <tr>
                     <th>Расход</th>
                     <th><?=$TotalOutcomes[0]?></th>
                     <th><?=$TotalOutcomes[1]?></th>
                     <th><?=$TotalOutcomes[2]?></th>
+                    <th><?=$TotalOutcomes[3]?></th>
                 </tr>
                 <tr>
                     <th>ИТОГО</th>
-                    <th><?=$TotalIncomes[0]-$TotalOutcomes[0]?></th>
-                    <th><?=$TotalIncomes[1]-$TotalOutcomes[1]?></th>
-                    <th><?=$TotalIncomes[2]-$TotalOutcomes[2]?></th>
+                    <th><?=$TotalIncomes[0]+$OtherIncomes[0]-$TotalOutcomes[0]?></th>
+                    <th><?=$TotalIncomes[1]+$OtherIncomes[1]-$TotalOutcomes[1]?></th>
+                    <th><?=$TotalIncomes[2]+$OtherIncomes[2]-$TotalOutcomes[2]?></th>
+                    <th><?=$TotalIncomes[3]+$OtherIncomes[3]-$TotalOutcomes[3]?></th>
                 </tr>
             <tbody>
                 
@@ -91,9 +102,9 @@
                 </select>
                 <label>Способ оплаты</label><select type="text" name='OutcomeType' required="on"><!-- способ оплаты --> 
                     <option></option>
-                    <option>С расчётного счёта</option>
-                    <option>Наличные Б</option>
-                    <option>Наличные С</option>
+                    <option>Безналичный расчёт</option>
+                    <option>Наличные по чеку</option>
+                    <option>Наличные по ПКО</option>
                 </select>
                 <br>
                 <label>Комментарий</label><input type="text" size='80' name='Comment' required="on"><!-- расшифровка расхода -->  
@@ -149,9 +160,10 @@
                 <thead>
                     <tr>
                         <th scope='col'>Дата</th>
-                        <th scope='col'>С расчётного счёта</th>
-                        <th scope='col'>Наличные Б</th>
-                        <th scope='col'>Наличные С</th>
+                        <th scope='col'>Безналичный расчёт</th>
+                        <th scope='col'>Наличные по чеку</th>
+                        <th scope='col'>Наличные по ПКО</th>
+                        <th scope='col'>ИТОГО за день</th>
                     <tr>
                 </thead>
                 <tbody>
@@ -162,6 +174,7 @@
                             echo("<td>$Outcomes[0]</td>");
                             echo("<td>$Outcomes[1]</td>");
                             echo("<td>$Outcomes[2]</td>");
+                            echo("<td>$Outcomes[0]+$Outcomes[1]+$Outcomes[2]</td>");
                             echo("</tr>");
                         }
                     ?>

@@ -21,7 +21,7 @@ class OutcomesMod extends Model{
     }
     
     public function getOutcomesDr(){
-        $Sql='SELECT * FROM tbl6DROutcomes ORDER BY Id DESC';
+        $Sql='SELECT * FROM tbl6DROutcomes ORDER BY Id';
         return db2::getInstance()->FetchAll($Sql,[]);
     }
     
@@ -32,10 +32,10 @@ class OutcomesMod extends Model{
     
     public function getTotalPayments($OutBranch,$DateF,$DateL,$ContType,$PayMethod){
         if ($OutBranch==''){
-            $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ?"; 
+            $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ? AND PayType<10"; 
             $Params=[$DateF,$DateL,$ContType,'%'.$PayMethod.'%'];
         }else{
-            $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE ContBranch=? AND (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ?";
+            $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE ContBranch=? AND (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ?  AND PayType<10";
             $Params=[$OutBranch,$DateF,$DateL,$ContType,'%'.$PayMethod.'%'];
         }
          
@@ -45,11 +45,24 @@ class OutcomesMod extends Model{
     
     public function getTotalOutcomes($OutBranch,$DateF,$DateL,$PayMethod){
         if ($OutBranch==''){
-            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE (OutDate BETWEEN ? AND ?) AND OutcomeType=?"; 
-            $Params=[$DateF,$DateL,$PayMethod];
+            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE (OutDate BETWEEN ? AND ?) AND OutcomeType=? AND Outcome<>?"; 
+            $Params=[$DateF,$DateL,$PayMethod,'Трансфер из ГО'];
         }else{
-            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE OutBranch=? AND (OutDate BETWEEN ? AND ?) AND OutcomeType=?";
-            $Params=[$OutBranch,$DateF,$DateL,$PayMethod];
+            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE OutBranch=? AND (OutDate BETWEEN ? AND ?) AND OutcomeType=? AND Outcome<>?";
+            $Params=[$OutBranch,$DateF,$DateL,$PayMethod,'Трансфер из ГО'];
+        }
+         
+        $this->Data=db2::getInstance()->FetchOne($Sql,$Params);        
+        return $this->Data;
+    }
+    
+    public function getOtherIncomes($OutBranch,$DateF,$DateL,$PayMethod){
+        if ($OutBranch==''){
+            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE (OutDate BETWEEN ? AND ?) AND OutcomeType=? AND Outcome=?"; 
+            $Params=[$DateF,$DateL,$PayMethod,'Трансфер из ГО'];
+        }else{
+            $Sql="SELECT Sum(OutSum) As PaySum FROM tbl6Outcomes WHERE OutBranch=? AND (OutDate BETWEEN ? AND ?) AND OutcomeType=? AND Outcome=?";
+            $Params=[$OutBranch,$DateF,$DateL,$PayMethod,'Трансфер из ГО'];
         }
          
         $this->Data=db2::getInstance()->FetchOne($Sql,$Params);        

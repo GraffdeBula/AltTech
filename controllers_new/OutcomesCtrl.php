@@ -8,6 +8,7 @@ class OutcomesCtrl extends ControllerMain{
     protected $OutcomesList=[];  
     protected $TotalOutcomes=[];
     protected $TotalIncomes=[];
+    protected $OtherIncomes=[];
     protected $TotalIncomesDays=[];
     protected $OutcomeDr;
     protected $DateF='';
@@ -90,6 +91,7 @@ class OutcomesCtrl extends ControllerMain{
             ['OutcomeList'=>$this->OutcomesList,
                 'TotalOutcomes'=>$this->TotalOutcomes,
                 'TotalIncomes'=>$this->TotalIncomes,
+                'OtherIncomes'=>$this->OtherIncomes,
                 'TotalIncomesDays'=>$this->TotalIncomesDays,
                 'OutcomeDr'=>$this->OutcomeDr,
                 'Dates'=>[$this->DateF,$this->DateL],                
@@ -99,6 +101,7 @@ class OutcomesCtrl extends ControllerMain{
     
     public function actionAddOutcome(){        
         (new OutcomesMod())->addOutcome($_GET['OutBranch'],$_GET['OutDate'],$_GET['OutSum'],$_GET['Outcome'],$_GET['Comment'],$_GET['OutcomeType']);
+        $_SESSION['OutcomesBranch']=$_GET['BranchName'];
         $this->actionShowOutcomes();
     }
     
@@ -138,11 +141,19 @@ class OutcomesCtrl extends ControllerMain{
             $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,2,'Наличные')->PAYSUM,
             $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,1,'Наличные')->PAYSUM,            
         ];
+        $this->TotalIncomes[3]=$this->TotalIncomes[0]+$this->TotalIncomes[1]+$this->TotalIncomes[2];
         $this->TotalOutcomes=[
-            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'С расчётного счёта')->PAYSUM,
-            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные Б')->PAYSUM,
-            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные С')->PAYSUM,            
+            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Безналичный расчёт')->PAYSUM,
+            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по чеку')->PAYSUM,
+            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по ПКО')->PAYSUM,            
         ];
+        $this->TotalOutcomes[3]=$this->TotalOutcomes[0]+$this->TotalOutcomes[1]+$this->TotalOutcomes[2];
+        $this->OtherIncomes=[
+            $Model->getOtherIncomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Безналичный расчёт')->PAYSUM,
+            $Model->getOtherIncomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по чеку')->PAYSUM,
+            $Model->getOtherIncomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по ПКО')->PAYSUM,            
+        ];
+        $this->OtherIncomes[3]=$this->OtherIncomes[0]+$this->OtherIncomes[1]+$this->OtherIncomes[2];
         
         $this->TotalIncomesDays=[];
         $Date1=new DateTime($this->DateF);
