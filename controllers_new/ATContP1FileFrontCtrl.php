@@ -122,7 +122,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRDOPDATE'=>Date('d.m.Y'),
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
-        $this->SaveTypeCalend();
+        if ((isset($_GET['FRDOPSUM']))&&($_GET['FRDOPSUM']>0)){
+            $this->SaveTypeCalend();
+        }
         (new Status())->ChangeP1Status(20, $_GET['ContCode']);            
         //копирование рисков
         $RiskListJur=(new ExpertMod)->GetExpRiskList($_GET['ContCode'],'Jurist');
@@ -172,7 +174,9 @@ class ATContP1FileFrontCtrl extends ControllerMain {
             'FRDOPSUM'=>$_GET['FRDOPSUM'],
             'FRCONTSUM'=>$_GET['FRDOPSUM']+$Cont->getFront()->FRCONTFIRSTSUM
         ]);
-        $this->SaveTypeCalend();
+        if ((isset($_GET['FRDOPSUM']))&&($_GET['FRDOPSUM']>0)){
+            $this->SaveTypeCalend();
+        }
         (new Status())->ChangeP1Status(18, $_GET['ContCode']);
         header("Location: index_admin.php?controller=ATContP1FileFrontCtrl&ClCode={$_GET['ClCode']}&ContCode={$_GET['ContCode']}");
     }

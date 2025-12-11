@@ -17,7 +17,7 @@ class P1DiscountMod extends Model{
     
     public function getDDiscount($ContCode){
         $Sql="SELECT Sum(DiscountSum) AS DiscountSum FROM tblP1Discounts WHERE ContCode=? AND DiscountType=?";
-        return $this->Data=db2::getInstance()->FetchAll($Sql,[$ContCode,'ДД']);
+        return $this->Data=db2::getInstance()->FetchOne($Sql,[$ContCode,'ДД']);
     }
 
     public function delDiscount($Id){
