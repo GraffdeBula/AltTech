@@ -12,10 +12,10 @@ class ATClientMod extends Model{
     protected $name='Ivan Ivanov';
     protected $Data=[];
     
-    public function NewClient($ClFName,$Cl1Name,$Cl2Name,$ClPasSer,$ClPasNum,$Emp,$Branch){
+    public function NewClient($ClFName,$Cl1Name,$Cl2Name,$ClPasSer,$ClPasNum,$Emp,$Branch,$DocPath){
         //добавить запись в таблицу клиентов
-        $Sql="INSERT INTO tblClients (lgDat,lgEmp,clBranch,clFNAme,cl1Name,cl2Name) VALUES (current_timestamp,?,?,?,?,?)";
-        $Params=[$Emp,$Branch,$ClFName,$Cl1Name,$Cl2Name];
+        $Sql="INSERT INTO tblClients (lgDat,lgEmp,clBranch,clFNAme,cl1Name,cl2Name,cldocpath) VALUES (current_timestamp,?,?,?,?,?,?)";
+        $Params=[$Emp,$Branch,$ClFName,$Cl1Name,$Cl2Name,$DocPath];
         db2::getInstance()->Query($Sql,$Params);
         
         //получение кода клиента
