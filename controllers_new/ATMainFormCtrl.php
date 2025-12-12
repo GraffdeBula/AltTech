@@ -45,7 +45,8 @@ class ATMainFormCtrl extends ControllerMain {
      */
     public function actionClIns(){
         $Model=new ATClientMod();        
-        $Model->NewClient($_GET['ClFName'],$_GET['Cl1Name'],$_GET['Cl2Name'],$_GET['ClPasSer'],$_GET['ClPasNum'],$_SESSION['EmName'],$_SESSION['EmBranch']);
+        $Path=$_SERVER['DOCUMENT_ROOT']."/".WORK_FOLDER."/clientdocs";
+        $Model->NewClient($_GET['ClFName'],$_GET['Cl1Name'],$_GET['Cl2Name'],$_GET['ClPasSer'],$_GET['ClPasNum'],$_SESSION['EmName'],$_SESSION['EmBranch'],$Path);
         header("Location: index_admin.php?controller=ATMainFormCtrl&action=ClSearch"
             . "&ClFName={$_GET['ClFName']}&Cl1Name={$_GET['Cl1Name']}&Cl2Name={$_GET['Cl2Name']}&ClPasSer={$_GET['ClPasSer']}&ClPasNum={$_GET['ClPasNum']}");
     }

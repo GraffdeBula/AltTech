@@ -2,6 +2,7 @@
 
 abstract class Model {
     protected $type;
+    protected $Data;
     public function getType(){
         $this->type='1';
     }
