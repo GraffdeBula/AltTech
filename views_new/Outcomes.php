@@ -15,7 +15,11 @@
             <?php   
                 if (in_array($_SESSION['EmRole'],['top','admin'])){
                     echo("<label>Филиал</label>");
-                    (new EchoBranchList())->echoList($_SESSION['EmBranch'],'BranchName');
+                    if (isset($_SESSION['OutcomesBranch'])){
+                        (new EchoBranchList())->echoList($_SESSION['OutcomesBranch'],'BranchName');
+                    }else{
+                        (new EchoBranchList())->echoList($_SESSION['EmBranch'],'BranchName');
+                    }
                 } else {
                     echo("<input type='hidden' name='BranchName' value='{$_SESSION['EmBranch']}'>");
                 }
@@ -25,7 +29,7 @@
             <label> до </label><input type='date' name='DateL' value='<?=$_SESSION['DateL']?>'> 
             <button class='btn btn-info'>Сформировать спиcок</button>
         </form>
-    <h5><u>Финансовый результат</u></h5>
+    <h5><u>Кассовый остаток</u></h5>
     <div>
         <table class="table table-hover">
             <thead>
@@ -126,6 +130,7 @@
                             <th scope="col">Способ оплаты</th>
                             <th scope="col">Расход</th>
                             <th scope="col">Комментарий</th>
+                            <th scope="col">Удаление</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -145,7 +150,12 @@
                                 ."<td>$Outcome->OUTCOMETYPE</td>"
                                 ."<td>$Outcome->OUTCOME</td>"
                                 ."<td>$Outcome->COMMENT</td>"
-                            ."</tr>");
+                            );
+                            echo("<td><form methog='get' autocomplete='off'>");
+                            (new MyForm('OutcomesCtrl', 'DelOutcome'))->AddForm2();
+                            echo("<input type='hidden' name='Id' value='$Outcome->ID'>");
+                            echo("<button class='btn btn-danger'>УДАЛИТЬ</button>");
+                            echo("</form></td></tr>");
 
                         }
                     ?>

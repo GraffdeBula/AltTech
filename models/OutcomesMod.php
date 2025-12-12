@@ -30,6 +30,11 @@ class OutcomesMod extends Model{
         db2::getInstance()->Query($Sql,[$OutBranch,$OutDate,$OutSum,$Outcome,$Comment,$OutType]);
     }
     
+    public function delOutcome($Id){
+        $Sql='DELETE FROM tbl6Outcomes WHERE Id=?';
+        db2::getInstance()->Query($Sql,[$Id]);
+    }
+    
     public function getTotalPayments($OutBranch,$DateF,$DateL,$ContType,$PayMethod){
         if ($OutBranch==''){
             $Sql="SELECT Sum(PaySum) As PaySum FROM tbl5Payments WHERE (PayDate BETWEEN ? AND ?) AND ContType=? AND PayMethod LIKE ? AND PayType<10"; 

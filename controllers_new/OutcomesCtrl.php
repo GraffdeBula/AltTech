@@ -13,6 +13,7 @@ class OutcomesCtrl extends ControllerMain{
     protected $OutcomeDr;
     protected $DateF='';
     protected $DateL='';
+    protected $Branch='';
     
     public function actionIndex(){
         $this->ViewName='Учёт расходов';
@@ -101,14 +102,24 @@ class OutcomesCtrl extends ControllerMain{
     
     public function actionAddOutcome(){        
         (new OutcomesMod())->addOutcome($_GET['OutBranch'],$_GET['OutDate'],$_GET['OutSum'],$_GET['Outcome'],$_GET['Comment'],$_GET['OutcomeType']);
-        $_SESSION['OutcomesBranch']=$_GET['BranchName'];
+        $this->Branch=$_GET['OutBranch'];
+        $this->DateF=$_SESSION['DateF'];
+        $this->DateL=$_SESSION['DateL'];
+        $this->actionShowOutcomes();
+    }
+    
+    public function actionDelOutcome(){
+        (new OutcomesMod())->delOutcome($_GET['Id']);
+        $this->Branch=$_SESSION['OutcomesBranch'];
+        $this->DateF=$_SESSION['DateF'];
+        $this->DateL=$_SESSION['DateL'];
         $this->actionShowOutcomes();
     }
     
     protected function getData(){  
         $Model=new OutcomesMod();
         $this->OutcomeDr=$Model->getOutcomesDr();
-        $this->OutcomesList=$Model->getOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL);
+        $this->OutcomesList=$Model->getOutcomes($this->Branch,$this->DateF,$this->DateL);
         $OutcomesArray=[];
         foreach($this->OutcomesList as $Outcome){
             $Date=(new DateTime($Outcome->OUTDATE))->format('d.m.Y');
@@ -137,21 +148,21 @@ class OutcomesCtrl extends ControllerMain{
         }
         
         $this->TotalIncomes=[
-            $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,2,'Безналичный')->PAYSUM,
-            $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,2,'Наличные')->PAYSUM,
-            $Model->getTotalPayments($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,1,'Наличные')->PAYSUM,            
+            $Model->getTotalPayments($this->Branch,$this->DateF,$this->DateL,2,'Безналичный')->PAYSUM,
+            $Model->getTotalPayments($this->Branch,$this->DateF,$this->DateL,2,'Наличные')->PAYSUM,
+            $Model->getTotalPayments($this->Branch,$this->DateF,$this->DateL,1,'Наличные')->PAYSUM,            
         ];
         $this->TotalIncomes[3]=$this->TotalIncomes[0]+$this->TotalIncomes[1]+$this->TotalIncomes[2];
         $this->TotalOutcomes=[
-            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Безналичный расчёт')->PAYSUM,
-            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по чеку')->PAYSUM,
-            $Model->getTotalOutcomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по ПКО')->PAYSUM,            
+            $Model->getTotalOutcomes($this->Branch,$this->DateF,$this->DateL,'Безналичный расчёт')->PAYSUM,
+            $Model->getTotalOutcomes($this->Branch,$this->DateF,$this->DateL,'Наличные по чеку')->PAYSUM,
+            $Model->getTotalOutcomes($this->Branch,$this->DateF,$this->DateL,'Наличные по ПКО')->PAYSUM,            
         ];
         $this->TotalOutcomes[3]=$this->TotalOutcomes[0]+$this->TotalOutcomes[1]+$this->TotalOutcomes[2];
         $this->OtherIncomes=[
-            $Model->getOtherIncomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Безналичный расчёт')->PAYSUM,
-            $Model->getOtherIncomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по чеку')->PAYSUM,
-            $Model->getOtherIncomes($_SESSION['OutcomesBranch'],$this->DateF,$this->DateL,'Наличные по ПКО')->PAYSUM,            
+            $Model->getOtherIncomes($this->Branch,$this->DateF,$this->DateL,'Безналичный расчёт')->PAYSUM,
+            $Model->getOtherIncomes($this->Branch,$this->DateF,$this->DateL,'Наличные по чеку')->PAYSUM,
+            $Model->getOtherIncomes($this->Branch,$this->DateF,$this->DateL,'Наличные по ПКО')->PAYSUM,            
         ];
         $this->OtherIncomes[3]=$this->OtherIncomes[0]+$this->OtherIncomes[1]+$this->OtherIncomes[2];
         
